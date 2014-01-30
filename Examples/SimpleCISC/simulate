@@ -1,0 +1,5 @@
+#! /bin/sh
+
+simcommand="ncverilog -sv +gui +ncaccess+r +tcl+system.tcl"
+LIB=library
+${simcommand} -y $LIB +libext+.sv +incdir+$LIB $LIB/opcodes.svh system.sv $*
