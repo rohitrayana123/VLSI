@@ -25,3 +25,6 @@
 
 ## Verilog Directories 
 .simvision/
+
+## Vim swap
+*.swp
