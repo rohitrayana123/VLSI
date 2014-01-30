@@ -1,0 +1,15 @@
+// Hex file to specify serial data input
+//
+// each line consists of two hex numbers
+// the first specifies the cycle number
+// the second specifies the data value
+
+// this is a dummy version containing no data
+
+// uncomment the following lines for a simple serial data stream
+//
+//	1F4	3
+//	3E8	5
+//	5DC	4
+//	186A0	4
+
