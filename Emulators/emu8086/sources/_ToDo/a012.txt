@@ -1,0 +1,19 @@
+; it seems it shows wrong message;
+; when it sets entry point it says "not set"
+; and when there's no entry point,
+; it says nothing.
+
+
+
+; check entry point 
+    
+sseg segment "stack"
+    dw 100h
+sseg ends
+
+cseg segment     
+mov bx, bx
+    start:
+    mov ax, ax
+cseg	ends                  
+end start

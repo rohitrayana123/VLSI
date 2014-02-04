@@ -1,0 +1,3 @@
+ascii code table
+should use system colours
+

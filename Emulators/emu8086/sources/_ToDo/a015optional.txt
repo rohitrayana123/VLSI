@@ -1,0 +1,8 @@
+[ try ]
+
+our mission is to convert emu
+to vb.net
+
+I think getting VB.net 2003
+would be most appropriate
+for this task.

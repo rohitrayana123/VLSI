@@ -1,0 +1,27 @@
+!
+
+*************************
+
+use windows system colours
+for all forms!
+
+*************************
+
+
+!
+
+emu should detect if source file has be modified outside the source editor 
+
+
+possible solution:
+
+open files in exclusive mode
+
+best solution:
+
+above + open files only from:
+c:\emu\
+ and subfolders
+
+
+

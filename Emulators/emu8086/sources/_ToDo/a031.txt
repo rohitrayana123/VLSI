@@ -1,0 +1,5 @@
+type .exe_ is mistakenly
+called "assembly language code"
+
+the text should be replaced
+with "dos executable"

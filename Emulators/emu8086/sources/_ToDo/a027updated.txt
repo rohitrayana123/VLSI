@@ -1,0 +1,20 @@
+something has to be
+done to simplify and improve
+options.
+
+allow changing fore and
+back colours simply.
+
+and turn off style colouring.
+
+
+[?] the options window
+    doesn't return focus to
+    main window  [?]
+and set font button
+stops working.
+
+
+need to rewrite options
+form code.
+

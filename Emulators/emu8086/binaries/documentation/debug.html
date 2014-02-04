@@ -1,0 +1,138 @@
+<html>
+
+	<head>
+		<title>debug</title>
+		<meta name="description" content="Extended Debug for the emulator">
+	</head>
+
+	<body>
+
+		<font face=Courier>
+
+
+
+
+
+
+
+			<FONT SIZE=+1><B>Extended Debug for the Emulator</B></FONT>
+
+
+			<br><br>
+	
+			<b>F11</b> or from the view menu.
+		
+			<br><br>
+			
+
+
+			<ul>
+
+				<li><b>c</b> - compare several bytes.<br>
+
+<pre><font size=2 face="Terminal">
+v1 <font color=#000064>db</font>  1,4,3,4,5,6,7
+v2 <font color=#000064>db</font>  1,5,3,0,5,6,7
+</font></pre>
+
+			      To compare v1 and v2 type the following:<br><br>
+			      <b> c v1 L 7 v2</b><br><br>
+
+					<b>L</b> is the size of the array.	Without the L parameter 8 bytes are compared.<br><br>
+
+
+				  It is also possible to use registers as parameters:<br><br>
+
+				  <b>c SI L 20h DI</b><br><br>
+
+				  The command outputs only those addresses with values that are different. 
+
+				  <br><br>
+
+				<li><b>i</b> - input and display a byte from a specified port:
+					<br><br>
+					<b>i 123</b>
+					<br><br>
+					<b>iw</b> - input and display a word. 
+					<br><br>
+
+
+				<li><b>o</b> - output byte to a specified port:
+					<br><br>
+					<b>o 123 55</b>
+					<br><br>
+					<b>ow</b> - output a word.
+					<br><br>
+
+
+
+				<li><b>d</b> - dump 128 bytes at specified address, for example:
+					<br><br>
+
+			        <b>d 100 </b>
+					<br><br>
+				    If no segment is specified CS is used by default. Square brackets are optional.
+					<BR>
+				    <b>d</b> command without parameters shows next 128 bytes.
+					<br><br>
+					<b> L </b> parameter can be used to specify the number of bytes to dump.
+					Dump 10 bytes starting from an offset of a variable called var:
+					<br><br>
+                    <b>d var L A</b>
+					<br><br>
+					If there's a variable L, declared as <b>L db 5</b>, brackets must be used:
+					<br><br>
+					<b>d [L]</b>
+					<br>
+					<b>d [L] L 1</b>
+                    <br><br>
+
+				<li><b>t</b> - single step.
+					<br><br>
+
+				<li><b>p</b> - step over (procedure or interrupt).
+					<br><br>
+
+				<li><b>r</b> - show all registers and current instruction at CS:IP.
+					<br><br>
+
+					<ul>
+						<li><b>rf</b> - view/set flags.
+						<li><b>r</b> [register name] - view/set register value.
+					</ul>
+					<br><br>
+
+
+			</ul>
+
+			<br><br>
+			Note: All output values are in HEX. All input parameters are be in HEX. "<b>h</b>" suffix is not required.
+			
+
+			<br><br><br><br>
+
+Portions Copyright Microsoft Corporation. All rights reserved.  
+
+		<HR>
+<CENTER>
+<BR><BR>
+
+<BR><BR>
+
+
+<A HREF="credits.html"><B> &gt;&gt;&gt; Credits &gt;&gt;&gt; </B></A>
+<BR><BR><BR>
+</CENTER>
+
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+		</font>
+
+		
+		
+	</body>
+
+</html>

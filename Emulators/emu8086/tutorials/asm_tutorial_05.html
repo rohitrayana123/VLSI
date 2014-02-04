@@ -1,0 +1,155 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial</TITLE>
+
+<META name="description" content="Library of common functions - emu8086.inc">
+
+
+</HEAD>
+
+<BODY>
+
+<FONT FACE="Courier" SIZE=3>
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Library of common functions - emu8086.inc</B></FONT>
+<BR><BR>
+The default location for inc files is: \inc\
+<BR><BR>
+
+<HR>
+
+<BR>
+Macros</B><B></B>:<BR><BR>
+<UL>
+
+<LI><B>PUTC char</B> - prints out an ASCII char at current cursor position.<BR><BR></LI>
+
+<LI><B>GOTOXY col, row</B> - sets cursor position.<BR><BR></LI>
+
+<LI><B>PRINT string</B> - prints out a string.<BR><BR></LI>
+
+
+<LI><B>PRINTN string</B> - prints out a string and carriage return.<BR><BR></LI>
+
+<LI><B>CURSOROFF</B> - turns off the text cursor.<BR><BR></LI>
+
+<LI><B>CURSORON</B> - turns on the text cursor.<BR><BR></LI>
+
+
+</UL>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Courier">include "emu8086.inc"
+ORG    100h
+PRINT 'Hello World!'
+GOTOXY 10, 5
+PUTC 'T'
+PUTC 'E'
+PUTC 'S'
+PUTC 'T'
+RET
+END
+</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR><BR>
+
+<HR>
+
+<BR>
+
+Procedures:<BR><BR>
+<UL>
+
+<LI>CALL <B>PRINT_STRING</B> - print a null terminated
+ string at current cursor position,
+ address of string in <B>DS:SI</B>
+
+ Declare: <B>DEFINE_PRINT_STRING</B>
+  before <B>END</B> directive.<BR><BR></LI>
+
+<LI>CALL <B>PTHIS</B> - print a null terminated
+ string at current cursor position.
+ Zero terminated string should be defined just after. 
+ To use it declare: <B>DEFINE_PTHIS</B>
+  <BR><BR></LI>
+
+<LI>CALL <B>GET_STRING</B> - get a null terminated
+string from a user, the received string is written to buffer
+at <B>DS:DI</B>, buffer size should be in <B>DX</B>.
+ Declare: <B>DEFINE_GET_STRING</B>
+  <BR><BR></LI>
+
+<LI>CALL <B>CLEAR_SCREEN</B> - clear the screen.
+ Declare: <B>DEFINE_CLEAR_SCREEN</B>
+  <BR><BR></LI>
+
+<LI>CALL <B>SCAN_NUM</B> - get multi-digit signed number from the keyboard,
+ and stores the result in <B>CX</B> register.
+ Declare: <B>DEFINE_SCAN_NUM</B>
+ <BR><BR></LI>
+
+<LI>CALL <B>PRINT_NUM</B> - prints a signed number from <B>AX</B> register.
+Declare: <B>DEFINE_PRINT_NUM</B>
+ and <B>DEFINE_PRINT_NUM_UNS</B><BR><BR></LI>
+
+<LI>CALL <B>PRINT_NUM_UNS</B> - prints out an unsigned
+number in <B>AX</B> register.
+ Declare: <B>DEFINE_PRINT_NUM_UNS</B>
+  <BR><BR></LI>
+
+</UL>
+
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Courier">include "emu8086.inc"
+ORG    100h
+CALL   pthis
+DB     "Enter the number: ", 0
+CALL   scan_num 
+MOV    AX, CX 
+CALL   pthis
+DB     13, 10, "Your lucky number is: ", 0
+CALL   print_num 
+RET 
+DEFINE_SCAN_NUM
+DEFINE_PRINT_NUM
+DEFINE_PRINT_NUM_UNS
+DEFINE_PTHIS
+END 
+</FONT></PRE>
+</TD></TR></TABLE>
+
+
+
+
+<BR><BR><BR>
+
+<HR>
+<BR><BR><BR>
+
+
+<CENTER>
+<BR><BR>
+<A HREF="asm_tutorial_06.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+<BR><BR><BR>
+</CENTER>
+
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+</FONT>
+
+</BODY>
+
+</HTML>

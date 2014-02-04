@@ -1,0 +1,105 @@
+; v020140204
+; DefaultDirName updated
+; script for  Inno Setup
+
+; ToDo: abort if folder already exists
+; NEVER INSTALL IN EXISTING DIRECTORIES
+
+#define MyAppName "emu"
+#define MyAppVersion "4.08"
+#define MyAppPublisher "yurim@nana10.co.il"
+#define MyAppURL "http://button4.com"
+#define MyAppExeName "emu8086.exe"
+
+[Setup]
+; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+AppId={{BDE98333-3850-4215-BD57-CF5C008E8AC5}}
+; if required to uninstall, delete D:\emu\ manually
+Uninstallable=no
+
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+;AppVerName={#MyAppName} {#MyAppVersion}
+AppPublisher={#MyAppPublisher}
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
+DefaultDirName=D:\emu
+DefaultGroupName=emu
+AllowNoIcons=yes
+OutputBaseFilename=setup
+; no compression
+Compression=none
+; no encryption
+Encryption=no
+SolidCompression=no
+
+
+; 5.2.1
+UsePreviousAppDir=no
+DirExistsWarning=yes
+AllowNetworkDrive=no
+AllowUNCPath=no
+
+
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+
+
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
+
+[Files]
+Source: "binaries\emu8086.exe"; DestDir: "{app}"; Flags: onlyifdoesntexist ; BeforeInstall: setreg1    
+Source: "binaries\documentation\*"; DestDir: "{app}\documentation\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\examples\*"; DestDir: "{app}\examples\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\inc\*"; DestDir: "{app}\inc\"; Flags: recursesubdirs createallsubdirs
+
+Source: "binaries\bios_rom"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\default.binf"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\diasm.dll"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\emu8086.ini"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\emu8086.io"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\floppy_0"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\int_vect"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\licence.html"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\md5.txt"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\microasm.dll"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\readme.txt"; DestDir: "{app}"; Flags: onlyifdoesntexist isreadme
+Source: "binaries\reg.ini"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\whatsnew.txt"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\mybuild\*"; DestDir: "{app}\mybuild\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\mysource\*"; DestDir: "{app}\mysource\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\vdrive\*"; DestDir: "{app}\vdrive\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\vdrive\a\*"; DestDir: "{app}\vdrive\a\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\vdrive\b\*"; DestDir: "{app}\vdrive\b\"; Flags: recursesubdirs createallsubdirs
+Source: "binaries\vdrive\c\*"; DestDir: "{app}\vdrive\c\"; Flags: recursesubdirs createallsubdirs
+
+Source: "binaries\a1.ico"; DestDir: "{app}"; Flags: onlyifdoesntexist
+Source: "binaries\a2.ico"; DestDir: "{app}"; Flags: onlyifdoesntexist
+
+Source: "binaries\options3\*"; DestDir: "{app}\options\"; Flags: recursesubdirs createallsubdirs
+
+; shared system file
+Source: "binaries\cmax20.ocx"; DestDir: "{sys}"; Flags: regserver noregerror onlyifdoesntexist sharedfile uninsneveruninstall
+
+
+[Icons]
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\a2.ico" 
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\a2.ico"
+
+
+
+[Code]
+procedure setreg1();
+begin
+  RegWriteStringValue(HKEY_CURRENT_USER, 'Software\VB and VBA Program Settings\emu8086\dirs',
+    'RKsCURRENT_SOURCE_FOLDER', '{app}\mysource');
+end;
+
+
+[Run]
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+

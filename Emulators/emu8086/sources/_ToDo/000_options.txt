@@ -1,0 +1,7 @@
+separate emulator options
+from editor options
+
+reset button should reset
+to system colours.
+
+

@@ -1,0 +1,4 @@
+it's recommended
+to change install
+path to d:\
+where available

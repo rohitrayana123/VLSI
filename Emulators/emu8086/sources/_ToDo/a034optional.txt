@@ -1,0 +1,15 @@
+* * * * * * * * * *
+ frmScreen
+* * * * * * * * * *
+allow manually change 
+start of video memory
+and other video parameters
+
+
+location of video memory
+for mode ax=04f02h, bx=100h
+is 0A0000h     (640x480)
+
+for text mode (default)
+   0B8000h   (80x25 chars)
+

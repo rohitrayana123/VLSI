@@ -1,0 +1,9 @@
+* * * * * * * * * *
+*  recommended    *
+*   resolution    *
+* * * * * * * * * *
+
+800x600 pixels
+
+16 bit high colour
+

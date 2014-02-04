@@ -1,0 +1,41 @@
+
+'    =======================================
+'      Colored ListBox Control
+'             with Horizontal Scroll
+'
+'      List box supports up to 16 colors!
+'
+'          Pure Visual Basic Code!
+'
+'       Version 1.00
+'    =======================================
+'
+'    Last Update: Friday, July 12, 2002
+'
+'
+'=======================================
+' SUPPORTED COLOR CODES:
+'
+'   0   Black
+'   1   Blue
+'   2   Green
+'   3   Cyan
+'   4   Red
+'   5   Magenta
+'   6   Yellow
+'   7   White
+'   8   Gray
+'   9   Light Blue
+'   A   Light Green
+'   B   Light Cyan
+'   C   Light Red
+'   D   Light Magenta
+'   E   Light Yellow
+'   F   Bright White
+'
+'  To use color code add it just after
+'  the "\" sign, for example:
+'     \CHi
+'  This will give the
+'   word "Hi" a Light Red color.
+'=======================================

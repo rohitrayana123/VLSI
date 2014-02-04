@@ -1,0 +1,20 @@
+[optional]
+
+allow emu editor only
+open these files:
+*.asm
+*.html
+*.txt
+*.inc
+
+and emulator only these:
+*.com_
+*.exe_
+*.bin_
+*.boot_
+*.com
+*.boot
+[?]
+*.exe
+*.bin
+

@@ -1,0 +1,19 @@
+* * * * * * * * * *
+
+enable additional
+640x480x256
+ video mode
+
+* * * * * * * * * *
+
+; set video mode:
+mov ax, 04f02h 
+mov bx, 101h   
+int 10h
+
+; set active page
+xor dx, dx   
+xor bx, bx   
+mov ax, 04f05h
+int 010h
+

@@ -1,0 +1,14 @@
+* * * * * * * * * *
+
+ASHKELON EDITION
+ 06:29 04-Feb-2014
+
+* * * * * * * * * *
+
+Recommendations added
+
+default install path is d:\emu\
+
+emu8086.ini updated
+
+* * * * * * * * * *

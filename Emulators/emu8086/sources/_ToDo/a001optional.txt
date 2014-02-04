@@ -1,0 +1,4 @@
+
+[optional]
+
+int. assembler should not allow registers to be redeclared.

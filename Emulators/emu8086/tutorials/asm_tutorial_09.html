@@ -1,0 +1,139 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial</TITLE>
+
+<META name="description" content="The Stack - Tutorial">
+
+</HEAD>
+
+<BODY>
+
+
+
+
+
+<FONT FACE="Courier" SIZE=3>
+
+
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>The Stack</B></FONT>
+
+<BR><BR>
+
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=100%><TR><TD>
+
+<FONT FACE="Courier">
+	PUSH REG<BR>
+	PUSH SREG<BR>
+	PUSH memory<BR>
+</FONT>
+</TD></TR></TABLE>
+
+<BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=100%><TR><TD>
+<FONT FACE="Courier">
+	POP REG<BR>
+	POP SREG<BR>
+	POP memory<BR>
+</FONT>
+</TD></TR></TABLE>
+
+
+<BR><BR>
+For every <B>PUSH</B> there must be a <B>POP</B>.
+
+<BR><BR><BR>
+
+Examples:
+
+<BR><BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Courier">
+ORG    100h
+MOV    AX, 1234h
+PUSH   AX 
+MOV    AX, 5678h
+POP    AX
+RET
+END</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Courier">
+ORG    100h
+MOV    AX, 1212h
+MOV    BX, 3434h
+PUSH   AX
+PUSH   BX
+POP    AX
+POP    BX
+RET
+END</FONT></PRE>
+</TD></TR></TABLE>
+<BR>
+
+<BR><BR>
+
+<HR>
+
+
+<BR><BR>
+
+<B>PUSH X</B>:<BR>
+<UL>
+<LI>Subtract <B>2</B> from <B>SP</B><BR><BR></LI>
+<LI>Copy <B>X</B> to [<B>SS:SP</B>]</LI>
+</UL>
+
+<BR>
+
+<B>POP X</B>:<BR>
+<UL>
+<LI>Copy [<B>SS:SP</B>] to <B>X</B><BR><BR></LI>
+<LI>Add <B>2</B> to <B>SP</B></LI>
+</UL>
+
+<BR>
+<B>SS:SP</B> = <B> top of the stack</B>.
+<BR><BR>
+
+<!-- 
+Memory location at <B>SS:0FFFEh</B> is for a final <B>RET</B> instruction.
+-->
+
+<BR><BR><BR>
+
+<HR>
+<BR><BR>
+<CENTER>
+<BR><BR>
+<A HREF="asm_tutorial_10.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+<BR><BR><BR>
+</CENTER>
+
+
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+</FONT>
+
+
+
+</BODY>
+
+</HTML>

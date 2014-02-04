@@ -1,0 +1,4 @@
+[optional]
+
+screen should allow to resize itself in graphics mode
+

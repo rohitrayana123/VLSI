@@ -1,0 +1,32 @@
+; it seems it shows wrong message;
+; when it sets entry point it says "not set"
+; and when there's no entry point,
+; it says nothing.
+
+=====
+
+
+for some reason compiler says "entry point not set"
+
+
+
+segment s1 "data"
+v1 dw 1234h
+s1 ends
+
+segment s2 "stack"
+dw 0x2000 dup (0)
+s2 ends
+
+segment s3 "code"
+ASSUME  CS:s3, DS:s1, SS:s2, ES:NOTHING
+start:
+
+mov ax, s1
+mov ds, ax
+
+mov ax, v1
+
+s3 ends
+end start
+

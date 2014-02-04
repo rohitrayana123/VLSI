@@ -1,0 +1,148 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial</TITLE>
+
+<META name="description" content="Variables - 8086 assembler tutorial">
+
+</HEAD>
+
+<BODY>
+
+
+
+<FONT FACE="Courier" SIZE=3>
+
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Variables</B></FONT>
+<BR><BR>
+
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=100%><TR><TD>
+<BR>
+<I><U>name</U></I> <B>DB</B> <I><U>value</U></I><BR><BR>
+<I><U>name</U></I> <B>DW</B> <I><U>value</U></I><BR><BR>
+
+<BR>
+
+<I><U>name</U></I> - should start with a letter
+                     <BR><BR>
+<I><U>value</U></I> - can be a numeric value or text
+
+<BR><BR>
+</TD></TR></TABLE>
+
+<BR><BR>
+Example:
+<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Courier">ORG 100h
+MOV AL, var1
+MOV BX, var2
+RET 
+VAR1 DB 7
+var2 DW 1234h
+</FONT></PRE>
+
+
+</TD></TR></TABLE>
+
+<BR><BR>
+
+<HR>
+
+<BR>
+
+<FONT SIZE=+2><B>Variable Arrays</B></FONT>
+<BR><BR><BR>
+
+<FONT FACE="Courier">
+A DB 48h, 65h, 6Ch, 6Ch, 6Fh, 00h<BR>
+</FONT>
+
+<BR><BR>
+
+Square brackets are used to access individual elements:<BR><BR><BR>
+<FONT FACE="Courier">
+MOV AL, A[3]<BR>
+MOV AL, A[SI]<BR>
+</FONT>
+<BR><BR>
+Legal memory pointers: <B>BX, SI, DI, BP</B> <BR>
+<FONT FACE="Courier">
+
+</FONT>
+<!--
+<BR><BR>
+
+Declare large arrays with <B>DUP</B> directive, for example:<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<FONT FACE="Courier">
+c DB 5 DUP(9)<BR>
+d DB 5 DUP(1, 2)
+</FONT>
+</TD></TR></TABLE>
+-->
+
+
+<BR>
+<BR><BR>
+
+<HR>
+
+<BR>
+
+<BR>
+<!--
+<FONT SIZE=+2><B>Constants</B></FONT>
+<BR><BR>
+
+Definition:<BR><BR>
+<BLOCKQUOTE>
+<FONT FACE="Courier">
+name EQU <I>expression</I><BR>
+</FONT>
+</BLOCKQUOTE>
+<BR>
+Example:<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<FONT FACE="Courier">
+k EQU 5<BR>
+<BR>
+MOV AX, k<BR>
+</FONT>
+</TD></TR></TABLE>
+<BR><BR>
+
+<HR>
+<BR>
+<BR><BR>
+-->
+
+<CENTER>
+<BR><BR>
+<A HREF="asm_tutorial_04.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+<BR><BR><BR>
+</CENTER>
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+</FONT>
+
+
+
+
+</BODY>
+
+</HTML>

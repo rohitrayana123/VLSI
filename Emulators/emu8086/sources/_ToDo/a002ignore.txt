@@ -1,0 +1,12 @@
+
+[ignore]
+
+
+
+
+remove extra 
+==============================
+
+from generated symbol table
+
+to make it look nicer in notepad with large fonts

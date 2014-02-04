@@ -1,0 +1,18 @@
+org 100h
+aaa equ 80
+bbb equ aaa-10
+
+mov ax, [aaa-10]
+mov ax, aaa-10
+
+; bug #1
+mov ax, bbb
+
+mov bx, bbb
+
+; bug #2
+mov ch, bbb
+
+mov cx, bbb
+
+ret

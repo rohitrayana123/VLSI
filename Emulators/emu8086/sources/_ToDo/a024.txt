@@ -1,0 +1,16 @@
+emu editor
+
+should inform
+when file is
+succesfully
+saved
+
+
+it should
+also inform
+how many 
+replacements
+are done
+
+ctrl+s should do
+a save

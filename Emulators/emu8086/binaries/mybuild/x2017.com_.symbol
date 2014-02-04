@@ -1,0 +1,22 @@
+< THE SYMBOL TABLE >  x2017.com_  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+THANK_YOU                	00102     	1         	VAR       	(NOSEG)   
+STAR_X                   	0010F     	2         	VAR       	(NOSEG)   
+STAR_Y                   	00111     	2         	VAR       	(NOSEG)   
+STAR_COLOUR              	00113     	1         	VAR       	(NOSEG)   
+START                    	00114     	-1        	FAR       	(NOSEG)   
+DRAW_STAR                	00120     	-1        	LABEL     	(NOSEG)   
+PUTICON                  	0013F     	-1        	NEAR      	(NOSEG)   
+NO_CARRY                 	0014E     	-1        	LABEL     	(NOSEG)   
+NEXT_Y                   	00151     	-1        	LABEL     	(NOSEG)   
+NEXT_X                   	00155     	-1        	LABEL     	(NOSEG)   
+TRANSPARENT              	00163     	-1        	LABEL     	(NOSEG)   
+NO_CAR_X                 	0016A     	-1        	LABEL     	(NOSEG)   
+NO_CAR_Y                 	00174     	-1        	LABEL     	(NOSEG)   
+STAR                     	00177     	-1        	LABEL     	(NOSEG)   
+===================================================================================================
+[ 29-Jan-2014  --  11:58:10 ] 
+< END >
+ 

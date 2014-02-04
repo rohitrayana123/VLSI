@@ -1,0 +1,101 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial</TITLE>
+
+<META name="description" content="Macros for 8086 Assembler">
+
+</HEAD>
+
+<BODY>
+
+
+
+
+
+<FONT FACE="Courier" SIZE=3>
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Macro</B></FONT>
+
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10><TR><TD>
+<PRE><FONT FACE="Courier">name    MACRO  [parameters,...]
+
+             &lt;instructions>
+
+ENDM</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR><BR>
+
+Example:
+<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10><TR><TD>
+<PRE><FONT FACE="Courier">Bird    MACRO  p1, p2, p3
+     MOV AX, p1
+     MOV BX, p2
+     MOV CX, p3
+ENDM
+ORG 100h
+Bird 1, 2, 3
+Bird 4, 5, DX
+RET</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR>
+
+
+<BR><BR>
+<B>LOCAL</B> directive is used to avoid redeclaration errors:<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=80%><TR><TD>
+<PRE><FONT FACE="Courier">cat MACRO
+LOCAL label1, label2
+CMP  AX, 2
+JE label1
+CMP  AX, 3
+JE label2
+label1:
+  INC  AX
+label2:
+  ADD  AX, 2
+ENDM
+ORG 100h
+cat
+cat
+RET
+END</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR><BR><BR>
+<BR><BR><BR>
+
+
+<CENTER>
+<A HREF="credits.html"><B> &gt;&gt;&gt; Credits &gt;&gt;&gt; </B></A>
+</CENTER>
+<BR>
+
+
+<BR>
+
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+</FONT>
+
+
+
+</BODY>
+
+</HTML>

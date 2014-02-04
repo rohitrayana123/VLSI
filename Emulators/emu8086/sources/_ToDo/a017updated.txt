@@ -1,0 +1,9 @@
+
+
+"reset all" button,
+should set background colour
+and all other colours
+to system colours
+
+
+

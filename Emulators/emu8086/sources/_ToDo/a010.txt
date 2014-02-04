@@ -1,0 +1,13 @@
+it appears the progress bar does
+not show properly
+
+
+it works for small and medium files, 
+but doesn't for huge files.
+
+test with s8024.asm
+
+
+the color of progress bar should use
+windows system colours.
+

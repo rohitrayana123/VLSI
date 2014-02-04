@@ -1,0 +1,82 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial</TITLE>
+
+<META name="description" content="Procedures - Tutorial">
+
+</HEAD>
+
+<BODY>
+
+
+
+
+
+<FONT FACE="Courier" SIZE=3>
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Procedures</B></FONT>
+<BR><BR>
+
+<HR>
+
+<BR><BR>
+
+
+ <BLOCKQUOTE>
+ <FONT FACE="Courier">
+ <I>name</I> PROC<BR><BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ; the code<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ;  of the procedure<BR><BR>
+ RET<BR>
+ ENDP
+
+ </FONT>
+ </BLOCKQUOTE>
+
+<BR><BR>
+Invoke procedures with a <B>CALL</B> instruction:
+
+<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Courier">ORG    100h
+CALL   m1
+MOV    AX, 2
+RET
+m1     PROC
+MOV    BX, 5
+RET
+ENDP
+END</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR><BR><BR>
+
+<HR>
+<BR><BR>
+<CENTER>
+<BR><BR>
+<A HREF="asm_tutorial_09.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+<BR>
+</CENTER>
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+</FONT>
+
+
+
+
+</BODY>
+
+</HTML>

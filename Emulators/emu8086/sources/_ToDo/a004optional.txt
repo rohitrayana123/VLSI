@@ -1,0 +1,4 @@
+[optional]
+
+ frmScreen should be closed with Alt+F4 like any other window.
+

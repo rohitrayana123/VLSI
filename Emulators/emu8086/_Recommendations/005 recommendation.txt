@@ -1,0 +1,5 @@
+You are connected to a network
+
+* Check all network cables
+* Verify that airplane mode is turned on.
+

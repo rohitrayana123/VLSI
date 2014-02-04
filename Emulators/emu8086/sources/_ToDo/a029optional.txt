@@ -1,0 +1,24 @@
+it can be,
+we use mid() function to 
+parse strings instead of 
+accesing characters directly
+with () 
+
+this is how it works in
+ vb.net 2010 express:
+
+' * * * * * * * * * *
+'this should print 'c'
+dim s as String
+s= "abc"
+Debug.print ("direct access: " & s(2))
+Debug.print ("mid access: " & mid(s,3,1))
+' * * * * * * * * * *
+
+perhaps in vb 5/6
+characters can be accessed in 
+the similar way too.
+
+note () for Debug.print aren't
+required for vb 5/6
+

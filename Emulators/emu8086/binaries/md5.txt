@@ -1,0 +1,22 @@
+
+* * * * * * * * * *
+md5 checksums for
+  build 4.08
+* * * * * * * * * *
+
+bios_rom                                       1b6191478f74b44090e904045beb7e08
+
+diasm.dll                                      8541edbe276b8c0bd2b5e959f8e1b489
+
+emu8086.exe                                    c6f57ef28cd8d63793731e4332d5501d
+
+int_vect                                       e83548ef5952eba7ff240689afdc2fa6
+
+microasm.dll                                   a8aafe86d05398f77ec86fca3496bffa
+
+* * * * * * * * * *
+
+
+
+
+

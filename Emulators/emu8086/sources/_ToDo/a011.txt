@@ -1,0 +1,15 @@
+outdated.
+see: a012.txt
+
+--------
+
+check out why emu says "entery point not set"
+for this code:
+
+cseg segment     
+    start:
+    mov ax, ax
+cseg	ends                  
+end     start
+
+

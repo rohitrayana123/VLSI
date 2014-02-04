@@ -1,0 +1,7 @@
+
+copiler window should not focus itself when 
+compiling in the background.
+
+it seems it calls a focus when new pass begins.
+
+

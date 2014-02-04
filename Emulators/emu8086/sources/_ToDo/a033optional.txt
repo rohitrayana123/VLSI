@@ -1,0 +1,11 @@
+[?]
+
+add hot key to stop
+emulator
+
+it can be F10
+or ctrl+pause
+
+
+
+

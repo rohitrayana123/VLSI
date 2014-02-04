@@ -1,0 +1,6 @@
+
+example: snake.asm
+
+timer function should be improved
+to check if hour is passed
+and if midnight is passed

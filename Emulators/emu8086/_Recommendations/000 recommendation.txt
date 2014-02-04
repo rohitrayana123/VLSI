@@ -1,0 +1,12 @@
+22:07 02-Feb-2014
+
+about bug0202.txt
+
+our recommendation
+is to avoid
+using any characters
+other than digits
+in equ constructs
+
+
+

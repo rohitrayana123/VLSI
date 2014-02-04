@@ -1,0 +1,7 @@
+
+; script for  Inno Setup
+; todo: abort if directory already exists
+
+; directory must be created by current setup.
+
+; never install in existing directories.

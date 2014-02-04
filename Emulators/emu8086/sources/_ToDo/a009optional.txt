@@ -1,0 +1,12 @@
+{optional}
+
+
+integrated assembler does 
+improper compilation of
+
+firing snake 
+
+some bytes are missing
+
+check listing vs listing
+

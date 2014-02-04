@@ -1,0 +1,111 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial</TITLE>
+
+<META name="description" content="Memory Access using 8086 Assembler">
+
+
+</HEAD>
+
+<BODY>
+
+
+
+
+<FONT FACE="Courier" SIZE=3>
+
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Memory Access</B></FONT>
+<BR><BR>
+<!--
+Supported register combinations for direct memory access:
+
+<BR><BR>
+
+<PRE>
+[BX + SI + val]
+[BX + DI + val]
+[BP + SI + val]
+[BP + DI + val]
+</PRE>
+
++ some other combinations not mentioned here.
+
+-->
+<BR><BR><BR>
+
+<HR>
+
+<BR>
+
+<FONT SIZE=+2><B><U>MOV</U> instruction</B></FONT>
+<BR><BR>
+
+<UL>
+
+	<LI>
+	first operand can be a register or memory location.<BR><BR>
+	</LI>
+	
+	<LI>
+	second operand can be a number,
+	a register or a memory location.<BR><BR>
+	</LI>
+
+	<LI>
+	both operands must be of the same size.
+	</LI>
+</UL>
+
+
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=100%><TR><TD>
+
+<pre><font face="Terminal"><font color=#000064>ORG</font> 100H           <font color=#008000>; make simple program </font>
+<font color=#0000FF>MOV</font> <font color=#C80000>AX</font>, 0B800h     <font color=#008000>; AX = B800 </font>
+<font color=#0000FF>MOV</font> <font color=#800000>DS</font>, <font color=#C80000>AX</font>         <font color=#008000>; DS = AX </font>
+<font color=#0000FF>MOV</font> <font color=#C80000>CL</font>, <font color=#800080>'A'</font>        <font color=#008000>; CL = 'A' </font>
+<font color=#0000FF>MOV</font> <font color=#C80000>CH</font>, 1101_1111b <font color=#008000>; CH = colour code </font>
+<font color=#0000FF>MOV</font> <font color=#C80000>BX</font>, 15Eh       <font color=#008000>; BX = 015E </font>
+<font color=#0000FF>MOV</font> <font color=#0064C8>[</font><font color=#C80000>BX</font><font color=#0064C8>]</font>, <font color=#C80000>CX</font>       <font color=#008000>;  [DS:BX] = CX </font>
+<font color=#0000FF>RET</font>                <font color=#008000>; exit </font>
+</font></pre>
+
+</TD></TR></TABLE>
+
+
+
+<BR><BR><BR>
+
+<HR>
+
+<BR><BR><BR>
+
+
+<CENTER>
+<BR><BR>
+<A HREF="asm_tutorial_03.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+<BR><BR><BR>
+</CENTER>
+
+
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+</FONT>
+
+
+
+
+
+</BODY>
+
+</HTML>

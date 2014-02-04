@@ -1,0 +1,12 @@
+segment s0 "stack"
+dw 0x2000 dup (0)
+s0 ends
+
+segment s1 "code"
+entry:
+mov ax, cs
+mov ds, ax
+
+s1 ends
+end entry
+

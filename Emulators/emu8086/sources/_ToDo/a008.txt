@@ -1,0 +1,6 @@
+!
+
+emulator form:
+make "please load" picture or image box use default windows colours
+
+to avoid flickering

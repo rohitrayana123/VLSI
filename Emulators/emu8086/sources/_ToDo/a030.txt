@@ -1,0 +1,7 @@
+*************************
+
+use windows system colours
+for all forms!
+
+*************************
+

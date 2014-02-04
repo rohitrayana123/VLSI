@@ -1,0 +1,5 @@
+add ".tmp" files to ascii list
+in emu8086.ini
+
+or create a bin list instead of ascii list
+
