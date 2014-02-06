@@ -1,7 +1,10 @@
 \documentclass[12pt,a4paper]{article}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{url}
 %\usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
-\title{ELEC6025: VLSI Design Project \\Part 1: Microprocessor Research\\Topic: Subroutines}
+\title{ELEC6027: VLSI Design Project \\Part 1: Microprocessor Research\\Topic: Subroutines}
 \author{Ashley Robinson\\ Team: R4\\Course Tutor: Mr B. Iain McNally}
 \date{\today}
 \begin{document}
@@ -12,18 +15,40 @@
 \tableofcontents
 \clearpage
 
+\lstset{
+    basicstyle=\footnotesize        % the size of the fonts that are used for the code
+}
+
+
 \section{Introduction}
-A short introduction to the material presented in this report \dots\citep{greenwade93}
 
-\section{Main Body}
-One or more sections covering your research topic.
 
-Here you should include appropriate figures and code snippets to illustrate your discussion. Ensure that all figures and code snippets are properly explained in your text.
+\section{Research}
 
-Where text, figures or code snippets are copied from another source, the source must be clearly acknowledged. Copied text must be surrounded by quotation marks "..." to show clearly that it is copied. 
+\subsection{Subroutine Context Save }
+
+\subsection{Operation of Stack Frames}
+
+\subsubsection{8086}
+The assembler held in listing~\ref{lst:Caller.asm} and~\ref{lst:Callee.asm} is written for the Intel 8086 microprocessor.
+A basic example of how stack frames are built to pass parameters to and from a subroutine.
+The main program in listing~\ref{lst:Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
+Calling the procedure to act upon the arguments passed via the stack and finally destroying the stack frame by popping data, including any return arguments, into registers.
+
+\lstinputlisting[label=lst:Caller.asm,frame=single,caption=Caller.asm]{Code/Caller.asm}
+
+When the subroutine, in listing~\ref{lst:Callee.asm}, is called the return address is pushed onto by using the $call$ instruction.
+This will be 
+\lstinputlisting[label=lst:Callee.asm,frame=single,caption=Callee.asm]{Code/Callee.asm}
+
+This code was tested upon an 8086 emulator~\cite{emu8086}.
+The emulator provides a complete overview of the flow of data within the processor, including the stack. 
+
 
 \section{Conclusion}
-Here I would like you to discuss how the issues raised in your report will affect your processor design. Where you have seen different processors opting for different solutions to the same problem you should discuss their relative merits in the context of your design. 
+
+
+
 
 %References - reading referenced in text
 \bibliographystyle{plain}
