@@ -35,15 +35,17 @@ A basic example of how stack frames are built to pass parameters to and from a s
 The main program in listing~\ref{lst:Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
 Calling the procedure to act upon the arguments passed via the stack and finally destroying the stack frame by popping data, including any return arguments, into registers.
 
-\lstinputlisting[label=lst:Caller.asm,frame=single,caption=Caller.asm]{Code/Caller.asm}
+\lstinputlisting[label=lst:8086Caller.asm,frame=single,caption=8086Caller.asm]{Code/8086Caller.asm}
 
 When the subroutine, in listing~\ref{lst:Callee.asm}, is called the return address is pushed onto by using the $call$ instruction.
 This will be 
-\lstinputlisting[label=lst:Callee.asm,frame=single,caption=Callee.asm]{Code/Callee.asm}
+\lstinputlisting[label=lst:8086Callee.asm,frame=single,caption=8086Callee.asm]{Code/8086Callee.asm}
 
 This code was tested upon an 8086 emulator~\cite{emu8086}.
 The emulator provides a complete overview of the flow of data within the processor, including the stack. 
 
+\lstinputlisting[label=lst:ArmCaller.asm,frame=single,caption=ArmCaller.asm]{Code/ArmCaller.asm}
+\lstinputlisting[label=lst:ArmCallee.asm,frame=single,caption=ArmCallee.asm]{Code/ArmCallee.asm}
 
 \section{Conclusion}
 
