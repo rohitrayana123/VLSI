@@ -1,4 +1,4 @@
-%% <+Last Edited: Thu 06 Feb 2014 16:47:10 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+%% <+Last Edited: Sun 09 Feb 2014 22:17:21 GMT by seblovett on seblovett-NETBOOK +>
 \documentclass[12pt,a4paper]{article}
 %\usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
@@ -37,13 +37,19 @@ What is the point in flags and branches. Why do we need them.
 
 Three case studies are discussed here. 
 For each architecture studied, there is a description of the flags implemented (if any) and instructions used for conditional branches. 
-Also, a C code snippet, seen in listing \ref{ListC}, is converted to assembler for each architecture to see how the architectures compare.
+Also, two C code snippets, seen in listings \ref{ListC} and \ref{ListC2}, are converted to assembler for each architecture to see how they compare.
 \begin{lstlisting}[frame=single,caption=C Code,language=C,label=ListC]
 uint16_t a = 0;
 for(uint16_t i = 0; i < 10; i++)
 {
 	a = a + i;
 }
+\end{lstlisting}
+\begin{lstlisting}[frame=single,caption=C Code,language=C,label=ListC2]
+if ( a > 0 )
+	b = 1;
+else
+	b = 0;
 \end{lstlisting}
 \subsection{ARM Cortex M0}
 
@@ -53,9 +59,14 @@ It implements 19 instructions in total, one of which is the `conditional branch'
 \subsubsection{Flags}
 The Cortex M0 uses 4 flags; Carry, oVerflow, Zero and Negative \citep{ARM:Flags}. 
 The flags are stored in a specific register, the Application Program Status Register (APSR). 
+The APSR is updated by a number of instructions. 
+All arithmetic instructions have the ability to update the register depending on the result of the arithmetic operation. 
+This can be seen in the assembler by an {\textit `S'} suffix to the instruction.
 
+There are also four instructions which update the status register - Compare (CMP), Compare Negative (CMN), Test Bits (TST) and Test Equivalence (TEQ).
+
+TST - and  but result is discarded. Only updates Z and N
 What triggers the flags. CMP CMN, TEQ, TST
-
 \begin{table}
 \centering
 \begin{tabular}{ccc}\hline
