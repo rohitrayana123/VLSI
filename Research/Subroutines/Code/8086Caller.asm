@@ -1,9 +1,9 @@
-main:           ; Main loop  
-   mov  ax,42   ; Load arg1
-   mov  bx,69   ; Load arg2
-   push ax      ; Push arg1 to stack
-   push bx      ; Push arg2 to stack
-   call adder   ; Call the subroutine  
-   pop  ax      ; Dummy pop from arg2 spot
-   pop  ax      ; Result pop from arg1 spot
-   jmp main          
+main:                ; Main loop  
+      MOV   ax,42    ; Load arg1
+      MOV   bx,69    ; Load arg2
+      PUSH  ax       ; Push arg1 to stack
+      PUSH  bx       ; Push arg2 to stack
+      CALL  adder    ; Call the subroutine  
+      POP   ax       ; Dummy pop from arg2 spot
+      POP   ax       ; Result pop from arg1 spot
+      JMP   main          

@@ -29,23 +29,46 @@
 
 \subsection{Operation of Stack Frames}
 
+
+
 \subsubsection{8086}
-The assembler held in listing~\ref{lst:Caller.asm} and~\ref{lst:Callee.asm} is written for the Intel 8086 microprocessor.
+The assembler held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
 A basic example of how stack frames are built to pass parameters to and from a subroutine.
-The main program in listing~\ref{lst:Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
+The main program in listing~\ref{lst:8086Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
 Calling the procedure to act upon the arguments passed via the stack and finally destroying the stack frame by popping data, including any return arguments, into registers.
 
 \lstinputlisting[label=lst:8086Caller.asm,frame=single,caption=8086Caller.asm]{Code/8086Caller.asm}
 
-When the subroutine, in listing~\ref{lst:Callee.asm}, is called the return address is pushed onto by using the $call$ instruction.
+When the subroutine, in listing~\ref{lst:8086Callee.asm}, is called the return address is pushed onto by using the $call$ instruction.
 This will be 
 \lstinputlisting[label=lst:8086Callee.asm,frame=single,caption=8086Callee.asm]{Code/8086Callee.asm}
 
 This code was tested upon an 8086 emulator~\cite{emu8086}.
 The emulator provides a complete overview of the flow of data within the processor, including the stack. 
 
+
+
+
+\subsubsection{ARM7TDMI using Arm Thumb}
+The ARM7TDMI is a 32-bit RISC microprocessor with an emphasis on low-power design and pipelining for high throughput~\cite{ARM7TDMI}.
+It has two instruction sets one of which is Arm Thumb, a low density 16-bit subset of the ARM assembly language~\cite{arm}.
+A user selectable flag is set to switch between instruction sets therefore drawing on each sets advantages.
+
+This architecture does not have built-in support for calling subroutines using the stack.
+When the branch instruction is used, as seen in listing~\ref{lst:ArmCaller.asm}, the program counter is overwritten with the address of the corresponding label.
+The address of the next line of code, which should be returned to after the subroutine, is placed into the link register.
+Calling conventions suggests leaving this register untouched and simply moving the data back into the program counter on a return.
 \lstinputlisting[label=lst:ArmCaller.asm,frame=single,caption=ArmCaller.asm]{Code/ArmCaller.asm}
+
+In this case the link register is pushed onto the stack from the subroutine therefore requiring the subroutine to pop the value into the program counter in order to return.
+Listing~\ref{lst:ArmCallee.asm} holds the subroutine and handles placing the return address on the stack.
+Relative addressing on the stack is required to draw the two arguments out and replace the first with the output of the function.
 \lstinputlisting[label=lst:ArmCallee.asm,frame=single,caption=ArmCallee.asm]{Code/ArmCallee.asm}
+
+
+
+
+
 
 \section{Conclusion}
 
