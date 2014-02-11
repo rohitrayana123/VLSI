@@ -2,6 +2,9 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{url}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{caption}
 %\usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
 \title{ELEC6027: VLSI Design Project \\Part 1: Microprocessor Research\\Topic: Subroutines}
@@ -16,7 +19,8 @@
 \clearpage
 
 \lstset{
-    basicstyle=\footnotesize        % the size of the fonts that are used for the code
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+   captionpos=b   
 }
 
 
@@ -26,25 +30,58 @@
 \section{Research}
 
 \subsection{Subroutine Context Save }
-
+Context save, also known as, allows 
 \subsection{Operation of Stack Frames}
 
 
-
+\newpage
 \subsubsection{8086}
 The assembler held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
 A basic example of how stack frames are built to pass parameters to and from a subroutine.
 The main program in listing~\ref{lst:8086Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
-Calling the procedure to act upon the arguments passed via the stack and finally destroying the stack frame by popping data, including any return arguments, into registers.
+The subroutine is called to act upon the arguments passed via the stack.
+When control is passed back to these set of instructions and the return value is extracted by using relative addressing from the base pointer then finally two stack pops completely destroy the stack frame.
 
 \lstinputlisting[label=lst:8086Caller.asm,frame=single,caption=8086Caller.asm]{Code/8086Caller.asm}
 
-When the subroutine, in listing~\ref{lst:8086Callee.asm}, is called the return address is pushed onto by using the $call$ instruction.
-This will be 
+
+
+When the subroutine, in listing~\ref{lst:8086Callee.asm}, is called the return address is pushed onto the stack.
+This built-in support for the stack handles branching and next line address storage using a call function.
+To start the base pointer is placed on the stack so stack pointer has value to which to be restored.
+Reducing the value of the stack pointer allocates space for local variables.
+The first argument is placed in memory as local variable; this is unnecessary but serves as example.
+The second argument is loaded into a working register.
+The first local variable is added to the working register which is then placed in to the memory for the second local variable.
+Finally the stack pointer and the base pointer are restored and a return instruction hands control over the caller. 
+This is all part of the calling convention for subroutines using stack frames on the 8086~\cite{8086call}.
+ 
 \lstinputlisting[label=lst:8086Callee.asm,frame=single,caption=8086Callee.asm]{Code/8086Callee.asm}
 
+
+
 This code was tested upon an 8086 emulator~\cite{emu8086}.
-The emulator provides a complete overview of the flow of data within the processor, including the stack. 
+The emulator provides a complete overview of the flow of data within the processor including the stack. 
+Figure~\ref{fig:emu} shows the emulator during the execution of the subroutine just before the stack pointer is overwritten with the base pointer.
+
+\begin{figure}[htb]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[height=5.5cm]{Figures/emu.png}
+                \caption{Emulator registers and stack}
+                \label{fig:emu}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[height=5.5cm]{Figures/stack.pdf}
+                \caption{Stack configuration}
+                \label{fig:stack}
+        \end{subfigure}
+        \caption{8086 stack operation}
+        \label{fig:8086}
+\end{figure}
+
+
+
 
 
 
