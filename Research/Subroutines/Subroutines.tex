@@ -5,8 +5,12 @@
 \usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{caption}
-%\usepackage[nodayofweek]{datetime}
+\usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
+
+
+
+
 \title{ELEC6027: VLSI Design Project \\Part 1: Microprocessor Research\\Topic: Subroutines}
 \author{Ashley Robinson\\ Team: R4\\Course Tutor: Mr B. Iain McNally}
 \date{\today}
@@ -19,12 +23,20 @@
 \clearpage
 
 \lstset{
-    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-   captionpos=b   
+   frame=L,
+   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+   captionpos=b
 }
 
 
 \section{Introduction}
+
+Subroutines, also known as procedures, methods, functions or just routines, are smaller sections of code inside larger program designed to perform certain tasks~\cite{alison}.
+The motivation for subroutines is to produce code which is more efficient in size, easy to adapt and above all else maintain. 
+They help form the foundations of third generation programming languages.
+
+Designing hardware such that it is capable of executing subroutines only requires available memory and access to the program counter.
+Designing hardware to call and return from subroutines efficiently can vastly improve the performance of a processor. 
 
 
 \section{Research}
@@ -63,17 +75,18 @@ This is all part of the calling convention for subroutines using stack frames on
 This code was tested upon an 8086 emulator~\cite{emu8086}.
 The emulator provides a complete overview of the flow of data within the processor including the stack. 
 Figure~\ref{fig:emu} shows the emulator during the execution of the subroutine just before the stack pointer is overwritten with the base pointer.
+Figure~\ref{fig:stack} is an abstraction of the stack with data label corresponding to the subroutine. 
 
 \begin{figure}[htb]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[height=5.5cm]{Figures/emu.png}
+                \includegraphics[height=5cm]{Figures/emu.png}
                 \caption{Emulator registers and stack}
                 \label{fig:emu}
         \end{subfigure}%
         \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[height=5.5cm]{Figures/stack.pdf}
-                \caption{Stack configuration}
+                \includegraphics[height=5cm]{Figures/stack.pdf}
+                \caption{Stack frame configuration}
                 \label{fig:stack}
         \end{subfigure}
         \caption{8086 stack operation}
@@ -119,12 +132,13 @@ Relative addressing on the stack is required to draw the two arguments out and r
 \renewcommand{\refname}{Bibliography}
 \begin{thebibliography}{9}
 
-\bibitem{lamport94}
-  Leslie Lamport,
-  \emph{\LaTeX: A Document Preparation System}.
-  Addison Wesley, Massachusetts,
-  2nd Edition,
-  1994.
+\bibitem{Patterson}
+  Patterson D A and Hennessy J L,
+  \emph{Computer Organisation and Design: The Hardware/Software Interface}.
+  Morgan Kaufman,
+  4th Edition,
+  2009.\\
+  - Lots of processor concepts and MIPS examples
 
 \end{thebibliography}
 \end{document}
