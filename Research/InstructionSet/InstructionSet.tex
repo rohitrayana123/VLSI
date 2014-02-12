@@ -15,15 +15,51 @@
 \section{Introduction}
 A short introduction to the material presented in this report \dots\citep{greenwade93}
 
-\section{Main Body}
-One or more sections covering your research topic.
+\section{Instruction Set Considerations}
 
-Here you should include appropriate figures and code snippets to illustrate your discussion. Ensure that all figures and code snippets are properly explained in your text.
+\subsection{Orthogonality}
+Each instruction within an architecture is defined as a series of binary bits defining the operation to be performed, the data to perform it on, and a number of instruction-specific parameters. 
+The concept of orthogonality is based on separating these bits into multiple fields with each defining difference aspects of the instruction. 
+The value of each field is then able to vary independently of each other part of the instruction. \cite{wiki:OrthogonalIS}
 
-Where text, figures or code snippets are copied from another source, the source must be clearly acknowledged. Copied text must be surrounded by quotation marks "..." to show clearly that it is copied. 
+Using the formatting defined as in table \ref{tab:ExFormat}, any instruction can be entered into the 'Opcode' field with any choice of addressing mode, source or destination. If there is no dependency between different fields the set is completely orthogonal. Example architectures include: ARM11 and VAX-11. \cite{wiki:OrthogonalIS}
+If there is some dependency, such as not having all addressing modes available for all available instructions, the instruction set can be perceived as near-orthogonal, such as in the DEC PDP-11 or Motorola 68k. \cite{wiki:OrthogonalIS}
+
+%Possible methods of improving orthogonality?
+
+%MIPS-specific formatting
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline Opcode & Addressing Mode & Source 1 & Source 2 & Destination \\ \hline
+\end{tabular}
+\caption{\label{tab:ExFormat}Example Instruction Set Format}
+\end{table}
+
+\subsection{Code Density}
+The principle of code density relates to how much can be performed using a fixed amount of instructions or available memory to store the instructions. In performing a given task, using one line of assembly code which translates to a small number of bytes in machine code will have a high density. Comparatively, the same task may require multiple lines of assembly which translate to the same or more bytes of machine code per line on a different architecture. This will result in a much lower code density. 
+
+Instruction set architectures designed without emphasis on simple operations are known as Complex Instruction Set Computers (CISC). These typically have a very large set of instructions and can range from a simple arithmetic ADD %change font here
+to a REPE %change font
+ instruction as found on an Intel 8086. \cite{8086:InstructionSet} 
+ This repeats the following instruction while the ZF flag equals 1, up to a given maximum number of times. 
+
+\subsubsection{Kolmogorov Complexity}
+
+\section{Case Studies}
+information
+
+\subsection{VAX-11}
+
+\subsection{DEC Alpha}
+
+\subsection{Intel 8086}
 
 \section{Conclusion}
 Here I would like you to discuss how the issues raised in your report will affect your processor design. Where you have seen different processors opting for different solutions to the same problem you should discuss their relative merits in the context of your design. 
+
+Word Count: %Manually insert word count, or use online tool/script
 
 %References - reading referenced in text
 \bibliographystyle{plain}
