@@ -1,4 +1,4 @@
-%% <+Last Edited: Wed 12 Feb 2014 22:03:01 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Thu 13 Feb 2014 22:53:59 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 %\usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
@@ -75,6 +75,8 @@ This is the same as an AND instruction, but only affects the Z and N flags.
 Similarly, there exists a TEQ instruction which conducts and XOR between the two operands and only updates the Z and N flags \citep{ARM:TSTTEQ}.
 The TST and TEQ instructions do not store the result of the operation.
 
+
+\subsubsection{Conditional Execution}
 %ARM also supports conditional execution, however this is not including in the Thumb instruction set (but is in the Thumb2 instruction set).
 Thumb2 has support for conditional execution.
 This is where operations are only executed if the condition code in the instruction matches up with the value in the status register.
@@ -116,7 +118,7 @@ In a small if-else clause, it only takes three instructions, and no branches.
 This speeds up the processor, as conditional branches can be costly.
 They will work very well in a pipelined processor, as well as a non-pipelined processor.
 
-\begin{lstlisting}[frame=single,caption=Thumb/Thumb2 Assembler for code in listing \ref{ListC1},label=ARM1]
+\begin{lstlisting}[frame=single,caption=Thumb/Thumb2 Assembler for code in listing \ref{ListC},label=ARM1]
 .def a=$r1
 .def i=$r2
 MOV a #0 ;load a with 0
@@ -142,13 +144,22 @@ MOVENE b #0 ; if a != 0, load b with 0
 
 
 \subsection{Intel 8086}
+
+The 8086 is a 16 bit microprocessor released in 1978.
+This was the original processor designed by Intel.
+Is is a CISC based architecture and implements the original x86 instruction set.
+Since then, the x86 instruction set has been expanded and the original instructions are still implemented in the lasted Intel CPUs.
+
 \subsubsection{Flags}
 
-The Intel 8086 has 9 flags, detailed in table \ref{tab:intel:flags}
+The Intel 8086 has 9 flags, detailed in table \ref{tab:Intel:flags}.
+The status register is updated when a compare (\texttt{CMP, CMPSB, CMPSW}) instruction is executed, or after an arithmetic operation.
 
 
 \begin{table}
 \centering
+\caption{Intel 8086 Flags from \cite{Intel:flags}}
+\label{tab:Intel:flags}
 \begin{tabular}{ccc} \hline
 Flag & Shorthand & Explanation \\ \hline
 Carry & C & Carry from the 8 bit arithmetic \\
@@ -164,7 +175,27 @@ Interrupt & I & Enables / disables interrupts \citep{flag:i} \\
 \end{table}
 
 \subsubsection{Conditional Branch}
+
+The 8086 has a total of 31 conditional branch instructions, and one jump instruction \citep{Intel:instructionset}.
+The conditional branches cover many different logic combinations between 5 flags - C, Z, O, S and P.
+This enables the 8086 to make signed and unsigned decisions.
+The full set of branch instructions can be seen at \cite{Intel:condjumps}.
+
+In the assembly language, there are multiple instructions that map to the same instruction.
+For example, the \texttt{JE} instruction checks that the \texttt{Z} flag is set, but the \texttt{JZ} instruction also does this.
+It can be seen that this is to make the code more readable as the instructions actually map to the same machine code \cite{Intel:datasheet}.
+In total, therefore, there are 17 actual instructions.
+
+The 8086 also implements a \texttt{LOOP} instruction.
+This is linked to a specific register (usually the \texttt{CX} register) and will branch if the value of \texttt{CX} does not become $0$ after being decremented.
+There is another instruction, \texttt{LOOPE / LOOPZ}, that jumps if the counter is zero, and the zero flag is set. 
+This has a complementary instruction, \texttt{LOOPNE / LOOPNZ}, which jumps if the counter is nonzero and the zero flag is not set.
+These instructions are useful, as it combines the decrement of a counter with a branch, resulting in a quicker operation for loops.
+
+
 \subsubsection{Assembler Example}
+
+
 \subsection{MIPS}
 \subsubsection{Flags}
 \subsubsection{Conditional Branch}
@@ -185,14 +216,8 @@ Here I would like you to discuss how the issues raised in your report will affec
 \bibliography{references}
 %Biliography - all the reading done
 \renewcommand{\refname}{Bibliography}
-\begin{thebibliography}{9}
-
-\bibitem{lamport94}
-  Leslie Lamport,
-  \emph{\LaTeX: A Document Preparation System}.
-  Addison Wesley, Massachusetts,
-  2nd Edition,
-  1994.
-
-\end{thebibliography}
+%\begin{thebibliography}{9}
+%\bibitem{test} ARM Example, 1992
+%
+%\end{thebibliography}
 \end{document}
