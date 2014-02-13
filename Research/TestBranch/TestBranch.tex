@@ -1,6 +1,6 @@
-%% <+Last Edited: Thu 13 Feb 2014 23:24:46 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Thu 13 Feb 2014 23:45:35 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
-%\usepackage[nodayofweek]{datetime}
+\usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
 \usepackage{listings}
 \usepackage{bibunits}
@@ -14,7 +14,7 @@
 
 \tableofcontents
 \clearpage
-\begin{bibunit}
+\begin{bibunit}[is-unsrt]
 \section{Introduction}
 %A short introduction to the material presented in this report \dots\cite{greenwade93}
 
@@ -214,7 +214,8 @@ Here I would like you to discuss how the issues raised in your report will affec
 \putbib[references]
 \end{bibunit}
 
-\begin{bibunit}
+\begin{bibunit}[is-unsrt]
+\renewcommand{\refname}{Bibliography}
 \nocite{*}
 \putbib[bibliography]
 \end{bibunit}
