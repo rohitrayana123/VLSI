@@ -13,9 +13,9 @@ module="$1"
 module=${module//[-.]/} # Remove tag
 case $module in
    "alu")         cmd="$cmd alu_stim.sv alu.sv opcodes.svh" ;;
-   "control")     cmd="$cmd control_stim.sv control.sv" ;;
-   "cpu_core")    cmd="$cmd cpu_core.sv cpu_core.sv" ;;
-   "datapath")    cmd="$cmd datapath.sv datapath.sv" ;; 
+   "control")     cmd="$cmd control_stim.sv control.sv opcodes.svh" ;;
+   "cpu_core")    cmd="$cmd cpu_core_stim.sv cpu_core.sv" ;;
+   "datapath")    cmd="$cmd datapath_stim.sv datapath.sv alu.sv" ;; 
    *)             echo "Unkown module $module"; exit ;;
 esac
 $cmd # Call SimVision
