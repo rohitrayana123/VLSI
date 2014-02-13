@@ -15,27 +15,17 @@ done
 mkdir /$HOME/$USER/$DESIGN/$FCDE
 
 
+# Folder layout
 DES="Design"
 IMP="Implementation"
+
 # Copy the verilog folder
 VER="verilog"
-EX[0]="INCA_libs"       # Exclude list
-EX[1]="ncverilog.key"
-EX[2]="ncverilog.log"
-EX[3]="waves.shm"
 echo "Copying across $VER folder..."
 mkdir /$HOME/$USER/$DESIGN/$FCDE/$VER
-for ITEM in $DES/$IMP/$VER/* ; do
-   COPY=1
-   for SKIP in ${EX[*]} ; do 
-      if [ $ITEM == $DES/$IMP/$VER/$SKIP ]; then
-         COPY=0
-      fi
-   done
-   if [ $COPY == 0 ]; then
-      echo "Skip $ITEM"
-   else
-      echo "Copy $ITEM"
-      cp -rf $ITEM /$HOME/$USER/$DESIGN/$FCDE/$VER
-   fi
-done
+cp -rf $DES/$IMP/$VER/*  /$HOME/$USER/$DESIGN/$FCDE/$VER
+
+# Call the handin script
+HANDIN="prepare_fcde behavioural"
+cd /$HOME/$USER/$DESIGN/$FCDE
+$HANDIN
