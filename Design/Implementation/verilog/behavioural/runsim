@@ -18,10 +18,10 @@ function printHelp (){
 # GUI Option
 cmd="ncverilog -sv"
 gui="$2"
-gui=${module//[-.]/} # Remove tag
+gui=${gui//[-.]/} # Remove tag
 case $gui in
-   *) echo "GUI" ; cmd="$cmd +gui" ;;
    "no_gui")      echo "No GUI";;
+   *)             echo "GUI" ; cmd="$cmd +gui" ;; 
 esac
 cmd="$cmd +ncaccess+r"
 
@@ -30,12 +30,17 @@ cmd="$cmd +ncaccess+r"
 module="$1"
 module=${module//[-.]/} # Remove tag
 case $module in
-   "alu")         cmd="$cmd alu_stim.sv alu.sv opcodes.svh" ;;
-   "control")     cmd="$cmd control_stim.sv control.sv opcodes.svh" ;;
-   "cpu_core")    cmd="$cmd cpu_core_stim.sv cpu_core.sv control.sv datapath.sv alu.sv" ;;
-   "datapath")    cmd="$cmd datapath_stim.sv datapath.sv alu.sv" ;;
+   "alu")         cmd="$cmd   opcodes.svh    alu_stim.sv       alu.sv"                                            ;;
+   "control")     cmd="$cmd   opcodes.svh    control_stim.sv   control.sv"                                        ;;
+   "cpu_core")    cmd="$cmd   opcodes.svh    cpu_core_stim.sv  cpu_core.sv    control.sv  datapath.sv    alu.sv"  ;;
+   "datapath")    cmd="$cmd   opcodes.svh    datapath_stim.sv  datapath.sv    alu.sv"                             ;;
    *)             echo "Unkown module $module"; printHelp; exit ;;
 esac
+cmd="$cmd +libext+.sv"
 
-
+echo $cmd
 $cmd  # Call SimVision
+
+
+# I am sure there's a point for these but...
+rm -rf ncverilog.log ncverilog.key waves.shm INCA_libs
