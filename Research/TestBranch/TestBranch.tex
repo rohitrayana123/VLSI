@@ -1,4 +1,4 @@
-%% <+Last Edited: Thu 13 Feb 2014 23:20:55 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Thu 13 Feb 2014 23:24:46 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 %\usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
@@ -16,7 +16,7 @@
 \clearpage
 \begin{bibunit}
 \section{Introduction}
-%A short introduction to the material presented in this report \dots\citep{greenwade93}
+%A short introduction to the material presented in this report \dots\cite{greenwade93}
 
 This report details the research done for the ``Test and Branch'' part of team R4 for the VLSI design module (ELEC6027).
 It looks into 2 aspects of processor design - condition codes and conditional branches. 
@@ -53,12 +53,12 @@ else
 \end{lstlisting}
 \subsection{ARM Cortex M0}
 
-The ARM Cortex M0 is a 32-bit RISC architecture that implements the Thumb/Thumb2 instruction set \citep{ARM:CortexM0}. 
+The ARM Cortex M0 is a 32-bit RISC architecture that implements the Thumb/Thumb2 instruction set \cite{ARM:CortexM0}. 
 It implements 19 formats of instructions in total, one of which is the `conditional branch' instruction. 
 The conditional branch instruction depends on the value in the status register from a previous operation.
 
 \subsubsection{Flags}
-The Cortex M0 uses 4 flags; Carry, oVerflow, Zero and Negative \citep{ARM:Flags}. 
+The Cortex M0 uses 4 flags; Carry, oVerflow, Zero and Negative \cite{ARM:Flags}. 
 The flags are stored in a specific register, the Application Program Status Register (APSR). 
 The APSR is updated by a number of instructions. 
 All arithmetic instructions have the ability to update the register depending on the result of the arithmetic operation. 
@@ -67,12 +67,12 @@ This optional update is only in the Thumb2 instruction set, not the Thumb.
 In the Thumb instruction set, all ALU operations update the status register.
 
 There are also four instructions which update the status register - Compare (CMP), Compare Negative (CMN), Test Bits (TST) and Test Equivalence (TEQ).
-These can all be part of an ALU instruction, or an immediate instruction \citep{ARM:CMPCMN}.
+These can all be part of an ALU instruction, or an immediate instruction \cite{ARM:CMPCMN}.
 Compare subtracts the register value from the other operand, and CMN is the same, but negates the second operand.
 These two instructions update all the flags, but discard the result of the operation.
 TST performs an AND function between the two operands. 
 This is the same as an AND instruction, but only affects the Z and N flags.
-Similarly, there exists a TEQ instruction which conducts and XOR between the two operands and only updates the Z and N flags \citep{ARM:TSTTEQ}.
+Similarly, there exists a TEQ instruction which conducts and XOR between the two operands and only updates the Z and N flags \cite{ARM:TSTTEQ}.
 The TST and TEQ instructions do not store the result of the operation.
 
 
@@ -80,7 +80,7 @@ The TST and TEQ instructions do not store the result of the operation.
 %ARM also supports conditional execution, however this is not including in the Thumb instruction set (but is in the Thumb2 instruction set).
 Thumb2 has support for conditional execution.
 This is where operations are only executed if the condition code in the instruction matches up with the value in the status register.
-In total, there are 15 condition codes \citep{ARM:conditioncodes} and are similar to the conditional branch options, discussed in section \ref{arm:conditionalbranch}.
+In total, there are 15 condition codes \cite{ARM:conditioncodes} and are similar to the conditional branch options, discussed in section \ref{arm:conditionalbranch}.
 This is particularly useful in a pipelined processor for small if-else clauses as no flushing / stalling needs to be done, as the execution of the instruction is done, but the result isn't stored.
 A small drop in performance is seen, but this isn't as bad as flushing a deep pipeline.
 
@@ -166,17 +166,17 @@ Carry & C & Carry from the 8 bit arithmetic \\
 Zero & Z & Set if the result of the ALU is zero \\
 Sign & S & Set to the most significant bit of the ALU result \\
 Overflow & O & Set on two's complement overflow \\
-Parity & P & 1 if the ALU result is even parity, 0 if odd \citep{flag:p} \\
-Auxiliary (or Adjust) & A & The carry generated from the low 4 bits of the ALU operation \citep{flag:a}\\
-Trap & T & Used for single step debugging \citep{flag:t} \\
-Direction & D & Sets the source index to increment / decrement (0/1) \citep{flag:d} \\
-Interrupt & I & Enables / disables interrupts \citep{flag:i} \\
+Parity & P & 1 if the ALU result is even parity, 0 if odd \cite{flag:p} \\
+Auxiliary (or Adjust) & A & The carry generated from the low 4 bits of the ALU operation \cite{flag:a}\\
+Trap & T & Used for single step debugging \cite{flag:t} \\
+Direction & D & Sets the source index to increment / decrement (0/1) \cite{flag:d} \\
+Interrupt & I & Enables / disables interrupts \cite{flag:i} \\
 \end{tabular}
 \end{table}
 
 \subsubsection{Conditional Branch}
 
-The 8086 has a total of 31 conditional branch instructions, and one jump instruction \citep{Intel:instructionset}.
+The 8086 has a total of 31 conditional branch instructions, and one jump instruction \cite{Intel:instructionset}.
 The conditional branches cover many different logic combinations between 5 flags - C, Z, O, S and P.
 This enables the 8086 to make signed and unsigned decisions.
 The full set of branch instructions can be seen at \cite{Intel:condjumps}.
@@ -212,6 +212,11 @@ T Flag
 Here I would like you to discuss how the issues raised in your report will affect your processor design. Where you have seen different processors opting for different solutions to the same problem you should discuss their relative merits in the context of your design. 
 
 \putbib[references]
+\end{bibunit}
+
+\begin{bibunit}
+\nocite{*}
+\putbib[bibliography]
 \end{bibunit}
 %References - reading referenced in text
 %\bibliographystyle{plain}
