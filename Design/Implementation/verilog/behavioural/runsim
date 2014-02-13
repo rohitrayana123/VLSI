@@ -1,0 +1,41 @@
+#! /bin/bash
+
+
+# HELP function
+function printHelp (){
+   echo "-------- HELP --------"
+   echo "Parameter 1: Module"
+   echo "   alu"
+   echo "   control"
+   echo "   cpu_core"
+   echo "   datapath"
+   echo "Paramter 2: GUI"
+   echo "   no_gui  "
+   echo "   gui      (default)"
+}
+
+
+# GUI Option
+cmd="ncverilog -sv"
+gui="$2"
+gui=${module//[-.]/} # Remove tag
+case $gui in
+   *) echo "GUI" ; cmd="$cmd +gui" ;;
+   "no_gui")      echo "No GUI";;
+esac
+cmd="$cmd +ncaccess+r"
+
+
+# Which module to test
+module="$1"
+module=${module//[-.]/} # Remove tag
+case $module in
+   "alu")         cmd="$cmd alu_stim.sv alu.sv opcodes.svh" ;;
+   "control")     cmd="$cmd control_stim.sv control.sv opcodes.svh" ;;
+   "cpu_core")    cmd="$cmd cpu_core_stim.sv cpu_core.sv control.sv datapath.sv alu.sv" ;;
+   "datapath")    cmd="$cmd datapath_stim.sv datapath.sv alu.sv" ;;
+   *)             echo "Unkown module $module"; printHelp; exit ;;
+esac
+
+
+$cmd  # Call SimVision
