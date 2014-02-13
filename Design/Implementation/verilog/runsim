@@ -1,0 +1,21 @@
+#! /bin/bash
+
+# GUI Option
+cmd="ncverilog -sv"
+case $2 in
+   "-gui") echo "GUI" ; cmd="$cmd +gui" ;;
+   *)      echo "No GUI";;
+esac
+cmd="$cmd +ncaccess+r"
+
+# Which module to test
+module="$1"
+module=${module//[-.]/} # Remove tag
+case $module in
+   "alu")         cmd="$cmd alu_stim.sv alu.sv opcodes.svh" ;;
+   "control")     cmd="$cmd control_stim.sv control.sv" ;;
+   "cpu_core")    cmd="$cmd cpu_core.sv cpu_core.sv" ;;
+   "datapath")    cmd="$cmd datapath.sv datapath.sv" ;; 
+   *)             echo "Unkown module $module"; exit ;;
+esac
+$cmd # Call SimVision
