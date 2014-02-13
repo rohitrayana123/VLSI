@@ -1,9 +1,9 @@
-%% <+Last Edited: Thu 13 Feb 2014 22:53:59 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Thu 13 Feb 2014 23:20:55 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 %\usepackage[nodayofweek]{datetime}
-\usepackage{natbib}
+%\usepackage{natbib}
 \usepackage{listings}
-
+\usepackage{bibunits}
 \title{ELEC6025: VLSI Design Project \\Part 1: Microprocessor Research\\Topic: Test and Branch}
 \author{Henry Lovett\\ Team: R4\\Course Tutor: Mr B. Iain McNally}
 \date{\today}
@@ -14,7 +14,7 @@
 
 \tableofcontents
 \clearpage
-
+\begin{bibunit}
 \section{Introduction}
 %A short introduction to the material presented in this report \dots\citep{greenwade93}
 
@@ -211,11 +211,15 @@ T Flag
 \section{Conclusion}
 Here I would like you to discuss how the issues raised in your report will affect your processor design. Where you have seen different processors opting for different solutions to the same problem you should discuss their relative merits in the context of your design. 
 
+\putbib[references]
+\end{bibunit}
 %References - reading referenced in text
-\bibliographystyle{plain}
-\bibliography{references}
-%Biliography - all the reading done
-\renewcommand{\refname}{Bibliography}
+%\bibliographystyle{plain}
+%\bibliography{references}
+%%Biliography - all the reading done
+%\renewcommand{\refname}{Bibliography}
+%\nocite{*}
+%\bibliography{bibliography}
 %\begin{thebibliography}{9}
 %\bibitem{test} ARM Example, 1992
 %
