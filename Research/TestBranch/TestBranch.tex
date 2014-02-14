@@ -1,4 +1,4 @@
-%% <+Last Edited: Thu 13 Feb 2014 23:45:35 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Fri 14 Feb 2014 19:06:33 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 \usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
@@ -91,12 +91,12 @@ Thumb does not implement the condition execution due to it being a 16-bit instru
 
 \begin{table}
 \centering
-\begin{tabular}{ccc}\hline
+\begin{tabular}{p{0.15\textwidth}p{0.15\textwidth}p{0.70\textwidth}}\hline
 Flag & Shorthand & Explanation \\ \hline
-Carry & C & \\
-Overflow & V & \\
-Zero & Z & Set if the ALU result \\
-Negative & N & Set if the ALU result is less than 0, i.e. bit 7 is set high. \\
+Carry & C & Set on arithmetic carry or borrow\\
+Overflow & V & Indicates two's complement overflow\\
+Zero & Z & Set if the ALU result is zero\\
+Negative & N & Set to the most significant bit of the result (sign). \\
 \end{tabular}
 \caption{Explanation of the flags in the ARM Cortex M0}
 \end{table}
@@ -160,7 +160,8 @@ The status register is updated when a compare (\texttt{CMP, CMPSB, CMPSW}) instr
 \centering
 \caption{Intel 8086 Flags from \cite{Intel:flags}}
 \label{tab:Intel:flags}
-\begin{tabular}{ccc} \hline
+\begin{tabular}{p{0.15\textwidth}p{0.15\textwidth}p{0.70\textwidth}}\hline
+%\begin{tabular}{ccc} \hline
 Flag & Shorthand & Explanation \\ \hline
 Carry & C & Carry from the 8 bit arithmetic \\
 Zero & Z & Set if the result of the ALU is zero \\
@@ -180,6 +181,7 @@ The 8086 has a total of 31 conditional branch instructions, and one jump instruc
 The conditional branches cover many different logic combinations between 5 flags - C, Z, O, S and P.
 This enables the 8086 to make signed and unsigned decisions.
 The full set of branch instructions can be seen at \cite{Intel:condjumps}.
+There is also a branch instruction that checks the value of a register to be zero, rather than the flags. 
 
 In the assembly language, there are multiple instructions that map to the same instruction.
 For example, the \texttt{JE} instruction checks that the \texttt{Z} flag is set, but the \texttt{JZ} instruction also does this.
@@ -194,22 +196,123 @@ These instructions are useful, as it combines the decrement of a counter with a 
 
 
 \subsubsection{Assembler Example}
+\begin{lstlisting}[frame=single,caption=Intel 8086 assembler for listing \ref{ListC},label=intel1]
+.def a ax
+.def i cx
+mov a,0 ; initialise a
+mov i,10 ; initialise i
+looplabel: 
+add a,a,i ; do the sum
+loop looplabel ; decrement cx, if cx != 0, jump to looplabel
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,caption=Intel 8086 assembler for listing \ref{ListC2},label=intel2]
+.def a ax
+.def b bx
+cmp a,0 ; compare a to zero
+je else: ; jump if zero flag is set (0 == a)
+mov b,0 ; store 0 to b
+jmp exit ; have to jump to exit
+else:
+ move b,1 ; store 1 to b
+exit:
+
+\end{lstlisting}
 
 
 \subsection{MIPS}
+
+MIPS is a 32-bit RISC architecture.
+It is one of the early RISC machines and is now owned by Imagination Technologies and is still used today.
+The simple design of the MIPS architecture lends itself as a learning tool for computer architecture.
+
 \subsubsection{Flags}
+
+MIPS does not have a status register, and only one flag.
+The flag used is a zero flag. 
+This means that the conditional branches can only rely on if a register value is zero or not.
+
+
 \subsubsection{Conditional Branch}
+
+MIPS implements only two branch instructions; branch if equal (BEQ) and branch if not equal (BNE).
+With only these two instructions, it is difficult to see how this can be used to fully control the program flow.
+There exists an instruction which helps with control flow, but is not a conditional jump - the Set Less Than (SLT) instruction.
+SLT stores compares two register values.
+A 1 is then stored in the destination register if operand 2 is less than operand 3, else 0 is stored \cite{patterson2013computer}.
+
+This instruction fulfils the lack of branch instructions.
+MIPS also has a register which always reads zero, which can then be compared to the value returned by the SLT instruction.
+This method results in more instructions needed to be executed to conduct a conditional branch, but results in significantly less instructions needed.
+
+
+
 \subsubsection{Assembler Example}
+\begin{lstlisting}[frame=single,caption=MIPS assembler for listing \ref{ListC},label=mips1]
+.def a $r1
+.def i $r2
+add a $r0 $r0 ; load a with 0
+add i $r0 0 ; load i with 0
+loop:
+slti $r3 i 10 ; slt with immediate - i < 10
+beq $r0 $r3 exit ; if r3 == 0, jump to exit
+add a a i ; do the add
+jmp loop ; jump back to the beginning of the loop
+exit:
+\end{lstlisting}
+\begin{lstlisting}[frame=single,caption=MIPS assembler for listing \ref{ListC2},label=mips2]
+.def a $r1
+.def b $r2
+slt $r3 $r0 a ; 0 < a
+bne $r0 $r3 else ; jump if the result isn't zero
+addi b $r0 1 ; load b with 1
+jmp exit
+else:
+addi b $r0 0 ; load b with 0
+exit:
+\end{lstlisting}
 
 
 \section{Other Architectures}
 \subsection{DEC Alpha}
+
+Architectures that don't use flags are not common. 
+The DEC Alpha is another example of an architecture that does not use flags.
+The conditional branch instruction can conduct 6 comparisions to zero; equal, not equal, greater than (or equal) and less than (or equal).
+The arithmetic for the operation must be done before hand, as in the MIPS.
+The conditional branch then can execute by comparing a precomputed value. 
+
+
 \subsection{AVR}
 Even though the AVR is a microcontroller core, it still posed interesting reading. 
+The AVR uses a status register and has 8 flags in total \cite{atmel:instructions}.
+A number of these are similar to ARM and Intel (C, Z, N, V, S, H, I), but the AVR implements a \texttt{'T'} flag.
+The T flag in the AVR is not the same as in the 8086, but is used as a more user defined bit in the status register.
+The instruction set allows branching if this flag is set or not, and can be set to a bit value in a byte. 
+\cite{avr:asm} has some examples of how this T flag can be used.
 
-T Flag
+
 \section{Conclusion}
 Here I would like you to discuss how the issues raised in your report will affect your processor design. Where you have seen different processors opting for different solutions to the same problem you should discuss their relative merits in the context of your design. 
+
+There is a compromise that must be made with the test and branch aspect of processor design.
+The use of flags is advantageous as more complex branches can be conducted depending on the result of the ALU operation.
+Also, the branch only takes one instruction to complete the comparison, and one to do the jump, totalling two in the worst case.
+However, this then requires more instructions, potentially increasing the size of the opcode field in instruction set.
+This also requires more design in the ALU to calculate the flags, as well as a more complex control unit to process the data.
+
+With out flags, the compiler / programmer must conduct operations to reduce the branch problem to an equality, or a less-than. 
+Although the example in listings \ref{mips} and \ref{mips2} are simple, this is not always the case. 
+A greater/less than or equal comparison will require addition to an operand, before conduction the SLT instruction.
+This can lengthen the execution of branches - which are used a lot in programs.
+The advantage, however, is that the hardware implementation is much simpler, and the control is smaller.
+A compare to zero is needed, as well as an extra ALU operation (SLT) which transfers the borrow signal to the LSB of the result. 
+
+Amdahl's Law says that to increase the performance, the common case must be made fast \cite{amdahl}.
+Branches are reasonably common to occur in a program, as the principle of a processor is to be able to dynamically make decisions. 
+Performance is a key aspect to processor design and by executing less instructions to do the same task will give an increase in performance.
+The recommendation, therefore, is that flags should be used at an expense of more hardware, instructions and complexity of the control.
+However, the performance and flexibility of the processor should be advantageous.
 
 \putbib[references]
 \end{bibunit}
