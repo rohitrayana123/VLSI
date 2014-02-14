@@ -43,13 +43,17 @@ Designing hardware to call and return from subroutines efficiently can vastly im
 
 \subsection{Subroutine Context Save }
 Context save allows a microprocessor to switch execution focus but retain data such that the previous focus can be fully restored.
+Using call and return instructions when running a subroutine may automatically save context, usually the program counter, but may also require additional instructions to guarantee safe execution.
+Nested and recursive subroutines, introduced in~\cite{IainPrograms}, require dealing with multiple context saves while retaining the data for all previous calls. 
+The Intel 8086, discussed further in section~\ref{8086}, has support for procedure call instructions which automatically use the stack to organise  
 
+\lstinputlisting[label=lst:8086Callee.asm,frame=single,caption=8086Callee.asm]{Code/factorial.c}
 
-\subsection{Operation of Stack Frames}
 
 A stack, as discussed in~\cite{stack}, is a Last-In-First-Out (LIFO) data structure which is used as store when the immediately accessible register do not provide enough memory.
 The stack can be thought of to grow in size where a register called a \emph{stack pointer} (SP) holds the address of the top most element in main memory.
 Two operations can be performed on the stack; \emph{push}, which adds an item to the stack and increments the stack pointer, together with \emph{pull}, which performs the reverse therefore shrinking the stack. 
+It is convention for the stack to occupy the main memory and grow down from the top address towards memmory allocated for other purposes; this can be seen in figure~\ref{fig:allocation}.
 
 One of the main
 
@@ -63,8 +67,12 @@ One of the main
 
 
 
-\newpage
+
+
+\subsection{Operation of Stack Frames}
+
 \subsubsection{8086}
+\label{8086}
 The assembler held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
 A basic example of how stack frames are built to pass parameters to and from a subroutine.
 The main program in listing~\ref{lst:8086Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
