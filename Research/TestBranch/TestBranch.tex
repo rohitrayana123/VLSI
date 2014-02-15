@@ -1,4 +1,4 @@
-%% <+Last Edited: Fri 14 Feb 2014 21:16:10 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Sat 15 Feb 2014 11:41:03 GMT by seblovett on seblovett-NETBOOK +>
 \documentclass[12pt,a4paper]{article}
 \usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
@@ -18,20 +18,22 @@
 \section{Introduction}
 %A short introduction to the material presented in this report \dots\cite{greenwade93}
 
-This report details the research done for the ``Test and Branch'' part of team R4 for the VLSI design module (ELEC6027).
+This report details the research done for the `Test and Branch' part of team R4 for the VLSI design module (ELEC6027).
 It looks into 2 aspects of processor design - condition codes and conditional branches. 
 The report begins with a overview of what should be achieved by the condition codes and branches. 
 Three case studies of some simple architectures are then discussed, looking into how they work and includes code snippets. 
-Some honourable mentions of other architectures are discussed also. 
+%Some honourable mentions of other architectures are discussed also. 
+Some other architectures of note are also discussed.
 The report then finishes with a comparison of the case studies and discusses the conclusions that can be drawn from this research
 The authors' recommendation for the implementation is also given in this section.
 
-One or more sections covering your research topic.
-Here you should include appropriate figures and code snippets to illustrate your discussion. Ensure that all figures and code snippets are properly explained in your text.
-Where text, figures or code snippets are copied from another source, the source must be clearly acknowledged. Copied text must be surrounded by quotation marks "..." to show clearly that it is copied. 
+%One or more sections covering your research topic.
+%Here you should include appropriate figures and code snippets to illustrate your discussion. Ensure that all figures and code snippets are properly explained in your text.
+%Where text, figures or code snippets are copied from another source, the source must be clearly acknowledged. Copied text must be surrounded by quotation marks "..." to show clearly that it is copied. 
 
-\section{Operation}
-What is the point in flags and branches. Why do we need them.
+%HSL: I would like to do an intro, but this is a short report... 
+%\section{Operation}
+%What is the point in flags and branches. Why do we need them.
 
 \section{Case studies}
 
@@ -77,18 +79,20 @@ This is the same as an AND instruction, but only affects the Z and N flags.
 Similarly, there exists a TEQ instruction which conducts and XOR between the two operands and only updates the Z and N flags \cite{ARM:TSTTEQ}.
 The TST and TEQ instructions do not store the result of the operation.
 
+The Thumb2 instruction set also allows for conditional execution. 
+However, this will not be discussed within the scope of this report.
 
-\subsubsection{Conditional Execution}
-%ARM also supports conditional execution, however this is not including in the Thumb instruction set (but is in the Thumb2 instruction set).
-Thumb2 has support for conditional execution.
-This is where operations are only executed if the condition code in the instruction matches up with the value in the status register.
-In total, there are 15 condition codes \cite{ARM:conditioncodes} and are similar to the conditional branch options, discussed in section \ref{arm:conditionalbranch}.
-This is particularly useful in a pipelined processor for small if-else clauses as no flushing / stalling needs to be done, as the execution of the instruction is done, but the result isn't stored.
-A small drop in performance is seen, but this isn't as bad as flushing a deep pipeline.
-
-In the Thumb instruction set, the lack of these condition codes is replaced by the use of the conditional branches.
-In an if-else clause, there must be one conditional branch, and one unconditional branch.
-Thumb does not implement the condition execution due to it being a 16-bit instruction set - Thumb2 is 32-bit.
+%\subsubsection{Conditional Execution}
+%%ARM also supports conditional execution, however this is not including in the Thumb instruction set (but is in the Thumb2 instruction set).
+%Thumb2 has support for conditional execution.
+%This is where operations are only executed if the condition code in the instruction matches up with the value in the status register.
+%In total, there are 15 condition codes \cite{ARM:conditioncodes} and are similar to the conditional branch options, discussed in section \ref{arm:conditionalbranch}.
+%This is particularly useful in a pipelined processor for small if-else clauses as no flushing / stalling needs to be done, as the execution of the instruction is done, but the result isn't stored.
+%A small drop in performance is seen, but this isn't as bad as flushing a deep pipeline.
+%
+%In the Thumb instruction set, the lack of these condition codes is replaced by the use of the conditional branches.
+%In an if-else clause, there must be one conditional branch, and one unconditional branch.
+%Thumb does not implement the condition execution due to it being a 16-bit instruction set - Thumb2 is 32-bit.
 
 %TC:ignore
 \begin{table}
@@ -108,17 +112,17 @@ The Thumb instruction set has a conditional branch instruction.
 This is capable of incrementing the program counter by an immediate value, depending on the flags in the status register.
 Fourteen different conditions are supported, and the full list can be seen in \cite{ARM:Thumb}.
 They include individual flag tests, as well as both signed and unsigned greater/less than tests.
-The value of the flags is from the last instruction that set the flags - in Thumb2, this is the last instruction with an {\textit 'S'} suffix.
+The value of the flags is from the last instruction that set the flags.% - in Thumb2, this is the last instruction with an {\textit 'S'} suffix.
 If the branch is decided to be taken, then the program counter is incremented by the immediate value.
 
-In Thumb2, the conditional execution can be used on a branch instruction to conditionally alter the value in the program counter.
+%In Thumb2, the conditional execution can be used on a branch instruction to conditionally alter the value in the program counter.
 
 \subsubsection{Assembler Examples}
 Below are snippets of assembly language for the Cortex M0 to implement the C code seen in listings \ref{ListC} and \ref{ListC2}.
-Here, the advantage of the conditional execution can be seen.
-In a small if-else clause, it only takes three instructions, and no branches.
-This speeds up the processor, as conditional branches can be costly.
-They will work very well in a pipelined processor, as well as a non-pipelined processor.
+%Here, the advantage of the conditional execution can be seen.
+%In a small if-else clause, it only takes three instructions, and no branches.
+%This speeds up the processor, as conditional branches can be costly.
+%They will work very well in a pipelined processor, as well as a non-pipelined processor.
 %TC:ignore
 \begin{lstlisting}[frame=single,caption=Thumb/Thumb2 Assembler for code in listing \ref{ListC},label=ARM1]
 .def a=$r1
@@ -128,9 +132,9 @@ MOV i #0 ;load i with 0
 loop:
 CMP i #10 ;compare i to 10.
 BEQ exit ;branch if i == 10
-ADDNE a a i ; a = a + i if i != 10
-ADDNE i i #1 ; i++ if i != 10
-BNE loop ; jump to loop if i != 10
+ADD a a i ; a = a + i 
+ADD i i #1 ; i++ 
+B loop ; jump to loop 
 exit: 
 ...
 \end{lstlisting}
@@ -140,8 +144,11 @@ exit:
 .def a $r1
 .def b $r3
 CMP a #0 ; compare a to 0
-MOVEQ b #1 ; if a == 0, load b with 1
-MOVENE b #0 ; if a != 0, load b with 0
+BNE else ; if a != 0 go to else
+MOV b #1 ; if a == 0, load b with 1
+B exit
+MOV b #0 ; if a != 0, load b with 0
+exit:
 \end{lstlisting}
 %TC:endignore
 
