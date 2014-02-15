@@ -1,4 +1,4 @@
-%% <+Last Edited: Fri 14 Feb 2014 19:06:33 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Fri 14 Feb 2014 21:16:10 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 \usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
@@ -38,6 +38,7 @@ What is the point in flags and branches. Why do we need them.
 Three case studies are discussed here. 
 For each architecture studied, there is a description of the flags implemented (if any) and instructions used for conditional branches. 
 Also, two C code snippets, seen in listings \ref{ListC} and \ref{ListC2}, are converted to assembler for each architecture to see how they compare.
+%TC:ignore
 \begin{lstlisting}[frame=single,caption=C Code,language=C,label=ListC]
 uint16_t a = 0;
 for(uint16_t i = 0; i < 10; i++)
@@ -51,6 +52,7 @@ if ( a > 0 )
 else
 	b = 0;
 \end{lstlisting}
+%TC:endignore
 \subsection{ARM Cortex M0}
 
 The ARM Cortex M0 is a 32-bit RISC architecture that implements the Thumb/Thumb2 instruction set \cite{ARM:CortexM0}. 
@@ -88,7 +90,7 @@ In the Thumb instruction set, the lack of these condition codes is replaced by t
 In an if-else clause, there must be one conditional branch, and one unconditional branch.
 Thumb does not implement the condition execution due to it being a 16-bit instruction set - Thumb2 is 32-bit.
 
-
+%TC:ignore
 \begin{table}
 \centering
 \begin{tabular}{p{0.15\textwidth}p{0.15\textwidth}p{0.70\textwidth}}\hline
@@ -100,8 +102,8 @@ Negative & N & Set to the most significant bit of the result (sign). \\
 \end{tabular}
 \caption{Explanation of the flags in the ARM Cortex M0}
 \end{table}
+%TC:endignore
 \subsubsection{Conditional Branch}\label{arm:conditionalbranch}
-
 The Thumb instruction set has a conditional branch instruction.
 This is capable of incrementing the program counter by an immediate value, depending on the flags in the status register.
 Fourteen different conditions are supported, and the full list can be seen in \cite{ARM:Thumb}.
@@ -117,7 +119,7 @@ Here, the advantage of the conditional execution can be seen.
 In a small if-else clause, it only takes three instructions, and no branches.
 This speeds up the processor, as conditional branches can be costly.
 They will work very well in a pipelined processor, as well as a non-pipelined processor.
-
+%TC:ignore
 \begin{lstlisting}[frame=single,caption=Thumb/Thumb2 Assembler for code in listing \ref{ListC},label=ARM1]
 .def a=$r1
 .def i=$r2
@@ -141,7 +143,7 @@ CMP a #0 ; compare a to 0
 MOVEQ b #1 ; if a == 0, load b with 1
 MOVENE b #0 ; if a != 0, load b with 0
 \end{lstlisting}
-
+%TC:endignore
 
 \subsection{Intel 8086}
 
@@ -155,6 +157,7 @@ Since then, the x86 instruction set has been expanded and the original instructi
 The Intel 8086 has 9 flags, detailed in table \ref{tab:Intel:flags}.
 The status register is updated when a compare (\texttt{CMP, CMPSB, CMPSW}) instruction is executed, or after an arithmetic operation.
 
+%TC:ignore
 
 \begin{table}
 \centering
@@ -174,6 +177,7 @@ Direction & D & Sets the source index to increment / decrement (0/1) \cite{flag:
 Interrupt & I & Enables / disables interrupts \cite{flag:i} \\
 \end{tabular}
 \end{table}
+%TC:endignore
 
 \subsubsection{Conditional Branch}
 
@@ -194,7 +198,7 @@ There is another instruction, \texttt{LOOPE / LOOPZ}, that jumps if the counter 
 This has a complementary instruction, \texttt{LOOPNE / LOOPNZ}, which jumps if the counter is nonzero and the zero flag is not set.
 These instructions are useful, as it combines the decrement of a counter with a branch, resulting in a quicker operation for loops.
 
-
+%TC:ignore
 \subsubsection{Assembler Example}
 \begin{lstlisting}[frame=single,caption=Intel 8086 assembler for listing \ref{ListC},label=intel1]
 .def a ax
@@ -203,7 +207,7 @@ mov a,0 ; initialise a
 mov i,10 ; initialise i
 looplabel: 
 add a,a,i ; do the sum
-loop looplabel ; decrement cx, if cx != 0, jump to looplabel
+loop looplabel ; cx--, if cx != 0, jump to looplabel
 \end{lstlisting}
 
 \begin{lstlisting}[frame=single,caption=Intel 8086 assembler for listing \ref{ListC2},label=intel2]
@@ -218,12 +222,12 @@ else:
 exit:
 
 \end{lstlisting}
-
+%TC:endignore
 
 \subsection{MIPS}
 
 MIPS is a 32-bit RISC architecture.
-It is one of the early RISC machines and is now owned by Imagination Technologies and is still used today.
+It is one of the early RISC machines and is now owned by Imagination Technologies and is still used today \cite{mips:wiki}.
 The simple design of the MIPS architecture lends itself as a learning tool for computer architecture.
 
 \subsubsection{Flags}
@@ -246,7 +250,7 @@ MIPS also has a register which always reads zero, which can then be compared to 
 This method results in more instructions needed to be executed to conduct a conditional branch, but results in significantly less instructions needed.
 
 
-
+%TC:ignore
 \subsubsection{Assembler Example}
 \begin{lstlisting}[frame=single,caption=MIPS assembler for listing \ref{ListC},label=mips1]
 .def a $r1
@@ -271,7 +275,7 @@ else:
 addi b $r0 0 ; load b with 0
 exit:
 \end{lstlisting}
-
+%TC:endignore
 
 \section{Other Architectures}
 \subsection{DEC Alpha}
@@ -280,13 +284,13 @@ Architectures that don't use flags are not common.
 The DEC Alpha is another example of an architecture that does not use flags.
 The conditional branch instruction can conduct 6 comparisions to zero; equal, not equal, greater than (or equal) and less than (or equal).
 The arithmetic for the operation must be done before hand, as in the MIPS.
-The conditional branch then can execute by comparing a precomputed value. 
+The conditional branch then can execute by comparing a precomputed value \cite{decalpha}. 
 
 
 \subsection{AVR}
 Even though the AVR is a microcontroller core, it still posed interesting reading. 
 The AVR uses a status register and has 8 flags in total \cite{atmel:instructions}.
-A number of these are similar to ARM and Intel (C, Z, N, V, S, H, I), but the AVR implements a \texttt{'T'} flag.
+A number of these are similar to ARM and Intel (C, Z, N, V, S, H, I), but the AVR implements a \texttt{`T'} flag.
 The T flag in the AVR is not the same as in the 8086, but is used as a more user defined bit in the status register.
 The instruction set allows branching if this flag is set or not, and can be set to a bit value in a byte. 
 \cite{avr:asm} has some examples of how this T flag can be used.
@@ -302,7 +306,7 @@ However, this then requires more instructions, potentially increasing the size o
 This also requires more design in the ALU to calculate the flags, as well as a more complex control unit to process the data.
 
 With out flags, the compiler / programmer must conduct operations to reduce the branch problem to an equality, or a less-than. 
-Although the example in listings \ref{mips} and \ref{mips2} are simple, this is not always the case. 
+Although the example in listings \ref{mips1} and \ref{mips2} are simple, this is not always the case. 
 A greater/less than or equal comparison will require addition to an operand, before conduction the SLT instruction.
 This can lengthen the execution of branches - which are used a lot in programs.
 The advantage, however, is that the hardware implementation is much simpler, and the control is smaller.
