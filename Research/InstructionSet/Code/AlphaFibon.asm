@@ -1,4 +1,4 @@
-	ADDL r31, #51, r5	:Define starting memory location as 51
+	ADDL r31, #51, r5	:Start at memory 51
 	LDL r1, 0(r5)		:r1 = first value
 	LDL r2, 1(r5)		:r2 = second value
 	ADDL r31, #10, r3	:r3 = 10 (n)
