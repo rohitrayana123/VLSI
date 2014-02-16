@@ -25,36 +25,48 @@ always begin   #(CLK_PERIOD/2)   Clock = 0;
 end
 
 initial begin
-   #100
-   DataIn = 16'hFFFF;
-   Address = 0;
-   Read = 0;
-   Write = 0;
-   #100
-   Write = 1;
-   #100
-   Write = 0;
-   #100
-   Read = 1;
-   #100
-   Read = 0;
-   #100
+   PrintRegs;
    repeat(100) begin
-      @(negedge Clock);
-      Read = 0;
-      Write = 0;
-      DataIn = $random();
-      Address = $random();
-      @(negedge Clock);
-      Write = 1;
-      @(negedge Clock);
-      Write = 0;
-      Read = 1;
-      Address = $random();
+      WriteReg($random(),$random());
+      PrintRegs;
+      ReadReg($random());
    end
    $stop;
 end
 
-initial $monitor($time,"   %x %x %x %x %x",DataOut,DataIn,Address,Read,Write);
+task WriteReg;
+   input    [15:0]   writeMe;
+   input    [2:0]    addressMe;
+   begin
+      $display("Writing %x to adress %d",writeMe,addressMe);
+      @(negedge Clock);
+      Read = 0;
+      Write = 1;
+      DataIn = writeMe;
+      Address = addressMe;
+      @(negedge Clock);
+      Write = 0;
+   end
+endtask
+
+task ReadReg; 
+   input    [2:0]    addressMe;
+   begin
+      @(negedge Clock);
+      Read = 1;
+      Write = 0; 
+      Address = addressMe;
+      @(posedge Clock);
+      $display("Read %x from adress %d",DataOut,addressMe);
+      @(negedge Clock);
+      Read = 0;
+   end
+endtask
+
+task PrintRegs;
+   integer i;
+   for(i=1;i<8;i=i+1)
+      $display("%d: %x",i,gpr.mem[i]);
+endtask
 
 endmodule
