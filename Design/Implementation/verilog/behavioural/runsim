@@ -9,6 +9,7 @@ function printHelp (){
    echo "   control"
    echo "   cpu_core"
    echo "   datapath"
+   echo "   regBlock"
    echo "Paramter 2: GUI"
    echo "   no_gui  "
    echo "   gui      (default)"
@@ -34,6 +35,7 @@ case $module in
    "control")     cmd="$cmd   opcodes.svh    control_stim.sv   control.sv"                                        ;;
    "cpu_core")    cmd="$cmd   opcodes.svh    cpu_core_stim.sv  cpu_core.sv    control.sv  datapath.sv    alu.sv"  ;;
    "datapath")    cmd="$cmd   opcodes.svh    datapath_stim.sv  datapath.sv    alu.sv"                             ;;
+   "regBlock")    cmd="$cmd                  regBlock_stim.sv  regBlock.sv"                                       ;;
    *)             echo "Unkown module $module"; printHelp; exit ;;
 esac
 cmd="$cmd +libext+.sv"
