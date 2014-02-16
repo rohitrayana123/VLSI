@@ -45,17 +45,18 @@ Designing hardware to call and return from subroutines efficiently can vastly im
 Context save allows a microprocessor to switch execution focus but retain data such that the previous focus can be fully restored.
 Using call and return instructions when running a subroutine may automatically save context, usually the program counter, but may also require additional instructions to guarantee safe execution.
 Nested and recursive subroutines, introduced in~\cite{IainPrograms}, require dealing with multiple context saves while retaining the data for all previous calls. 
-The Intel 8086, discussed further in section~\ref{8086}, has support for procedure call instructions which automatically use the stack to organise  
+The Intel 8086, discussed further in section~\ref{8086}, has support for procedure call instructions which automatically use the stack to organise data.
+Listing~\ref{lst:factorial.c} holds subroutine written in C that recursively calls itself to compute the factorial of a number.
+Such applications require context save support.
 
-\lstinputlisting[label=lst:8086Callee.asm,frame=single,caption=8086Callee.asm]{Code/factorial.c}
+\lstinputlisting[label=lst:factorial.c,frame=single,caption=Factorial subroutine]{Code/factorial.c}
 
 
-A stack, as discussed in~\cite{stack}, is a Last-In-First-Out (LIFO) data structure which is used as store when the immediately accessible register do not provide enough memory.
+A stack, as discussed in~\cite{stack}, is a Last-In-First-Out (LIFO) data structure which is used as store when the immediately accessible registers do not provide enough memory.
 The stack can be thought of to grow in size where a register called a \emph{stack pointer} (SP) holds the address of the top most element in main memory.
 Two operations can be performed on the stack; \emph{push}, which adds an item to the stack and increments the stack pointer, together with \emph{pull}, which performs the reverse therefore shrinking the stack. 
 It is convention for the stack to occupy the main memory and grow down from the top address towards memmory allocated for other purposes; this can be seen in figure~\ref{fig:allocation}.
 
-One of the main
 
 \begin{figure}[htb]
    \centering
@@ -73,7 +74,7 @@ One of the main
 
 \subsubsection{8086}
 \label{8086}
-The assembler held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
+The assembly held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
 A basic example of how stack frames are built to pass parameters to and from a subroutine.
 The main program in listing~\ref{lst:8086Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
 The subroutine is called to act upon the arguments passed via the stack.
@@ -126,8 +127,9 @@ Figure~\ref{fig:stack} is an abstraction of the stack with data label correspond
 
 \subsubsection{ARM7TDMI using Arm Thumb}
 The ARM7TDMI is a 32-bit RISC microprocessor with an emphasis on low-power design and pipelining for high throughput~\cite{ARM7TDMI}.
-It has two instruction sets one of which is Arm Thumb, a low density 16-bit subset of the ARM assembly language~\cite{arm}.
+It has two instruction sets. One of which is Arm Thumb, a low density 16-bit subset of the ARM assembly language~\cite{arm}.
 A user selectable flag is set to switch between instruction sets therefore drawing on each sets advantages.
+The advantage, explained in~\cite{ARMs}, is a reduction in code density. 
 
 This architecture does not have built-in support for calling subroutines using the stack.
 When the branch instruction is used, as seen in listing~\ref{lst:ArmCaller.asm}, the program counter is overwritten with the address of the corresponding label.
@@ -147,7 +149,8 @@ Relative addressing on the stack is required to draw the two arguments out and r
 
 \section{Conclusion}
 
-
+It is clear that whether a microprocessor has built-in support for a stack or not the ability to call subroutines is unaffected.
+The support does make calling more efficient and easier to code. 
 
 
 %References - reading referenced in text
@@ -164,6 +167,14 @@ Relative addressing on the stack is required to draw the two arguments out and r
   4th Edition,
   2009.\\
   - Lots of processor concepts and MIPS examples
+
+\bibitem{Mathur}
+  Mathur S,
+  \emph{Microprocessor 8086: Architecture, Programming and Interfacing}.
+  PHI Learning Private Limited,
+  2011.\\
+  - Intel 8086 microprocessor resource
+
 
 \end{thebibliography}
 \end{document}
