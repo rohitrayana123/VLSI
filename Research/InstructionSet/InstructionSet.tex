@@ -2,9 +2,10 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{array}
-\newcolumntype{C}{>{\centering\arraybackslash}p{1.5cm}}
 %\usepackage[nodayofweek]{datetime}
-%\usepackage{natbib}
+\usepackage{natbib}
+\newcolumntype{C}{>{\centering\arraybackslash}p{1.5cm}}
+
 \title{ELEC6025: VLSI Design Project \\Part 1: Microprocessor Research\\Topic: Instruction Set}
 \author{Martin Wearn\\ Team: R4\\Course Tutor: Mr B. Iain McNally}
 \date{\today}
@@ -40,7 +41,7 @@ The principle of code density relates to how much can be performed using a fixed
 
 ISA's designed without emphasis on simple operations are known as Complex Instruction Set Computers (CISC). These typically have a very large set of instructions and can range from a simple arithmetic \texttt{ADD} to a \texttt{REPE} instruction as is found in the Intel 8086. \cite{8086:InstructionSet} This repeats the following instruction while a flag equals 1, until a maximum is reached. 
 
-There are a number of factors which effect the density of code within a program. These include minimum instruction length, number of registers and the presence of a 'zero' register among others. A recent experiment shows the effect of different architectural features on the binary file size of a particular program \cite{Density:Correlations}. The results of calculating the correlation between feature and code size can be seen in Table~\ref{tab:Correlation}. Each type of architecture has its merits, whether that be when hand-coding or using a compiler. When hand-coding, CISC typically produces more dense code since less instructions are needed. When compiled, it is not as dense since a very complicated, specialized compiler would be needed to use the more powerful instructions. However, RISC produces less efficient coding when done by hand, but compilers can produce similar results without the added complexity.
+There are a number of factors which effect the density of code within a program. These include minimum instruction length, number of registers and the presence of a 'zero' register among others. A recent experiment shows the effect of different architectural features on the binary file size of a particular program \cite{Density:Correlation}. The results of calculating the correlation between feature and code size can be seen in Table~\ref{tab:Correlation}. Each type of architecture has its merits, whether that be when hand-coding or using a compiler. When hand-coding, CISC typically produces more dense code since less instructions are needed. When compiled, it is not as dense since a very complicated, specialized compiler would be needed to use the more powerful instructions. However, RISC produces less efficient coding when done by hand, but compilers can produce similar results without the added complexity.
 
 \begin{table}[htb]
 	\centering
@@ -61,7 +62,7 @@ There are a number of factors which effect the density of code within a program.
 	-0.3653 & Unaligned load/store available \\
 	-0.3854 & Hardware divide \\ \hline
 	\end{tabular}
-	\caption{\label{tab:Correlation}Correlation of architecture features to binary file size \cite{Density:Correlations}}
+	\caption{\label{tab:Correlation}Correlation of architecture features to binary file size \cite{Density:Correlation}}
 \end{table}
 
 \subsubsection{Kolmogorov Complexity}
@@ -72,7 +73,7 @@ The use of mathematical theory is impractical in simple designs since KC is an "
 \section{Case Studies}
 
 \subsection{VAX-11}
-The VAX-11 is a CISC-type microprocessor from 1977 and was produced by Digital Equipment Corporation \cite{VAX:History}. It was the first commercial 32-bit system which also performed at 1 MIPS (Million Instructions Per Second). It was adopted by many institutions and universities \cite{VAX:History}. The design objectives were focussed on simple compiling, via direct high level language conversion, and minimising code size. This lead to powerful addressing modes, instructions and efficient encoding \cite{VAX:Chap3}. The advanced addressing modes included: register, auto-decrement, auto-increment, displacement, and deferred addressing \cite{VAX:ArchRefMan}. The VAX was built as a successor to the earlier PDP-11 architecture and benefited by expanding the pre-existing data types for availability with all addressing modes \cite{VAX:OrthogIS}. This created fully orthogonal encoding. 
+The VAX-11 is a CISC-type microprocessor from 1977 and was produced by Digital Equipment Corporation \cite{VAX:History}. It was the first commercial 32-bit system which also performed at 1 MIPS (Million Instructions Per Second). It was adopted by many institutions and universities \cite{VAX:History}. The design objectives were focussed on simple compiling, via direct high level language conversion, and minimising code size. This lead to powerful addressing modes, instructions and efficient encoding \cite{VAX:Chap3}. The advanced addressing modes included: register, auto-decrement, auto-increment, displacement, and deferred addressing \cite{VAX:ArchRefMan}. The VAX was built as a successor to the earlier PDP-11 architecture and benefited by expanding the pre-existing data types for availability with all addressing modes \cite{wiki:OrthogonalIS}. This created fully orthogonal encoding. 
 
 Listing~\ref{lst:VAXFibon} is an example program for computing the first 10 Fibonacci numbers, taking two values from memory and demonstrating the complexity of VAX ISA.
 
@@ -118,17 +119,20 @@ Word Count: 1685%Manually insert word count, or use online tool/script
 
 %References - reading referenced in text
 \bibliographystyle{plain}
-%\bibliography{references}
+\bibliography{references}
+
 %Biliography - all the reading done
-\renewcommand{\refname}{Bibliography}
-\begin{thebibliography}{9}
+%\renewcommand{\refname}{Bibliography}
+%\bibliographystyle{plainnat}
+%\bibliography{bibliography}
+%\begin{thebibliography}{9}
 
-\bibitem{lamport94}
-  Leslie Lamport,
-  \emph{\LaTeX: A Document Preparation System}.
-  Addison Wesley, Massachusetts,
-  2nd Edition,
-  1994.
+%\bibitem{lamport94}
+%  Leslie Lamport,
+%  \emph{\LaTeX: A Document Preparation System}.
+%  Addison Wesley, Massachusetts,
+%  2nd Edition,
+%  1994.
 
-\end{thebibliography}
+%\end{thebibliography}
 \end{document}

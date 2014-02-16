@@ -13,7 +13,7 @@ pdflatex ${file}.tex
 bibtex ${file}
 pdflatex ${file}.tex
 pdflatex ${file}.tex
- 
+
 #clean
 rm *.aux
 rm *.bbl
