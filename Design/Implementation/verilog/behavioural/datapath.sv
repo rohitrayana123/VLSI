@@ -1,63 +1,66 @@
 module datapath(
-  output wire  [15:0] SysBus,
-  output logic [3:0] Opcode,
-  output logic Zflag,
-  input  [15:0] Data_in,
-  input  opcodes::alu_functions_t Function,
-  input  SelInc, LoadPC, LoadIR, TrisOperand, TrisPC, TrisAcc, TrisMem,
-  input  Clock, nReset
-  );
+  output wire  [15:0]   SysBus,
+  output logic [3:0]    Opcode,
+  output logic          Zflag,
+  input        [15:0]   Data_in,
+  input        [1:0]    Op2Sel,
+  input                 Op1Sel,
+  input                 Rw,
+  input                 Clock,
+  input                 nReset,
+  input  opcodes::alu_functions_t Function
+);
 
-timeunit 1ns;
-timeprecision 100ps;
+timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
 
-logic [15:0] IR, ACC;
-logic [11:0] PC;
-logic [11:0] Operand, PC_mux_output;
+wire  [15:0]   AluRes;
+logic [15:0]   Op1;
+logic [15:0]   Op2;
+wire  [15:0]   SignExtend;
+logic [15:0]   AluOut;
+logic [15:0]   PC;
+logic [15:0]   SP;
 
-wire  [15:0] ALU_output;
 
-//
-// ALU Instance
-//
-   alu ALU ( Zflag, ALU_output, ACC, SysBus, Function);
+regBlock regBlock(                        // Register block instance                         
+   .Rd1     (Rd1     ),
+   .Rd2     (Rd2     ),
+   .WData   (WData   ),
+   .Rs1     (Rs1     ),
+   .Rs2     (Rs2     ),
+   .Rw      (Rw      ),
+   .Clock   (Clock   ),
+   .We      (We      )
+);
 
-//
-// Divide instruction into Opcode and Operand
-//
-   assign Opcode  = IR[15:12];
-   assign Operand = IR[11:0];
+always_comb begin                         // Control ALU data input
+   case(Op1Sel)                           // 2input mux
+      0        :  Op1 = Rd1;
+      default  :  Op1 = SP;
+   endcase
+   case(Op2Sel)                           // 3 input mux
+      0        :  Op2 = SignExtend;
+      1        :  Op2 = SignExtend << 2;
+      default  :  Op2 = Rd2; 
+   endcase
+end
 
-//
-// Drive SysBus as required
-// (Operand and PC values are "zero extended" to give 16 bits)
-//
-   assign SysBus = (TrisOperand) ? {4'b0,Operand} : 'z;
-   assign SysBus = (TrisPC)      ? {4'b0,PC}      : 'z;
-   assign SysBus = (TrisAcc)     ? ACC            : 'z;
-   assign SysBus = (TrisMem)     ? Data_in        : 'z;
+alu alu(                                  // Combo ALU only
+   .Zflag   (Zflag   ), 
+   .Result  (AluRes  ),
+   .Op1     (Op1     ),
+   .Op2     (Op2     )
+);
 
-//
-// Multiplexor for PC update
-//
-   assign PC_mux_output = (SelInc) ? PC + 1 : Operand;
+always_ff@(posedge Clock or negedge nReset) begin
+   if(!nReset)
+      AluOut <= 0;
+   else
+      AluOut <= AluRes;
+end
 
-//
-// Update Registers as required
-//
-   always_ff @(posedge Clock, negedge nReset)
-      if (!nReset)
-         begin
-            ACC <= 0;
-            IR  <= 0; // NOP
-            PC  <= 0;
-	 end
-      else
-         begin
-            ACC <= #20 ALU_output;
-            if (LoadIR) IR <= #20 SysBus;
-            if (LoadPC) PC <= #20 PC_mux_output;
-	 end
+
+
 endmodule

@@ -8,30 +8,22 @@ wire  [15:0]   SysBus;
 wire  [3:0]    Opcode;     
 wire           Zflag;      
 logic [15:0]   Data_in;    
-logic          SelInc;     
-logic          LoadPC;     
-logic          LoadIR;     
-logic          TrisOperand;
-logic          TrisPC;     
-logic          TrisAcc;    
-logic          TrisMem;    
+logic [1:0]    Op2Sel;
+logic          Op1Sel;
+logic          Rw;
 logic          Clock;      
 logic          nReset;     
 
 datapath datapath(                                           
-   .SysBus        (SusBus),      // Outputs from DUT
-   .Opcode        (Opcode),
-   .Zflag         (Zflag),
-   .Data_in       (Data_in),     // Inputs to DUT
-   .SelInc        (SelInc),
-   .LoadPC        (LoadPc),
-   .LoadIR        (LoadIR),
-   .TrisOperand   (TrisOperand), 
-   .TrisPC        (TrisPC),
-   .TrisAcc       (TrisAcc),
-   .TrisMem       (TrisMem),
-   .Clock         (Clock),
-   .nReset        (nReset)
+   .SysBus        (SusBus  ),    // Outputs from DUT
+   .Opcode        (Opcode  ),
+   .Zflag         (Zflag   ),
+   .Data_in       (Data_in ),    // Inputs to DUT
+   .Op2Sel        (OP2Sel  ),
+   .Op1Sel        (Op1Sel  ),
+   .Rw            (Rw      ),
+   .Clock         (Clock   ),
+   .nReset        (nReset  )
 );
 
 always begin   #(CLK_PERIOD/2) Clock = 0;
