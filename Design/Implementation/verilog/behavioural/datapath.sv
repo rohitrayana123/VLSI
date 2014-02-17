@@ -1,30 +1,31 @@
 module datapath(
   output wire  [15:0]   SysBus,
-  output logic [3:0]    Opcode,
+  output wire  [7:0]    IrControl,
   output logic          Z,
-  input        [4:0]    AluOp,
-  input        [1:0]    Op2Sel,
-  input                 Op1Sel,
-  input                 Rw,
-  input                 AluEn,
-  input                 SpEn,
-  input                 SpWe,
-  input                 LrEn,
-  input                 LrWe,
-  input                 PcWe,
-  input        [1:0]    PcSel,
-  input                 PcEn,
-  input                 IrWe,
-  input                 WdSel,
-  input                 ImmSel,
-  input                 RegWe,
-  input                 Clock,
-  input                 nReset
+  input  wire  [15:0]   DataIn,
+  input  wire  [4:0]    AluOp,
+  input  wire  [1:0]    Op2Sel,
+  input  wire           Op1Sel,
+  input  wire           Rw,
+  input  wire           AluEn,
+  input  wire           SpEn,
+  input  wire           SpWe,
+  input  wire           LrEn,
+  input  wire           LrWe,
+  input  wire           PcWe,
+  input  wire  [1:0]    PcSel,
+  input  wire           PcEn,
+  input  wire           IrEn,
+  input  wire           IrWe,
+  input  wire           WdSel,
+  input  wire           ImmSel,
+  input  wire           RegWe,
+  input  wire           MemEn,
+  input  wire           Clock,
+  input  wire           nReset
 );
 
 timeunit 1ns; timeprecision 100ps;
-
-import opcodes::*;
 
 wire  [15:0]   AluRes;
 wire  [15:0]   AluBusIF;
@@ -71,25 +72,32 @@ signExtend signExtend(  // Sign extender
 // Bus interfaces
 
 trisBuf16 trisBufAlu(   // ALU
-   .dataIn  (AluOut  ),
-   .en      (AluEn   ),
-   .dataOut (SysBus  )
+   .DataIn  (AluOut  ),
+   .En      (AluEn   ),
+   .DataOut (SysBus  )
 );
 trisBuf16 trisBufPc(    // PC
-   .dataIn  (Pc      ),
-   .en      (PcEn    ),
-   .dataOut (SysBus  )
+   .DataIn  (Pc      ),
+   .En      (PcEn    ),
+   .DataOut (SysBus  )
 );
 trisBuf16 trisBufSp(    // SP
-   .dataIn  (Sp      ),
-   .en      (SpEn    ),
-   .dataOut (SysBus  )
+   .DataIn  (Sp      ),
+   .En      (SpEn    ),
+   .DataOut (SysBus  )
 );
 trisBuf16 trisBufLr(    // LR
-   .dataIn  (Lr      ),
-   .en      (LrEn    ),
-   .dataOut (SysBus  )
+   .DataIn  (Lr      ),
+   .En      (LrEn    ),
+   .DataOut (SysBus  )
 );
+trisBuf16 trisBufSys(   // Memory access
+   .DataIn  (DataIn  ),
+   .En      (MemEn    ),
+   .DataOut (SysBus  )
+);
+
+
 
 
 // Sequential
@@ -126,8 +134,7 @@ always_ff@(posedge Clock or negedge nReset) begin : IrReg
       if(IrWe)
          Ir <= SysBus;
 end
-assign OpCode = {Ir[15:9],Ir[2:0]};       // Wire these to OpCode output
-
+assign IrControl = {Ir[15:9],Ir[2:0]};                 // Wire these to OpCode output
 
 // Combo
 

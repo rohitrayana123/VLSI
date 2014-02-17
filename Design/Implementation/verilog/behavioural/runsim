@@ -42,7 +42,10 @@ case $module in
                               cpu_core.sv    
                               control.sv  
                               datapath.sv    
-                              alu.sv"           ;;
+                              alu.sv
+                              regBlock.sv
+                              trisBuf16.sv
+                              signExtend.sv"       ;;
    "datapath")    cmd="$cmd   opcodes.svh        
                               datapath_stim.sv  
                               datapath.sv       

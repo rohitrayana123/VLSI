@@ -2,16 +2,16 @@ module cpu_core_stim;
 
 timeunit 1ns; timeprecision 10ps;
 
-wire  [15:0]   Data_out;
-wire           ENB;     
-wire           nME;     
-wire           ALE;     
+wire  [15:0]   DataOut;
+wire           Enb;     
+wire           nMe;     
+wire           Ale;     
 wire           RnW;     
-wire           nOE;     
+wire           nOe;     
 wire           SDO;     
-logic [15:0]   Data_in; 
-logic          nIRQ;    
-logic          nWAit;   
+logic [15:0]   DataIn; 
+logic          nIrq;    
+logic          nWait;   
 logic          Test;    
 logic          SDI;     
 logic          Clock;   
@@ -19,20 +19,20 @@ logic          nReset;
 
 
 cpu_core cpu_core(                                           
-   .Data_out   (Data_out), // Output from DUT 
-   .ENB        (ENB),
-   .nME        (nME),
-   .ALE        (ALE),
-   .RnW        (RnW),
-   .nOE        (nOE),
-   .SDO        (SDO),
-   .Data_in    (Data_in),  // Input to DUT
-   .nIRQ       (nIRQ),
-   .nWait      (nWait),
-   .Test       (Test),
-   .SDI        (SDI),
-   .Clock      (Clock),
-   .nReset     (nReset)
+   .DataOut    (DataOut ), // Output from DUT 
+   .Enb        (Enb     ),
+   .nMe        (nMe     ),
+   .Ale        (Ale     ),
+   .RnW        (RnW     ),
+   .nOe        (nOe     ),
+   .SDO        (SDO     ),
+   .DataIn     (DataIn  ),  // Input to DUT
+   .nIrq       (nIrq    ),
+   .nWait      (nWait   ),
+   .Test       (Test    ),
+   .SDI        (SDI     ),
+   .Clock      (Clock   ),
+   .nReset     (nReset  )
 );
 
 endmodule
