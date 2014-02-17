@@ -12,6 +12,7 @@ logic [2:0]    Rs2;
 logic [2:0]    Rw;   
 logic          Clock;
 logic          WE;   
+logic          nReset;
 
 regBlock regBlock(                                           
    .Rd1     (Rd1     ),
@@ -21,11 +22,19 @@ regBlock regBlock(
    .Rs2     (Rs2     ),
    .Rw      (Rw      ),
    .Clock   (Clock   ),
-   .WE      (WE      )
+   .WE      (WE      ),
+   .nReset  (nReset  )
 );
 
 always begin   #(CLK_PERIOD/2)   Clock = 0;
                #(CLK_PERIOD/2)   Clock = 1;
+end
+
+initial 
+begin
+	nReset = 1;
+	#100 nReset = 0;
+	#100 nReset = 1;
 end
 
 initial begin
