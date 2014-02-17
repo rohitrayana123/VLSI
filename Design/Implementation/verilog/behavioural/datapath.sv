@@ -1,8 +1,7 @@
 module datapath(
   output wire  [15:0]   SysBus,
   output logic [3:0]    Opcode,
-  output logic          Zflag,
-  input        [15:0]   Data_in,
+  output logic          Z,
   input        [4:0]    AluOp,
   input        [1:0]    Op2Sel,
   input                 Op1Sel,
@@ -14,7 +13,11 @@ module datapath(
   input                 LrWe,
   input                 PcWe,
   input        [1:0]    PcSel,
+  input                 PcEn,
   input                 IrWe,
+  input                 WdSel,
+  input                 ImmSel,
+  input                 RegWe,
   input                 Clock,
   input                 nReset
 );
@@ -27,6 +30,9 @@ wire  [15:0]   AluRes;
 wire  [15:0]   AluBusIF;
 logic [15:0]   Op1;
 logic [15:0]   Op2;
+wire  [15:0]   Rd1;
+wire  [15:0]   Rd2;
+wire  [15:0]   WData;
 wire  [15:0]   SignExtend;
 logic [15:0]   AluOut;
 logic [15:0]   Pc;
@@ -34,12 +40,11 @@ wire  [15:0]   PcSrc;
 logic [15:0]   Sp;
 logic [15:0]   Lr;
 logic [15:0]   Ir;
-wire  [15:0]   SpBusIF;
-
+wire  [15:0]   Extended;
 
 // Instances
 
-regBlock regBlock(                        // Register block instance                         
+regBlock regBlock(      // Register block instance                         
    .Rd1     (Rd1     ),
    .Rd2     (Rd2     ),
    .WData   (WData   ),
@@ -47,15 +52,19 @@ regBlock regBlock(                        // Register block instance
    .Rs2     (Ir[8:6] ),
    .Rw      (Ir[2:0] ),
    .Clock   (Clock   ),
-   .We      (We      )
+   .We      (RegWe   )
 );
-
-alu alu(                                  // Combo ALU only
+alu alu(                // Combo ALU only
    .Zflag   (Zflag   ), 
    .Result  (AluRes  ),
    .Op1     (Op1     ),
    .Op2     (Op2     ),
    .OpCode  (AluOp   )
+);
+signExtend signExtend(  // Sign extender 
+   .DataOut (Extended),
+   .DataIn  (Ir[10:3]),
+   .ImmSel  (ImmSel  )
 );
 
 
@@ -91,7 +100,6 @@ always_ff@(posedge Clock or negedge nReset) begin : AluReg
    else
       AluOut<= AluRes;
 end
-
 always_ff@(posedge Clock or negedge nReset) begin : SpReg
    if(!nReset)
       Sp <= 0;
@@ -99,7 +107,6 @@ always_ff@(posedge Clock or negedge nReset) begin : SpReg
       if(SpWe)
          Sp <= AluOut;
 end
-
 always_ff@(posedge Clock or negedge nReset) begin : PcRegMuxed 
    if(!nReset)      
       Pc <= 0;
@@ -112,7 +119,6 @@ always_ff@(posedge Clock or negedge nReset) begin : PcRegMuxed
             default  :  Pc <= Pc + 1;
          endcase
 end
-
 always_ff@(posedge Clock or negedge nReset) begin : IrReg
    if(!nReset)
       Ir <= 0;
@@ -126,15 +132,18 @@ assign OpCode = {Ir[15:9],Ir[2:0]};       // Wire these to OpCode output
 // Combo
 
 always_comb begin : OpMux                 // Control ALU data input
-   case(Op1Sel)                           // 2 input mux
+   case(Op1Sel)                           // 3 input mux
       0        :  Op1 = Rd1;
+      1        :  Op1 = Pc;
       default  :  Op1 = Sp;
    endcase
    case(Op2Sel)                           // 3 input mux
-      0        :  Op2 = SignExtend;
-      1        :  Op2 = SignExtend << 2;
+      0        :  Op2 = Extended;
+      1        :  Op2 = Extended << 2;
       default  :  Op2 = Rd2; 
    endcase
 end
+
+assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
 
 endmodule
