@@ -1,4 +1,4 @@
-%% <+Last Edited: Mon 17 Feb 2014 20:19:30 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Mon 17 Feb 2014 21:11:03 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 \usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
@@ -171,7 +171,6 @@ Since then, the x86 instruction set has been expanded and the original instructi
 
 The Intel 8086 has 9 flags, detailed in table \ref{tab:Intel:flags}.
 The status register is updated when a compare (\texttt{CMP}, \texttt{CMPSB}, C\texttt{MPSW}) instruction is executed, or after an arithmetic operation.
-
 %TC:ignore
 
 \begin{table}
@@ -212,6 +211,7 @@ This is linked to a specific register (usually the \texttt{CX} register) and wil
 There is another instruction, \texttt{LOOPE / LOOPZ}, that jumps if the counter is zero, and the zero flag is set. 
 This has a complementary instruction, \texttt{LOOPNE / LOOPNZ}, which jumps if the counter is nonzero and the zero flag is not set.
 These instructions are useful, as it combines the decrement of a counter with a branch, resulting in a quicker operation for loops.
+
 
 %TC:ignore
 \subsubsection{Assembler Example}
@@ -337,6 +337,11 @@ However, the performance and flexibility of the processor should be advantageous
 \end{bibunit}
 
 \begin{bibunit}[is-unsrt]
+\makeatletter
+        \renewcommand\@biblabel[1]{\textbullet}
+\makeatother
+%\bibliography{bibl}{bibliography}{Bibliography}
+
 \renewcommand{\refname}{Bibliography}
 \nocite{*}
 \putbib[bibliography]
