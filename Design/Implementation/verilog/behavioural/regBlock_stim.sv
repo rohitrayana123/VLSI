@@ -11,7 +11,7 @@ logic [2:0]    Rs1;
 logic [2:0]    Rs2;
 logic [2:0]    Rw;   
 logic          Clock;
-logic          We;   
+logic          WE;   
 
 regBlock regBlock(                                           
    .Rd1     (Rd1     ),
@@ -21,7 +21,7 @@ regBlock regBlock(
    .Rs2     (Rs2     ),
    .Rw      (Rw      ),
    .Clock   (Clock   ),
-   .We      (We      )
+   .WE      (WE      )
 );
 
 always begin   #(CLK_PERIOD/2)   Clock = 0;
@@ -51,11 +51,11 @@ task WriteReg;
    begin
       $display("Writing %x to adress %d",writeMe,addressMe);
       @(negedge Clock);
-      We = 1;
+      WE = 1;
       WData = writeMe;
       Rw = addressMe;
       @(negedge Clock);
-      We = 0;
+      WE = 0;
    end
 endtask
 
