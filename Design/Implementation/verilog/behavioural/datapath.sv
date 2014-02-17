@@ -3,12 +3,20 @@ module datapath(
   output logic [3:0]    Opcode,
   output logic          Zflag,
   input        [15:0]   Data_in,
+  input        [4:0]    AluOp,
   input        [1:0]    Op2Sel,
   input                 Op1Sel,
   input                 Rw,
+  input                 AluEn,
+  input                 SpEn,
+  input                 SpWe,
+  input                 LrEn,
+  input                 LrWe,
+  input                 PcWe,
+  input        [1:0]    PcSel,
+  input                 IrWe,
   input                 Clock,
-  input                 nReset,
-  input  opcodes::alu_functions_t Function
+  input                 nReset
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -16,29 +24,111 @@ timeunit 1ns; timeprecision 100ps;
 import opcodes::*;
 
 wire  [15:0]   AluRes;
+wire  [15:0]   AluBusIF;
 logic [15:0]   Op1;
 logic [15:0]   Op2;
 wire  [15:0]   SignExtend;
 logic [15:0]   AluOut;
-logic [15:0]   PC;
-logic [15:0]   SP;
+logic [15:0]   Pc;
+wire  [15:0]   PcSrc;
+logic [15:0]   Sp;
+logic [15:0]   Lr;
+logic [15:0]   Ir;
+wire  [15:0]   SpBusIF;
 
+
+// Instances
 
 regBlock regBlock(                        // Register block instance                         
    .Rd1     (Rd1     ),
    .Rd2     (Rd2     ),
    .WData   (WData   ),
-   .Rs1     (Rs1     ),
-   .Rs2     (Rs2     ),
-   .Rw      (Rw      ),
+   .Rs1     (Ir[5:3] ),
+   .Rs2     (Ir[8:6] ),
+   .Rw      (Ir[2:0] ),
    .Clock   (Clock   ),
    .We      (We      )
 );
 
-always_comb begin                         // Control ALU data input
-   case(Op1Sel)                           // 2input mux
+alu alu(                                  // Combo ALU only
+   .Zflag   (Zflag   ), 
+   .Result  (AluRes  ),
+   .Op1     (Op1     ),
+   .Op2     (Op2     ),
+   .OpCode  (AluOp   )
+);
+
+
+// Bus interfaces
+
+trisBuf16 trisBufAlu(   // ALU
+   .dataIn  (AluOut  ),
+   .en      (AluEn   ),
+   .dataOut (SysBus  )
+);
+trisBuf16 trisBufPc(    // PC
+   .dataIn  (Pc      ),
+   .en      (PcEn    ),
+   .dataOut (SysBus  )
+);
+trisBuf16 trisBufSp(    // SP
+   .dataIn  (Sp      ),
+   .en      (SpEn    ),
+   .dataOut (SysBus  )
+);
+trisBuf16 trisBufLr(    // LR
+   .dataIn  (Lr      ),
+   .en      (LrEn    ),
+   .dataOut (SysBus  )
+);
+
+
+// Sequential
+
+always_ff@(posedge Clock or negedge nReset) begin : AluReg
+   if(!nReset)
+      AluOut <= 0;
+   else
+      AluOut<= AluRes;
+end
+
+always_ff@(posedge Clock or negedge nReset) begin : SpReg
+   if(!nReset)
+      Sp <= 0;
+   else
+      if(SpWe)
+         Sp <= AluOut;
+end
+
+always_ff@(posedge Clock or negedge nReset) begin : PcRegMuxed 
+   if(!nReset)      
+      Pc <= 0;
+   else
+      if(PcWe)                            // Control PC data input
+         case(PcSel)                      // 3 input mux
+            0        :  Pc <= Lr;
+            1        :  Pc <= AluOut;
+            2        :  Pc <= SysBus;
+            default  :  Pc <= Pc + 1;
+         endcase
+end
+
+always_ff@(posedge Clock or negedge nReset) begin : IrReg
+   if(!nReset)
+      Ir <= 0;
+   else
+      if(IrWe)
+         Ir <= SysBus;
+end
+assign OpCode = {Ir[15:9],Ir[2:0]};       // Wire these to OpCode output
+
+
+// Combo
+
+always_comb begin : OpMux                 // Control ALU data input
+   case(Op1Sel)                           // 2 input mux
       0        :  Op1 = Rd1;
-      default  :  Op1 = SP;
+      default  :  Op1 = Sp;
    endcase
    case(Op2Sel)                           // 3 input mux
       0        :  Op2 = SignExtend;
@@ -46,21 +136,5 @@ always_comb begin                         // Control ALU data input
       default  :  Op2 = Rd2; 
    endcase
 end
-
-alu alu(                                  // Combo ALU only
-   .Zflag   (Zflag   ), 
-   .Result  (AluRes  ),
-   .Op1     (Op1     ),
-   .Op2     (Op2     )
-);
-
-always_ff@(posedge Clock or negedge nReset) begin
-   if(!nReset)
-      AluOut <= 0;
-   else
-      AluOut <= AluRes;
-end
-
-
 
 endmodule
