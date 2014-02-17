@@ -41,6 +41,7 @@ case $module in
                               regBlock.sv       
                               trisBuf16.sv     ";;
    "regBlock")    cmd="$cmd                  regBlock_stim.sv  regBlock.sv"                                       ;;
+   "trisreg")	  cmd="$cmd trisreg_stim.sv trisreg.sv";;
    *)             echo "Unkown module $module"; printHelp; exit ;;
 esac
 cmd="$cmd +libext+.sv"
@@ -50,4 +51,6 @@ $cmd  # Call SimVision
 
 
 # I am sure there's a point for these but...
-rm -rf ncverilog.log ncverilog.key waves.shm INCA_libs
+# HSL: if this line is included, you can not reinvoke simulator. Maybe best to
+# have a clean script?
+#rm -rf ncverilog.log ncverilog.key waves.shm INCA_libs
