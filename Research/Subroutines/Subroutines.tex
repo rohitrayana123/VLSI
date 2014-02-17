@@ -126,10 +126,11 @@ Figure~\ref{fig:stack} is an abstraction of the stack with data label correspond
 
 
 \subsubsection{ARM7TDMI using Arm Thumb}
-The ARM7TDMI is a 32-bit RISC microprocessor with an emphasis on low-power design and pipelining for high throughput~\cite{ARM7TDMI}.
-It has two instruction sets. One of which is Arm Thumb, a low density 16-bit subset of the ARM assembly language~\cite{arm}.
-A user selectable flag is set to switch between instruction sets therefore drawing on each sets advantages.
-The advantage, explained in~\cite{ARMs}, is a reduction in code density. 
+The ARM7TDMI is a 32-bit RISC microprocessor with an emphasis on low-power design and pipelining for high throughput which is detailed in~\cite{ARM7TDMI}.
+It has two instruction sets. 
+One of which is Arm Thumb, explained in~\cite{arm}, a low density compressed 16-bit subset of the ARM assembly language where the benefits are considered in~\cite{ARMs}.
+It most notably assisted ARM into moving into the mobile phone market by reducing required program memory. 
+A user selectable flag is set to switch between instruction sets.
 
 This architecture does not have built-in support for calling subroutines using the stack.
 When the branch instruction is used, as seen in listing~\ref{lst:ArmCaller.asm}, the program counter is overwritten with the address of the corresponding label.
@@ -152,6 +153,7 @@ Relative addressing on the stack is required to draw the two arguments out and r
 It is clear that whether a microprocessor has built-in support for a stack or not the ability to call subroutines is unaffected.
 The support does make calling more efficient and easier to code. 
 
+\newpage
 
 %References - reading referenced in text
 \bibliographystyle{plain}
