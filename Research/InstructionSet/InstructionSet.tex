@@ -20,14 +20,14 @@
 \bibliographystyle{bibl}{ieeetr}
 \nocite{bibl}{*} %allow for no citations to bibliography
 
-%\begin{titlepage}
-%\clearpage
-%\maketitle
-%\thispagestyle{empty}
-%\end{titlepage}
+\begin{titlepage}
+\clearpage
+\maketitle
+\thispagestyle{empty}
+\end{titlepage}
 
-%\tableofcontents
-%\clearpage
+\tableofcontents
+\clearpage
 
 \section{Introduction}
 In programming a particular microprocessor, the size and formatting of assembly language instructions used are defined by the Instruction Set Architecture (ISA). This is a description of what operations can be performed. When choosing the encoding, a number of factors need to be considered. Including, but not limited to, instruction size, completeness and regularity. This report focusses on the principles of orthogonality and code density. 
@@ -127,7 +127,7 @@ Implementation of a microprocessor design based on a RISC processor will produce
 It was decided to base an ISA design on the 16-bit ARM Thumb subset. This was because it is an accumulation of the most common instructions from the main ARM ISA and designed to reduce the overall program size compared to its 32-bit counterpart \cite{ref}{ARM:ARM11RefMan}. This means an inherently dense coding, with a wide range of simple instructions. Also, the earlier mentioned investigation at Cornell University suggests there is little difference in terms of code density if there is no 'zero' register like in the ARM \cite{ref}{Density:Correlation}.
 
 \vspace*{\baselineskip}
-Word Count: 1686%Manually insert word count, or use online tool/script
+Word Count: 1629%Manually insert word count, or use online tool/script
 
 %References - Cited references
 \newpage
@@ -135,6 +135,7 @@ Word Count: 1686%Manually insert word count, or use online tool/script
 
 %Biliography - Non-cited information soruces
 %enable internal macro changes, and redefine labelling for bibliography
+\newpage
 \makeatletter 
 	\renewcommand\@biblabel[1]{\textbullet}
 \makeatother
