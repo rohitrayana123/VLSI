@@ -7,6 +7,7 @@
 \usepackage{caption}
 \usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
+\usepackage[nottoc, notbib]{tocbibind}
 
 
 
@@ -15,8 +16,12 @@
 \author{Ashley Robinson\\ Team: R4\\Course Tutor: Mr B. Iain McNally}
 \date{\today}
 \begin{document}
+
+
 \begin{titlepage}
+\clearpage
 \maketitle
+\thispagestyle{empty}
 \end{titlepage}
 
 \tableofcontents
@@ -157,26 +162,55 @@ The support does make calling more efficient and easier to code.
 
 %References - reading referenced in text
 \bibliographystyle{plain}
-\bibliography{references}
+\bibliography{references}{references}{References}
+\addcontentsline{toc}{section}{\protect\numberline{}References}
 %Biliography - all the reading done
-\renewcommand{\refname}{Bibliography}
-\begin{thebibliography}{9}
 
-\bibitem{Patterson}
-  Patterson D A and Hennessy J L,
-  \emph{Computer Organisation and Design: The Hardware/Software Interface}.
-  Morgan Kaufman,
-  4th Edition,
-  2009.\\
-  - Lots of processor concepts and MIPS examples
+\makeatletter 
+	\renewcommand\@biblabel[1]{\textbullet}
+\makeatother
 
-\bibitem{Mathur}
-  Mathur S,
-  \emph{Microprocessor 8086: Architecture, Programming and Interfacing}.
-  PHI Learning Private Limited,
-  2011.\\
-  - Intel 8086 microprocessor resource
+\section*{Bibliography}
+\addcontentsline{toc}{section}{\protect\numberline{}Bibliography}
 
+\begin{itemize}
+   \item{
+      Patterson D A and Hennessy J L,
+      \emph{Computer Organisation and Design: The Hardware/Software Interface},
+      Morgan Kaufman,
+      4th Edition,
+      2009.\\
+      - Lots of processor concepts and MIPS examples
+   }
+   \item{
+      Mathur S,
+      \emph{Microprocessor 8086: Architecture, Programming and Interfacing},
+      PHI Learning Private Limited,
+      2011.\\
+      - Intel 8086 microprocessor resource
+   }
+\end{itemize}
 
-\end{thebibliography}
+%\renewcommand{}{\refname}{Bibliography}
+%\bibliographystyle{plain}
+%
+%
+%\begin{thebibliography}{9}
+%\bibitem{Patterson}
+%  Patterson D A and Hennessy J L,
+%  \emph{Computer Organisation and Design: The Hardware/Software Interface}.
+%  Morgan Kaufman,
+%  4th Edition,
+%  2009.\\
+%  - Lots of processor concepts and MIPS examples
+%
+%\bibitem{Mathur}
+%  Mathur S,
+%  \emph{Microprocessor 8086: Architecture, Programming and Interfacing}.
+%  PHI Learning Private Limited,
+%  2011.\\
+%  - Intel 8086 microprocessor resource
+%
+%
+%\end{thebibliography}
 \end{document}
