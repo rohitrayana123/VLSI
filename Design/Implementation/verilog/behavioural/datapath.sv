@@ -38,34 +38,6 @@ alu a(                // Combo ALU only
 assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]};
 assign Opcode = {Ir[15:9], Ir[2:0]};
 assign Sysbus = (MemEn) ? DataIn : {16{1'bz}};
-// Bus interfaces
-
-//trisBuf16 trisBufAlu(   // ALU
-//   .DataIn  (AluOut  ),
-//   .En      (AluEn   ),
-//   .DataOut (SysBus  )
-//);
-//trisBuf16 trisBufPc(    // PC
-//   .DataIn  (Pc      ),
-//   .En      (PcEn    ),
-//   .DataOut (SysBus  )
-//);
-//trisBuf16 trisBufSp(    // SP
-//   .DataIn  (Sp      ),
-//   .En      (SpEn    ),
-//   .DataOut (SysBus  )
-//);
-//trisBuf16 trisBufLr(    // LR
-//   .DataIn  (Lr      ),
-//   .En      (LrEn    ),
-//   .DataOut (SysBus  )
-//);
-//trisBuf16 trisBufSys(   // Memory access
-//   .DataIn  (DataIn  ),
-//   .En      (MemEn    ),
-//   .DataOut (SysBus  )
-//);
- 
 
 //Registers
 trisreg Reg_PC (
@@ -102,7 +74,7 @@ trisreg Reg_IR (
 	.Reg_WE (IrWe    ),
 	.DataIn (SysBus  ),
 	.DataOut(Ir      ),
-	.TrisOut(SysBus  )
+	.TrisOut() //not used
 );
 trisreg Reg_ALUOUT (
 	.Clock  (Clock   ), 
