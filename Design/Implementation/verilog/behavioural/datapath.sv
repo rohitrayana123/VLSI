@@ -1,6 +1,6 @@
 module datapath(
   output wire  [15:0]   SysBus,
-  output wire  [7:0]    IrControl,
+  output wire  [7:0]    Opcode,
   output logic          Z,
   input  wire  [15:0]   DataIn,
   input  wire  [4:0]    AluOp,
@@ -15,7 +15,7 @@ module datapath(
   input  wire           PcWe,
   input  wire  [1:0]    PcSel,
   input  wire           PcEn,
-  input  wire           IrEn,
+//input  wire           IrEn,
   input  wire           IrWe,
   input  wire           WdSel,
   input  wire           ImmSel,
@@ -53,6 +53,7 @@ regBlock regBlock(      // Register block instance
    .Rs2     (Ir[8:6] ),
    .Rw      (Ir[2:0] ),
    .Clock   (Clock   ),
+   .nReset  (nReset  ),
    .We      (RegWe   )
 );
 alu alu(                // Combo ALU only
@@ -62,12 +63,8 @@ alu alu(                // Combo ALU only
    .Op2     (Op2     ),
    .OpCode  (AluOp   )
 );
-signExtend signExtend(  // Sign extender 
-   .DataOut (Extended),
-   .DataIn  (Ir[10:3]),
-   .ImmSel  (ImmSel  )
-);
-
+//Sign extends
+assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]};
 
 // Bus interfaces
 

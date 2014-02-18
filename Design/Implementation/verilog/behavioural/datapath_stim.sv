@@ -4,8 +4,8 @@ timeunit 1ns; timeprecision 10ps;
 
 parameter CLK_PERIOD = 100;
 
-wire  [15:0]   SysBus;     
-wire  [3:0]    Opcode;     
+wire  [15:0]   SysBus, DataIn;     
+wire  [7:0]    Opcode;     
 wire           Z;      
 logic [4:0]    AluOp;
 logic [1:0]    Op2Sel;
@@ -25,8 +25,8 @@ logic          ImmSel;
 logic          RegWe;
 logic          Clock;      
 logic          nReset;     
-
-datapath datapath(                                           
+logic 	       MemEn;
+datapath dp(                                           
    .SysBus        (SysBus  ),    // Outputs from DUT
    .Opcode        (Opcode  ),
    .Z             (Z       ),
@@ -47,7 +47,9 @@ datapath datapath(
    .ImmSel        (ImmSel  ),
    .RegWe         (RegWe   ),
    .Clock         (Clock   ),
-   .nReset        (nReset  )
+   .nReset        (nReset  ),
+   .DataIn	  (DataIn  ),
+   .MemEn	  (MemEn   )
 );
 
 always begin   #(CLK_PERIOD/2) Clock = 0;

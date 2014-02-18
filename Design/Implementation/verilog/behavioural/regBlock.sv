@@ -6,7 +6,7 @@ module regBlock #( parameter n = 16, parameter reg_count = 8, parameter addr_siz
   input        [addr_size-1:0]    Rs2,
   input        [addr_size-1:0]    Rw,
   input                 Clock, 
-  input                 WE,
+  input                 We,
   input			nReset
 );
 
@@ -19,7 +19,7 @@ begin
 	if (!nReset)
 		regs = '{reg_count{'{n{0}}}};
 	else
-		if(WE)  regs[Rw] <= WData;    
+		if(We)  regs[Rw] <= WData;    
 end
 
 assign Rd1 = regs[Rs1];
