@@ -4,7 +4,8 @@ module datapath(
   output logic [3:0]    Flags,
   input  wire  [15:0]   DataIn,
   input  wire  [4:0]    AluOp,
-  input  wire  [1:0]    Op2Sel, PcSel,
+  input  wire  [1:0]    Op2Sel,
+  input  opcodes::pc_select_t    PcSel,
   input  wire           Op1Sel, Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset
 );
 

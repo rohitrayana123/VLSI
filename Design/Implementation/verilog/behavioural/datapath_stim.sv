@@ -1,7 +1,7 @@
 module datapath_stim;
 
 timeunit 1ns; timeprecision 10ps;
-
+import opcodes::*;
 parameter CLK_PERIOD = 100;
 
 wire  [15:0]   SysBus, DataIn;     
@@ -9,23 +9,8 @@ wire  [7:0]    Opcode;
 wire  [3:0]    Flags;  
 logic [4:0]    AluOp;
 logic [1:0]    Op2Sel;
-logic          Op1Sel;
-logic          Rw;
-logic          WdSel;
-logic          AluEn;
-logic          SpEn;
-logic          SpWe;
-logic          LrEn;
-logic          LrWe;
-logic          PcWe;
-logic [1:0]    PcSel;
-logic          PcEn;
-logic          IrWe;
-logic          ImmSel;    
-logic          RegWe;
-logic          Clock;      
-logic          nReset;     
-logic 	       MemEn;
+pc_select_t PcSel;
+logic Op1Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn;
 datapath dp(                                           
    .SysBus        (SysBus  ),    // Outputs from DUT
    .Opcode        (Opcode  ),

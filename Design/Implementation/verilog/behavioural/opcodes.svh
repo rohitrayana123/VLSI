@@ -6,6 +6,8 @@ typedef
   enum logic [3:0] { FnACC, FnMem, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
   alu_functions_t;
 
+//Program Counter Selction Codes
+typedef enum logic [1:0] {Lr, Sysbus, AluOut, Pc1 } pc_select_t;
 // Define Opcodes:
 //
 //  these could be defined with a further enumerated type declaration
@@ -31,5 +33,8 @@ localparam ADDI 		= 5'b00101;
 localparam ADDIB	 	= 5'b11000;
 localparam ADC			= 5'b00110;
 localparam ADCI			= 5'b00111;
+
+
+
 
 endpackage
