@@ -1,5 +1,5 @@
 module alu(
-  output logic          Zflag, 
+  output logic [3:0]    Flags, 
   output logic [15:0]   Result,
   input        [15:0]   Op1,
   input        [15:0]   Op2,
