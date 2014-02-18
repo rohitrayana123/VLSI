@@ -25,11 +25,11 @@ typedef
 //localparam LSR		= 4'd11;
 //localparam STA		= 4'd15;
 
-localparam NOP 			= 5'b00000
-localparam ADD 			= 5'b00100
-localparam ADDI 		= 5'b00101
-localparam ADDIB	 	= 5'b11000
-localparam ADC			= 5'b00110
-localparam ADCI			= 5'b00111
+localparam NOP 			= 5'b00000;
+localparam ADD 			= 5'b00100;
+localparam ADDI 		= 5'b00101;
+localparam ADDIB	 	= 5'b11000;
+localparam ADC			= 5'b00110;
+localparam ADCI			= 5'b00111;
 
 endpackage
