@@ -1,4 +1,4 @@
-%% <+Last Edited: Mon 17 Feb 2014 21:11:03 GMT by seblovett on seblovett-Ubuntu +>
+%% <+Last Edited: Tue 18 Feb 2014 21:42:28 GMT by seblovett on seblovett-Ubuntu +>
 \documentclass[12pt,a4paper]{article}
 \usepackage[nodayofweek]{datetime}
 %\usepackage{natbib}
@@ -76,15 +76,15 @@ This can be seen in the assembler by an {\texttt `S'} suffix to the instruction.
 This optional update is only in the Thumb2 instruction set, not the Thumb.
 In the Thumb instruction set, all ALU operations update the status register.
 
-There are also four instructions which update the status register - Compare (\texttt{CMP}), Compare Negative (\texttt{CMN}), Test Bits (\texttt{TST}) and Test Equivalence (\texttt{TEQ}).
+There are four other instructions which update the status register - Compare (\texttt{CMP}), Compare Negative (\texttt{CMN}), Test Bits (\texttt{TST}) and Test Equivalence (\texttt{TEQ}).
 %These can all be part of an ALU instruction, or an immediate instruction \cite{ARM:CMPCMN}.
 These can compare two values from registers, or a register and an immediate \cite{ARM:CMPCMN}.
-Compare subtracts the register value from the other operand, and CMN is the same, but negates the second operand.
+Compare subtracts the register value from the other operand, and \texttt{CMN} is the same, but negates the second operand.
 These two instructions update all the flags, but discard the result of the operation.
-TST performs an AND function between the two operands. 
-This is the same as an \texttt{AND} instruction, but only affects the Z and N flags.
-Similarly, there exists a TEQ instruction which conducts and XOR between the two operands and only updates the Z and N flags \cite{ARM:TSTTEQ}.
-The TST and TEQ instructions do not store the result of the operation.
+\texttt{TST} performs an AND function between the two operands. 
+This is the same as an \texttt{AND} instruction, but only affects the \texttt{Z} and \texttt{N} flags.
+Similarly, there exists a \texttt{TEQ} instruction which conducts an XOR between the two operands and only updates the \texttt{Z} and \texttt{N} flags \cite{ARM:TSTTEQ}.
+The \texttt{TST} and \texttt{TEQ} instructions do not store the result of the operation.
 
 
 %\subsubsection{Conditional Execution}
@@ -171,6 +171,7 @@ Since then, the x86 instruction set has been expanded and the original instructi
 
 The Intel 8086 has 9 flags, detailed in table \ref{tab:Intel:flags}.
 The status register is updated when a compare (\texttt{CMP}, \texttt{CMPSB}, C\texttt{MPSW}) instruction is executed, or after an arithmetic operation.
+There are flags which are not used for conditional branches, but related to other workings of the processor.
 %TC:ignore
 
 \begin{table}
@@ -198,16 +199,16 @@ Interrupt & I & Enables / disables interrupts \cite{flag:i} \\
 The 8086 has a total of 31 conditional branch instructions, and one jump instruction \cite{Intel:instructionset}.
 The conditional branches cover many different logic combinations between 5 flags - \texttt{C}, \texttt{Z}, \texttt{O}, \texttt{S} and \texttt{P}.
 This enables the 8086 to make signed and unsigned decisions.
-The full set of branch instructions can be seen at \cite{Intel:condjumps}.
+The full set of branch instructions can be seen in \cite{Intel:condjumps}.
 There is also a branch instruction that checks the value of a register to be zero, rather than the flags. 
 
-In the assembly language, there are multiple instructions that map to the same instruction.
+In the assembly language, there are multiple instructions that map to the same opcode.
 For example, the \texttt{JE} instruction checks that the \texttt{Z} flag is set, but the \texttt{JZ} instruction also does this.
 It can be seen that this is to make the code more readable as the instructions actually map to the same machine code \cite{Intel:datasheet}.
 In total, therefore, there are 17 actual instructions.
 
 The 8086 also implements a \texttt{LOOP} instruction.
-This is linked to a specific register (usually the \texttt{CX} register) and will branch if the value of \texttt{CX} does not become $0$ after being decremented.
+This is linked to a specific register (the \texttt{CX} register) and will branch if the value of \texttt{CX} does not become $0$ after being decremented.
 There is another instruction, \texttt{LOOPE / LOOPZ}, that jumps if the counter is zero, and the zero flag is set. 
 This has a complementary instruction, \texttt{LOOPNE / LOOPNZ}, which jumps if the counter is nonzero and the zero flag is not set.
 These instructions are useful, as it combines the decrement of a counter with a branch, resulting in a quicker operation for loops.
@@ -257,8 +258,8 @@ This means that the conditional branches can only rely on if a register value is
 MIPS implements only two branch instructions; branch if equal (\texttt{BEQ}) and branch if not equal (\texttt{BNE}).
 With only these two instructions, it is difficult to see how this can be used to fully control the program flow.
 There exists an instruction which helps with control flow, but is not a conditional jump - the Set Less Than (\texttt{SLT}) instruction.
-\texttt{SLT} stores compares two register values.
-A 1 is then stored in the destination register if operand 2 is less than operand 3, else 0 is stored \cite{patterson2013computer}.
+\texttt{SLT} compares two register values.
+A $1$ is stored in the destination register if operand 2 is less than operand 3, else 0 is stored \cite{patterson2013computer}.
 
 This instruction fulfils the lack of branch instructions.
 MIPS also has a register which always reads zero, which can then be compared to the value returned by the \texttt{SLT} instruction.
