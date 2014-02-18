@@ -7,6 +7,7 @@
 \usepackage{caption}
 \usepackage[nodayofweek]{datetime}
 \usepackage{natbib}
+\usepackage[nottoc, notbib]{tocbibind}
 
 
 
@@ -15,8 +16,12 @@
 \author{Ashley Robinson\\ Team: R4\\Course Tutor: Mr B. Iain McNally}
 \date{\today}
 \begin{document}
+
+
 \begin{titlepage}
+\clearpage
 \maketitle
+\thispagestyle{empty}
 \end{titlepage}
 
 \tableofcontents
@@ -31,12 +36,13 @@
 
 \section{Introduction}
 
-Subroutines, also known as procedures, methods, functions or just routines, are smaller sections of code inside larger program designed to perform certain tasks which is described in~\cite{alison}.
+Subroutines, also known as procedures, methods, functions or just routines, are smaller sections of code inside larger programs designed to perform certain tasks as described in~\cite{alison}.
 The motivation for subroutines is to produce code which is more efficient in size, easy to adapt and above all else maintain. 
 They help form the foundations of third generation programming languages.
 
-Designing hardware such that it is capable of executing subroutines only requires available memory and access to the program counter.
-Designing hardware to call and return from subroutines efficiently can vastly improve the performance of a processor. 
+This report approaches the implication of hardware design by considering microprocessor architecture and targeted assembler subroutines.
+Designing hardware such that it is capable of executing subroutines only requires available memory and access to the current position in the program; usually a register called the Program Counter (PC).
+Designing hardware to call and return from subroutines efficiently can vastly improve program performance. 
 
 
 \section{Research}
@@ -45,18 +51,18 @@ Designing hardware to call and return from subroutines efficiently can vastly im
 Context save allows a microprocessor to switch execution focus but retain data such that the previous focus can be fully restored.
 Using call and return instructions when running a subroutine may automatically save context, usually the program counter, but may also require additional instructions to guarantee safe execution.
 Nested and recursive subroutines, introduced in~\cite{IainPrograms}, require dealing with multiple context saves while retaining the data for all previous calls. 
-The Intel 8086, discussed further in section~\ref{8086}, has support for procedure call instructions which automatically use the stack to organise data.
 Listing~\ref{lst:factorial.c} holds subroutine written in C that recursively calls itself to compute the factorial of a number.
-Such applications require context save support.
+Such applications require context save support that permits many nested subroutines.
 
 \lstinputlisting[label=lst:factorial.c,frame=single,caption=Factorial subroutine]{Code/factorial.c}
 
 
 A stack, as discussed in~\cite{stack}, is a Last-In-First-Out (LIFO) data structure which is used as store when the immediately accessible registers do not provide enough memory.
-The stack can be thought of to grow in size where a register called a \emph{stack pointer} (SP) holds the address of the top most element in main memory.
+The stack can be thought of to grow in size where a register called a Stack Pointer (SP) holds the address of the top most element in main memory.
 Two operations can be performed on the stack; \emph{push}, which adds an item to the stack and increments the stack pointer, together with \emph{pull}, which performs the reverse therefore shrinking the stack. 
-It is convention for the stack to occupy the main memory and grow down from the top address towards memmory allocated for other purposes; this can be seen in figure~\ref{fig:allocation}.
-
+It is convention for the stack to occupy main memory and grow down from the top address towards memory allocated for other purposes; this can be seen in figure~\ref{fig:allocation}.
+Data can be accessed indirectly on the stack using standard load and store instructions. 
+If the top of the stack is known then relative addressing can be used to go back and forth without having to change the SP.
 
 \begin{figure}[htb]
    \centering
@@ -65,15 +71,28 @@ It is convention for the stack to occupy the main memory and grow down from the 
    \label{fig:allocation}
 \end{figure}
 
-
+Context save can also be handled by the assembly code running on the processor.
+Function prologues and epilogues, considered in~\cite{proWiki,pro}, are used to move data.
+These follow conventions which usually advice the programmer on what register to place on the stack and how to do so from the caller and callee.
 
 
 
 
 \subsection{Operation of Stack Frames}
 
-\subsubsection{8086}
+A stack from is method of ordering data used when a subroutine is called.
+
+\begin{figure}[htb]
+   \centering
+   \includegraphics[height=7cm]{Figures/CallStack.pdf}
+   \caption{An example call stack built of two stack frames where \emph{FuncA} is called first. Adapted from~\cite{callWiki}.}
+   \label{fig:call}
+\end{figure}
+
+\section{Case Studies}
+\subsection{8086}
 \label{8086}
+The Intel 8086 has support for procedure call instructions which automatically use the stack to organise data.
 The assembly held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
 A basic example of how stack frames are built to pass parameters to and from a subroutine.
 The main program in listing~\ref{lst:8086Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
@@ -125,7 +144,7 @@ Figure~\ref{fig:stack} is an abstraction of the stack with data label correspond
 
 
 
-\subsubsection{ARM7TDMI using Arm Thumb}
+\subsection{ARM7TDMI using Arm Thumb}
 The ARM7TDMI is a 32-bit RISC microprocessor with an emphasis on low-power design and pipelining for high throughput which is detailed in~\cite{ARM7TDMI}.
 It has two instruction sets. 
 One of which is Arm Thumb, explained in~\cite{arm}, a low density compressed 16-bit subset of the ARM assembly language where the benefits are considered in~\cite{ARMs}.
@@ -158,25 +177,54 @@ The support does make calling more efficient and easier to code.
 %References - reading referenced in text
 \bibliographystyle{plain}
 \bibliography{references}
+\addcontentsline{toc}{section}{\protect\numberline{}References}
 %Biliography - all the reading done
-\renewcommand{\refname}{Bibliography}
-\begin{thebibliography}{9}
 
-\bibitem{Patterson}
-  Patterson D A and Hennessy J L,
-  \emph{Computer Organisation and Design: The Hardware/Software Interface}.
-  Morgan Kaufman,
-  4th Edition,
-  2009.\\
-  - Lots of processor concepts and MIPS examples
+\makeatletter 
+	\renewcommand\@biblabel[1]{\textbullet}
+\makeatother
 
-\bibitem{Mathur}
-  Mathur S,
-  \emph{Microprocessor 8086: Architecture, Programming and Interfacing}.
-  PHI Learning Private Limited,
-  2011.\\
-  - Intel 8086 microprocessor resource
+\section*{Bibliography}
+\addcontentsline{toc}{section}{\protect\numberline{}Bibliography}
 
+\begin{itemize}
+   \item{
+      Patterson D A and Hennessy J L,
+      \emph{Computer Organisation and Design: The Hardware/Software Interface},
+      Morgan Kaufman,
+      4th Edition,
+      2009.\\
+      - Lots of processor concepts and MIPS examples
+   }
+   \item{
+      Mathur S,
+      \emph{Microprocessor 8086: Architecture, Programming and Interfacing},
+      PHI Learning Private Limited,
+      2011.\\
+      - Intel 8086 microprocessor resource
+   }
+\end{itemize}
 
-\end{thebibliography}
+%\renewcommand{}{\refname}{Bibliography}
+%\bibliographystyle{plain}
+%
+%
+%\begin{thebibliography}{9}
+%\bibitem{Patterson}
+%  Patterson D A and Hennessy J L,
+%  \emph{Computer Organisation and Design: The Hardware/Software Interface}.
+%  Morgan Kaufman,
+%  4th Edition,
+%  2009.\\
+%  - Lots of processor concepts and MIPS examples
+%
+%\bibitem{Mathur}
+%  Mathur S,
+%  \emph{Microprocessor 8086: Architecture, Programming and Interfacing}.
+%  PHI Learning Private Limited,
+%  2011.\\
+%  - Intel 8086 microprocessor resource
+%
+%
+%\end{thebibliography}
 \end{document}
