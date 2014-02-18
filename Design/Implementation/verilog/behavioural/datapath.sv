@@ -14,6 +14,33 @@ wire  [15:0]   AluRes, AluBusIF, Rd1, Rd2, WData, SignExtend, Extended, PcSrc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir;
 
 
+//Combinational logic for tristate bus, reg inputs or outputs
+assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]};
+assign Opcode = {Ir[15:9], Ir[2:0]};
+assign Sysbus = (MemEn) ? DataIn : {16{1'bz}};
+assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
+
+always_comb begin : PcInMux
+	case(PcSel)                      // 3 input mux
+            0        :  PcIn <= Lr;
+            1        :  PcIn <= AluOut;
+            2        :  PcIn <= SysBus;
+            default  :  PcIn <= Pc + 1;
+         endcase
+end
+
+always_comb begin : OpMux                 // Control ALU data input
+   case(Op1Sel)                           // 3 input mux
+      0        :  Op1 = Rd1;
+      1        :  Op1 = Pc;
+      default  :  Op1 = Sp;
+   endcase
+   case(Op2Sel)                           // 3 input mux
+      0        :  Op2 = Extended;
+      1        :  Op2 = Extended << 2;
+      default  :  Op2 = Rd2; 
+   endcase
+end
 
 // Instances
 
@@ -35,9 +62,6 @@ alu a(                // Combo ALU only
    .Op2     (Op2     ),
    .OpCode  (AluOp   )
 );
-assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]};
-assign Opcode = {Ir[15:9], Ir[2:0]};
-assign Sysbus = (MemEn) ? DataIn : {16{1'bz}};
 
 //Registers
 trisreg Reg_PC (
@@ -85,58 +109,5 @@ trisreg Reg_ALUOUT (
 	.DataOut(AluOut  ),
 	.TrisOut(SysBus  )
 );
-
-
-
-
-// Sequential
-
-//always_ff@(posedge Clock or negedge nReset) begin : AluReg
-//   if(!nReset)
-//      AluOut <= 0;
-//   else
-//      AluOut<= AluRes;
-//end
-//always_ff@(posedge Clock or negedge nReset) begin : SpReg
-//   if(!nReset)
-//      Sp <= 0;
-//   else
-//      if(SpWe)
-//         Sp <= AluOut;
-//end
-always_comb //@(posedge Clock or negedge nReset) begin : PcRegMuxed 
-begin : PcInMux
-	case(PcSel)                      // 3 input mux
-            0        :  PcIn <= Lr;
-            1        :  PcIn <= AluOut;
-            2        :  PcIn <= SysBus;
-            default  :  PcIn <= Pc + 1;
-         endcase
-end
-//always_ff@(posedge Clock or negedge nReset) begin : IrReg
-//   if(!nReset)
-//      Ir <= 0;
-//   else
-//      if(IrWe)
-//         Ir <= SysBus;
-//end
-assign IrControl = {Ir[15:9],Ir[2:0]};                 // Wire these to OpCode output
-
-// Combo
-
-always_comb begin : OpMux                 // Control ALU data input
-   case(Op1Sel)                           // 3 input mux
-      0        :  Op1 = Rd1;
-      1        :  Op1 = Pc;
-      default  :  Op1 = Sp;
-   endcase
-   case(Op2Sel)                           // 3 input mux
-      0        :  Op2 = Extended;
-      1        :  Op2 = Extended << 2;
-      default  :  Op2 = Rd2; 
-   endcase
-end
-
-assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
 
 endmodule
