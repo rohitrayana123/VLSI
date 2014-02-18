@@ -2,11 +2,13 @@ module control_stim;
 
 timeunit 1ns; timeprecision 10ps;
 
+import opcodes::*;
+
 parameter CLK_PERIOD = 100;
 
 logic       Ale;
 logic       Enb;
-logic [4:0] AluOp;    
+logic [3:0] AluOp;    
 logic [1:0] Op2Sel;   
 logic       Op1Sel;   
 logic       Rw;       
@@ -61,5 +63,9 @@ end
 initial begin
          nReset = 0;
    #500  nReset = 1;
+   
+   #1000    OpCode = NOP;
+   #1000    OpCode = ADD;
+   #1000    OpCode = NOP;
 end
 endmodule
