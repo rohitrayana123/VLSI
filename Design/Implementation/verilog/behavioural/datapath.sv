@@ -10,7 +10,7 @@ module datapath(
 
 timeunit 1ns; timeprecision 100ps;
 
-wire  [15:0]   AluRes, AluBusIF, Rd1, Rd2, WData, SignExtend, Extended, PcSrc;
+wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir;
 
 
@@ -87,7 +87,7 @@ trisreg Reg_SP (
 	.nReset (nReset  ),
 	.Reg_EN (SpEn    ),
 	.Reg_WE (SpWe    ),
-	.DataIn (AluOut  ),
+	.DataIn (AluRes  ),
 	.DataOut(Sp      ),
 	.TrisOut(SysBus  )
 );
