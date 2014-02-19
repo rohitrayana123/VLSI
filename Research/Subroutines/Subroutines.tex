@@ -36,20 +36,23 @@
 
 \section{Introduction}
 
-Subroutines, also known as procedures, methods, functions or just routines, are smaller sections of code inside larger programs designed to perform certain tasks as described in~\cite{alison}.
+Subroutines, also known as procedures, methods, functions or just routines, are smaller sections of code inside larger programs designed to perform specific tasks~\cite{alison}.
 The motivation for subroutines is to produce code which is more efficient in size, easy to adapt and above all else maintain. 
 They help form the foundations of third generation programming languages.
 
-This report approaches the implication of hardware design by considering microprocessor architecture and targeted assembler subroutines.
+This report discusses the implications of subroutine support in hardware by considering microprocessor architecture and targeted assembler.
 Designing hardware such that it is capable of executing subroutines only requires available memory and access to the current position in the program; usually a register called the Program Counter (PC).
 Designing hardware to call and return from subroutines efficiently can vastly improve program performance. 
 
-
+Two pieces of code will be referred to throughout this report.
+The \emph{caller} is the piece of code which jumps to another piece of code and finally will return to continue execution.
+The \emph{callee} is a piece of code jumped to from the caller and contains the functionality of a subroutine. 
+While all subroutines considered a leaf functions the callee is not explicitly the whole subroutine as both pieces code are required for execution.
 \section{Research}
 
 \subsection{Subroutine Context Save }
 Context save allows a microprocessor to switch execution focus but retain data such that the previous focus can be fully restored.
-Using call and return instructions when running a subroutine may automatically save context, usually the program counter, but may also require additional instructions to guarantee safe execution.
+Using call and return instructions when running a subroutine may automatically save context, such as the PC, but may also require additional instructions to guarantee safe execution.
 Nested and recursive subroutines, introduced in~\cite{IainPrograms}, require dealing with multiple context saves while retaining the data for all previous calls. 
 Listing~\ref{lst:factorial.c} holds subroutine written in C that recursively calls itself to compute the factorial of a number.
 Such applications require context save support that permits many nested subroutines.
@@ -57,22 +60,23 @@ Such applications require context save support that permits many nested subrouti
 \lstinputlisting[label=lst:factorial.c,frame=single,caption=Factorial subroutine]{Code/factorial.c}
 
 
-A stack, as discussed in~\cite{stack}, is a Last-In-First-Out (LIFO) data structure which is used as store when the immediately accessible registers do not provide enough memory.
-The stack can be thought of to grow in size where a register called a Stack Pointer (SP) holds the address of the top most element in main memory.
+A stack, as discussed in~\cite{stack}, is a Last-In-First-Out (LIFO) data structure which is used for data storage when the immediately accessible registers do not provide enough memory.
+The stack can be thought of to grow in size where a register called a Stack Pointer (SP) holds the address, in main memory, of the top most element.
 Two operations can be performed on the stack; \emph{push}, which adds an item to the stack and increments the stack pointer, together with \emph{pull}, which performs the reverse therefore shrinking the stack. 
 It is convention for the stack to occupy main memory and grow down from the top address towards memory allocated for other purposes; this can be seen in figure~\ref{fig:allocation}.
 Data can be accessed indirectly on the stack using standard load and store instructions. 
 If the top of the stack is known then relative addressing can be used to go back and forth without having to change the SP.
+Rewriting data in the stack is considered bad practice although is usually possible and can be exploited when writing subroutines.
 
 \begin{figure}[htb]
    \centering
-   \includegraphics[height=5cm]{Figures/allocation.pdf}
+   \includegraphics[height=5.5cm]{Figures/allocation.pdf}
    \caption{Allocation of the stack in main memory. Based on a MIPS architecture adapted from~\cite{stack}.}
    \label{fig:allocation}
 \end{figure}
 
-Context save can also be handled by the assembly code running on the processor.
-Function prologues and epilogues, considered in~\cite{proWiki,pro}, are used to move data.
+Context save can also be handled by the assembler code running on the processor.
+Function prologues and epilogues, considered in~\cite{proWiki,pro}, are used to move data for safe execution.
 These follow conventions which usually advice the programmer on what register to place on the stack and how to do so from the caller and callee.
 
 
@@ -80,24 +84,41 @@ These follow conventions which usually advice the programmer on what register to
 
 \subsection{Operation of Stack Frames}
 
-A stack from is method of ordering data used when a subroutine is called.
+A stack frame is a method of ordering data used when a subroutine is called.
+It is created by both the caller and the callee.
+It holds the paramters passed to the subroutine, the return address which should pointer at the caller and local variables created inside the callee.
+Figure~\ref{fig:call} is a call stack; a stack of stack frames created by nesting subroutines.
+This is generally the case for most programs but optimisation can be used to improve memory allocation.
+Explained in~\cite{callWiki}, overlapping can be used to pass local variables on to a nested subroutine by merging the parameter and local variable sections.
+Data returned from a function can be accessed using load instructions with addresses previously occupied by the stack.
+
+Support for stack frames may be provided by a Base Pointer (BP).
+This usually takes on the value of the SP when the return address is placed on the stack therefore no calculations have to be done in order to destroy the local variable part of stack frame, just a simple overwrite.
 
 \begin{figure}[htb]
    \centering
-   \includegraphics[height=7cm]{Figures/CallStack.pdf}
+   \includegraphics[height=8cm]{Figures/CallStack.pdf}
    \caption{An example call stack built of two stack frames where \emph{FuncA} is called first. Adapted from~\cite{callWiki}.}
    \label{fig:call}
 \end{figure}
 
+
+
+
+
+
 \section{Case Studies}
-\subsection{8086}
+\label{case}
+\subsection{Intel 8086}
 \label{8086}
-The Intel 8086 has support for procedure call instructions which automatically use the stack to organise data.
-The assembly held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the Intel 8086 microprocessor.
-A basic example of how stack frames are built to pass parameters to and from a subroutine.
+The Intel 8086 is a 16-bit Complex Instruction Set Computer (CISC) microprocessor which sparked the well kown x86 Intel family.
+It has support for procedure call instructions which automatically use the stack to organise data.
+The assembler held in listing~\ref{lst:8086Caller.asm} and~\ref{lst:8086Callee.asm} is written for the 8086.
+This is a basic example of how stack frames are built to pass parameters to and from a subroutine.
 The main program in listing~\ref{lst:8086Caller.asm} loads two immediate values into registers then begins building a stack frame by pushing them to the stack.  
 The subroutine is called to act upon the arguments passed via the stack.
-When control is passed back to these set of instructions and the return value is extracted by using relative addressing from the base pointer then finally two stack pops completely destroy the stack frame.
+When control is passed back to the caller these set of instructions and the return value is extracted by using relative addressing from the BP then finally two stack pops completely destroy the stack frame.
+It is also possible to destroy the stack frame by using an add instruction on the SP shrinking it by one entry for every addition of two.
 
 \lstinputlisting[label=lst:8086Caller.asm,frame=single,caption=8086Caller.asm]{Code/8086Caller.asm}
 
@@ -105,13 +126,13 @@ When control is passed back to these set of instructions and the return value is
 
 When the subroutine, in listing~\ref{lst:8086Callee.asm}, is called the return address is pushed onto the stack.
 This built-in support for the stack handles branching and next line address storage using a call function.
-To start the base pointer is placed on the stack so stack pointer has value to which to be restored.
-Reducing the value of the stack pointer allocates space for local variables.
-The first argument is placed in memory as local variable; this is unnecessary but serves as example.
+To start the BP is placed on the stack so the SP has a restoration value.
+Reducing the value of the SP allocates space for local variables.
+The first argument is placed in memory as a local variable; this is unnecessary but serves as an example.
 The second argument is loaded into a working register.
-The first local variable is added to the working register which is then placed in to the memory for the second local variable.
-Finally the stack pointer and the base pointer are restored and a return instruction hands control over the caller. 
-This is all part of the calling convention for subroutines using stack frames on the 8086~\cite{8086call}.
+The first local variable is added to the working register which is then placed in to the memory as the second local variable.
+Finally the SP and the BP are restored and a return instruction hands control over to the caller. 
+This is all part of the calling convention for subroutines using stack frames on the 8086 microprocessor~\cite{8086call}.
  
 \lstinputlisting[label=lst:8086Callee.asm,frame=single,caption=8086Callee.asm]{Code/8086Callee.asm}
 
@@ -119,8 +140,8 @@ This is all part of the calling convention for subroutines using stack frames on
 
 This code was tested upon an 8086 emulator~\cite{emu8086}.
 The emulator provides a complete overview of the flow of data within the processor including the stack. 
-Figure~\ref{fig:emu} shows the emulator during the execution of the subroutine just before the stack pointer is overwritten with the base pointer.
-Figure~\ref{fig:stack} is an abstraction of the stack with data label corresponding to the subroutine. 
+Figure~\ref{fig:emu} shows the emulator during the execution of the subroutine just before the SP is overwritten with the BP.
+Figure~\ref{fig:stack} is an abstraction of the stack with data labels corresponding to the subroutine. 
 
 \begin{figure}[htb]
         \centering
@@ -144,36 +165,45 @@ Figure~\ref{fig:stack} is an abstraction of the stack with data label correspond
 
 
 
-\subsection{ARM7TDMI using Arm Thumb}
-The ARM7TDMI is a 32-bit RISC microprocessor with an emphasis on low-power design and pipelining for high throughput which is detailed in~\cite{ARM7TDMI}.
+\subsection{ARM7TDMI (using Arm Thumb)}
+The ARM7TDMI is a 32-bit Reduced Instruction Set Computer (RISC) microprocessor with an emphasis on low-power design and pipelining for high throughput which is detailed in~\cite{ARM7TDMI}.
 It has two instruction sets. 
-One of which is Arm Thumb, explained in~\cite{arm}, a low density compressed 16-bit subset of the ARM assembly language where the benefits are considered in~\cite{ARMs}.
+One of which is Arm Thumb, explained in~\cite{arm}, a low density compressed 16-bit subset of the ARM assembler language where the benefits are considered in~\cite{ARMs}.
 It most notably assisted ARM into moving into the mobile phone market by reducing required program memory. 
 A user selectable flag is set to switch between instruction sets.
 
 This architecture does not have built-in support for calling subroutines using the stack.
-When the branch instruction is used, as seen in listing~\ref{lst:ArmCaller.asm}, the program counter is overwritten with the address of the corresponding label.
-The address of the next line of code, which should be returned to after the subroutine, is placed into the link register.
-Calling conventions suggests leaving this register untouched and simply moving the data back into the program counter on a return.
+When the branch instruction is used, as seen in listing~\ref{lst:ArmCaller.asm}, the PC is overwritten with the address of the corresponding label.
+The address of the next line of code, which should be returned to after the subroutine, is placed into the link register (LR).
+Calling conventions suggests leaving this register untouched and simply moving the data back into the PC on a return.
+\newpage
 \lstinputlisting[label=lst:ArmCaller.asm,frame=single,caption=ArmCaller.asm]{Code/ArmCaller.asm}
 
-In this case the link register is pushed onto the stack from the subroutine therefore requiring the subroutine to pop the value into the program counter in order to return.
+In this case the LR is pushed onto the stack from the subroutine therefore requiring the subroutine to pop the value into the PC in order to return.
+This is an example of important assembler context save.
+If the prologue and epilogue are not respected then a call stack is never built therefore no nested functions can be used.
+
 Listing~\ref{lst:ArmCallee.asm} holds the subroutine and handles placing the return address on the stack.
 Relative addressing on the stack is required to draw the two arguments out and replace the first with the output of the function.
+Although this subroutine performs the same task as code held in listing~\ref{lst:8086Callee.asm} only one local variable is used as the example with two local variables is never really required.
 \lstinputlisting[label=lst:ArmCallee.asm,frame=single,caption=ArmCallee.asm]{Code/ArmCallee.asm}
-
-
-
-
-
 
 \section{Conclusion}
 
-It is clear that whether a microprocessor has built-in support for a stack or not the ability to call subroutines is unaffected.
-The support does make calling more efficient and easier to code. 
+It is clear that whether a microprocessor has built-in support for stack frames or not that the ability to call subroutines is unaffected.
+Support makes calling more efficient and easier to code.
+Essentially the matter is a trade off between complexity and efficiency.
 
-\newpage
+\subsection{Design Recommendations}
+All instruction sets considered in this report are 16-bits in length and could possibly be ported straight to the microprocessor to be designed.
+The 8086 is a pre-RISC architecture that can be considered as a quite a simple CISC processor~\cite{brief}.
+RISC processors are simpler to construct as they have an emphasis on software; a comparison drawn in~\cite{CISCvRISC}. 
+This would make the hardware easier to design but programs written for the end processor would be larger. 
+So a RISC processor would most likely not provide built-in support for the stack but a CISC processor would; just like the case studies in section~\ref{case}.
+A RISC processor is the intended architecture to implement the recommendation given is not to provide support but use instructions similar to those in the ARM Thumb instruction set. 
+This would require designing an LR that can be used as shown in listings~\ref{lst:ArmCaller.asm} and~\ref{lst:8086Callee.asm}. 
 
+%TC:ignore
 %References - reading referenced in text
 \bibliographystyle{plain}
 \bibliography{references}
@@ -189,7 +219,38 @@ The support does make calling more efficient and easier to code.
 
 \begin{itemize}
    \item{
-      Patterson D A and Hennessy J L,
+      ARM, 
+      Infocenter,
+      \url{http://infocenter.arm.com/help/index.jsp},
+      Online. Acessed Feb 2014.\\
+      - A valuable resource for all things ARM.
+   }
+   \item{
+      C. Lin,
+      Understanding the Stack,
+      \url{http://www.cs.umd.edu/class/spring2003/cmsc311/Notes/Mips/stack.html},
+      2004,
+      University of Maryland,
+      Online. Acessed Feb 2014.\\
+      - General stack operation.
+
+   }
+   \item{
+      S. Mathur,
+      \emph{Microprocessor 8086: Architecture, Programming and Interfacing},
+      PHI Learning Private Limited,
+      2011.\\
+      - Intel 8086 microprocessor resource
+   }
+   \item{
+      B. I. McNally,
+      Full Custom Design Exercise,
+      \url{http://users.ecs.soton.ac.uk/bim/notes/fcde/index.php},
+      2014.\\
+      - Plenty of information for ELEC6027
+   }
+   \item{
+      D. Patterson and J. Hennessy,
       \emph{Computer Organisation and Design: The Hardware/Software Interface},
       Morgan Kaufman,
       4th Edition,
@@ -197,13 +258,14 @@ The support does make calling more efficient and easier to code.
       - Lots of processor concepts and MIPS examples
    }
    \item{
-      Mathur S,
-      \emph{Microprocessor 8086: Architecture, Programming and Interfacing},
-      PHI Learning Private Limited,
-      2011.\\
-      - Intel 8086 microprocessor resource
+      Wikipedia,
+      MIPS architecture,
+      \url{http://en.wikipedia.org/wiki/MIPS_architecture},
+      Online. Acessed Feb 2014.\\
+      - Quick information on the well studied MIPS processor.
    }
 \end{itemize}
+%TC:endignore
 
 %\renewcommand{}{\refname}{Bibliography}
 %\bibliographystyle{plain}

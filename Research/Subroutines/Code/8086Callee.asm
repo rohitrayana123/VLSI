@@ -1,4 +1,4 @@
-adder PROC           ; Subroutine   
+adder PROC              ; Subroutine   
       PUSH  bp          ; Push base ptr to stack
       MOV   bp,sp       ; Set base ptr to stack ptr  
       SUB   sp,4        ; Allocate local variable space (2 ints)

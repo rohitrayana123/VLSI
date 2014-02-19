@@ -1,4 +1,4 @@
-main:                ; Main loop   
+main:                   ; Main loop   
       MOV   bp,sp       ; Init base ptr
       MOV   ax,42       ; Load arg1
       MOV   bx,69       ; Load arg2     
