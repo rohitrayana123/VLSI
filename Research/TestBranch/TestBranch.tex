@@ -47,7 +47,7 @@ The authors' recommendation for the implementation is also given in the final se
 Three case studies are discussed here. 
 For each architecture studied, there is a description of the flags implemented (if any) and instructions used for conditional branches. 
 Also, two C code snippets, seen in listings \ref{ListC} and \ref{ListC2}, are converted to assembler for each architecture to see how they compare.
-%TC:ignore
+%  
 \begin{lstlisting}[frame=single,caption=C Code,language=C,label=ListC]
 uint16_t a = 0;
 for(uint16_t i = 0; i < 10; i++)
@@ -61,7 +61,7 @@ if ( a > 0 )
 else
 	b = 0;
 \end{lstlisting}
-%TC:endignore
+%  
 \subsection{ARM Cortex M0}
 
 The ARM Cortex M0 is a 32-bit RISC architecture that implements the Thumb/Thumb2 instruction set \cite{ARM:CortexM0}. 
@@ -101,7 +101,7 @@ The \texttt{TST} and \texttt{TEQ} instructions do not store the result of the op
 %In an if-else clause, there must be one conditional branch, and one unconditional branch.
 %Thumb does not implement the condition execution due to it being a 16-bit instruction set - Thumb2 is 32-bit.
 
-%TC:ignore
+%  
 \begin{table}
 \centering
 \caption{Explanation of the flags in the ARM Cortex M0}
@@ -114,7 +114,7 @@ Zero & Z & Set if the ALU result is zero\\
 Negative & N & Set to the most significant bit of the result (sign). \\
 \end{tabular}
 \end{table}
-%TC:endignore
+%  
 \subsubsection{Conditional Branch}\label{arm:conditionalbranch}
 The Thumb instruction set has a conditional branch instruction.
 This is capable of incrementing the program counter by an immediate value, depending on the flags in the status register.
@@ -133,7 +133,7 @@ Below are snippets of assembly language for the Cortex M0 to implement the C cod
 %In a small if-else clause, it only takes three instructions, and no branches.
 %This speeds up the processor, as conditional branches can be costly.
 %They will work very well in a pipelined processor, as well as a non-pipelined processor.
-%TC:ignore
+%  
 \begin{lstlisting}[frame=single,caption=Thumb/Thumb2 Assembler for code in listing \ref{ListC},label=ARM1]
 .def a=$r1
 .def i=$r2
@@ -160,7 +160,7 @@ B exit
 MOV b #0 ; if a != 0, load b with 0
 exit:
 \end{lstlisting}
-%TC:endignore
+%  
 
 \subsection{Intel 8086}
 
@@ -174,7 +174,7 @@ Since then, the x86 instruction set has been expanded and the original instructi
 The Intel 8086 has 9 flags, detailed in table \ref{tab:Intel:flags}.
 The status register is updated when a compare (\texttt{CMP}, \texttt{CMPSB}, \texttt{CMPSW}) instruction is executed, or after an arithmetic operation.
 There are flags which are not used for conditional branches, but related to other workings of the processor, and hence are only mentioned in passing in this report.
-%TC:ignore
+%  
 
 \begin{table}
 \centering
@@ -194,7 +194,7 @@ Direction & D & Sets the source index to increment / decrement (0/1) \cite{flag:
 Interrupt & I & Enables / disables interrupts \cite{flag:i} \\
 \end{tabular}
 \end{table}
-%TC:endignore
+%  
 
 \subsubsection{Conditional Branch}
 
@@ -217,7 +217,7 @@ This has a complementary instruction, \texttt{LOOPNE / LOOPNZ}, which jumps if t
 These instructions are useful, as it combines the decrement of a counter with a branch, resulting in a quicker operation for loops.
 
 
-%TC:ignore
+%  
 \subsubsection{Assembler Example}
 \begin{lstlisting}[frame=single,caption=Intel 8086 assembler for listing \ref{ListC},label=intel1]
 .def a ax
@@ -241,7 +241,7 @@ else:
 exit:
 
 \end{lstlisting}
-%TC:endignore
+%  
 
 \subsection{MIPS}
 
@@ -271,7 +271,7 @@ However, the instruction set on a whole will be smaller.
 %!!!!!This method esults in more instructions needed to be executed to conduct a conditional branch, but .
 
 
-%TC:ignore
+%  
 \subsubsection{Assembler Example}
 \begin{lstlisting}[frame=single,caption=MIPS assembler for listing \ref{ListC},label=mips1]
 .def a $r1
@@ -296,7 +296,7 @@ else:
 addi b $r0 0 ; load b with 0
 exit:
 \end{lstlisting}
-%TC:endignore
+%  
 
 \section{Other Architectures}
 \subsection{DEC Alpha}
@@ -341,6 +341,7 @@ Performance is a key aspect to processor design and by executing fewer instructi
 The recommendation, therefore, is that flags should be used at the expense of more hardware, instructions and complexity of the control.
 However, the increased performance and flexibility of the processor should be advantageous.
 
+\clearpage
 \putbib[references]
 \end{bibunit}
 
