@@ -85,7 +85,7 @@ The use of mathematical theory is impractical in simple designs since KC is an "
 \section{Case Studies}
 
 \subsection{VAX-11}
-The VAX-11 is a CISC-type microprocessor from 1977 and was produced by Digital Equipment Corporation \cite{ref}{VAX:History}. It was the first commercial 32-bit system which also performed at 1 MIPS (Million Instructions Per Second). It was adopted by many institutions and universities \cite{ref}{VAX:History}. The design objectives were focussed on simple compiling, via direct high level language conversion, and minimising code size. This lead to powerful addressing modes, instructions and efficient encoding \cite{ref}{VAX:Chap3}. The advanced addressing modes included: register, auto-decrement, auto-increment, displacement, and deferred addressing \cite{ref}{VAX:ArchRefMan}. The VAX was built as a successor to the earlier PDP-11 architecture and benefited by expanding the pre-existing data types for availability with all addressing modes \cite{ref}{wiki:OrthogonalIS}. This created fully orthogonal encoding. 
+The VAX-11 is a 32-bit CISC-type microprocessor from 1977 produced by Digital Equipment Corporation \cite{ref}{VAX:History}.  Its design were focussed on simple compiling, via direct high level language conversion, and minimising code size. This lead to powerful addressing modes, instructions and efficient encoding \cite{ref}{VAX:Chap3}. The advanced addressing modes included: auto-decrement, auto-increment, displacement, and deferred addressing \cite{ref}{VAX:ArchRefMan}. The VAX was a successor to the PDP-11 architecture and expanded the pre-existing data types for availability with all addressing modes \cite{ref}{wiki:OrthogonalIS}. This created fully orthogonal encoding. 
 
 Listing~\ref{lst:VAXFibon} is an example program for computing the first 10 Fibonacci numbers, taking two values from memory and demonstrating the complexity of VAX ISA.
 
@@ -93,7 +93,7 @@ Listing~\ref{lst:VAXFibon} is an example program for computing the first 10 Fibo
 \lstinputlisting[label=lst:VAXFibon,frame=single,caption=VAX Fibonnaci Program]{Code/VAXFibon.asm}
 
 \subsection{DEC Alpha}
-The DEC Alpha is a 64-bit RISC microprocessor produced in 1992 to replace the VAX system in response to other RISC systems surpassing it's price to performance ratio \cite{ref}{Alpha:Wiki}. Design focussed on simpler, cheaper hardware which maintained compatibility with a range of operating systems \cite{ref}{Alpha:Wiki}. The instruction formatting, as seen in Figure~\ref{tab:AlphaFormat}, shows the simplicity and strong orthogonality of the architecture coupled with consistent ordering of operands. The code density is worse than its predecessor as can be seen in Listing~\ref{lst:AlphaFibon}. The difference may not seem like much in this example, but it becomes more significant when calling subroutines \cite{ref}{VAX:Chap3}. 
+The DEC Alpha is a 64-bit RISC microprocessor from 1992 which replaced the VAX system in response to other RISC systems surpassing it's price to performance ratio \cite{ref}{Alpha:Wiki}. Design focussed on simpler, cheaper hardware which maintained compatibility with multiple operating systems \cite{ref}{Alpha:Wiki}. The instruction formatting, as seen in Figure~\ref{tab:AlphaFormat}, shows the simplicity and strong orthogonality of the architecture coupled with consistent ordering of operands. The code density is worse than its predecessor as can be seen in Listing~\ref{lst:AlphaFibon}. The difference in length becomes more significant when calling subroutines \cite{ref}{VAX:Chap3}. 
 
 \begin{table}[htb]
 	\centering
@@ -127,7 +127,7 @@ Implementation of a microprocessor design based on a RISC processor will produce
 It was decided to base an ISA design on the 16-bit ARM Thumb subset. This was because it is an accumulation of the most common instructions from the main ARM ISA and designed to reduce the overall program size compared to its 32-bit counterpart \cite{ref}{ARM:ARM11RefMan}. This means an inherently dense coding, with a wide range of simple instructions. Also, the earlier mentioned investigation at Cornell University suggests there is little difference in terms of code density if there is no 'zero' register like in the ARM \cite{ref}{Density:Correlation}.
 
 \vspace*{\baselineskip}
-Word Count: 1629%Manually insert word count, or use online tool/script
+Word Count: 1588%Manually insert word count, or use online tool/script
 
 %References - Cited references
 \newpage
