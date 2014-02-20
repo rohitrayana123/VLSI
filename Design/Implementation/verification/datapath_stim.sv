@@ -11,7 +11,7 @@ wire  [3:0]    	Flags;
 alu_functions_t AluOp;
 Op1_select_t   	Op1Sel;
 pc_select_t 	PcSel;
-logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn, LrSel, Rs1Sel;
+logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn, LrSel, Rs1Sel, CFlag;
 datapath dp(                                           
    .SysBus        (SysBus  ),    // Outputs from DUT
    .Opcode        (Opcode  ),
@@ -37,7 +37,8 @@ datapath dp(
    .nReset        (nReset  ),
    .DataIn	  (DataIn  ),
    .MemEn	  (MemEn   ),
-   .Rs1Sel	  (Rs1Sel  )
+   .Rs1Sel	  (Rs1Sel  ),
+   .CFlag	  (CFlag   )
 );
 
 always begin   #(CLK_PERIOD/2) Clock = 0;

@@ -6,7 +6,7 @@ module datapath(
   input  opcodes::alu_functions_t AluOp,
   input  opcodes::pc_select_t    PcSel,
   input  opcodes::Op1_select_t    Op1Sel,
-  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel, Rs1Sel
+  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel, Rs1Sel, CFlag
 );
 
 import opcodes::*;
