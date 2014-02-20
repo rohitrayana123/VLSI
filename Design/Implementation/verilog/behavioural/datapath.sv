@@ -6,7 +6,7 @@ module datapath(
   input  opcodes::alu_functions_t AluOp,
   input  opcodes::pc_select_t    PcSel,
   input  opcodes::Op1_select_t    Op1Sel,
-  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel
+  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel, Rs1Sel
 );
 
 import opcodes::*;
@@ -14,7 +14,7 @@ timeunit 1ns; timeprecision 100ps;
 
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
-
+logic [2:0] Rs1In;
 
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]};
@@ -23,7 +23,7 @@ assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrSel) ? Pc : SysBus;
-
+assign Rs1In = (Rs1Sel) ? Ir[2:0] : Ir[5:3]; 
 //Multiplexers
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux

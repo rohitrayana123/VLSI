@@ -11,7 +11,7 @@ wire  [3:0]    	Flags;
 alu_functions_t AluOp;
 Op1_select_t   	Op1Sel;
 pc_select_t 	PcSel;
-logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn, LrSel;
+logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn, LrSel, Rs1Sel;
 datapath dp(                                           
    .SysBus        (SysBus  ),    // Outputs from DUT
    .Opcode        (Opcode  ),
@@ -36,7 +36,8 @@ datapath dp(
    .Clock         (Clock   ),
    .nReset        (nReset  ),
    .DataIn	  (DataIn  ),
-   .MemEn	  (MemEn   )
+   .MemEn	  (MemEn   ),
+   .Rs1Sel	  (Rs1Sel  )
 );
 
 always begin   #(CLK_PERIOD/2) Clock = 0;
@@ -76,6 +77,7 @@ begin
 	RegWe  = 0; 
 	MemEn  = 0; 
 	LrSel = 0;
+	Rs1Sel = 0;
 	#CLK_PERIOD
 	#CLK_PERIOD
 	//Test the PC increments
