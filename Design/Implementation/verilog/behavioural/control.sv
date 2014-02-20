@@ -41,9 +41,10 @@ enum {
 
 always_ff@(posedge Clock or negedge nReset) begin
    // Major states
-   if(!nReset) 
+   if(!nReset) begin
       state <= fetch; 
-   else        
+      fetchSub <= addrLatch;
+   end else begin 
       case(state) 
          fetch    :  if(fetchSub == irGet)
                         state <= decode;
@@ -51,27 +52,25 @@ always_ff@(posedge Clock or negedge nReset) begin
          execute  :  state <= fetch;
          default  :  state <= fetch;
       endcase
-   // Fetch
-   if(!nReset) 
-      fetchSub <= addrLatch;
-   else     
+      // Fetch  
       if(state == fetch)
          case(fetchSub)
             addrLatch   : fetchSub <= irGet;
             irGet       : fetchSub <= addrLatch;
             default     : fetchSub <= addrLatch;
          endcase
-   // Execute 
-   if(state == execute) begin
-      state <= fetch;
-      case(OpCode)
-         NOP   :  state <= fetch;
-         ADD   :  AluOp <= FnADD; 
-         ADDI  :  AluOp <= FnADD; 
-         ADDIB :  AluOp <= FnADD; 
-         ADC   :  AluOp <= FnADD;  
-         ADCI  :  AluOp <= FnADD; 
-      endcase
+      // Execute 
+      if(state == execute) begin
+         state <= fetch;
+         case(OpCode)
+            NOP   :  state <= fetch;
+            ADD   :  AluOp <= FnADD; 
+            ADDI  :  AluOp <= FnADD; 
+            ADDIB :  AluOp <= FnADD; 
+            ADC   :  AluOp <= FnADD;  
+            ADCI  :  AluOp <= FnADD; 
+         endcase
+      end
    end
 end
 
