@@ -3,11 +3,10 @@ module cpu_core_stim;
 timeunit 1ns; timeprecision 10ps;
 
 wire  [15:0]   DataOut;
-wire           Enb;     
-wire           nMe;     
-wire           Ale;     
-wire           RnW;     
-wire           nOe;     
+wire           ENB;     
+wire           nME;     
+wire           ALE;          
+wire           nOE;     
 wire           SDO;     
 logic [15:0]   DataIn; 
 logic          nIrq;    
@@ -20,11 +19,10 @@ logic          nReset;
 
 cpu_core cpu_core(                                           
    .DataOut    (DataOut ), // Output from DUT 
-   .Enb        (Enb     ),
-   .nMe        (nMe     ),
-   .Ale        (Ale     ),
-   .RnW        (RnW     ),
-   .nOe        (nOe     ),
+   .nOE        (nOE     ),
+   .nME        (nME     ),
+   .ALE        (ALE     ),
+   .ENB        (ENB     ),
    .SDO        (SDO     ),
    .DataIn     (DataIn  ),  // Input to DUT
    .nIrq       (nIrq    ),

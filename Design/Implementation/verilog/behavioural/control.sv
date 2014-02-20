@@ -21,8 +21,11 @@ module control(
    output logic                     nME,
    output logic                     ENB,
    output logic                     ALE,
-   input  wire    [7:0]             OpCode,
-   input  wire                      Z,
+   output logic                     CFlag,
+   output logic                     LrSel,
+   output logic                     Rs1Sel,
+   input  wire    [7:0]             Opcode,
+   input  wire    [3:0]             FLags,
    input  wire                      Clock,
    input  wire                      nReset
 );
@@ -68,7 +71,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       // Execute 
       if(state == execute) begin
          state <= #20 fetch;
-         case(OpCode)
+         case(Opcode)
             NOP   :  AluOp <= #20 FnNOP;
             ADD   :  AluOp <= #20 FnADD; 
             ADDI  :  AluOp <= #20 FnADD; 
@@ -95,8 +98,7 @@ always_comb begin
    IrWe     <= 0;
    WdSel    <= 0;
    ImmSel   <= 0;
-   RegWe    <= 0; 
-   PcSel    <= 0;
+   RegWe    <= 0;
    MemEn    <= 0;
    nWE      <= 0;
    nOE      <= 0;
