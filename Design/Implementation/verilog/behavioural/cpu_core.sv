@@ -60,7 +60,7 @@ control control (
    .RegWe      (RegWe      ),
    .PcSel      (PcSel      ),
    .MemEn      (MemEn      ),
-   .nWE        (nWE        ),
+   .nWE        (RnW        ),//HSL: RnW - Read not Write - the signal to memory
    .nOE        (nOE        ),
    .nME        (nME        ),
    .ENB        (ENB        ),
@@ -75,10 +75,10 @@ control control (
 );
 
 datapath datapath ( 
-   .SysBus     (DataOut    ),   // Output
+   .SysBus     (Data_out    ),   // Output
    .Opcode     (Opcode     ),
    .Flags      (Flags      ),  
-   .DataIn     (DataIn     ),
+   .DataIn     (Data_in     ),
    .AluOp      (AluOp      ),   // Inputs 
    .PcSel      (PcSel      ),
    .Op1Sel     (Op1Sel     ),
