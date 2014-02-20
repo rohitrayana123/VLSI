@@ -85,48 +85,48 @@ end
 
 always_comb begin
    // Default outputs    
-   Op2Sel   <= 0; 
-   Op1Sel   <= 0; 
-   AluEn    <= 0;
-   SpEn     <= 0;
-   SpWe     <= 0;
-   LrEn     <= 0;
-   LrWe     <= 0;
-   PcWe     <= 0;
-   PcEn     <= 0;
-   IrWe     <= 0;
-   WdSel    <= 0;
-   ImmSel   <= 0;
-   RegWe    <= 0;
-   MemEn    <= 0;
-   nWE      <= 0;
-   nOE      <= 0;
-   nME      <= 0;
-   ENB      <= 0;
-   ALE      <= 0;
+   Op2Sel   = 0; 
+   Op1Sel   = 0; 
+   AluEn    = 0;
+   SpEn     = 0;
+   SpWe     = 0;
+   LrEn     = 0;
+   LrWe     = 0;
+   PcWe     = 0;
+   PcEn     = 0;
+   IrWe     = 0;
+   WdSel    = 0;
+   ImmSel   = 0;
+   RegWe    = 0;
+   MemEn    = 0;
+   nWE      = 0;
+   nOE      = 0;
+   nME      = 0;
+   ENB      = 0;
+   ALE      = 0;
    case(state)
       fetch : 
          case(fetchSub)
             latch1:begin
-               MemEn <= 1;
+               MemEn = 1;
             end
             latch2:begin
-               MemEn <= 1;
-               ALE   <= 1; 
-               nWE   <= 1;
-               nOE   <= 1;
+               MemEn = 1;
+               ALE   = 1; 
+               nWE   = 1;
+               nOE   = 1;
             end 
             latch3:begin
-               nWE   <= 1;
-               nOE   <= 1;
-            end 
+               nWE   = 1;
+               nOE   = 1;
+            end
             latch4:begin
-               nWE   <= 1;
+               nWE   = 1;
             end 
             irGet:begin
-               MemEn <= 1;
-               ENB   <= 1; // Pad to read in
-               IrWe  <= 1; // Write to IR
+               MemEn = 1;
+               ENB   = 1; // Pad to read in
+               IrWe  = 1; // Write to IR
             end
          endcase
    endcase
