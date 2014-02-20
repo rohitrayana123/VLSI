@@ -10,7 +10,7 @@ wire  [3:0]    	Flags;
 alu_functions_t AluOp;
 Op1_select_t   	Op1Sel;
 pc_select_t 	PcSel;
-logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn;
+logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn, LrSel;
 datapath dp(                                           
    .SysBus        (SysBus  ),    // Outputs from DUT
    .Opcode        (Opcode  ),
@@ -25,6 +25,7 @@ datapath dp(
    .SpWe          (SpWe    ),
    .LrEn          (LrEn    ),
    .LrWe          (LrWe    ),
+   .LrSel	  (LrSel   ),
    .PcWe          (PcWe    ),
    .PcSel         (PcSel   ),
    .PcEn          (PcEn    ),
@@ -48,14 +49,16 @@ begin
 	#CLK_PERIOD nReset = 1;
 end
 
+int errors;
 //test routine
 initial
 begin
+	errors = 0;
 //	DataIn = 0;
 	AluOp  = 0;
 	Op2Sel = 0; 
-	PcSel  = 0;
-	Op1Sel = 0; 
+	PcSel  = Pc1;
+	Op1Sel = Op1Rd1; 
 	Rw     = 0; 
 	AluEn  = 0; 
 	SpEn   = 0; 
@@ -69,6 +72,47 @@ begin
 	ImmSel = 0; 
 	RegWe  = 0; 
 	MemEn  = 0; 
+	LrSel = 0;
+	#CLK_PERIOD
+	#CLK_PERIOD
+	//Test the PC increments
+	PcEn = 1; //output PC to Sysbus
+	PcSel = Pc1; //set the input to pc+1
+	PcWe = 1; //write enable
+	#CLK_PERIOD PcWe = 0; // increment once - PC should be 1
+	assert(1 == SysBus) else begin $display("PC inc error"); errors++; end
+	#CLK_PERIOD 
+	assert(1 == SysBus) else begin $display("PC inc error"); errors++; end
+	PcWe = 1; 
+	#CLK_PERIOD 
+	assert(2 == SysBus) else begin $display("PC inc error"); errors++; end
+	PcWe = 0;
+	PcEn = 0;
+	//PC to LR
+	LrEn = 1; //output link register
+	LrWe = 1; //write LR with PC value
+	//@todo make LrSel a defined value (typedef again?)
+	LrSel = 1;
+	#CLK_PERIOD assert(2 == SysBus) else begin $display("PC to LR error"); errors++; end
+	LrWe = 0; //don't write
+	LrEn = 0;
+	//LR to PC
+	//increment PC, check it's 3, 
+	PcSel = Pc1;
+	PcWe = 1;
+	PcEn = 1; //output PC to sysbus
+	#CLK_PERIOD 
+	assert(3 == SysBus) else begin $display("PC inc error"); errors++; end
+	//restore LR (2) back to PC
+	PcSel = PcLr; 
+	#(1.1*CLK_PERIOD )
+	//Check PC = 2
+	assert(2 == SysBus) else begin $display("Lr to PC error"); errors++; end
+	#(0.9*CLK_PERIOD)
+	PcWe = 0;
+	PcEn = 0;
+	
+	//test storing to IR - opcode out
 	#1000 $stop();
 end
 endmodule

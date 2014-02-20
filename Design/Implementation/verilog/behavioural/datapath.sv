@@ -6,14 +6,14 @@ module datapath(
   input  opcodes::alu_functions_t AluOp,
   input  opcodes::pc_select_t    PcSel,
   input  opcodes::Op1_select_t    Op1Sel,
-  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel
+  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel
 );
 
 import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended;
-logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir;
+logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
 
 
 //Combinational logic for tristate bus, reg inputs or outputs
@@ -22,6 +22,7 @@ assign Opcode = {Ir[15:9], Ir[2:0]};
 assign Sysbus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Sel) ? Rd2 : Extended;
+assign LrIn = (LrSel) ? Pc : SysBus;
 
 //Multiplexers
 always_comb begin : PcInMux
@@ -82,7 +83,7 @@ trisreg Reg_LR (
 	.nReset (nReset  ),
 	.Reg_EN (LrEn    ),
 	.Reg_WE (LrWe    ),
-	.DataIn (Pc      ),
+	.DataIn (LrIn    ),
 	.DataOut(Lr      ),
 	.TrisOut(SysBus  )
 );
