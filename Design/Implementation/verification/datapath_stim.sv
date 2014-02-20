@@ -4,13 +4,13 @@ timeunit 1ns; timeprecision 10ps;
 import opcodes::*;
 parameter CLK_PERIOD = 100;
 
-wire  [15:0]   SysBus, DataIn;     
-wire  [7:0]    Opcode;     
-wire  [3:0]    Flags;  
-logic [4:0]    AluOp;
-logic [1:0]    Op2Sel;
-pc_select_t PcSel;
-logic Op1Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn;
+wire  [15:0]   	SysBus, DataIn;     
+wire  [7:0]    	Opcode;     
+wire  [3:0]    	Flags;  
+alu_functions_t AluOp;
+Op1_select_t   	Op1Sel;
+pc_select_t 	PcSel;
+logic Op2Sel, Rw, WdSel, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, ImmSel, RegWe, Clock, nReset, MemEn;
 datapath dp(                                           
    .SysBus        (SysBus  ),    // Outputs from DUT
    .Opcode        (Opcode  ),

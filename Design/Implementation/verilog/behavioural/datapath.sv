@@ -3,12 +3,13 @@ module datapath(
   output wire  [7:0]    Opcode,
   output logic [3:0]    Flags,
   input  wire  [15:0]   DataIn,
-  input  wire  [4:0]    AluOp,
+  input  opcodes::alu_functions_t AluOp,
   input  opcodes::pc_select_t    PcSel,
   input  opcodes::Op1_select_t    Op1Sel,
   input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel
 );
 
+import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended;
