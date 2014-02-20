@@ -1,5 +1,5 @@
 #! /bin/bash
-
+cd ~/VLSI/bin
 imp="../Design/Implementation"
 behave="${imp}/verilog/behavioural"
 stim="${imp}/verification"
