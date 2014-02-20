@@ -34,7 +34,7 @@ module=${module//[-.]/} # Remove tag
 #HSL:
 #there's an exception
 if [ "system" == ${module} ]; then
-	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${behave}/system.sv"
+	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${behave}/system.sv +tcl+${stim}/system.tcl"
 	#cmd="ncverilog -sv +gui +ncaccess+r +libext+.sv -y . opcodes.svh system.sv"
 elif [ -f ${stim}/${module}_stim.sv ]; then
 	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${stim}/${module}_stim.sv"
