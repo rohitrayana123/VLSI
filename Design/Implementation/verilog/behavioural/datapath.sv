@@ -6,7 +6,7 @@ module datapath(
   input  opcodes::alu_functions_t AluOp,
   input  opcodes::pc_select_t    PcSel,
   input  opcodes::Op1_select_t    Op1Sel,
-  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel, Rs1Sel, CFlag
+  input  wire           AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel, Rs1Sel, CFlag, AluWe
 );
 
 import opcodes::*;
@@ -53,7 +53,7 @@ regBlock regBlock(      // Register block instance
    .Rd1     (Rd1     ),
    .Rd2     (Rd2     ),
    .WData   (WData   ),
-   .Rs1     (Ir[5:3] ),
+   .Rs1     (Rs1In   ),
    .Rs2     (Ir[8:6] ),
    .Rw      (Ir[2:0] ),
    .Clock   (Clock   ),
