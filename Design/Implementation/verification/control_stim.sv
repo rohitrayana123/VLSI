@@ -8,8 +8,7 @@ parameter CLK_PERIOD = 100;
 
 logic [3:0] AluOp;    
 logic [1:0] Op2Sel;   
-logic       Op1Sel;   
-logic       Rw;       
+logic       Op1Sel;          
 logic       AluEn;    
 logic       SpEn;     
 logic       SpWe;     
@@ -28,8 +27,7 @@ logic       nOE;
 logic       nME;
 logic       ENB;
 logic       ALE;
-logic [7:0] OpCode;
-logic       Z;        
+logic [9:0] Opcode;
 logic       Clock;    
 logic       nReset;   
 
@@ -37,7 +35,6 @@ control control(
    .AluOp         (AluOp      ),            
    .Op2Sel        (Op2Sel     ),
    .Op1Sel        (Op1Sel     ),
-   .Rw            (Rw         ),
    .AluEn         (AluEn      ),      
    .SpEn          (SpEn       ), 
    .SpWe          (SpWe       ),
@@ -56,8 +53,7 @@ control control(
    .nME           (nME        ),
    .ENB           (ENB        ),
    .ALE           (ALE        ),
-   .OpCode        (OpCode     ),
-   .Z             (Z          ),
+   .Opcode        (Opcode     ),
    .Clock         (Clock      ),
    .nReset        (nReset     )
 );
@@ -91,7 +87,7 @@ initial begin
       @(posedge Clock) if(!(IrWe == 1)) fail;
    
       // Opcode is now present
-      OpCode = prog[i];
+      Opcode = prog[i];
 
       // Test Execute phase
       @(posedge Clock);

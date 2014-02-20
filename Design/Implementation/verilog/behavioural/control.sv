@@ -1,8 +1,7 @@
 module control(
    output opcodes::alu_functions_t  AluOp, 
-   output logic   [1:0]             Op2Sel, 
-   output logic                     Op1Sel, 
-   output logic                     Rw,
+   output logic   [1:0]             Op1Sel, 
+   output logic                     Op2Sel, 
    output logic                     AluEn,
    output logic                     SpEn,
    output logic                     SpWe,
@@ -24,8 +23,9 @@ module control(
    output logic                     CFlag,
    output logic                     LrSel,
    output logic                     Rs1Sel,
-   input  wire    [7:0]             Opcode,
-   input  wire    [3:0]             FLags,
+   output logic                     AluWe,
+   input  wire    [9:0]             Opcode,
+   input  wire    [3:0]             Flags,
    input  wire                      Clock,
    input  wire                      nReset
 );
@@ -87,7 +87,6 @@ always_comb begin
    // Default outputs    
    Op2Sel   <= 0; 
    Op1Sel   <= 0; 
-   Rw       <= 0;
    AluEn    <= 0;
    SpEn     <= 0;
    SpWe     <= 0;

@@ -16,9 +16,9 @@ module cpu_core(
 
 timeunit 1ns; timeprecision 100ps;
 
-wire [4:0]  AluOp;  
-wire [1:0]  Op2Sel;  
-wire        Op1Sel;  
+wire [3:0]  AluOp;  
+wire [1:0]  Op1Sel;  
+wire        Op2Sel;  
 wire        AluEn;  
 wire        SpEn;  
 wire        SpWe;  
@@ -36,9 +36,8 @@ wire        MemEn;
 wire        Rs1Sel;
 wire        CFlag;
 wire [3:0]  Flags;
-wire [7:0]  Opcode;  
-wire        Z;  
-
+wire [9:0]  Opcode;  
+wire        AluWe;
 
 assign SDO = SDI; // No sim 
 
@@ -69,6 +68,7 @@ control control (
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
    .Opcode     (Opcode     ),    // Inputs 
+   .AluWe      (AluWe      ),
    .Clock      (nReset     ),
    .nReset     (Clock      )
 );
@@ -97,6 +97,7 @@ datapath datapath (
    .MemEn      (MemEn      ),
    .Rs1Sel     (Rs1Sel     ),
    .CFlag      (CFlag      ),
+   .AluWe      (AluWe      ),
    .Clock      (Clock      ),
    .nReset     (nReset     )
 );
