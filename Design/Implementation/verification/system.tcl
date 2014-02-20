@@ -31,8 +31,8 @@ set wave_signal_list {
   system.CPU.CPU_core.CFlag
   system.CPU.CPU_core.Flags
   system.CPU.CPU_core.Op1Sel
-  system.CPU.CPU_core.Op2Sel
   system.CPU.CPU_core.datapath.a.Op1
+  system.CPU.CPU_core.Op2Sel
   system.CPU.CPU_core.datapath.a.Op2
   system.CPU.CPU_core.AluOp
   system.CPU.CPU_core.datapath.a.Result
