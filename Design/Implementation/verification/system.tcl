@@ -26,7 +26,7 @@ set wave_signal_list {
   system.CPU.ENB
   system.CPU.CPU_core.datapath.SysBus
   system.CPU.CPU_core.control.state
-  system.CPU.CPU_core.control.fetchState
+  system.CPU.CPU_core.control.fetchSub
   system.CPU.CPU_core.ImmSel
   system.CPU.CPU_core.CFlag
   system.CPU.CPU_core.Flags
