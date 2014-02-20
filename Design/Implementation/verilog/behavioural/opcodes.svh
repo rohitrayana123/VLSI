@@ -3,7 +3,7 @@ package opcodes;
 // Define ALU Function Codes:
 //
 typedef 
-  enum logic [3:0] { FnACC, FnMem, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
+  enum logic [3:0] { FnNOP, FnACC, FnMem, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
   alu_functions_t;
 
 //Program Counter Selction Codes

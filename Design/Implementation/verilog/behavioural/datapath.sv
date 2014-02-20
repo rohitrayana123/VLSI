@@ -65,7 +65,7 @@ alu a(                // Combo ALU only
    .Result  (AluRes  ),
    .Op1     (Op1     ),
    .Op2     (Op2     ),
-   .OpCode  (AluOp   )
+   .AluOp   (AluOp   )
 );
 
 //Registers
@@ -99,7 +99,7 @@ trisreg Reg_SP (
 trisreg Reg_IR (
 	.Clock  (Clock   ), 
 	.nReset (nReset  ),
-	.Reg_EN (0       ),//does not utilise the tristate bus as an output
+	.Reg_EN (1'b0    ),//does not utilise the tristate bus as an output, length gets rid of warnings
 	.Reg_WE (IrWe    ),
 	.DataIn (SysBus  ),
 	.DataOut(Ir      ),

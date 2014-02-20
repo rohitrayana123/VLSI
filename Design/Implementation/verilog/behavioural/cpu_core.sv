@@ -16,7 +16,7 @@ module cpu_core(
 
 timeunit 1ns; timeprecision 100ps;
 
-wire [3:0]  AluOp;  
+opcodes::alu_functions_t  AluOp;  
 wire [1:0]  Op1Sel;  
 wire        Op2Sel;  
 wire        AluEn;  
