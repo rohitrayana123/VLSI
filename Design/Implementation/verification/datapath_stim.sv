@@ -133,7 +133,7 @@ errors++; $display("IR Error"); end
 	MemEn = 0;
 
 	//Test writing to reg and reading back
-	for (int temp = 0; temp < 8; temp++)
+	for (temp = 0; temp < 8; temp++)
 	begin
 		WdSel = 1; //choose from sysbus
 		Rs1Sel = 1;
@@ -142,7 +142,7 @@ errors++; $display("IR Error"); end
 		AluOp = FnMem;//pass through
 		DataIn = temp;
 		IrWe = 1; //write to Ir
-		#1000 //hold
+		#CLK_PERIOD //hold
 		IrWe = 0;
 		assert(Opcode[2:0] == temp[2:0]) else begin errors++; $display("Ir Error"); end
 		//register now chosen, write data to it
@@ -153,13 +153,13 @@ errors++; $display("IR Error"); end
 		AluEn = 1; //output the ALUOUT to sysbus
 		//temp should be in reg[temp]. ALU op is to pass through. 
 		//ALU is outputted
-		#1000
+		#CLK_PERIOD
 		assert(SysBus == temp) else begin errors++; $display("ALU or Reg write error"); end 
 		AluEn = 0;
-		#1000 MemEn = 1; //restart the sequence
-	
+		#CLK_PERIOD MemEn = 1; //restart the sequence
 	end
+	
 
-	#1000 $stop();
+	#CLK_PERIOD $stop();
 end
 endmodule
