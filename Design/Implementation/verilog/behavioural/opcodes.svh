@@ -7,7 +7,8 @@ typedef
   alu_functions_t;
 
 //Program Counter Selction Codes
-typedef enum logic [1:0] {Lr, Sysbus, AluOut, Pc1 } pc_select_t;
+typedef enum logic [1:0] {PcLr, PcSysbus, PcAluOut, Pc1 } pc_select_t;
+typedef enum logic [1:0] {Op1Pc, Op1Rd1, Op1Sp } Op1_select_t;
 // Define Opcodes:
 //
 //  these could be defined with a further enumerated type declaration

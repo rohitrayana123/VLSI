@@ -4,9 +4,9 @@ module datapath(
   output logic [3:0]    Flags,
   input  wire  [15:0]   DataIn,
   input  wire  [4:0]    AluOp,
-  input  wire  [1:0]    Op2Sel,
   input  opcodes::pc_select_t    PcSel,
-  input  wire           Op1Sel, Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset
+  input  opcodes::Op1_select_t    Op1Sel,
+  input  wire           Rw, AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -20,27 +20,29 @@ assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]
 assign Opcode = {Ir[15:9], Ir[2:0]};
 assign Sysbus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
+assign Op2 = (Op2Sel) ? Rd2 : Extended;
 
+//Multiplexers
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
-            0        :  PcIn <= Lr;
-            1        :  PcIn <= AluOut;
-            2        :  PcIn <= SysBus;
-            default  :  PcIn <= Pc + 1;
+            PcLr        :  PcIn <= Lr;
+            PcAluOut    :  PcIn <= AluOut;
+            PcSysbus    :  PcIn <= SysBus;
+            Pc1         :  PcIn <= Pc + 1;
          endcase
 end
 
 always_comb begin : OpMux                 // Control ALU data input
    case(Op1Sel)                           // 3 input mux
-      0        :  Op1 = Rd1;
-      1        :  Op1 = Pc;
-      default  :  Op1 = Sp;
+      	Op1Rd1   :  Op1 = Rd1;
+	Op1Pc    :  Op1 = Pc;
+	Op1Sp    :  Op1 = Sp;	
+	default  :  Op1 = Rd1;
    endcase
-   case(Op2Sel)                           // 3 input mux
-      0        :  Op2 = Extended;
-      1        :  Op2 = Extended << 2;
-      default  :  Op2 = Rd2; 
-   endcase
+//   case(Op2Sel)                           // 3 input mux
+//      0        :  Op2 = Extended;
+//      default  :  Op2 = Rd2; 
+//   endcase
 end
 
 // Instances
@@ -79,8 +81,8 @@ trisreg Reg_LR (
 	.nReset (nReset  ),
 	.Reg_EN (LrEn    ),
 	.Reg_WE (LrWe    ),
-	.DataIn (        ),
-	.DataOut(        ),
+	.DataIn (Pc      ),
+	.DataOut(Lr      ),
 	.TrisOut(SysBus  )
 );
 trisreg Reg_SP (
