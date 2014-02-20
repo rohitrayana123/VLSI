@@ -1,7 +1,7 @@
 #!/bin/bash
 # @file synth.sh
 # Date Created: Wed 19 Feb 2014 23:18:49 GMT by seblovett on hind.ecs.soton.ac.uk
-# <+Last Edited: Wed 19 Feb 2014 23:58:39 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Thu 20 Feb 2014 00:14:11 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 
 echo sythesise script
 rm rc*
@@ -29,8 +29,13 @@ cd place_route/
 
 vlog2net -T c035u -clocks  ../gate_level/${module}.sv ../../../magic/c035u/cell_lib
 
-magic ${module}_PLACED -d null < ../magicroute.tcl
+echo ":b h 10000" > magicroute.tcl
+echo ":route" >> magicroute.tcl 
+echo ":save" >> magicroute.tcl
+echo ":quit" >> magicroute.tcl
 
+magic ${module}_PLACED -d null < magicroute.tcl
+rm magicroute.tcl
 vlog2net -T c035u -post ../gate_level/${module}.sv ../../../magic/c035u/cell_lib
 exit 0
 
