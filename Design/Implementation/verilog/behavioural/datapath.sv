@@ -1,6 +1,6 @@
 module datapath(
   output wire  [15:0]   SysBus,
-  output wire  [7:0]    Opcode,
+  output wire  [9:0]    Opcode,
   output logic [3:0]    Flags,
   input  wire  [15:0]   DataIn,
   input  opcodes::alu_functions_t AluOp,
@@ -19,7 +19,7 @@ logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmSel) ? {{11{Ir[10]}}, Ir[10:6] } : { {8{Ir[10]}}, Ir[10:6]};
 assign Opcode = {Ir[15:9], Ir[2:0]};
-assign Sysbus = (MemEn) ? DataIn : {16{1'bz}};
+assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrSel) ? Pc : SysBus;

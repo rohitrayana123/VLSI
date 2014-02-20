@@ -4,8 +4,9 @@ timeunit 1ns; timeprecision 10ps;
 import opcodes::*;
 parameter CLK_PERIOD = 100;
 
-wire  [15:0]   	SysBus, DataIn;     
-wire  [7:0]    	Opcode;     
+wire  [15:0]   	SysBus;
+logic [15:0]    DataIn;     
+wire  [9:0]    	Opcode;     
 wire  [3:0]    	Flags;  
 alu_functions_t AluOp;
 Op1_select_t   	Op1Sel;
@@ -50,11 +51,13 @@ begin
 end
 
 int errors;
+logic [15:0] temp;
 //test routine
 initial
 begin
+	temp = 0;
 	errors = 0;
-//	DataIn = 0;
+	DataIn = 0;
 	AluOp  = 0;
 	Op2Sel = 0; 
 	PcSel  = Pc1;
@@ -113,6 +116,18 @@ begin
 	PcEn = 0;
 	
 	//test storing to IR - opcode out
+	
+	temp = 42405; // 16'b 1010 0101 1010 0101 
+	DataIn = 42405;
+	//while we're here, check the DataIn to SysBus
+	MemEn = 1; //enable Data in
+	#(0.5*CLK_PERIOD) assert(SysBus == DataIn ) else begin errors ++;
+$display("MemEn Error"); end
+	IrWe = 1; 
+	#CLK_PERIOD assert ({DataIn[15:9], DataIn[2:0]} == Opcode) else begin
+errors++; $display("IR Error"); end
+	IrWe = 0;
+	MemEn = 0;
 	#1000 $stop();
 end
 endmodule
