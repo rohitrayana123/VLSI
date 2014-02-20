@@ -22,6 +22,7 @@ always_comb
       FnNOT		: Result = ~Op1;
       FnLSL		: Result = Op1 << 1;
       FnLSR		: Result = Op1 >> 1;
+      FnNOP    : Result = Op1;
       default  : Result = Op1;
    endcase
 
