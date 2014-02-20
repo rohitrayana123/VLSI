@@ -1,17 +1,18 @@
 module cpu_core(
-  output wire  [15:0]   DataOut,
+  output wire  [15:0]   Data_out,
   output wire           nOE,
   output wire           nME,
   output wire           ALE,
   output wire           ENB, 
   output wire           SDO,
-  input  wire  [15:0]   DataIn,
-  input  wire           nIrq, 
+  input  wire  [15:0]   Data_in,
+  input  wire           nIRQ, 
   input  wire           nWait,
   input  wire           Test, 
   input  wire           SDI, 
   input  wire           Clock, 
-  input  wire           nReset
+  input  wire           nReset,
+  output wire 		RnW
 );
 
 timeunit 1ns; timeprecision 100ps;

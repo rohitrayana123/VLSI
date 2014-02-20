@@ -1,6 +1,6 @@
-#! /bin/bash
-cd ~/VLSI/bin
-imp="../Design/Implementation"
+#!/bin/bash
+#cd ~/VLSI/bin
+imp="${HOME}/VLSI/Design/Implementation"
 behave="${imp}/verilog/behavioural"
 stim="${imp}/verification"
 
@@ -32,7 +32,11 @@ module="$1"
 module=${module//[-.]/} # Remove tag
 
 #HSL:
-if [ -f ${stim}/${module}_stim.sv ]; then
+#there's an exception
+if [ "system" == ${module} ]; then
+	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${behave}/system.sv"
+	#cmd="ncverilog -sv +gui +ncaccess+r +libext+.sv -y . opcodes.svh system.sv"
+elif [ -f ${stim}/${module}_stim.sv ]; then
 	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${stim}/${module}_stim.sv"
 else
 	echo "Unkown module $module"
