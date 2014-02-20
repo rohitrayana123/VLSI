@@ -21,8 +21,11 @@ module control(
    output logic                     nME,
    output logic                     ENB,
    output logic                     ALE,
+   output logic                     CFlag,
+   output logic                     LrSel,
+   output logic                     Rs1Sel,
    input  wire    [7:0]             Opcode,
-   input  wire                      Z,
+   input  wire    [3:0]             FLags,
    input  wire                      Clock,
    input  wire                      nReset
 );
