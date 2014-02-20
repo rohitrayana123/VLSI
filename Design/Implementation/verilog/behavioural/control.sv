@@ -1,6 +1,4 @@
 module control(
-   output logic                     Ale,
-   output logic                     Enb,
    output opcodes::alu_functions_t  AluOp, 
    output logic   [1:0]             Op2Sel, 
    output logic                     Op1Sel, 
@@ -16,8 +14,13 @@ module control(
    output logic                     WdSel,
    output logic                     ImmSel,
    output logic                     RegWe,
-   output logic                     MemEn,
-   input  opcodes::pc_select_t      PcSel,
+   output opcodes::pc_select_t      PcSel,
+   output logic                     MemEn,   // Pad control 
+   output logic                     nWE,     // To memory map
+   output logic                     nOE,
+   output logic                     nME,
+   output logic                     ENB,
+   output logic                     ALE,
    input  wire    [7:0]             OpCode,
    input  wire                      Z,
    input  wire                      Clock,
@@ -30,91 +33,103 @@ import opcodes::*;
 
 enum {
    fetch,
-   decode,
    execute
 }  state;
 
 enum {
-   addrLatch,
+   latch1,
+   latch2,
+   latch3,
+   latch4,
    irGet       
 }  fetchSub;
 
 always_ff@(posedge Clock or negedge nReset) begin
    // Major states
    if(!nReset) begin
-      state <= fetch; 
-      fetchSub <= addrLatch;
+      state <= #20 fetch; 
+      fetchSub <= #20 latch1;
    end else begin 
       case(state) 
-         fetch    :  if(fetchSub == irGet)
-                        state <= decode;
-         decode   :  state <= execute;
-         execute  :  state <= fetch;
-         default  :  state <= fetch;
+         fetch    :  if(fetchSub == irGet)   state <= #20 execute;
+         execute  :  state <= #20 fetch;
+         default  :  state <= #20 fetch;
       endcase
       // Fetch  
       if(state == fetch)
          case(fetchSub)
-            addrLatch   : fetchSub <= irGet;
-            irGet       : fetchSub <= addrLatch;
-            default     : fetchSub <= addrLatch;
+            latch1   : fetchSub <= #20 latch2;
+            latch2   : fetchSub <= #20 latch3;
+            latch3   : fetchSub <= #20 latch4;
+            latch4   : fetchSub <= #20 irGet;
+            irGet    : fetchSub <= #20 latch1;
+            default  : fetchSub <= #20 latch1;
          endcase
       // Execute 
       if(state == execute) begin
-         state <= fetch;
+         state <= #20 fetch;
          case(OpCode)
-            NOP   :  state <= fetch;
-            ADD   :  AluOp <= FnADD; 
-            ADDI  :  AluOp <= FnADD; 
-            ADDIB :  AluOp <= FnADD; 
-            ADC   :  AluOp <= FnADD;  
-            ADCI  :  AluOp <= FnADD; 
+            NOP   :  AluOp <= #20 FnNOP;
+            ADD   :  AluOp <= #20 FnADD; 
+            ADDI  :  AluOp <= #20 FnADD; 
+            ADDIB :  AluOp <= #20 FnADD; 
+            ADC   :  AluOp <= #20 FnADD;  
+            ADCI  :  AluOp <= #20 FnADD; 
          endcase
       end
    end
 end
 
-//always_comb begin
-//   Ale   <= 0;
-//   Enb   <= 0;
-//   PcEn  <= 0;
-//   IrWe  <= 0;
-//   RegWe <= 0;
-//   case(state) 
-//      fetch    :
-//         case(fetchSub)
-//            addrLatch   : begin
-//               Ale   <= 1;
-//               Enb   <= 1;
-//               PcEn  <= 1;
-//            end
-//            irGet       : begin
-//               IrWe  <= 1; 
-//            end
-//         endcase
-//      execute  :
-//         case(OpCode)
-//            NOP   :  begin
-//                        
-//                     end
-//            ADD   :  begin 
-//                        AluOp  <= FnADD;
-//                     end
-//            ADDI  :  begin
-//                        AluOp  <= FnADD;
-//                     end
-//            ADDIB :  begin
-//                        AluOp  <= FnADD;
-//                     end
-//            ADC   :  begin
-//                        AluOp  <= FnADD;
-//                     end
-//            ADCI  :  begin
-//                        AluOp  <= FnADD;
-//                     end
-//         endcase
-//   endcase
-//end
+always_comb begin
+   // Default outputs    
+   Op2Sel   <= 0; 
+   Op1Sel   <= 0; 
+   Rw       <= 0;
+   AluEn    <= 0;
+   SpEn     <= 0;
+   SpWe     <= 0;
+   LrEn     <= 0;
+   LrWe     <= 0;
+   PcWe     <= 0;
+   PcEn     <= 0;
+   IrWe     <= 0;
+   WdSel    <= 0;
+   ImmSel   <= 0;
+   RegWe    <= 0; 
+   PcSel    <= 0;
+   MemEn    <= 0;
+   nWE      <= 0;
+   nOE      <= 0;
+   nME      <= 0;
+   ENB      <= 0;
+   ALE      <= 0;
+   case(state)
+      fetch : 
+         case(fetchSub)
+            latch1:begin
+               MemEn <= 1;
+            end
+            latch2:begin
+               MemEn <= 1;
+               ALE   <= 1; 
+               nWE   <= 1;
+               nOE   <= 1;
+            end 
+            latch3:begin
+               nWE   <= 1;
+               nOE   <= 1;
+            end 
+            latch4:begin
+               nWE   <= 1;
+            end 
+            irGet:begin
+               MemEn <= 1;
+               ENB   <= 1; // Pad to read in
+               IrWe  <= 1; // Write to IR
+            end
+         endcase
+   endcase
+end
 
 
 endmodule

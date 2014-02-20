@@ -6,8 +6,6 @@ import opcodes::*;
 
 parameter CLK_PERIOD = 100;
 
-logic       Ale;
-logic       Enb;
 logic [3:0] AluOp;    
 logic [1:0] Op2Sel;   
 logic       Op1Sel;   
@@ -24,15 +22,18 @@ logic       IrWe;
 logic       WdSel;    
 logic       ImmSel;   
 logic       RegWe;    
-logic       MemEn;    
+logic       MemEn;
+logic       nWE;
+logic       nOE;
+logic       nME;
+logic       ENB;
+logic       ALE;
 logic [7:0] OpCode;
 logic       Z;        
 logic       Clock;    
 logic       nReset;   
 
 control control(
-   .Ale           (Ale        ),
-   .Enb           (Enb        ),
    .AluOp         (AluOp      ),            
    .Op2Sel        (Op2Sel     ),
    .Op1Sel        (Op1Sel     ),
@@ -50,22 +51,60 @@ control control(
    .ImmSel        (ImmSel     ),
    .RegWe         (RegWe      ),
    .MemEn         (MemEn      ),
+   .nWE           (nWE        ),
+   .nOE           (nOE        ),
+   .nME           (nME        ),
+   .ENB           (ENB        ),
+   .ALE           (ALE        ),
    .OpCode        (OpCode     ),
    .Z             (Z          ),
    .Clock         (Clock      ),
    .nReset        (nReset     )
 );
 
+initial                          Clock = 1;
 always begin   #(CLK_PERIOD/2)   Clock = 0;
                #(CLK_PERIOD/2)   Clock = 1;
 end
 
+logic [9:0] prog [7:0];
+
 initial begin
+   integer i;
+
+   prog[0] = NOP;
+   prog[1] = ADD;
+   prog[2] = ADDI;
+   prog[3] = ADDIB;
+   prog[4] = ADC;
+   prog[5] = ADCI;
+
+
          nReset = 0;
-   #500  nReset = 1;
+   #500  nReset = 1; 
+   for(i=0;i<20;i=i+1) begin
+      // Test fetch phase
+      @(posedge Clock) if(!((MemEn == 1)&&(ALE == 0))) fail;
+      @(posedge Clock) if(!((MemEn == 1)&&(ALE == 1)&&(nWE == 1)&&(nOE == 1))) fail;
+      @(posedge Clock) if(!((MemEn == 0)&&(ALE == 0)&&(nWE == 1)&&(nOE == 1))) fail;
+      @(posedge Clock) if(!((MemEn == 0)&&(ALE == 0)&&(nWE == 1)&&(nOE == 0))) fail;
+      @(posedge Clock) if(!(IrWe == 1)) fail;
    
-   #1000    OpCode = NOP;
-   #1000    OpCode = ADD;
-   #1000    OpCode = NOP;
+      // Opcode is now present
+      OpCode = prog[i];
+
+      // Test Execute phase
+      @(posedge Clock);
+   
+   end
+   $stop;
 end
+
+task fail;
+   $display();
+   $display("  !!!!!!!!!!!!!!!!!!!!!!!!");
+   $display("  !!!      FAIL        !!!");
+   $display("  !!!!!!!!!!!!!!!!!!!!!!!!");
+   $stop;
+endtask
 endmodule
