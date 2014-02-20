@@ -70,8 +70,8 @@ control control (
    .Flags      (Flags      ),
    .Opcode     (Opcode     ),    // Inputs 
    .AluWe      (AluWe      ),
-   .Clock      (nReset     ),
-   .nReset     (Clock      )
+   .Clock      (Clock      ),
+   .nReset     (nReset     )
 );
 
 datapath datapath ( 
