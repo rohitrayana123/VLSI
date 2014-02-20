@@ -1,0 +1,15 @@
+//
+// File created by:  ncverilog
+// Do not modify this file
+//
+-sv
++gui
++ncaccess+r
++tcl+system.tcl
+-y
+library
++libext+.sv
++incdir+library
+library/opcodes.svh
+system.sv
+programs/array_mult.sv
