@@ -1,10 +1,9 @@
 module cpu_core(
   output wire  [15:0]   DataOut,
-  output wire           Enb,
-  output wire           nMe, 
-  output wire           Ale, 
-  output wire           RnW, 
-  output wire           nOe, 
+  output wire           nOE,
+  output wire           nME,
+  output wire           ALE,
+  output wire           ENB, 
   output wire           SDO,
   input  wire  [15:0]   DataIn,
   input  wire           nIrq, 
@@ -29,18 +28,16 @@ wire        LrWe;
 wire        PcWe;  
 wire [1:0]  PcSel;  
 wire        PcEn;  
-wire        IrEn;
 wire        IrWe;
 wire        WdSel;  
 wire        ImmSel;  
 wire        RegWe; 
 wire        MemEn;
-wire [7:0]  IrControl;  
+wire [7:0]  Opcode;  
 wire        Z;  
 
 
 assign SDO = SDI; // No sim 
-
 
 control control ( 
    .AluOp      (AluOp      ),    // Ouputs  
@@ -52,16 +49,20 @@ control control (
    .SpWe       (SpWe       ),      
    .LrEn       (LrEn       ),
    .LrWe       (LrWe       ),
-   .PcWe       (PcWe       ),
-   .PcSel      (PcSel      ),
+   .PcWe       (PcWe       ), 
    .PcEn       (PcEn       ),
-   .IrEn       (IrEn       ),
    .IrWe       (IrWe       ),
    .WdSel      (WdSel      ),
    .ImmSel     (ImmSel     ),
    .RegWe      (RegWe      ),
+   .PcSel      (PcSel      ),
    .MemEn      (MemEn      ),
-   .IrControl  (IrControl  ),    // Inputs
+   .nWE        (nWE        ),
+   .nOE        (nOE        ),
+   .nME        (nME        ),
+   .ENB        (ENB        ),
+   .ALE        (ALE        ),
+   .Opcode     (Opcode     ),    // Inputs
    .Z          (Z          ),
    .Clock      (nReset     ),
    .nReset     (Clock      )
@@ -69,11 +70,11 @@ control control (
 
 datapath datapath ( 
    .SysBus     (DataOut    ),   // Output
-   .IrControl  (IrControl  ),
-   .Z          (Z          ),  
+   .Opcode     (Opcode     ),
+   .Flags      (Flags      ),  
    .DataIn     (DataIn     ),
    .AluOp      (AluOp      ),   // Inputs 
-   .Op2Sel     (Op2Sel     ),
+   .PcSel      (PcSel      ),
    .Op1Sel     (Op1Sel     ),
    .Rw         (Rw         ),
    .AluEn      (AluEn      ),
@@ -82,9 +83,7 @@ datapath datapath (
    .LrEn       (LrEn       ),
    .LrWe       (LrWe       ),
    .PcWe       (PcWe       ),
-   .PcSel      (PcSel      ),
    .PcEn       (PcEn       ),
-   .IrEn       (IrEn       ),
    .IrWe       (IrWe       ),
    .WdSel      (WdSel      ),
    .ImmSel     (ImmSel     ),
