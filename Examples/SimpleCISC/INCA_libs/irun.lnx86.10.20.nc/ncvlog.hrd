@@ -1,0 +1,11 @@
+//
+// File created by:  ncverilog
+// Do not modify this file
+//
+-YDIR
+library
+-sv
+-LIBEXT
+.sv
+-INCDIR
+library
