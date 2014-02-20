@@ -61,7 +61,7 @@ set wave_signal_list {
   system.CPU.CPU_core.RegWe
   system.CPU.CPU_core.datapath.regBlock.Rw
   system.CPU.CPU_core.datapath.regBlock.WData
-  
+  system.RAM.Data_stored
 }
 
 # View Results
