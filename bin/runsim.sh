@@ -21,8 +21,9 @@ cmd="ncverilog -sv"
 gui="$2"
 gui=${gui//[-.]/} # Remove tag
 case $gui in
-   "no_gui")      echo "No GUI";;
-   *)             echo "GUI" ; cmd="$cmd +gui" ;; 
+
+   "gui")      echo "GUI" ; cmd="$cmd +gui" ;; 
+   *)             echo "NO GUI" ;; 
 esac
 cmd="$cmd +ncaccess+r"
 
@@ -34,7 +35,7 @@ module=${module//[-.]/} # Remove tag
 #HSL:
 #there's an exception
 if [ "system" == ${module} ]; then
-	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${behave}/system.sv +tcl+${stim}/system.tcl"
+	cmd="$cmd  +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/options.sv ${behave}/opcodes.svh ${behave}/system.sv +define+prog_file=\"${behave}/program.hex\" +tcl+${stim}/system.tcl"
 	#cmd="ncverilog -sv +gui +ncaccess+r +libext+.sv -y . opcodes.svh system.sv"
 elif [ -f ${stim}/${module}_stim.sv ]; then
 	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${stim}/${module}_stim.sv"
