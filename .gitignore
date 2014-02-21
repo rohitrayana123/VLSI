@@ -30,3 +30,6 @@ waves.shm/
 ncverilog.key
 ## Vim swap
 *.swp
+
+## Misc
+*~
