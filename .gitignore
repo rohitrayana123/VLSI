@@ -23,8 +23,10 @@
 *.out
 *.synctex.gz
 
-## Verilog Directories 
+## Verilog Directories and files
 .simvision/
-
+INCA_libs/
+waves.shm/
+ncverilog.key
 ## Vim swap
 *.swp
