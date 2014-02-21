@@ -35,7 +35,7 @@ timeunit 1ns; timeprecision 100ps;
 import opcodes::*;
 
 Opcode_t Opcode;
-assign Opcode = OpcodeCondIn[9:5];
+//assign Opcode = OpcodeCondIn[9:5];
 
 enum {
    fetch,
@@ -75,12 +75,8 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) begin
          state <= #20 fetch;
          case(Opcode)
-            NOP   :  AluOp <= #20 FnNOP;
-            ADD   :  AluOp <= #20 FnADD; 
-            ADDI  :  AluOp <= #20 FnADD; 
-            ADDIB :  AluOp <= #20 FnADD; 
-            ADC   :  AluOp <= #20 FnADD;  
-            ADCI  :  AluOp <= #20 FnADD; 
+            NOP                     :  AluOp <= #20 FnNOP;
+            ADD,ADDI,ADDIB,ADC,ADCI :  AluOp <= #20 FnADD; 
          endcase
       end
    end
@@ -117,14 +113,12 @@ always_comb begin
             latch2:begin
                ALE = 1;
                nME = 1;
-               ENB = 0;
               	nWE  = 1;
                nOE  = 1;
 		         PcEn  = 1;
             end 
             latch3:begin
                nWE = 1;
-		         ENB = 0;
 		         MemEn = 1;  //outside onto sysbus
 		         IrWe = 1;   //want to write to Ir 
             end
@@ -139,7 +133,6 @@ always_comb begin
                nME = 1;
                nWE = 1;
                MemEn = 1;
-               ENB   = 0; // Pad to read in
                IrWe  = 1; // Write to IR
             end
             endcase
@@ -152,6 +145,4 @@ always_comb begin
       end
    endcase
 end
-
-
 endmodule
