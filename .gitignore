@@ -26,6 +26,7 @@
 ## Verilog Directories and files
 .simvision/
 INCA_libs/
+ncsim.shm/
 waves.shm/
 ncverilog.key
 ## Vim swap
