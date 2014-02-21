@@ -68,7 +68,7 @@ control control (
    .Rs1Sel     (Rs1Sel     ),
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
-   .Opcode     (Opcode     ),    // Inputs 
+   .OpcodeCondIn(Opcode     ),    // Inputs 
    .AluWe      (AluWe      ),
    .Clock      (Clock      ),
    .nReset     (nReset     )

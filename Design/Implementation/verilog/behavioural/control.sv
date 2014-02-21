@@ -24,7 +24,7 @@ module control(
    output logic                     LrSel,
    output logic                     Rs1Sel,
    output logic                     AluWe,
-   input  wire    [9:0]             Opcode,
+   input  wire    [9:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
    input  wire                      Clock,
    input  wire                      nReset
@@ -33,6 +33,9 @@ module control(
 timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
+
+Opcode_t Opcode;
+assign Opcode = OpcodeCondIn[9:5];
 
 enum {
    fetch,
