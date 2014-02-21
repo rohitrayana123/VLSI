@@ -111,39 +111,45 @@ always_comb begin
       fetch : 
          case(fetchSub)
             latch1:begin
-            // 	MemEn = 1;
-		nME = 1; //Memory enable
-		ALE = 1; //Address Latch
-		PcEn  = 1; //output the PC to SysBus
-		nOE   = 1; //don't want the memory to use the bus
-		nWE = 1;
+		         nME = 1; //Memory enable
+		         PcEn = 1; //output the PC to SysBus
             end
             latch2:begin
-               //MemEn = 1;
-              	nWE   = 1;
-               	nOE   = 1;
-		PcEn  = 1;
+               ALE = 1;
+               nME = 1;
+               ENB = 0;
+              	nWE  = 1;
+               nOE  = 1;
+		         PcEn  = 1;
             end 
             latch3:begin
-                nWE   = 1;
-               //nOE   = 1;//want to output on the bus to 
-		ENB  = 1;
-		MemEn = 1; //outside onto sysbus
-		IrWe = 1; //want to write to Ir
+               nWE = 1;
+		         ENB = 0;
+		         MemEn = 1;  //outside onto sysbus
+		         IrWe = 1;   //want to write to Ir 
             end
             latch4:begin
-		//nME = 1;
-		MemEn = 1;
-		ENB = 1;
+		         //nME = 1;
+		         MemEn = 1;
+		         ENB = 1;
                nWE   = 1;
-		IrWe  = 1;
+		         IrWe  = 1;
             end 
             irGet:begin
+               nME = 1;
+               nWE = 1;
                MemEn = 1;
-               ENB   = 1; // Pad to read in
+               ENB   = 0; // Pad to read in
                IrWe  = 1; // Write to IR
             end
-         endcase
+            endcase
+      execute:begin
+         nME = 1;
+         nWE = 1;
+         PcWe = 1;      // Just in for now 
+         PcEn = 1;
+         PcSel = Pc1;
+      end
    endcase
 end
 
