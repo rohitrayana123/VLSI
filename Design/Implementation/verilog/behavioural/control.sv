@@ -1,6 +1,6 @@
 module control(
    output opcodes::alu_functions_t  AluOp, 
-   output logic   [1:0]             Op1Sel, 
+   output opcodes::Op1_select_t     Op1Sel, 
    output logic                     Op2Sel, 
    output logic                     AluEn,
    output logic                     SpEn,
@@ -35,55 +35,60 @@ timeunit 1ns; timeprecision 100ps;
 import opcodes::*;
 
 Opcode_t Opcode;
-//assign Opcode = OpcodeCondIn[9:5];
-
+assign Opcode = OpcodeCondIn[9:5];
 enum {
    fetch,
    execute
 }  state;
-
 enum {
-   latch1,
-   latch2,
-   latch3,
-   latch4,
-   irGet       
+   fet1,
+   fet2,
+   fet3,
+   fet4       
 }  fetchSub;
+enum {
+   exe1,
+   exe2
+}  executeSub;
 
 always_ff@(posedge Clock or negedge nReset) begin
    // Major states
    if(!nReset) begin
-      state <= #20 fetch; 
-      fetchSub <= #20 latch1;
+      state <= #20 fetch;
+      fetchSub <= #20 fet1;
+      executeSub <= #20 exe1;
    end else begin 
-      case(state) 
-         fetch    :  if(fetchSub == irGet)   state <= #20 execute;
-         execute  :  state <= #20 fetch;
-         default  :  state <= #20 fetch;
-      endcase
       // Fetch  
       if(state == fetch)
          case(fetchSub)
-            latch1   : fetchSub <= #20 latch2;
-            latch2   : fetchSub <= #20 latch3;
-            latch3   : fetchSub <= #20 latch4;
-            latch4   : fetchSub <= #20 irGet;
-            irGet    : fetchSub <= #20 latch1;
-            default  : fetchSub <= #20 latch1;
+            fet1: fetchSub <= #20 fet2;
+            fet2: fetchSub <= #20 fet3;
+            fet3: fetchSub <= #20 fet4;
+            fet4: begin
+                     state <= #20 execute;
+                     fetchSub <= #20 fet1;
+                     executeSub <= #20 exe1;
+                  end
+            default: fetchSub <= #20 fet1;
          endcase
-      // Execute 
-      if(state == execute) begin
-         state <= #20 fetch;
-         case(Opcode)
-            NOP                     :  AluOp <= #20 FnNOP;
-            ADD,ADDI,ADDIB,ADC,ADCI :  AluOp <= #20 FnADD; 
+      // Execute     
+      if(state == execute)
+         case(executeSub)
+            exe1: case(Opcode)
+                     ADD,
+                     ADDI,
+                     ADDIB,
+                     ADC,
+                     ADCI: state <= #20 fetch;           
+                  endcase
          endcase
-      end
    end
 end
 
 always_comb begin
-   // Default outputs    
+   // Default outputs   
+   AluOp    = 0;
+   AluWe    = 0;
    Op2Sel   = 0; 
    Op1Sel   = 0; 
    AluEn    = 0;
@@ -91,6 +96,7 @@ always_comb begin
    SpWe     = 0;
    LrEn     = 0;
    LrWe     = 0;
+   LrSel    = 0;
    PcWe     = 0;
    PcEn     = 0;
    IrWe     = 0;
@@ -106,42 +112,57 @@ always_comb begin
    case(state)
       fetch : 
          case(fetchSub)
-            latch1:begin
-		         nME = 1; //Memory enable
-		         PcEn = 1; //output the PC to SysBus
+            fet1: begin ALE = 1; nME = 1; nWE  = 1; nOE  = 1; PcEn  = 1; end 
+            fet2: begin nWE = 1; MemEn = 1; end
+            fet3: begin MemEn = 1; ENB = 1; nWE   = 1; end 
+            fet4: begin nME = 1; nWE = 1; MemEn = 1; IrWe  = 1; end
+         endcase
+      execute: begin
+         case(executeSub)
+            exe1: begin    // Single cycle ops
+               nME = 1;    // Memory enable
+		         PcEn = 1;   // output the PC to SysBus
+               case(Opcode)
+                  ADD:  begin
+                           AluOp = FnADD;
+                           Op1Sel = Op1Rd1;
+                           Op2Sel = 1;
+                           RegWe = 1;
+                           PcWe = 1;
+                           PcSel = Pc1;
+                        end
+                  ADDI: begin
+                           AluOp = FnADD;
+                           Op1Sel = Op1Rd1;
+                           RegWe = 1;
+                           PcWe = 1;
+                           PcSel = Pc1;
+                        end
+                  ADDIB:begin
+                           AluOp = FnADD;
+                           Op1Sel = Op1Rd1;
+                           Rs1Sel = 1;
+                           RegWe = 1;
+                           PcWe = 1;
+                           PcSel = Pc1;
+                        end
+                  ADC:  begin
+                           AluOp = FnADD;
+                           Op1Sel = Op1Rd1;
+                           RegWe = 1;
+                           PcWe = 1;
+                           PcSel = Pc1;
+                        end
+                  ADCI:  begin
+                           AluOp = FnADD;
+                           Op1Sel = Op1Rd1;
+                           RegWe = 1;
+                           PcWe = 1;
+                           PcSel = Pc1;
+                        end
+               endcase
             end
-            latch2:begin
-               ALE = 1;
-               nME = 1;
-              	nWE  = 1;
-               nOE  = 1;
-		         PcEn  = 1;
-            end 
-            latch3:begin
-               nWE = 1;
-		         MemEn = 1;  //outside onto sysbus
-		         IrWe = 1;   //want to write to Ir 
-            end
-            latch4:begin
-		         //nME = 1;
-		         MemEn = 1;
-		         ENB = 1;
-               nWE   = 1;
-		         IrWe  = 1;
-            end 
-            irGet:begin
-               nME = 1;
-               nWE = 1;
-               MemEn = 1;
-               IrWe  = 1; // Write to IR
-            end
-            endcase
-      execute:begin
-         nME = 1;
-         nWE = 1;
-         PcWe = 1;      // Just in for now 
-         PcEn = 1;
-         PcSel = Pc1;
+         endcase
       end
    endcase
 end
