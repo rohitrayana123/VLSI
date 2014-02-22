@@ -35,10 +35,12 @@ module=${module//[-.]/} # Remove tag
 #HSL:
 #there's an exception
 if [ "system" == ${module} ]; then
-	cmd="$cmd  +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/options.sv ${behave}/opcodes.svh ${behave}/system.sv +define+prog_file=\"${behave}/program.hex\" +tcl+${stim}/system.tcl"
-	#cmd="ncverilog -sv +gui +ncaccess+r +libext+.sv -y . opcodes.svh system.sv"
+	cmd="$cmd  +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/options.sv ${behave}/opcodes.svh ${behave}/system.sv +define+prog_file=\"${behave}/program.hex\" "
+	if [ "gui" == $gui ]; then
+      cmd="$cmd +tcl+${stim}/system.tcl"
+   fi
 elif [ -f ${stim}/${module}_stim.sv ]; then
-	cmd="$cmd +libext+.sv -y ${behave} ${behave}/opcodes.svh ${stim}/${module}_stim.sv"
+	cmd="$cmd +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/opcodes.svh ${behave}/options.sv ${stim}/${module}_stim.sv"
 else
 	echo "Unkown module $module"
 	printHelp;
