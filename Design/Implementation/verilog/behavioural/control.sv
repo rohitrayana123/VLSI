@@ -74,16 +74,18 @@ always_ff@(posedge Clock or negedge nReset) begin
             default: fetchSub <= #20 fet1;
          endcase
       // Execute     
-      if(state == execute)
+      if(state == execute) begin
+         state <= #20 fetch;
          case(executeSub)
             exe1: case(Opcode)
                      ADD,
                      ADDI,
                      ADDIB,
                      ADC,
-                     ADCI: state <= #20 fetch;           
+                     ADCI: state <= #20 fetch;
                   endcase
          endcase
+      end
    end
 end
 

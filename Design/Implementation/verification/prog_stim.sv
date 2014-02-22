@@ -1,9 +1,5 @@
 `include "options.sv"
 
-
-// ajr - find a way to change the program stored in RAM mid test
-`define prog_file "/home/ajr2g10/VLSI/Design/Implementation/programs/program.hex"
-
 module system;
 
 timeunit 1ns;
@@ -55,8 +51,10 @@ always begin
             #250  Clock = 0;
             #250  Clock = 1;
 end
-
-
+initial begin
+                  nReset = 0;
+            #1000 nReset = 1;
+end
 
 
 initial begin
@@ -82,6 +80,7 @@ end
   initial
     begin
       #`sim_time
+      $writememh(`ram_out,system.RAM.Data_stored);
       $stop;
       $finish;
     end
