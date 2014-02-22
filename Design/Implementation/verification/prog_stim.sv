@@ -1,4 +1,7 @@
 `include "options.sv"
+
+
+// ajr - find a way to change the program stored in RAM mid test
 `define prog_file "/home/ajr2g10/VLSI/Design/Implementation/programs/program.hex"
 
 module system;

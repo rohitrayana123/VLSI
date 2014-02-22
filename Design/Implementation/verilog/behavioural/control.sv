@@ -35,7 +35,9 @@ timeunit 1ns; timeprecision 100ps;
 import opcodes::*;
 
 Opcode_t Opcode;
-assign Opcode = OpcodeCondIn[9:5];
+
+assign Opcode = OpcodeCondIn[9:5]; // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
+
 enum {
    fetch,
    execute
@@ -87,10 +89,10 @@ end
 
 always_comb begin
    // Default outputs   
-   AluOp    = 0;
+   AluOp    = FnNOP;
    AluWe    = 0;
    Op2Sel   = 0; 
-   Op1Sel   = 0; 
+   Op1Sel   = Op1Rd1; 
    AluEn    = 0;
    SpEn     = 0;
    SpWe     = 0;
