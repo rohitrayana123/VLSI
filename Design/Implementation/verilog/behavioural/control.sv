@@ -152,14 +152,14 @@ always_comb begin
                            PcSel = Pc1;
                         end
                   ADC:  begin
-                           AluOp = FnADD;
+                           AluOp = FnADC;
                            Op1Sel = Op1Rd1;
                            RegWe = 1;
                            PcWe = 1;
                            PcSel = Pc1;
                         end
                   ADCI:  begin
-                           AluOp = FnADD;
+                           AluOp = FnADC;
                            Op1Sel = Op1Rd1;
                            RegWe = 1;
                            PcWe = 1;
