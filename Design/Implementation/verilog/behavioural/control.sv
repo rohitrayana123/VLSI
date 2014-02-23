@@ -151,6 +151,7 @@ always_comb begin
                   ADDI: begin
                            AluOp = FnADD;
                            Op1Sel = Op1Rd1;
+                           ImmSel = 1;
                            RegWe = 1;
                            PcWe = 1;
                            PcSel = Pc1;
@@ -158,6 +159,7 @@ always_comb begin
                   ADDIB:begin
                            AluOp = FnADD;
                            Op1Sel = Op1Rd1;
+                           ImmSel = 1;
                            Rs1Sel = 1;
                            RegWe = 1;
                            PcWe = 1;
