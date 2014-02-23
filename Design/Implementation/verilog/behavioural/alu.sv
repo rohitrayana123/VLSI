@@ -16,6 +16,7 @@ always_comb
    case (AluOp)
       FnMem		: Result = Op1;
       FnADD		: Result = Op1 + Op2;
+      FnADC    : Result = Op1 + Op2 + 1; 
       FnSUB		: Result = Op1 - Op2;
       FnAND		: Result = Op1 & Op2;
       FnOR	   : Result = Op1 | Op2;
