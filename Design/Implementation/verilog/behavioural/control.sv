@@ -104,6 +104,7 @@ always_comb begin
    PcWe     = 0;
    PcEn     = 0;
    IrWe     = 0;
+   Rs1Sel   = 0;
    WdSel    = 0;
    ImmSel   = 0;
    RegWe    = 0;
