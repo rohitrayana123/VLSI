@@ -1,0 +1,19 @@
+This is the coding scheme I used when writing up the instruction set.
+
+OpCodes:
+Shifting starts 000
+Addition starts 001
+Subtraction starts 01 (01110, 01111 not used)
+Logic starts 10 (10110, 10111 not used)
+Type B instructions start 110
+Others (E,C,D) start 111
+
+Can set opcode of type D to 1111, allowing 4 bits for branch type selection (Not implemented)
+
+Conditions:
+Unconditional starts 0
+	a 0 next uses link register
+	a 1 next does not use link register
+Conditional starts 1
+	a 1 next checks z flag
+	a 0 next does not check z flag
