@@ -17,14 +17,20 @@ wire [15:0] Address;
 wire ALE, nME, nOE, RnW;
 tri1 nIRQ, nWait;
 
-cpu CPU ( .Data(Data), .nME(nME), .ALE(ALE), .RnW(RnW), .nOE(nOE), .SDO(SDO),
-`ifndef nointerrupt
-  .nIRQ(nIRQ),
-`endif
-`ifndef nowait
-  .nWait(nWait),
-`endif
-  .Clock(Clock), .nReset(nReset), .Test(Test), .SDI(SDI)  );
+cpu cpu ( 
+   .Data    (Data), 
+   .nME     (nME), 
+   .ALE     (ALE), 
+   .RnW     (RnW), 
+   .nOE     (nOE), 
+   .SDO     (SDO),
+   .nIRQ    (nIRQ),
+   .nWait   (nWait),
+   .Clock   (Clock), 
+   .nReset  (nReset), 
+   .Test    (Test), 
+   .SDI     (SDI)  
+);
 
 // define the interconnect fabric based on a SystemVerilog interface
 
@@ -40,51 +46,56 @@ io_switches IO_SWITCHES ( Bus, switches, nSelSwitch);
 io_timer IO_TIMER ( Bus, nSelTimer, Clock, nReset );
 io_serial IO_SERIAL ( Bus, nSelSerial, Clock, nReset );
 
-`ifdef special_stimulus
 
-  `include "stimulus.sv"
 
-`else
 
-initial           Clock = 0;
+
+integer ClockCount = 0;
+// Reset and clock
+initial begin     
+                  nReset = 0;
+                  Clock = 0;
+            #1000 Clock = 1;
+end
 always begin
             #250  Clock = 0;
             #250  Clock = 1;
 end
-initial begin
-                  nReset = 0;
-            #1000 nReset = 1;
-end
 
 
-initial begin
-   `ifdef switch_value
-     switches = `switch_value;
-   `else
-      switches = 1;
-   `endif
-   Test = 0;
-   SDI = 0;
-end
-  
-`endif
-
-`ifdef special_monitor
-
-  `include "monitor.sv"
-
-`endif
+// Probe the reg block]
+always
+   @(posedge Clock) begin
+      ClockCount = ClockCount + 1;
+      $display("\n\n\n");
+      $display("SIM TIME   =%d\nClockCount =%d\n",
+         $time,
+         ClockCount
+      );
+      $display("SysBus=%x\n",
+          cpu.cpu_core.datapath.SysBus
+      );
+      $display(
+         "General Purpose Registers\n0=%x\n1=%x\n2=%x\n3=%x\n4=%x\n5=%x\n6=%x\n7=%x\n",
+         cpu.cpu_core.datapath.regBlock.regs[0],
+         cpu.cpu_core.datapath.regBlock.regs[1],
+         cpu.cpu_core.datapath.regBlock.regs[2],
+         cpu.cpu_core.datapath.regBlock.regs[3],
+         cpu.cpu_core.datapath.regBlock.regs[4],
+         cpu.cpu_core.datapath.regBlock.regs[5],
+         cpu.cpu_core.datapath.regBlock.regs[6],
+         cpu.cpu_core.datapath.regBlock.regs[7]
+      );
+   end
 
 `ifdef sim_time
-
   initial
     begin
-      #`sim_time
-      $writememh(`ram_out,system.RAM.Data_stored);
+      #`sim_time                                      // Stop sim
+      $writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
       $stop;
       $finish;
     end
-
 `endif
 
 endmodule
