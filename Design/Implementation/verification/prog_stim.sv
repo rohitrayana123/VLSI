@@ -53,9 +53,9 @@ io_serial IO_SERIAL ( Bus, nSelSerial, Clock, nReset );
 integer ClockCount = 0;
 // Reset and clock
 initial begin     
-                  nReset = 0;
-                  Clock = 0;
-            #1000 Clock = 1;
+                  nReset   = 0;
+                  Clock    = 0;
+            #1000 nReset   = 1;
 end
 always begin
             #250  Clock = 0;
@@ -73,20 +73,42 @@ always
          ClockCount
       );
       $display("SysBus=%x\n",
-          cpu.cpu_core.datapath.SysBus
+          cpu.CPU_core.datapath.SysBus
       );
       $display(
          "General Purpose Registers\n0=%x\n1=%x\n2=%x\n3=%x\n4=%x\n5=%x\n6=%x\n7=%x\n",
-         cpu.cpu_core.datapath.regBlock.regs[0],
-         cpu.cpu_core.datapath.regBlock.regs[1],
-         cpu.cpu_core.datapath.regBlock.regs[2],
-         cpu.cpu_core.datapath.regBlock.regs[3],
-         cpu.cpu_core.datapath.regBlock.regs[4],
-         cpu.cpu_core.datapath.regBlock.regs[5],
-         cpu.cpu_core.datapath.regBlock.regs[6],
-         cpu.cpu_core.datapath.regBlock.regs[7]
+         cpu.CPU_core.datapath.regBlock.regs[0],
+         cpu.CPU_core.datapath.regBlock.regs[1],
+         cpu.CPU_core.datapath.regBlock.regs[2],
+         cpu.CPU_core.datapath.regBlock.regs[3],
+         cpu.CPU_core.datapath.regBlock.regs[4],
+         cpu.CPU_core.datapath.regBlock.regs[5],
+         cpu.CPU_core.datapath.regBlock.regs[6],
+         cpu.CPU_core.datapath.regBlock.regs[7]
       );
    end
+
+  initial
+      begin
+            `ifdef switch_value
+                    switches = `switch_value;
+                          `else
+                                   switches = 1;
+                                         `endif
+                                               Test = 0;
+                                                     SDI = 0;
+                                                         end
+
+
+
+
+`ifdef special_monitor
+
+  `include "monitor.sv"
+
+  `endif
+
+
 
 `ifdef sim_time
   initial

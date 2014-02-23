@@ -50,7 +50,9 @@ enum {
 }  fetchSub;
 enum {
    exe1,
-   exe2
+   exe2,
+   exe3,
+   exe4
 }  executeSub;
 
 always_ff@(posedge Clock or negedge nReset) begin
@@ -83,6 +85,16 @@ always_ff@(posedge Clock or negedge nReset) begin
                      ADDIB,
                      ADC,
                      ADCI: state <= #20 fetch;
+                     STW: executeSub <= exe2;
+                  endcase
+            exe2: case(Opcode)
+                     STW: executeSub <= exe3;
+                  endcase
+            exe3: case(Opcode)
+                     STW: executeSub <= exe4;
+                  endcase
+            exe4: case(Opcode)
+                     STW: state <= fetch;
                   endcase
          endcase
       end
@@ -165,7 +177,17 @@ always_comb begin
                            PcWe = 1;
                            PcSel = Pc1;
                         end
+                  STW:  begin
+                           
+                        end
                endcase
+            end
+         exe2: begin
+               
+            end
+         exe3: begin
+            end
+         exe4: begin
             end
          endcase
       end
