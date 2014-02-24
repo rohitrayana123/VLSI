@@ -63,61 +63,55 @@ always begin
 end
 
 
-// Probe the reg block]
-always
-   @(posedge Clock) begin
-      ClockCount = ClockCount + 1;
-      $display("\n\n\n");
-      $display("SIM TIME   =%d\nClockCount =%d\n",
-         $time,
-         ClockCount
-      );
-      $display("SysBus=%x\n",
-          cpu.CPU_core.datapath.SysBus
-      );
-      $display(
-         "General Purpose Registers\n0=%x\n1=%x\n2=%x\n3=%x\n4=%x\n5=%x\n6=%x\n7=%x\n",
-         cpu.CPU_core.datapath.regBlock.regs[0],
-         cpu.CPU_core.datapath.regBlock.regs[1],
-         cpu.CPU_core.datapath.regBlock.regs[2],
-         cpu.CPU_core.datapath.regBlock.regs[3],
-         cpu.CPU_core.datapath.regBlock.regs[4],
-         cpu.CPU_core.datapath.regBlock.regs[5],
-         cpu.CPU_core.datapath.regBlock.regs[6],
-         cpu.CPU_core.datapath.regBlock.regs[7]
-      );
-   end
+// Dump to stdout
+// Only on rising clock edges
+always @(posedge Clock) begin
+   ClockCount = ClockCount + 1;
+   $display("\n\n\n");
+   $display("SIM TIME   =%d\nClockCount =%d\n",
+      $time,
+      ClockCount
+   );
+   $display("SysBus=%x\n",
+       cpu.CPU_core.datapath.SysBus
+   );
+   $display(
+      "General Purpose Registers\n0=%x\n1=%x\n2=%x\n3=%x\n4=%x\n5=%x\n6=%x\n7=%x\n",
+      cpu.CPU_core.datapath.regBlock.regs[0],
+      cpu.CPU_core.datapath.regBlock.regs[1],
+      cpu.CPU_core.datapath.regBlock.regs[2],
+      cpu.CPU_core.datapath.regBlock.regs[3],
+      cpu.CPU_core.datapath.regBlock.regs[4],
+      cpu.CPU_core.datapath.regBlock.regs[5],
+      cpu.CPU_core.datapath.regBlock.regs[6],
+      cpu.CPU_core.datapath.regBlock.regs[7]
+   );
+end
 
-  initial
-      begin
-            `ifdef switch_value
-                    switches = `switch_value;
-                          `else
-                                   switches = 1;
-                                         `endif
-                                               Test = 0;
-                                                     SDI = 0;
-                                                         end
-
-
-
+initial begin
+   `ifdef switch_value
+      switches = `switch_value;
+   `else
+      switches = 1;
+   `endif
+   Test = 0;
+   SDI = 0;
+end
 
 `ifdef special_monitor
-
-  `include "monitor.sv"
-
-  `endif
-
-
-
-`ifdef sim_time
-  initial
-    begin
-      #`sim_time                                      // Stop sim
-      $writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
-      $stop;
-      $finish;
-    end
+   `include "monitor.sv"
 `endif
+
+initial begin
+   `ifdef sim_time
+      #`sim_time                                      // Stop sim
+   `endif      
+   `ifdef ram_out
+      $writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
+   `endif
+   $stop;
+   $finish;
+end
+
 
 endmodule
