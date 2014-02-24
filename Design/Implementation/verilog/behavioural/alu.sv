@@ -9,6 +9,12 @@ module alu(
 timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
+
+`define FLAGS_Z  0
+`define FLAGS_C  1
+`define FLAGS_V  2
+`define FLAGS_N  3
+
 logic Carry;
 assign Flags[`FLAGS_Z] = (Result == 0);
 assign Flags[`FLAGS_N] = Result[15];
