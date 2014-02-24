@@ -36,7 +36,7 @@ import opcodes::*;
 
 Opcode_t Opcode;
 
-assign Opcode = OpcodeCondIn[9:5]; // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
+assign Opcode = OpcodeCondIn[7:3]; // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
 
 enum {
    fetch,
