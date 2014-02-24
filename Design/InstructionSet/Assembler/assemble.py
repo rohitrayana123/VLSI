@@ -212,7 +212,7 @@ if "__main__" == __name__: #only runs is this is main
 		print("No assembler file given")
 		parser.print_help()
 		exit(1)
-	
+	print options
 	assemfile = options.asm
 	assemfile, fileExtension = os.path.splitext(assemfile)
 	if None == options.hexfile:
@@ -221,6 +221,7 @@ if "__main__" == __name__: #only runs is this is main
 	#check file exits
 	if not os.path.exists(assemfile):
 		print("Assembler file not found")
+		print assemfile
 		exit(1)
 
 	print("Converting File " + assemfile + " to machine code")
