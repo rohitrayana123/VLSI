@@ -41,6 +41,7 @@ assign Opcode = OpcodeCondIn[7:3]; // This assignment is a violation of SystemVe
 enum {
    fetch,
    execute
+
 }  state;
 enum {
    fet1,
@@ -52,7 +53,8 @@ enum {
    exe1,
    exe2,
    exe3,
-   exe4
+   exe4,
+   exe5
 }  executeSub;
 
 always_ff@(posedge Clock or negedge nReset) begin
@@ -76,8 +78,7 @@ always_ff@(posedge Clock or negedge nReset) begin
             default: fetchSub <= #20 fet1;
          endcase
       // Execute     
-      if(state == execute) begin
-         state <= #20 fetch;
+      if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
                      ADD,
@@ -94,10 +95,12 @@ always_ff@(posedge Clock or negedge nReset) begin
                      STW: executeSub <= exe4;
                   endcase
             exe4: case(Opcode)
+                     STW: executeSub <= exe5;
+                  endcase
+            exe5: case(Opcode)
                      STW: state <= fetch;
                   endcase
          endcase
-      end
    end
 end
 
@@ -137,10 +140,10 @@ always_comb begin
       execute: begin
          case(executeSub)
             exe1: begin    // Single cycle ops
-               nME = 1;    // Memory enable
-		         PcEn = 1;   // output the PC to SysBus
                case(Opcode)
                   ADD:  begin
+                           nME = 1;    // Memory enable
+		                     PcEn = 1;   // output the PC to SysBus
                            AluOp = FnADD;
                            Op1Sel = Op1Rd1;
                            Op2Sel = 1;
@@ -149,6 +152,8 @@ always_comb begin
                            PcSel = Pc1;
                         end
                   ADDI: begin
+                           nME = 1;    // Memory enable
+		                     PcEn = 1;   // output the PC to SysBus
                            AluOp = FnADD;
                            Op1Sel = Op1Rd1;
                            ImmSel = 1;
@@ -157,6 +162,8 @@ always_comb begin
                            PcSel = Pc1;
                         end
                   ADDIB:begin
+                           nME = 1;    // Memory enable
+		                     PcEn = 1;   // output the PC to SysBus
                            AluOp = FnADD;
                            Op1Sel = Op1Rd1;
                            ImmSel = 1;
@@ -166,6 +173,8 @@ always_comb begin
                            PcSel = Pc1;
                         end
                   ADC:  begin
+                           nME = 1;    // Memory enable
+		                     PcEn = 1;   // output the PC to SysBus
                            AluOp = FnADC;
                            Op1Sel = Op1Rd1;
                            RegWe = 1;
@@ -173,6 +182,8 @@ always_comb begin
                            PcSel = Pc1;
                         end
                   ADCI:  begin
+                           nME = 1;    // Memory enable
+		                     PcEn = 1;   // output the PC to SysBu
                            AluOp = FnADC;
                            Op1Sel = Op1Rd1;
                            RegWe = 1;
@@ -180,17 +191,51 @@ always_comb begin
                            PcSel = Pc1;
                         end
                   STW:  begin
-                           
+                           nME = 1;              
+                           Op1Sel = Op1Rd1;  // 
+                           AluOp = FnADD;
+                           AluEn = 1;
+                           AluWe = 1;
                         end
-               endcase
-            end
-         exe2: begin
-               
-            end
+            endcase
+         end
+         exe2: begin 
+            case(Opcode)
+               STW:  begin     
+                        nME = 1;
+                        ALE = 1;
+                        AluEn = 1;
+                        nWE = 1;
+                        nOE = 1;
+                     end
+            endcase
+         end
          exe3: begin
-            end
+            case(Opcode)
+               STW:  begin
+                        AluEn = 1;
+                        nOE = 1;
+                        nWE = 1;
+                     end
+            endcase
+         end
          exe4: begin
-            end
+            case(Opcode)
+               STW:  begin
+                        AluEn = 1;
+                        nWE = 1;               
+                     end   
+            endcase  
+         end
+         exe5: begin
+            case(Opcode)
+               STW:  begin
+                        AluEn = 1;
+                        nME = 1;
+                        nWE = 1;
+                     end
+            endcase 
+         end
          endcase
       end
    endcase
