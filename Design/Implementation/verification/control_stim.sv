@@ -53,7 +53,7 @@ control control(
    .nME           (nME        ),
    .ENB           (ENB        ),
    .ALE           (ALE        ),
-   .Opcode        (Opcode     ),
+   .OpcodeCondIn  (Opcode     ),
    .Clock         (Clock      ),
    .nReset        (nReset     )
 );
