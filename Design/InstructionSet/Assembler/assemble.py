@@ -54,13 +54,27 @@ Encodings = { 	"ADD"	: ("00100", "A"),
 
 	}
 
-def ConvertToBin(number, length):
-	print("WARNING NEXT LINE WON'T WORK ON HIND'S PYTHON VERSION. NEED TO FIND AN ALTERNATIVE")
-	fmtstr = '{0:0' + str(length) + 'b}'
-        return fmtstr.format(number)
+def ConvertToBin(x, length):
+	#print("WARNING NEXT LINE WON'T WORK ON HIND'S PYTHON VERSION. NEED TO FIND AN ALTERNATIVE")
+	#fmtstr = '{0:0' + str(length) + 'b}'
+        #return fmtstr.format(x)
+	#print x
+	#print length
+	mask = 1 << length - 1
+	binary = ""
+	while mask > 0:
+		if mask & x:
+			binary+="1"
+		else:
+			binary+="0"
+		mask >>= 1
+	#print binary
+	return binary
 
 def EncodeLine(asm):
 	'''function to encode a single line'''
+	if asm[-1] == "\n":
+		asm = asm[:-1]
 	print asm
 	binary = ""
 	#get mnemonic
@@ -69,16 +83,16 @@ def EncodeLine(asm):
 		if c == ';':
 			asm = asm[:i]
 			break
-	print asm
+	#print asm
 	#split by comma or space
 	asm = re.split(' |,', asm)
-	print asm
+	#print asm
 	#remove blank parts
 	asm_parts = list()
 	for a in asm:
 		if a != "":
 			asm_parts.append(a)
-	print asm_parts
+	#print asm_parts
 	asm = asm_parts #mnemonic now at asm[0]
 	op = asm[0]
 	#look up the format
@@ -99,6 +113,7 @@ def EncodeLine(asm):
 			if a > 7:
 				raise Exception("Register out of range")
 			binary += ConvertToBin(a, 3)
+			#print binary
 		if 3 < len(asm):
 			a = asm[3] #last, could be a imm or reg
 			if "R" == a[0]:
@@ -190,14 +205,15 @@ def EncodeLine(asm):
 		
 		pass 
 	
-	print binary
+	print "Binary: " + binary
 	if len(binary) != 16:
 		raise Exception("hex code not correct length. Internal error")
 	a = int(binary, 2)
 	#convert to hex
 	hexout = "%04x" % a
 	#return hex
-	print hexout
+	print "Hex: " + hexout
+	print ""
 	return hexout
 if "__main__" == __name__: #only runs is this is main	
 
