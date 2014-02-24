@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 24 Feb 2014 22:43:33 GMT by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Mon 24 Feb 2014 23:50:18 GMT by seblovett on seblovett-Ubuntu +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -71,7 +71,7 @@ def RunSim(options):
 	#print the command
 	print " ".join(cmd)
 	#run the command
-	#call(cmd)
+	call(cmd)
 	pass	
 
 
