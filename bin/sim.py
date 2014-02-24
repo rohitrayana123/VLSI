@@ -1,12 +1,71 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 24 Feb 2014 19:14:02 GMT by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Mon 24 Feb 2014 19:46:30 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
-# @brief A brief description of this code
+# @brief to invoke the simulator for various tasks
+# @todo list:
+# 	Add support for running magic simulations
+#	Check that the files exist
+#	Auto invoke the assembler when given a .asm file
+# Known bugs and limitations
+#	Magic simulations not supported
+#	Won't auto detect file extensions
 import os
 from optparse import OptionParser
 from subprocess import call
+
+
+def RunSim(options):
+	print "Running sim..."
+	#@todo Check files exist
+	
+	#piece together the command
+	#starting poitn
+	cmd = ["ncverilog", "-sv"]
+	#to gui or not to gui?
+	if options.gui: #run with a gui
+		cmd.append("+gui")
+		cmd.append("+ncaccess+r")
+		#tcl file?
+		#are we doing a full system or module?
+		if (None != options.module): #module simulation
+			#see if tcl exists
+			tclpath = os.path.join(stim, options.module+".tcl")
+			if ( os.path.exists(tclpath)):
+				cmd.append("+tcl+%s" % tclpath)
+		else: #running system
+			tclpath = os.path.join(stim, "system.tcl")
+			cmd.append("+tcl+%s" % tclpath)
+
+	#library
+	cmd.append("+libext+.sv")
+	cmd.append("-y") 
+	cmd.append(behave)
+	cmd.append("+incdir+%s" % behave)
+	#top level stim file
+	if (None != options.module): #use the stim file
+		#cmd.append("-v")
+		cmd.append(os.path.join(stim, options.module+"_stim.sv"))
+	else: #running a system program
+		#cmd.append("-v")
+		cmd.append(os.path.join(behave, "system.sv"))
+		programfile, fileExtension = os.path.splitext(options.program)
+		if os.path.join(programs, programfile+".asm"): #found us some assembler - compile it!
+			print "@todo - auto invoke the compiler."
+		cmd.append('+define+prog_file="%s"' % os.path.join(programs, programfile+".hex"))
+
+	#opcodes.svh
+	cmd.append(behave+"/opcodes.svh") 
+
+	#print the command
+	print " ".join(cmd)
+	#run the command
+	call(cmd)
+	pass	
+
+
+
 if "__main__" == __name__:
 	''' Run Sim V2.0 '''
 	print "Run Sim V2.0"
@@ -41,45 +100,9 @@ if "__main__" == __name__:
 		print("Cannot specify both program and module")
 		parser.print_help()
 	else:
-		print "Running sim..."
-		#Check files exist
-		#@todo
-		#piece together the command
-		cmd = ["ncverilog", "-sv"]
-		if options.gui: #run with a gui
-			cmd.append("+gui")
-			cmd.append("+ncaccess+r")
-			#tcl file?
-			#are we doing a full system or module?
-			if (None != options.module): #module simulation
-				#see if tcl exists
-				tclpath = os.path.join(stim, options.module+".tcl")
-				print tclpath
-				if ( os.path.exists(tclpath)):
-					print("Tcl found")
-					cmd.append("+tcl+%s" % tclpath)
-			
-		#library
-		cmd.append("+libext+.sv")
-		cmd.append("-y") 
-		cmd.append(behave)
-		#options and opcodes
-		cmd.append("-v")
-		cmd.append(behave+"/opcodes.svh") 
-		cmd.append(behave+"/options.sv")
-		
-		if (None != options.module): #use the stim file
-			cmd.append("+nctop+"+os.path.join(stim, options.module+"_stim.sv"))
-		else: #running a system program
-			cmd.append("+nctop+"+os.path.join(behave, "system.sv"))
-			cmd.append('+define+prog_file="%s"' % os.path.join(programs, options.program+".hex"))
-		#run the command
-		print cmd
-		call(cmd)
-		
+		RunSim(options)
 
-	print options
 
-	
-	pass
+
+
 
