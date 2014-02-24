@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 24 Feb 2014 19:46:30 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 24 Feb 2014 22:20:19 GMT by seblovett on seblovett-Ubuntu +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -37,7 +37,8 @@ def RunSim(options):
 		else: #running system
 			tclpath = os.path.join(stim, "system.tcl")
 			cmd.append("+tcl+%s" % tclpath)
-
+	else:
+		cmd.append("-exit")
 	#library
 	cmd.append("+libext+.sv")
 	cmd.append("-y") 
