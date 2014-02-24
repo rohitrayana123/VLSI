@@ -37,7 +37,7 @@ wire        MemEn;
 wire        Rs1Sel;
 wire        CFlag;
 wire [3:0]  Flags;
-wire [9:0]  Opcode;  
+wire [7:0]  Opcode;  
 wire        AluWe;
 
 assign SDO = SDI; // No sim 
