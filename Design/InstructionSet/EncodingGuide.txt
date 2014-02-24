@@ -3,7 +3,7 @@ This is the coding scheme I used when writing up the instruction set.
 OpCodes:
 Shifting starts 000
 Addition starts 001
-Subtraction starts 01 (01110, 01111 not used)
+Subtraction starts 01 (01111 not used)
 Logic starts 10 (10110, 10111 not used)
 Type B instructions start 110
 Others (E,C,D) start 111
