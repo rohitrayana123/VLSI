@@ -31,16 +31,16 @@ cmd="$cmd +ncaccess+r"
 # Which module to test
 module="$1"
 module=${module//[-.]/} # Remove tag
-
+progs="${imp}/programs"
 #HSL:
 #there's an exception
 if [ "system" == ${module} ]; then
-	cmd="$cmd  +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/options.sv ${behave}/opcodes.svh ${behave}/system.sv +define+prog_file=\"${behave}/program.hex\" "
+	cmd="$cmd  +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/options.sv ${behave}/opcodes.svh ${behave}/system.sv +define+prog_file=\"${progs}/${3}.hex\" "
 	if [ "gui" == $gui ]; then
       cmd="$cmd +tcl+${stim}/system.tcl"
    fi
 elif [ -f ${stim}/${module}_stim.sv ]; then
-	cmd="$cmd +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/opcodes.svh ${behave}/options.sv ${stim}/${module}_stim.sv"
+	cmd="$cmd +libext+.sv +incdir+${behave} -y ${behave} -v ${behave}/opcodes.svh ${behave}/options.sv ${stim}/${module}_stim.sv +define+prog_file=\"${progs}/${3}.hex\" "
 else
 	echo "Unkown module $module"
 	printHelp;
