@@ -105,7 +105,9 @@ end
 initial begin
    `ifdef sim_time
       #`sim_time                                      // Stop sim
-   `endif      
+   `else
+      #100000
+   `endif
    `ifdef ram_out
       $writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
    `endif
