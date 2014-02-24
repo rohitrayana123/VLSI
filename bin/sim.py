@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 24 Feb 2014 22:20:19 GMT by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Mon 24 Feb 2014 22:43:33 GMT by seblovett on seblovett-Ubuntu +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -16,8 +16,13 @@ from optparse import OptionParser
 from subprocess import call
 
 
+
 def RunSim(options):
 	print "Running sim..."
+	home = os.path.expanduser("~/VLSI")
+	behave = os.path.join(home, "Design/Implementation/verilog/behavioural")
+	stim = os.path.join(home, "Design/Implementation/verification")
+	programs = os.path.join(home, "Design/Implementation/programs")
 	#@todo Check files exist
 	
 	#piece together the command
@@ -52,8 +57,12 @@ def RunSim(options):
 		#cmd.append("-v")
 		cmd.append(os.path.join(behave, "system.sv"))
 		programfile, fileExtension = os.path.splitext(options.program)
-		if os.path.join(programs, programfile+".asm"): #found us some assembler - compile it!
-			print "@todo - auto invoke the compiler."
+		if os.path.exists(os.path.join(programs, programfile+".asm")): #found us some assembler - compile it!
+			print("Invoking compiler...")
+			asmb = os.path.join(programs, programfile)
+			print asmb
+			call(["python", os.path.join(home, "bin/assemble.py"), "-a", asmb+".asm", "-o", asmb+".hex"])
+
 		cmd.append('+define+prog_file="%s"' % os.path.join(programs, programfile+".hex"))
 
 	#opcodes.svh
@@ -62,7 +71,7 @@ def RunSim(options):
 	#print the command
 	print " ".join(cmd)
 	#run the command
-	call(cmd)
+	#call(cmd)
 	pass	
 
 
@@ -72,10 +81,6 @@ if "__main__" == __name__:
 	print "Run Sim V2.0"
 	
 	#some global things
-	home = os.path.expanduser("~/VLSI")
-	behave = os.path.join(home, "Design/Implementation/verilog/behavioural")
-	stim = os.path.join(home, "Design/Implementation/verification")
-	programs = os.path.join(home, "Design/Implementation/programs")
 	#parse the options
 	#interactive mode?
 	parser = OptionParser(usage="sim.py [-m module.sv / -p program.hex ] -g -M")
