@@ -1,5 +1,6 @@
 #!/usr/bin/python
-
+#Known bugs and limitations
+# Currently doesn't support the use of labels
 import os
 import re
 import sys
@@ -52,10 +53,6 @@ Encodings = { 	"ADD"	: ("00100", "A"),
 		"POP"	: ("111000", "E")
 
 	}
-def GetEncodings():
-	'''function to get the encodings from opcodes.svh'''
-	#@todo
-	pass
 
 def ConvertToBin(number, length):
 	print("WARNING NEXT LINE WON'T WORK ON HIND'S PYTHON VERSION. NEED TO FIND AN ALTERNATIVE")
@@ -89,7 +86,7 @@ def EncodeLine(asm):
 		#key is in the list
 		binary += Encodings[op][0] #get the opcode
 	else: #error
-		raise Exception("Error in the asm")
+		raise Exception("Opcode not recognised")
 
 	#encode on type
 	if "A" == Encodings[op][1]: #get the encoding type
@@ -203,16 +200,7 @@ def EncodeLine(asm):
 	print hexout
 	return hexout
 if "__main__" == __name__: #only runs is this is main	
-	EncodeLine("ADD R2, R1, R0 ; comment")
-	EncodeLine("ADDIB R1, #255")
-	EncodeLine("NEG R0")
-	EncodeLine("LDW R1, R2, #12")
-	EncodeLine("PUSH LR")
-	EncodeLine("POP R0")
-	EncodeLine("RET")
-	EncodeLine("JMP R7, #15")
-	EncodeLine("BR #20")
-	
+
 	parser = OptionParser()
 	parser.add_option("-a", "--asm", dest="asm",
                   help="assembler file input", metavar="FILE")	
@@ -243,65 +231,8 @@ if "__main__" == __name__: #only runs is this is main
 	outfile = open(OUTPUTFILE, 'w')
 	
 	LINES = ifile.readlines()
-	
-#	#Seperate each line into a list of elements
-#	for line in LINES:
-#		code, sep, comms = line.partition(':')			#remove comments and newline char
-#		pass_one = code.split(',')				#seperate by comma
-#		for j, part in enumerate(pass_one)
-#			part = part.strip()				#remove lead/trail spaces
-#			if part.count(' ') >= 1:				#check if there are spaces in string
-#				pass_two = part.split(' ')		#seperate by spaces
-#				pass_one[j] = pass_two			#replace first pass element with seperated list
-#		for seg in pass_one
-#			sline += seg					#create list of segments
-#		SEGMLINES.append(sline)					#create list of lists
-#	
-#	#Check each line for a link reference and create link table
-#	for i, line in enumerate(SEGMLINES)
-#		if line[0].startswith('.'):
-#			LINKTABLE.append({line[0], i})			#add link consisting of LABEL and line no.
-#			SEGMLINES[i].remove(line[0])			#remove label from instruction
-#	
-#	#Convert each element to machine code and concatenate
-#	for i, line in enumerated(SEGMLINES)
-#		if OpType(line[0]) == 'E':				#Stack operations
-#			MC[i] = "11100" + ('1' if line[0] == 'PUSH' else '0') + ('1' if line[1] == 'LR' else '0') + '0' + regcode(line[1]) + '00000'
-#		elif OpType(line[0]) == 'D1':				#Control transfer: Jump
-#			MC[i] = '11111' + conditioncode(line[0]) + regcode(line[1]) + '{0:05b}'.format(line[2].lstrip('#'))
-#		elif OpType(line[0]) == 'D2':				#Control transfer: Others
-#			if line[0] == 'RET':				#Specific -> Return
-#				MC[i] = '11111' + conditioncode(line[0]) + '00000000'
-#			else
-#				MC[i] = '11111' + conditioncode(line[0]) + branch(line[1])		
-#		elif OpType(line[0]) == 'C':				#Data transfer
-#			MC[i] = '1' + ('1' if line[0] == 'STW' else '0') + '101' + regcode(line[1]) + regcode(line[2].lstrip('[')) + '{0:05b}'.format(line[3].rstrip(']'))
-#		elif OpType(line[0]) == 'B':				#Byte immediate
-#			MC[i] = OpNum(line[0]) + regcode(line[1]) + '{0:08b}'.format(line[2].lstrip('#'))
-#		elif OpType(line[0]) == 'A1':				#Data manipulation:Register
-#			MC[i] = OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00'
-#		elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
-#			MC[i] = OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '{0:05b}'.format(line[3].lstrip('#'))
-
-#Output result to file
-
-#Conversion functions
-def OpType(value):
-	
-	return 
-
-def regcode(value):
-	
-	return
-
-def conditioncode(value):
-	
-	return
-
-def branch(value):
-	
-	return
-
-def OpNum(value):
-	
-	return
+	for l in LINES:
+		outfile.write(EncodeLine(l))
+		outfile.write("\n")
+	ifile.close()
+	outfile.close()
