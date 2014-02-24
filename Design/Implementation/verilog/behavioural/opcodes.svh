@@ -5,6 +5,11 @@ package opcodes;
 typedef 
   enum logic [3:0] { FnNOP, FnACC,FnADC, FnMem, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
   alu_functions_t;
+//Location of flags in the array
+`define FLAGS_Z  0
+`define FLAGS_C  1
+`define FLAGS_V  2
+`define FLAGS_N  3
 
 //Program Counter Selction Codes
 typedef enum logic [1:0] {PcLr, PcSysbus, PcAluOut, Pc1 } pc_select_t;

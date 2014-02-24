@@ -9,15 +9,19 @@ module alu(
 timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
-
-assign Zflag = (Result == 0);
-
+logic Carry;
+assign Flags[`FLAGS_Z] = (Result == 0);
+assign Flags[`FLAGS_N] = Result[15];
+assign Flags[`FLAGS_C] = Carry;
+assign Flags[`FLAGS_V] = 0; //@todo sort overflow out
 always_comb
+begin
+   Carry = 0; //default case
    case (AluOp)
       FnMem		: Result = Op1;
-      FnADD		: Result = Op1 + Op2;
+      FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
       FnADC    : Result = Op1 + Op2 + 1; 
-      FnSUB		: Result = Op1 - Op2;
+      FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
       FnAND		: Result = Op1 & Op2;
       FnOR	   : Result = Op1 | Op2;
       FnNOT		: Result = ~Op1;
@@ -26,5 +30,5 @@ always_comb
  //     FnNOP    : Result = Op1;
       default  : Result = Op1;
    endcase
-
+end
 endmodule
