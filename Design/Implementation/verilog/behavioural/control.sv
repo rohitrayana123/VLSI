@@ -24,7 +24,7 @@ module control(
    output opcodes::Lr_select_t      LrSel,
    output opcodes::Rs1_select_t     Rs1Sel,
    output logic                     AluWe,
-   input  wire    [9:0]             OpcodeCondIn,
+   input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
    input  wire                      Clock,
    input  wire                      nReset
@@ -35,8 +35,12 @@ timeunit 1ns; timeprecision 100ps;
 import opcodes::*;
 
 Opcode_t Opcode;
+Branch_t BranchCode;
+Stack_t  StackCode;
 
 assign Opcode = OpcodeCondIn[7:3]; // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
+assign BranchCode = OpcodeCondIn[2:0];
+assign StackCode = OpcodeCondIn[2:1];
 
 enum {
    fetch,
@@ -80,7 +84,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                     ADD, ADDI, ADDIB, ADC, ADCI, LUI, LLI: 	state <= #20 fetch;	// Single cycle ops
+                     ADD, ADDI, ADDIB, ADC, ADCI, LUI, LLI, RET: 	state <= #20 fetch;	// Single cycle ops
                      LDW, STW: 	executeSub <= exe2;
                   endcase
             exe2: case(Opcode)
@@ -204,6 +208,36 @@ always_comb begin
 							PcWe = 1;
 							PcSel = Pc1;
 						end
+						RET:begin
+							nME = 1;
+							LrWe = 1;
+							PcEn = 1;
+							PcSel = PcSysbus;
+						end
+						BR:begin
+
+						end
+						BNE:begin
+
+						end
+						BE:begin
+
+						end
+						BLT:begin
+
+						end
+						BGE:begin
+
+						end
+						BWL:begin
+
+						end
+						JMP:begin
+
+						end
+						PUSH_POP:begin
+
+						end	
             		endcase
          		end
          		exe2:begin 

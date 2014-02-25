@@ -30,6 +30,12 @@ typedef enum logic [2:0] 	{
 				RET = 3'b010, 
 				JMP = 3'b001 
 				} Branch_t;
+typedef enum logic [1:0]	{
+				PUSH		= 2'b10,
+				PUSH_LINK 	= 2'b11,
+				POP			= 2'b00,
+				POP_LINK	= 2'b01
+				} Stack_t;
 // Define Opcodes:
 //
 //  these could be defined with a further enumerated type declaration
