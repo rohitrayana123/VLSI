@@ -105,19 +105,27 @@ end
    `include "monitor.sv"
 `endif
 
+
 initial begin
-   `ifdef sim_time
-      #`sim_time                                      // Stop sim
-   `else
-      #20000
-   `endif
-   `ifdef ram_out
-      $writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
-   `else
-      $writememh("ram.hex",system.RAM.Data_stored);    // Write ram contents 
-   `endif
-   $stop;
-   $finish;
+   	integer done;
+   	`ifdef sim_time
+      	#`sim_time                                      	// Time stop
+	`else;
+	 	while(1) begin
+			@(posedge Clock) 
+			if(system.RAM.Data_stored[2047] ==  16'hFFFF)
+				break;	// Mem stop	
+		end
+		$display("--- DETECTED MEMORY WRITE STOP ---");
+   	`endif
+	$display("Dumping RAM...");
+   	`ifdef ram_out
+      	$writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
+   	`else
+      	$writememh("ram.hex",system.RAM.Data_stored);    // Write ram contents 
+   	`endif
+   	$stop;
+   	$finish;
 end
 
 
