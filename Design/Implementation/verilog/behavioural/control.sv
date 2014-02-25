@@ -166,7 +166,6 @@ always_comb begin
 		                    PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
-                           	ImmSel = 1;
                            	Rs1Sel = 1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -191,8 +190,9 @@ always_comb begin
                            	PcSel = Pc1;
                     	end
                   		STW:begin				// Add must be done before address out
-                           	nME = 1;              
-                           	Op1Sel = Op1Rd1;   
+                           	nME = 1;  
+							ImmSel = 1;
+                           	Op1Sel = Op1Rd1;
 							AluOp = FnADD;
                            	AluEn = 1;			// Pass right through on next clock
                            	AluWe = 1;
@@ -201,7 +201,10 @@ always_comb begin
          		end
          		exe2:begin 
             		case(Opcode)
-               			STW:begin    
+               			STW:begin  
+							ImmSel = 1;
+							AluOp = FnADD;
+							Op1Sel = Op1Rd1;
 							nME = 1;			// Address on sysbus, latch in
                         	ALE = 1;
 							nWE = 1;
@@ -215,7 +218,8 @@ always_comb begin
                			STW:begin				// Get the data out of the reg
                         	Op1Sel = Op1Rd1;
 							AluOp = FnMEM;		// Nothing done to op1
-                        	nOE = 1;
+                        	Rs1Sel = 1;
+							nOE = 1;
                         	nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
