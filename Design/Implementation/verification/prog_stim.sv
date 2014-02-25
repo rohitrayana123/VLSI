@@ -75,6 +75,9 @@ always @(posedge Clock) begin
    $display("SysBus=%x\n",
        cpu.CPU_core.datapath.SysBus
    );
+   $display("Opcode=%b\n",
+      cpu.CPU_core.control.Opcode
+   );
    $display(
       "General Purpose Registers\n0=%x\n1=%x\n2=%x\n3=%x\n4=%x\n5=%x\n6=%x\n7=%x\n",
       cpu.CPU_core.datapath.regBlock.regs[0],
@@ -106,10 +109,12 @@ initial begin
    `ifdef sim_time
       #`sim_time                                      // Stop sim
    `else
-      #100000
+      #20000
    `endif
    `ifdef ram_out
       $writememh(`ram_out,system.RAM.Data_stored);    // Write ram contents
+   `else
+      $writememh("ram.hex",system.RAM.Data_stored);    // Write ram contents 
    `endif
    $stop;
    $finish;
