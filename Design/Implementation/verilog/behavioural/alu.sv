@@ -22,19 +22,20 @@ assign Flags[`FLAGS_C] = Carry;
 assign Flags[`FLAGS_V] = 0; //@todo sort overflow out
 always_comb
 begin
-   Carry = 0; //default case
-   case (AluOp)
-      FnMEM		: Result = Op1;
-      FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
-      FnADC    : Result = Op1 + Op2 + 1; 
-      FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
-      FnAND		: Result = Op1 & Op2;
-      FnOR	   : Result = Op1 | Op2;
-      FnNOT		: Result = ~Op1;
-      FnLSL		: Result = Op1 << 1;
-      FnLSR		: Result = Op1 >> 1;
- //     FnNOP    : Result = Op1;
-      default  : Result = Op1;
-   endcase
+   	Carry = 0; //default case
+   	case (AluOp)
+      	FnMEM		: Result = Op1;
+      	FnIMM		: Result = Op2;	// AJR - Need stright through for LUI,LLI
+	  	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
+      	FnADC   	: Result = Op1 + Op2 + 1; 
+      	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
+      	FnAND		: Result = Op1 & Op2;
+      	FnOR	   	: Result = Op1 | Op2;
+      	FnNOT		: Result = ~Op1;
+      	FnLSL		: Result = Op1 << 1;
+      	FnLSR		: Result = Op1 >> 1;
+ 		FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
+      	default  	: Result = Op1;
+   	endcase
 end
 endmodule

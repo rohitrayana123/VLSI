@@ -80,7 +80,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                     ADD, ADDI, ADDIB, ADC, ADCI: 	state <= #20 fetch;	// Single cycle ops
+                     ADD, ADDI, ADDIB, ADC, ADCI, LUI, LLI: 	state <= #20 fetch;	// Single cycle ops
                      LDW, STW: 	executeSub <= exe2;
                   endcase
             exe2: case(Opcode)
@@ -193,6 +193,17 @@ always_comb begin
                            	AluEn = 1;			// Pass right through on next clock
                            	AluWe = 1;
                     	end
+						LLI:begin
+							nME = 1;
+							ImmSel = ImmLong;
+							Op2Sel = Op2Imm;
+							WdSel = WdAlu;
+							AluOp = FnIMM;
+							RegWe = 1;
+							AluEn = 1;
+							PcWe = 1;
+							PcSel = Pc1;
+						end
             		endcase
          		end
          		exe2:begin 
@@ -256,8 +267,8 @@ always_comb begin
 							WdSel = WdSys;
 							RegWe = 1;
 						end
-						STW:begin				// Final nME change 
-                        	AluEn = 1;
+						STW:begin				
+							AluEn = 1;
                        		nOE = 1;
 							nME = 1;
 					 	end
