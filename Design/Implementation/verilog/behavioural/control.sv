@@ -41,7 +41,6 @@ assign Opcode = OpcodeCondIn[7:3]; // This assignment is a violation of SystemVe
 enum {
    fetch,
    execute
-
 }  state;
 enum {
    fet1,
@@ -81,24 +80,20 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                     ADD,
-                     ADDI,
-                     ADDIB,
-                     ADC,
-                     ADCI: state <= #20 fetch;
-                     STW: executeSub <= exe2;
+                     ADD, ADDI, ADDIB, ADC, ADCI: 	state <= #20 fetch;	// Single cycle ops
+                     LDW, STW: 	executeSub <= exe2;
                   endcase
             exe2: case(Opcode)
-                     STW: executeSub <= exe3;
+                     LDW, STW: 	executeSub <= exe3;
                   endcase
             exe3: case(Opcode)
-                     STW: executeSub <= exe4;
+                     LDW, STW: 	executeSub <= exe4;
                   endcase
             exe4: case(Opcode)
-                     STW: executeSub <= exe5;
+                     LDW, STW: 	executeSub <= exe5;
                   endcase
             exe5: case(Opcode)
-                     STW: state <= fetch;
+                     LDW, STW:	state <= fetch;
                   endcase
          endcase
    end
@@ -189,7 +184,8 @@ always_comb begin
                            	PcWe = 1;
                            	PcSel = Pc1;
                     	end
-                  		STW:begin				// Add must be done before address out
+						// Same setup for load and store is the same
+                  		LDW,STW:begin			// Add must be done before address out
                            	nME = 1;  
 							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
@@ -201,7 +197,7 @@ always_comb begin
          		end
          		exe2:begin 
             		case(Opcode)
-               			STW:begin  
+               			LDW,STW:begin  
 							ImmSel = ImmShort;
 							AluOp = FnADD;
 							Op1Sel = Op1Rd1;
@@ -215,7 +211,7 @@ always_comb begin
          		end
          		exe3: begin
             		case(Opcode)
-               			STW:begin				// Get the data out of the reg
+               			LDW,STW:begin			// Get the data out of the reg
                         	Op1Sel = Op1Rd1;
 							AluOp = FnMEM;		// Nothing done to op1
                         	Rs1Sel = Rs1Rd;
@@ -228,6 +224,9 @@ always_comb begin
          		end
          		exe4: begin
             		case(Opcode)
+						LDW:begin
+							AluEn = 1;
+						end
                			STW:begin
                         	AluEn = 1;			// Hold data on sysbus
                         	nOE = 1;               
@@ -235,13 +234,17 @@ always_comb begin
             		endcase  
          		end
          		exe5: begin
+					PcWe = 1;
+                    PcSel = Pc1;		// Done, move on
             		case(Opcode)
-               			STW:begin				// Final nME change 
+						LDW:begin
+							AluEn = 1;
+							nME = 1;
+						end
+						STW:begin				// Final nME change 
                         	AluEn = 1;
                        		nOE = 1;
 							nME = 1;
-                       		PcWe = 1;
-                       		PcSel = Pc1;		// Done, move on
 					 	end
            	 		endcase 
          		end
