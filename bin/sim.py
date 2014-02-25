@@ -24,7 +24,7 @@ def RunSim(options):
 	stim = os.path.join(home, "Design/Implementation/verification")
 	programs = os.path.join(home, "Design/Implementation/programs")
 	#@todo Check files exist
-	
+
 	#piece together the command
 	#starting poitn
 	cmd = ["ncverilog", "-sv"]
@@ -46,7 +46,7 @@ def RunSim(options):
 		cmd.append("-exit")
 	#library
 	cmd.append("+libext+.sv")
-	cmd.append("-y") 
+	cmd.append("-y")
 	cmd.append(behave)
 	cmd.append("+incdir+%s" % behave)
 	#top level stim file
@@ -55,7 +55,7 @@ def RunSim(options):
 		cmd.append(os.path.join(stim, options.module+"_stim.sv"))
 	else: #running a system program
 		#cmd.append("-v")
-		cmd.append(os.path.join(behave, "system.sv"))
+		cmd.append(os.path.join(stim, "prog_stim.sv"))
 		programfile, fileExtension = os.path.splitext(options.program)
 		if os.path.exists(os.path.join(programs, programfile+".asm")): #found us some assembler - compile it!
 			print("Invoking compiler...")
@@ -66,20 +66,20 @@ def RunSim(options):
 		cmd.append('+define+prog_file="%s"' % os.path.join(programs, programfile+".hex"))
 
 	#opcodes.svh
-	cmd.append(behave+"/opcodes.svh") 
+	cmd.append(behave+"/opcodes.svh")
 
 	#print the command
 	print " ".join(cmd)
 	#run the command
 	call(cmd)
-	pass	
+	pass
 
 
 
 if "__main__" == __name__:
 	''' Run Sim V2.0 '''
 	print "Run Sim V2.0"
-	
+
 	#some global things
 	#parse the options
 	#interactive mode?
@@ -87,10 +87,10 @@ if "__main__" == __name__:
 	#@todo - auto invoke the assembler if assembly is given?
 	parser.add_option("-m", "--module", dest="module",
                   help="module to simulate - should not be defined if program is")
-	
+
 	parser.add_option("-M", "--magic", dest="magic", action="store_true", default=False,
                   help="runs the simulation using the magic layout.")
-	
+
 	parser.add_option("-p", "--prog", dest="program",
                   help="program to run (hex file) should not be defined if module is")
 
@@ -98,7 +98,7 @@ if "__main__" == __name__:
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
 	(options, args) = parser.parse_args()
-	
+
 	#want either a module or program to be able to run
 	if (None == options.module ) and ( None == options.program ):
 		parser.print_help()
