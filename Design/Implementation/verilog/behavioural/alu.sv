@@ -24,7 +24,7 @@ always_comb
 begin
    Carry = 0; //default case
    case (AluOp)
-      FnMem		: Result = Op1;
+      FnMEM		: Result = Op1;
       FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
       FnADC    : Result = Op1 + Op2 + 1; 
       FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};

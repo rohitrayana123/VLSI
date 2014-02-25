@@ -3,7 +3,7 @@ package opcodes;
 // Define ALU Function Codes:
 //
 typedef 
-  enum logic [3:0] { FnNOP, FnACC,FnADC, FnMem, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
+  enum logic [3:0] { FnNOP, FnACC,FnADC, FnMEM, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
   alu_functions_t;
 //Location of flags in the array
 `define FLAGS_Z  0
@@ -11,10 +11,17 @@ typedef
 `define FLAGS_V  2
 `define FLAGS_N  3
 
+
 //Program Counter Selction Codes
-typedef enum logic [1:0] {PcLr, PcSysbus, PcAluOut, Pc1 } pc_select_t;
-typedef enum logic [1:0] {Op1Pc, Op1Rd1, Op1Sp } Op1_select_t;
-typedef enum logic [2:0] {	BR  = 3'b000, 
+typedef enum logic [1:0] 	{PcLr, PcSysbus, PcAluOut, Pc1 } 	pc_select_t;
+typedef enum logic [1:0] 	{Op1Pc, Op1Rd1, Op1Sp } 			Op1_select_t;
+typedef enum logic 			{Op2Rd2=1, Op2Imm=0} 				Op2_select_t;
+typedef enum logic 			{ImmShort=1, ImmLong=0} 			Imm_select_t;
+typedef enum logic 			{WdSys=1, WdAlu=0} 					Wd_select_t;
+typedef enum logic			{Rs1Rd=1, Rs1Ra=0} 					Rs1_select_t;
+typedef enum logic			{LrPc=1, LrSys=0}					Lr_select_t;		
+typedef enum logic [2:0] 	{	
+				BR  = 3'b000, 
 				BNE = 3'b110, 
 				BE  = 3'b111, 
 				BLT = 3'b100, 

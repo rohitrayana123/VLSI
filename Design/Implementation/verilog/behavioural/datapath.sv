@@ -6,7 +6,12 @@ module datapath(
   input  opcodes::alu_functions_t AluOp,
   input  opcodes::pc_select_t    PcSel,
   input  opcodes::Op1_select_t    Op1Sel,
-  input  wire           AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, WdSel, ImmSel, RegWe, MemEn, Clock, nReset, Op2Sel, LrSel, Rs1Sel, CFlag, AluWe
+  input  opcodes::Op2_select_t	Op2Sel,
+  input  opcodes::Imm_select_t ImmSel,
+  input  opcodes::Wd_select_t WdSel,
+  input  opcodes::Rs1_select_t Rs1Sel,
+  input  opcodes::Lr_select_t LrSel,
+  input  wire           AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, Op, CFlag, AluWe
 );
 
 import opcodes::*;
@@ -17,13 +22,13 @@ logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
 logic [2:0] Rs1In;
 
 //Combinational logic for tristate bus, reg inputs or outputs
-assign Extended = (ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
+assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
 assign Opcode = {Ir[15:8]};
 assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
-assign WData = (WdSel) ? SysBus : AluRes; // 2 input mux
-assign Op2 = (Op2Sel) ? Rd2 : Extended;
-assign LrIn = (LrSel) ? Pc : SysBus;
-assign Rs1In = (Rs1Sel) ? Ir[10:8] : Ir[7:5]; 
+assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
+assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
+assign LrIn = (LrPc == LrSel) ? Pc : SysBus;
+assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5]; 
 //Multiplexers
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux

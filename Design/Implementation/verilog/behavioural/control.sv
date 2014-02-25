@@ -1,7 +1,7 @@
 module control(
    output opcodes::alu_functions_t  AluOp, 
    output opcodes::Op1_select_t     Op1Sel, 
-   output logic                     Op2Sel, 
+   output opcodes::Op2_select_t     Op2Sel, 
    output logic                     AluEn,
    output logic                     SpEn,
    output logic                     SpWe,
@@ -10,8 +10,8 @@ module control(
    output logic                     PcWe,
    output logic                     PcEn,
    output logic                     IrWe,
-   output logic                     WdSel,
-   output logic                     ImmSel,
+   output opcodes::Wd_select_t      WdSel,
+   output opcodes::Imm_select_t		ImmSel,
    output logic                     RegWe,
    output opcodes::pc_select_t      PcSel,
    output logic                     MemEn,   // Pad control 
@@ -21,8 +21,8 @@ module control(
    output logic                     ENB,
    output logic                     ALE,
    output logic                     CFlag,
-   output logic                     LrSel,
-   output logic                     Rs1Sel,
+   output opcodes::Lr_select_t      LrSel,
+   output opcodes::Rs1_select_t     Rs1Sel,
    output logic                     AluWe,
    input  wire    [9:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
@@ -108,20 +108,20 @@ always_comb begin
    	// Default outputs   
    	AluOp    = FnNOP;
    	AluWe    = 0;
-   	Op2Sel   = 0; 
+   	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
    	AluEn    = 0;
    	SpEn     = 0;
    	SpWe     = 0;
    	LrEn     = 0;
    	LrWe     = 0;
-   	LrSel    = 0;
+   	LrSel    = LrSys;
    	PcWe     = 0;
    	PcEn     = 0;
    	IrWe     = 0;
-   	Rs1Sel   = 0;
-   	WdSel    = 0;
-   	ImmSel   = 0;
+   	Rs1Sel   = Rs1Ra;
+   	WdSel    = WdAlu;
+   	ImmSel   = ImmLong;
    	RegWe    = 0;
    	MemEn    = 0;
    	nWE      = 0;
@@ -146,7 +146,7 @@ always_comb begin
 		            		PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
-                           	Op2Sel = 1;
+                           	Op2Sel = Op2Rd2;
                            	RegWe = 1;
                            	PcWe = 1;
                            	PcSel = Pc1;
@@ -156,7 +156,7 @@ always_comb begin
 		                    PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
-                           	ImmSel = 1;
+                           	ImmSel = ImmShort;
                            	RegWe = 1;
                            	PcWe = 1;
                            	PcSel = Pc1;
@@ -166,7 +166,7 @@ always_comb begin
 		                    PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
-                           	Rs1Sel = 1;
+                           	Rs1Sel = Rs1Rd;
                            	RegWe = 1;
                            	PcWe = 1;
                            	PcSel = Pc1;
@@ -191,7 +191,7 @@ always_comb begin
                     	end
                   		STW:begin				// Add must be done before address out
                            	nME = 1;  
-							ImmSel = 1;
+							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
 							AluOp = FnADD;
                            	AluEn = 1;			// Pass right through on next clock
@@ -202,7 +202,7 @@ always_comb begin
          		exe2:begin 
             		case(Opcode)
                			STW:begin  
-							ImmSel = 1;
+							ImmSel = ImmShort;
 							AluOp = FnADD;
 							Op1Sel = Op1Rd1;
 							nME = 1;			// Address on sysbus, latch in
@@ -218,7 +218,7 @@ always_comb begin
                			STW:begin				// Get the data out of the reg
                         	Op1Sel = Op1Rd1;
 							AluOp = FnMEM;		// Nothing done to op1
-                        	Rs1Sel = 1;
+                        	Rs1Sel = Rs1Rd;
 							nOE = 1;
                         	nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
