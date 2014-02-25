@@ -105,139 +105,144 @@ always_ff@(posedge Clock or negedge nReset) begin
 end
 
 always_comb begin
-   // Default outputs   
-   AluOp    = FnNOP;
-   AluWe    = 0;
-   Op2Sel   = 0; 
-   Op1Sel   = Op1Rd1; 
-   AluEn    = 0;
-   SpEn     = 0;
-   SpWe     = 0;
-   LrEn     = 0;
-   LrWe     = 0;
-   LrSel    = 0;
-   PcWe     = 0;
-   PcEn     = 0;
-   IrWe     = 0;
-   Rs1Sel   = 0;
-   WdSel    = 0;
-   ImmSel   = 0;
-   RegWe    = 0;
-   MemEn    = 0;
-   nWE      = 0;
-   nOE      = 0;
-   nME      = 0;
-   ENB      = 0;
-   ALE      = 0;
-   case(state)
-      fetch : 
-         case(fetchSub)
-            fet1: begin ALE = 1; nME = 1; nWE  = 1; nOE  = 1; PcEn  = 1; end 
-            fet2: begin nWE = 1; MemEn = 1; end
-            fet3: begin MemEn = 1; ENB = 1; nWE   = 1; end 
-            fet4: begin nME = 1; nWE = 1; MemEn = 1; IrWe  = 1; end
-         endcase
-      execute: begin
-         case(executeSub)
-            exe1: begin    // Single cycle ops
-               case(Opcode)
-                  ADD:  begin
-                           nME = 1;    // Memory enable
-		                     PcEn = 1;   // output the PC to SysBus
-                           AluOp = FnADD;
-                           Op1Sel = Op1Rd1;
-                           Op2Sel = 1;
-                           RegWe = 1;
-                           PcWe = 1;
-                           PcSel = Pc1;
+   	// Default outputs   
+   	AluOp    = FnNOP;
+   	AluWe    = 0;
+   	Op2Sel   = 0; 
+   	Op1Sel   = Op1Rd1; 
+   	AluEn    = 0;
+   	SpEn     = 0;
+   	SpWe     = 0;
+   	LrEn     = 0;
+   	LrWe     = 0;
+   	LrSel    = 0;
+   	PcWe     = 0;
+   	PcEn     = 0;
+   	IrWe     = 0;
+   	Rs1Sel   = 0;
+   	WdSel    = 0;
+   	ImmSel   = 0;
+   	RegWe    = 0;
+   	MemEn    = 0;
+   	nWE      = 0;
+   	nOE      = 0;
+   	nME      = 0;
+   	ENB      = 0;
+   	ALE      = 0;
+   	case(state)
+      	fetch : 
+         	case(fetchSub)
+            	fet1: begin ALE = 1; nME = 1; nWE  = 1; nOE  = 1; PcEn  = 1; end 
+            	fet2: begin nWE = 1; MemEn = 1; end
+            	fet3: begin MemEn = 1; ENB = 1; nWE   = 1; end 
+            	fet4: begin nME = 1; nWE = 1; MemEn = 1; IrWe  = 1;  end
+         	endcase
+      	execute: begin
+         	case(executeSub)
+            	exe1: begin    // Single cycle ops
+               		case(Opcode)
+                  		ADD:begin
+                        	nME = 1;    // Memory enable
+		            		PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnADD;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = 1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
                         end
-                  ADDI: begin
-                           nME = 1;    // Memory enable
-		                     PcEn = 1;   // output the PC to SysBus
-                           AluOp = FnADD;
-                           Op1Sel = Op1Rd1;
-                           ImmSel = 1;
-                           RegWe = 1;
-                           PcWe = 1;
-                           PcSel = Pc1;
+                  		ADDI:begin
+                           	nME = 1;    // Memory enable
+		                    PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnADD;
+                           	Op1Sel = Op1Rd1;
+                           	ImmSel = 1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
                         end
-                  ADDIB:begin
-                           nME = 1;    // Memory enable
-		                     PcEn = 1;   // output the PC to SysBus
-                           AluOp = FnADD;
-                           Op1Sel = Op1Rd1;
-                           ImmSel = 1;
-                           Rs1Sel = 1;
-                           RegWe = 1;
-                           PcWe = 1;
-                           PcSel = Pc1;
+                  		ADDIB:begin
+                           	nME = 1;    // Memory enable
+		                    PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnADD;
+                           	Op1Sel = Op1Rd1;
+                           	ImmSel = 1;
+                           	Rs1Sel = 1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
                         end
-                  ADC:  begin
-                           nME = 1;    // Memory enable
-		                     PcEn = 1;   // output the PC to SysBus
-                           AluOp = FnADC;
-                           Op1Sel = Op1Rd1;
-                           RegWe = 1;
-                           PcWe = 1;
-                           PcSel = Pc1;
-                        end
-                  ADCI:  begin
-                           nME = 1;    // Memory enable
-		                     PcEn = 1;   // output the PC to SysBu
-                           AluOp = FnADC;
-                           Op1Sel = Op1Rd1;
-                           RegWe = 1;
-                           PcWe = 1;
-                           PcSel = Pc1;
-                        end
-                  STW:  begin
-                           nME = 1;              
-                           Op1Sel = Op1Rd1;  // 
-                           AluOp = FnADD;
-                           AluEn = 1;
-                           AluWe = 1;
-                        end
-            endcase
-         end
-         exe2: begin 
-            case(Opcode)
-               STW:  begin     
-                        nME = 1;
-                        ALE = 1;
-                        AluEn = 1;
-                        nWE = 1;
-                        nOE = 1;
-                     end
-            endcase
-         end
-         exe3: begin
-            case(Opcode)
-               STW:  begin
-                        AluEn = 1;
-                        nOE = 1;
-                        nWE = 1;
-                     end
-            endcase
-         end
-         exe4: begin
-            case(Opcode)
-               STW:  begin
-                        AluEn = 1;
-                        nWE = 1;               
-                     end   
-            endcase  
-         end
-         exe5: begin
-            case(Opcode)
-               STW:  begin
-                        AluEn = 1;
-                        nME = 1;
-                        nWE = 1;
-                     end
-            endcase 
-         end
-         endcase
-      end
-   endcase
+                  		ADC:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnADC;
+                           	Op1Sel = Op1Rd1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
+                    	end
+                  		ADCI:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBu
+                           	AluOp = FnADC;
+                           	Op1Sel = Op1Rd1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
+                    	end
+                  		STW:begin				// Add must be done before address out
+                           	nME = 1;              
+                           	Op1Sel = Op1Rd1;   
+							AluOp = FnADD;
+                           	AluEn = 1;			// Pass right through on next clock
+                           	AluWe = 1;
+                    	end
+            		endcase
+         		end
+         		exe2:begin 
+            		case(Opcode)
+               			STW:begin    
+							nME = 1;			// Address on sysbus, latch in
+                        	ALE = 1;
+							nWE = 1;
+                        	nOE = 1;
+                        	AluEn = 1;
+                     	end
+            		endcase
+         		end
+         		exe3: begin
+            		case(Opcode)
+               			STW:begin				// Get the data out of the reg
+                        	Op1Sel = Op1Rd1;
+							AluOp = FnMEM;		// Nothing done to op1
+                        	nOE = 1;
+                        	nWE = 1;
+                     		AluWe = 1;			// Pass right through on next clock
+                        	AluEn = 1;
+						end
+            		endcase
+         		end
+         		exe4: begin
+            		case(Opcode)
+               			STW:begin
+                        	AluEn = 1;			// Hold data on sysbus
+                        	nOE = 1;               
+                     	end   
+            		endcase  
+         		end
+         		exe5: begin
+            		case(Opcode)
+               			STW:begin				// Final nME change 
+                        	AluEn = 1;
+                       		nOE = 1;
+							nME = 1;
+                       		PcWe = 1;
+                       		PcSel = Pc1;		// Done, move on
+					 	end
+           	 		endcase 
+         		end
+         	endcase
+      	end
+	endcase
 end
 endmodule
