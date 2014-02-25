@@ -211,7 +211,16 @@ always_comb begin
          		end
          		exe3: begin
             		case(Opcode)
-               			LDW,STW:begin			// Get the data out of the reg
+               			LDW:begin	
+                        	Op1Sel = Op1Rd1;
+							AluOp = FnMEM;		// Nothing done to op1
+                        	Rs1Sel = Rs1Rd;
+							MemEn = 1;
+                        	nWE = 1;
+                     		AluWe = 1;			// Pass right through on next clock
+                        	AluEn = 1;
+						end
+						STW:begin			// Get the data out of the reg
                         	Op1Sel = Op1Rd1;
 							AluOp = FnMEM;		// Nothing done to op1
                         	Rs1Sel = Rs1Rd;
@@ -220,12 +229,15 @@ always_comb begin
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
 						end
+
             		endcase
          		end
          		exe4: begin
             		case(Opcode)
 						LDW:begin
-							AluEn = 1;
+							MemEn = 1;
+							ENB = 1;
+							nWE = 1;
 						end
                			STW:begin
                         	AluEn = 1;			// Hold data on sysbus
@@ -238,8 +250,11 @@ always_comb begin
                     PcSel = Pc1;		// Done, move on
             		case(Opcode)
 						LDW:begin
-							AluEn = 1;
 							nME = 1;
+							nWE = 1;
+							MemEn = 1;
+							WdSel = WdSys;
+							RegWe = 1;
 						end
 						STW:begin				// Final nME change 
                         	AluEn = 1;
