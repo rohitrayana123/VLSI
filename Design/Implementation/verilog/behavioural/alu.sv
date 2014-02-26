@@ -3,17 +3,14 @@ module alu(
   output logic [15:0]            Result,
   input        [15:0]            Op1,
   input        [15:0]            Op2,
-  input opcodes::alu_functions_t AluOp
+  input opcodes::alu_functions_t AluOp,
+  input wire CarryIn
   );
 
 timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
 
-`define FLAGS_Z  0
-`define FLAGS_C  1
-`define FLAGS_V  2
-`define FLAGS_N  3
 
 logic Carry;
 assign Flags[`FLAGS_Z] = (Result == 0);
@@ -26,9 +23,10 @@ begin
    	case (AluOp)
       	FnMEM		: Result = Op1;
       	FnIMM		: Result = Op2;	// AJR - Need stright through for LUI,LLI
-	  	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
-      	FnADC   	: Result = Op1 + Op2 + 1; 
+  	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
+      	FnADC   	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
       	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
+	FnSUC		: {Carry, Result} = [1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
       	FnAND		: Result = Op1 & Op2;
       	FnOR	   	: Result = Op1 | Op2;
       	FnNOT		: Result = ~Op1;

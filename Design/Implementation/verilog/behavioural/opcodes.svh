@@ -3,7 +3,7 @@ package opcodes;
 // Define ALU Function Codes:
 //
 typedef 
-  enum logic [3:0] { FnNOP, FnACC,FnADC, FnMEM,FnIMM, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR }
+  enum logic [3:0] { FnNOP, FnACC,FnADC, FnMEM,FnIMM, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR, FnSUC}
   alu_functions_t;
 //Location of flags in the array
 `define FLAGS_Z  0

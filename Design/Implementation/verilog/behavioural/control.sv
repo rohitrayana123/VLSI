@@ -60,6 +60,18 @@ enum {
    exe5
 }  executeSub;
 
+//Flags register
+logic [3:0] StatusReg;
+logic StatusRegWe;
+//HSL - @todo this shouldn't always update. either put it in the control ff below, or make it sensitive to the alu op
+always_ff@(posedge Clock or negedge nReset)
+	if (!nReset)
+		StatusReg <= #20 0;
+	else
+		if (StatusRegWe)
+			StatusReg <= #20 Flags;
+assign CFlag = StatusReg[`FLAGS_C];
+
 always_ff@(posedge Clock or negedge nReset) begin
    // Major states
    if(!nReset) begin
@@ -84,7 +96,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                     ADD, ADDI, ADDIB, ADC, ADCI, LUI, LLI, RET: 	state <= #20 fetch;	// Single cycle ops
+                     ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET: 	state <= #20 fetch;	// Single cycle ops
                      LDW, STW: 	executeSub <= exe2;
                   endcase
             exe2: case(Opcode)
@@ -128,6 +140,7 @@ always_comb begin
    	nME      = 0;
    	ENB      = 0;
    	ALE      = 0;
+	StatusRegWe= 0;
    	case(state)
       	fetch : 
          	case(fetchSub)
@@ -149,25 +162,28 @@ always_comb begin
                            	RegWe = 1;
                            	PcWe = 1;
                            	PcSel = Pc1;
+				StatusRegWe = 1;
                         end
                   		ADDI:begin
                            	nME = 1;    // Memory enable
-		                    PcEn = 1;   // output the PC to SysBus
+		                	PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	RegWe = 1;
                            	PcWe = 1;
+				StatusRegWe = 1;
                            	PcSel = Pc1;
                         end
                   		ADDIB:begin
                            	nME = 1;    // Memory enable
-		                    PcEn = 1;   // output the PC to SysBus
+		                	PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
                            	Rs1Sel = Rs1Rd;
                            	RegWe = 1;
                            	PcWe = 1;
+				StatusRegWe = 1;
                            	PcSel = Pc1;
                         end
                   		ADC:begin
@@ -177,6 +193,7 @@ always_comb begin
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
+				StatusRegWe = 1;
                            	PcSel = Pc1;
                     	end
                   		ADCI:begin
@@ -186,6 +203,60 @@ always_comb begin
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                    	end
+                  		SUB:begin
+                        	nME = 1;    // Memory enable
+		            		PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnSUB;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
+				StatusRegWe = 1;
+                        end
+                  		SUBI:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnSUB;
+                           	Op1Sel = Op1Rd1;
+                           	ImmSel = ImmShort;
+                           	RegWe = 1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		SUBIB:begin
+                           	nME = 1;    // Memory enable
+		                PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnSUB;
+                           	Op1Sel = Op1Rd1;
+                           	Rs1Sel = Rs1Rd;
+                           	RegWe = 1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		SUC:begin
+                           	nME = 1;    // Memory enable
+		                PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnADC;
+                           	Op1Sel = Op1Rd1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                    	end
+                  		SUCI:begin
+                           	nME = 1;    // Memory enable
+		                PcEn = 1;   // output the PC to SysBu
+                           	AluOp = FnADC;
+                           	Op1Sel = Op1Rd1;
+                           	RegWe = 1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
                            	PcSel = Pc1;
                     	end
 						// Same setup for load and store is the same

@@ -70,6 +70,7 @@ alu a(                // Combo ALU only
    .Result  (AluRes  ),
    .Op1     (Op1     ),
    .Op2     (Op2     ),
+   .CarryIn (CFlag   ),
    .AluOp   (AluOp   )
 );
 
