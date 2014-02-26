@@ -265,7 +265,7 @@ always_comb begin
 		                	PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
-                           	ImmSel = ImmShort;
+                           	Op2Sel = Op2Rd2;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
