@@ -63,7 +63,7 @@ def RunSim(options):
 			print asmb
 			call(["python", os.path.join(home, "bin/assemble.py"), "-a", asmb+".asm", "-o", asmb+".hex"])
 
-		cmd.append('+define+prog_file="%s"' % os.path.join(programs, programfile+".hex"))
+		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 
 	#opcodes.svh
 	cmd.append(behave+"/opcodes.svh")
