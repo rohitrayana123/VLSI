@@ -26,7 +26,7 @@ begin
   	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
       	FnADC   	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
       	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
-	FnSUC		: {Carry, Result} = [1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
+	FnSUC		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
       	FnAND		: Result = Op1 & Op2;
       	FnOR	   	: Result = Op1 | Op2;
       	FnNOT		: Result = ~Op1;
