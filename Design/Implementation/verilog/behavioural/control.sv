@@ -97,11 +97,12 @@ always_ff@(posedge Clock or negedge nReset) begin
          case(executeSub)
             exe1: case(Opcode)
                      ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET: 	state <= #20 fetch;	// Single cycle ops
-                     LDW, STW: 	executeSub <= exe2;
+                	LDW, STW, JMP: 	executeSub <= exe2;
                   endcase
             exe2: case(Opcode)
-                     LDW, STW: 	executeSub <= exe3;
-                  endcase
+            		LDW, STW: 	executeSub <= exe3;
+                  	JMP: state <= fetch;	
+				  endcase
             exe3: case(Opcode)
                      LDW, STW: 	executeSub <= exe4;
                   endcase
@@ -259,8 +260,7 @@ always_comb begin
 				StatusRegWe = 1;
                            	PcSel = Pc1;
                     	end
-						// Same setup for load and store is the same
-                  		LDW,STW:begin			// Add must be done before address out
+						LDW,STW:begin			// Add must be done before address out
                            	nME = 1;  
 							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
@@ -268,6 +268,18 @@ always_comb begin
                            	AluEn = 1;			// Pass right through on next clock
                            	AluWe = 1;
                     	end
+						LUI:begin
+							nME = 1;
+							ImmSel = ImmLong;
+							Op2Sel = Op2Imm;
+							WdSel = WdAlu;
+							AluOp = FnIMM;
+							RegWe = 1;
+							AluEn = 1;
+							PcWe = 1;
+							PcSel = Pc1;
+
+						end
 						LLI:begin
 							nME = 1;
 							ImmSel = ImmLong;
@@ -304,7 +316,10 @@ always_comb begin
 
 						end
 						JMP:begin
-
+							AluOp = FnADD;
+							ImmSel = ImmShort;
+                           	Op1Sel = Op1Rd1;
+							AluWe = 1;
 						end
 						PUSH_POP:begin
 
@@ -323,6 +338,13 @@ always_comb begin
                         	nOE = 1;
                         	AluEn = 1;
                      	end
+						JMP:begin
+							AluEn = 1;
+							LrWe = 1;
+							LrSel = LrSys;
+							PcSel = Pc1;
+							PcWe = 1;
+						end
             		endcase
          		end
          		exe3: begin
