@@ -55,6 +55,7 @@ SUBIB                	= 5'b11001, //Type B
 SUC                  	= 5'b01011, //Type A
 SUCI                 	= 5'b01100, //Type A
 CMP                  	= 5'b01101, //Type A
+CMPI                 	= 5'b01110, //Type A
 AND                  	= 5'b10000, //Type A
 OR                   	= 5'b10001, //Type A
 XOR                  	= 5'b10010, //Type A

@@ -22,11 +22,11 @@ C61F	// ADDIB R6,#31
 CA7F	// SUBIB R2, #127  
 4C50	// SUB   R4, R2, R4    R4 = R2 - R4 (-1 + 127 )
 5C50	// SUC   R4, R2, R4    R4 = R2 - R4 - ~Carry (-1 - 126 )
-6450	// SUCI  R4, R2, R4
+6450	// SUCI  R4, R2 #-16
+6888	// CMP   R4, R2
+7084	// CMPI  R4 #15
 A8C0	// LDW R0,[R6,#0]		// 0xFFFF in R0
 E86F 	// STW R0,[R3,#15] 		// FFFF written to 0x7FF in  RAM     
-xxxx
-xxxx
 xxxx
 xxxx
 FFFF
