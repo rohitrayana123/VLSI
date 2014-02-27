@@ -22,7 +22,7 @@ begin
    	Carry = 0; //default case
    	case (AluOp)
       	FnMEM		: Result = Op1;
-      	FnIMM		: Result = Op2;	// AJR - Need stright through for LUI,LLI
+      	FnIMM		: Result = Op2;	// AJR - Need stright through for LUI,LLI - HSL surely LUI will need a byte shift up
   	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
       	FnADC   	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
       	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
@@ -30,9 +30,14 @@ begin
       	FnAND		: Result = Op1 & Op2;
       	FnOR	   	: Result = Op1 | Op2;
       	FnNOT		: Result = ~Op1;
-      	FnLSL		: Result = Op1 << 1;
-      	FnLSR		: Result = Op1 >> 1;
- 		FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
+	FnXOR		: Result = Op1 ^ Op2;
+	FnNAND 		: Result = ~ ( Op1 & Op2 ); 
+	FnNOR		: Result = ~ ( Op1 | Op2 );
+      	FnLSL		: Result = Op1 << Op2;
+      	FnLSR		: Result = Op1 >> Op2;
+       	FnASR		: Result = Op1 >> Op2; //HSL @todo - complete this
+	FnNEG		: Result = ~Op1 + 1;
+ 	FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
       	default  	: Result = Op1;
    	endcase
 end

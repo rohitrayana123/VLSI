@@ -3,7 +3,24 @@ package opcodes;
 // Define ALU Function Codes:
 //
 typedef 
-  enum logic [3:0] { FnNOP, FnACC,FnADC, FnMEM,FnIMM, FnADD, FnSUB, FnAND, FnOR, FnNOT, FnLSL, FnLSR, FnSUC}
+  enum logic [4:0] { 	FnNOP, //HSL - I don't see the point in this
+			FnMEM, //HSL - propose to change this to FnA
+			FnIMM, //HSL - Propose to change this to FnB
+			FnADD, 
+			FnADC, 
+			FnSUB, 
+			FnSUC,
+			FnNEG,
+			FnAND, 
+			FnOR,
+			FnXOR,
+			FnNOT,
+			FnNAND,
+			FnNOR, 
+			FnLSL, 
+			FnLSR,
+			FnASR
+}
   alu_functions_t;
 //Location of flags in the array
 `define FLAGS_Z  0
@@ -65,7 +82,7 @@ NOR                  	= 5'b10110, //Type A
 LSL                  	= 5'b00001, //Type A
 LSR                  	= 5'b00010, //Type A
 ASR                  	= 5'b00011, //Type A
-LDW              		= 5'b10101, //Type C
+LDW              	= 5'b10101, //Type C
 STW                  	= 5'b11101, //Type C
 LUI                  	= 5'b11010, //Type B
 LLI                  	= 5'b11011, //Type B
