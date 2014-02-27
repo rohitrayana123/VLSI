@@ -24,6 +24,8 @@ module control(
    output opcodes::Lr_select_t      LrSel,
    output opcodes::Rs1_select_t     Rs1Sel,
    output logic                     AluWe,
+   output opcodes::Sp_select_t		SpSel,
+   output opcodes::IncDec_select_t	SpIncDec,
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
    input  wire                      Clock,

@@ -39,6 +39,8 @@ typedef enum logic 			{ImmShort=1, ImmLong=0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1, WdAlu=0} 					Wd_select_t;
 typedef enum logic			{Rs1Rd=1, Rs1Ra=0} 					Rs1_select_t;
 typedef enum logic			{LrPc=1, LrSys=0}					Lr_select_t;		
+typedef enum logic 			{SpAlu=1,SpPushPop=0}				Sp_select_t;
+typedef enum logic			{SpInc=1, SpDec=0}					IncDec_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 
