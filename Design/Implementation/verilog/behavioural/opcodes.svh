@@ -20,8 +20,7 @@ typedef
 			FnLSL, 
 			FnLSR,
 			FnASR,
-			FnLUI,
-			FnLLI
+			FnLUI
 }
   alu_functions_t;
 //Location of flags in the array
@@ -81,7 +80,6 @@ ASR                  	= 5'b00011, //Type A
 LDW              	= 5'b10101, //Type C
 STW                  	= 5'b11101, //Type C
 LUI                  	= 5'b11010, //Type B
-LLI                  	= 5'b11011, //Type B
 BRANCH               	= 5'b11111, //Type D
 STACK             	= 5'b11100 //Type E
 //POP                  	= 5'b11100 //Type E

@@ -93,7 +93,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-            		ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
+            		ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
                 	LDW, STW: 	executeSub <= #20 exe2;
                   endcase
             exe2: case(Opcode)
@@ -376,16 +376,7 @@ always_comb begin
 							RegWe = 1;	
 							PcWe = 1;
 							PcSel = Pc1;
-						end
-						LLI:begin
-							ImmSel = ImmLong;
-							Op2Sel = Op2Imm;
-							WdSel = WdAlu;
-							AluOp = FnLLI;
-							RegWe = 1;	
-							PcWe = 1;
-							PcSel = Pc1;
-						end
+						end	
 						BRANCH:begin
 							case(BranchCode)	
 								BR,BNE,BE,BLT,BGE,BWL:begin		// Conditional branching

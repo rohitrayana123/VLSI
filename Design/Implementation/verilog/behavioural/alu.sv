@@ -38,8 +38,7 @@ begin
        	FnASR		: Result = Op1 >>> Op2;
 	FnNEG		: Result = ~Op1 + 1;
 	FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
-      	FnLLI		: Result = {Op1[15:8],Op2[7:0]};
-	FnLUI		: Result = {Op2[15:8],Op1[7:0]};
+      		FnLUI		: Result = {Op2[15:8],8'h00};
 	default  	: Result = Op1;
    	endcase
 end
