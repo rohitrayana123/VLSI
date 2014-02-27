@@ -4,8 +4,8 @@ package opcodes;
 //
 typedef 
   enum logic [4:0] { 	FnNOP, //HSL - I don't see the point in this
-			FnMEM, //HSL - propose to change this to FnA
-			FnIMM, //HSL - Propose to change this to FnB
+			FnA, //HSL - propose to change this to FnA
+			FnB, //HSL - Propose to change this to FnB
 			FnADD, 
 			FnADC, 
 			FnSUB, 
