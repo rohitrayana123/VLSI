@@ -33,7 +33,7 @@ assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
             PcLr        :  PcIn <= Lr;
-            PcAluOut    :  PcIn <= AluOut;
+            PcAluOut    :  PcIn <= AluRes;
             PcSysbus    :  PcIn <= SysBus;
             Pc1         :  PcIn <= Pc + 1;
          endcase
