@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Thu 27 Feb 2014 16:18:47 GMT by hl13g10 on hart2.ecs.soton.ac.uk +>
+# <+Last Edited: Thu 27 Feb 2014 16:21:21 GMT by hl13g10 on hart2.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -81,7 +81,8 @@ def RunSim(options):
 		magicrc.write(":extract\n:quit\n")
 		magicrc.close()
 		magicsim = open("magicsim", 'w')
-		magicsim.write("magic -d null %s < magicext" % options.module)
+		magicsim.write("magic -d null %s < magicext\n" % options.module)
+		magicsim.close()
 		cmdmag = ["bash", "magicsim" ]
 		print(cmdmag)
 	if options.debug == False:
