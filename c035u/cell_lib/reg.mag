@@ -1,0 +1,40 @@
+magic
+tech c035u
+timestamp 1393501539
+use scanreg scanreg_0
+timestamp 1386241447
+transform 1 0 0 0 1 0
+box 0 0 720 799
+use scanreg scanreg_1
+timestamp 1386241447
+transform 1 0 720 0 1 0
+box 0 0 720 799
+use scanreg scanreg_2
+timestamp 1386241447
+transform 1 0 1440 0 1 0
+box 0 0 720 799
+use scanreg scanreg_3
+timestamp 1386241447
+transform 1 0 2160 0 1 0
+box 0 0 720 799
+use scanreg scanreg_4
+timestamp 1386241447
+transform 1 0 2880 0 1 0
+box 0 0 720 799
+use scanreg scanreg_5
+timestamp 1386241447
+transform 1 0 3600 0 1 0
+box 0 0 720 799
+use scanreg scanreg_6
+timestamp 1386241447
+transform 1 0 4320 0 1 0
+box 0 0 720 799
+use scanreg scanreg_7
+timestamp 1386241447
+transform 1 0 5040 0 1 0
+box 0 0 720 799
+use scanreg scanreg_8
+timestamp 1386241447
+transform 1 0 5760 0 1 0
+box 0 0 720 799
+<< end >>
