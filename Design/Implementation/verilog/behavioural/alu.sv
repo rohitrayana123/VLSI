@@ -16,7 +16,7 @@ logic Carry;
 assign Flags[`FLAGS_Z] = (Result == 0);
 assign Flags[`FLAGS_N] = Result[15];
 assign Flags[`FLAGS_C] = Carry;
-assign Flags[`FLAGS_V] = 0; //@todo sort overflow out
+assign Flags[`FLAGS_V] = ~Op1[15] & Op2[15] & ~Result[15] |  Op1[15] & ~Op2[15] & Result[15];
 always_comb
 begin
    	Carry = 0; //default case
@@ -37,8 +37,10 @@ begin
       	FnLSR		: Result = Op1 >> Op2;
        	FnASR		: Result = Op1 >>> Op2;
 	FnNEG		: Result = ~Op1 + 1;
- 	FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
-      	default  	: Result = Op1;
+	FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
+      	FnLLI		: Result = {Op1[15:8],Op2[7:0]};
+	FnLUI		: Result = {Op2[15:8],Op1[7:0]};
+	default  	: Result = Op1;
    	endcase
 end
 endmodule

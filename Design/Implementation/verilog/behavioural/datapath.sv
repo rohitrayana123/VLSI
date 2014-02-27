@@ -11,13 +11,15 @@ module datapath(
   input  opcodes::Wd_select_t WdSel,
   input  opcodes::Rs1_select_t Rs1Sel,
   input  opcodes::Lr_select_t LrSel,
-  input  wire           AluEn, SpEn, SpWe, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, Op, CFlag, AluWe
+  input  opcodes::Sp_select_t SpSel,
+  input  opcodes::IncDec_select_t SpIncDec,
+  input  wire           AluEn, SpEn, SpWe,  LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, Op, CFlag, AluWe
 );
 
 import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
-wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended;
+wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
 logic [2:0] Rs1In;
 
@@ -28,7 +30,9 @@ assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrPc == LrSel) ? Pc : SysBus;
-assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5]; 
+assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
+assign SpDataIn = (SpSel == SpAlu) ? AluRes : SpNext;
+assign SpNext = (SpIncDec == SpInc) ? Sp + 1 : Sp - 1;
 //Multiplexers
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
@@ -98,7 +102,7 @@ trisreg Reg_SP (
 	.nReset (nReset  ),
 	.Reg_EN (SpEn    ),
 	.Reg_WE (SpWe    ),
-	.DataIn (AluRes  ),
+	.DataIn (SpDataIn),
 	.DataOut(Sp      ),
 	.TrisOut(SysBus  )
 );

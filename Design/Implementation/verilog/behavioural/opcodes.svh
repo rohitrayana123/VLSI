@@ -19,7 +19,9 @@ typedef
 			FnNOR, 
 			FnLSL, 
 			FnLSR,
-			FnASR
+			FnASR,
+			FnLUI,
+			FnLLI
 }
   alu_functions_t;
 //Location of flags in the array
@@ -37,6 +39,8 @@ typedef enum logic 			{ImmShort=1, ImmLong=0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1, WdAlu=0} 					Wd_select_t;
 typedef enum logic			{Rs1Rd=1, Rs1Ra=0} 					Rs1_select_t;
 typedef enum logic			{LrPc=1, LrSys=0}					Lr_select_t;		
+typedef enum logic 			{SpAlu=1,SpPushPop=0}				Sp_select_t;
+typedef enum logic			{SpInc=1, SpDec=0}					IncDec_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 
@@ -49,9 +53,9 @@ typedef enum logic [2:0] 	{
 				} Branch_t;
 typedef enum logic [1:0]	{
 				PUSH		= 2'b10,
-				PUSH_LINK 	= 2'b11,
+				PUSH_LR 	= 2'b11,
 				POP			= 2'b00,
-				POP_LINK	= 2'b01
+				POP_LR		= 2'b01
 				} Stack_t;
 // Define Opcodes:
 //
@@ -87,7 +91,7 @@ STW                  	= 5'b11101, //Type C
 LUI                  	= 5'b11010, //Type B
 LLI                  	= 5'b11011, //Type B
 BRANCH               	= 5'b11111, //Type D
-PUSH_POP             	= 5'b11100 //Type E
+STACK             	= 5'b11100 //Type E
 //POP                  	= 5'b11100 //Type E
 } Opcode_t;
 endpackage
