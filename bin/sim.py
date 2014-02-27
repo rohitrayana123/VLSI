@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Thu 27 Feb 2014 16:21:21 GMT by hl13g10 on hart2.ecs.soton.ac.uk +>
+# <+Last Edited: Thu 27 Feb 2014 16:23:16 GMT by hl13g10 on hart2.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -87,7 +87,7 @@ def RunSim(options):
 		print(cmdmag)
 	if options.debug == False:
 		call(cmdmag)		
-		#call(cmd)
+		call(cmd)
 	pass
 
 
