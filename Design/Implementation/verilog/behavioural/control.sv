@@ -96,7 +96,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                     ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR: 	state <= #20 fetch;	// Single cycle ops
+                     ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG: 	state <= #20 fetch;	// Single cycle ops
                 	LDW, STW, JMP: 	executeSub <= exe2;
                   endcase
             exe2: case(Opcode)
@@ -214,6 +214,15 @@ always_comb begin
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
+				StatusRegWe = 1;
+                        end
+                  		NEG:begin
+                        	nME = 1;    // Memory enable
+		            		PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNEG;
+                           	Op1Sel = Op1Rd1;
                            	PcWe = 1;
                            	PcSel = Pc1;
 				StatusRegWe = 1;
