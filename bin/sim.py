@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 24 Feb 2014 23:50:18 GMT by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Thu 27 Feb 2014 16:09:02 GMT by hl13g10 on hart2.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -23,6 +23,7 @@ def RunSim(options):
 	behave = os.path.join(home, "Design/Implementation/verilog/behavioural")
 	stim = os.path.join(home, "Design/Implementation/verification")
 	programs = os.path.join(home, "Design/Implementation/programs")
+	magic = os.path.join(home, "Design/Implementation/magic/c035u/%s" % options.module)
 	#@todo Check files exist
 
 	#piece together the command
@@ -47,8 +48,12 @@ def RunSim(options):
 	#library
 	cmd.append("+libext+.sv")
 	cmd.append("-y")
-	cmd.append(behave)
-	cmd.append("+incdir+%s" % behave)
+	if options.magic:
+		cmd.append(magic)
+		cmd.append("+incdir+%s" % magic)
+	else:
+		cmd.append(behave)
+		cmd.append("+incdir+%s" % behave)
 	#top level stim file
 	if (None != options.module): #use the stim file
 		#cmd.append("-v")
@@ -71,7 +76,8 @@ def RunSim(options):
 	#print the command
 	print " ".join(cmd)
 	#run the command
-	call(cmd)
+	if options.debug == False:
+		call(cmd)
 	pass
 
 
@@ -97,6 +103,7 @@ if "__main__" == __name__:
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
+	parser.add_option("-d", action="store_true", dest="debug", default=False, help="Make, but don't execute, the command")
 	(options, args) = parser.parse_args()
 
 	#want either a module or program to be able to run
