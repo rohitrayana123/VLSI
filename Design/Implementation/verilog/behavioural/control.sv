@@ -96,16 +96,16 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                     ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI: 	state <= #20 fetch;	// Single cycle ops
-                	LDW, STW, JMP: 	executeSub <= exe2;
-                  endcase
+                	ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI: 	state <= #20 fetch;	// Single cycle ops
+                	LDW, STW: 	executeSub <=#20 exe2;
+                  	BRANCH: state <= #20 fetch;
+				  endcase
             exe2: case(Opcode)
-            		LDW, STW: 	executeSub <= exe3;
-                  	JMP: state <= fetch;	
+            		LDW, STW: 	executeSub <= exe3;	
 				  endcase
             exe3: case(Opcode)
-                     LDW, STW: 	executeSub <= exe4;
-                  endcase
+                	LDW, STW: 	executeSub <= exe4;
+				  endcase
             exe4: case(Opcode)
                      LDW, STW: 	executeSub <= exe5;
                   endcase
@@ -267,9 +267,9 @@ always_comb begin
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	PcWe = 1;
-				StatusRegWe = 1;
+							StatusRegWe = 1;
                            	PcSel = Pc1;
-			end
+						end
                   		CMPI:begin
                            	nME = 1;    // Memory enable
 		                	PcEn = 1;   // output the PC to SysBus
@@ -311,39 +311,58 @@ always_comb begin
 							PcWe = 1;
 							PcSel = Pc1;
 						end
-						RET:begin
-							nME = 1;
-							LrWe = 1;
-							PcEn = 1;
-							PcSel = PcSysbus;
-						end
-						BR:begin
+						BRANCH:begin
+							case(BranchCode)
+								BR:begin
 
-						end
-						BNE:begin
+								end
+								BNE:begin
 
-						end
-						BE:begin
+								end
+								BE:begin
 
-						end
-						BLT:begin
+								end
+								BLT:begin
 
-						end
-						BGE:begin
+								end
+								BGE:begin
 
-						end
-						BWL:begin
+								end
+								BWL:begin
 
-						end
-						JMP:begin
-							AluOp = FnADD;
-							ImmSel = ImmShort;
-                           	Op1Sel = Op1Rd1;
-							AluWe = 1;
+								end
+								RET:begin
+									nME = 1;
+									LrWe = 1;
+									PcEn = 1;
+									PcSel = PcSysbus;	
+								end
+								JMP:begin
+									AluOp = FnADD;
+									ImmSel = ImmShort;
+                           			Op1Sel = Op1Rd1;
+									nME =1;
+									PcSel = PcAluOut;
+									PcWe = 1;
+								end	
+							endcase
 						end
 						PUSH_POP:begin
+							case(StackCode)
+								PUSH:begin
 
-						end	
+								end
+								PUSH_LINK:begin
+
+								end
+								POP:begin
+
+								end
+								POP_LINK:begin
+
+								end
+							endcase
+						end
             		endcase
          		end
          		exe2:begin 
@@ -357,14 +376,7 @@ always_comb begin
 							nWE = 1;
                         	nOE = 1;
                         	AluEn = 1;
-                     	end
-						JMP:begin
-							AluEn = 1;
-							LrWe = 1;
-							LrSel = LrSys;
-							PcSel = Pc1;
-							PcWe = 1;
-						end
+                     	end	
             		endcase
          		end
          		exe3: begin
@@ -386,8 +398,7 @@ always_comb begin
                         	nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
-						end
-
+						end		
             		endcase
          		end
          		exe4: begin
