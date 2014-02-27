@@ -53,9 +53,9 @@ typedef enum logic [2:0] 	{
 				} Branch_t;
 typedef enum logic [1:0]	{
 				PUSH		= 2'b10,
-				PUSH_LINK 	= 2'b11,
+				PUSH_LR 	= 2'b11,
 				POP			= 2'b00,
-				POP_LINK	= 2'b01
+				POP_LR		= 2'b01
 				} Stack_t;
 // Define Opcodes:
 //
@@ -91,7 +91,7 @@ STW                  	= 5'b11101, //Type C
 LUI                  	= 5'b11010, //Type B
 LLI                  	= 5'b11011, //Type B
 BRANCH               	= 5'b11111, //Type D
-PUSH_POP             	= 5'b11100 //Type E
+STACK             	= 5'b11100 //Type E
 //POP                  	= 5'b11100 //Type E
 } Opcode_t;
 endpackage

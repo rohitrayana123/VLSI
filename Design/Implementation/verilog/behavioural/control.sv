@@ -99,7 +99,7 @@ always_ff@(posedge Clock or negedge nReset) begin
          case(executeSub)
             exe1: case(Opcode)
             		ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                	LDW, STW: 	executeSub <= #20 exe2;
+                	LDW, STW, STACK: 	executeSub <= #20 exe2;
                   endcase
             exe2: case(Opcode)
             		LDW, STW: 	executeSub <= #20 exe3;	
@@ -123,7 +123,7 @@ always_comb begin
    	AluWe    = 0;
    	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
-   	AluEn    = 0;
+   	AluEn    = 0; 
    	SpEn     = 0;
    	SpWe     = 0;
    	LrEn     = 0;
@@ -372,8 +372,7 @@ always_comb begin
 						LDW,STW:begin			// Add must be done before address out
    							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
-							AluOp = FnADD;
-                           	AluEn = 1;			// Pass right through on next clock
+							AluOp = FnADD;	
                            	AluWe = 1;
                     	end
 						LUI:begin
@@ -381,8 +380,7 @@ always_comb begin
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
 							AluOp = FnLUI;
-							RegWe = 1;
-							AluEn = 1;
+							RegWe = 1;	
 							PcWe = 1;
 							PcSel = Pc1;
 						end
@@ -391,8 +389,7 @@ always_comb begin
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
 							AluOp = FnLLI;
-							RegWe = 1;
-							AluEn = 1;
+							RegWe = 1;	
 							PcWe = 1;
 							PcSel = Pc1;
 						end
@@ -430,36 +427,35 @@ always_comb begin
 								end	
 							endcase
 						end
-						PUSH_POP:begin
-							//case(StackCode)
-							//	PUSH:begin
-							//		
-							//	end
-							//	PUSH_LINK:begin
-
-							//	end
-							//	POP:begin
-
-							//	end
-							//	POP_LINK:begin
-
-							//	end
-							//endcase
+						STACK:begin		// Begining addressing the SP mem
+							ALE = 1;
+               	 			nWE = 1;
+               	 			nOE = 1;
+							SpEn = 1;;
 						end
             		endcase
          		end
-         		exe2:begin 
+         		exe2:begin
             		case(Opcode)
                			LDW,STW:begin  
+							ALE = 1;
+               	 			nWE = 1;
+               	 			nOE = 1; 
 							ImmSel = ImmShort;
 							AluOp = FnADD;
 							Op1Sel = Op1Rd1;
-                        	ALE = 1;
-							nWE = 1;
-                        	nOE = 1;
                         	AluEn = 1;
                      	end	
-            		endcase
+            			STACK:begin
+							nME = 0;
+							SpEn = 1;
+							MemEn = 1;
+							nWE = 1;
+							case(StackCode)
+								PUSH,PUSH_LR: nOE = 1;	
+							endcase
+						end
+					endcase
          		end
          		exe3: begin
             		case(Opcode)
@@ -482,7 +478,12 @@ always_comb begin
                         	nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
-						end		
+						end
+						STACK:begin
+							nME = 0;
+							
+						end
+
             		endcase
          		end
          		exe4: begin
