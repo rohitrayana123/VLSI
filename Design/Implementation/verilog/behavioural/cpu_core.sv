@@ -21,8 +21,6 @@ opcodes::alu_functions_t  AluOp;
 wire [1:0]  Op1Sel;  
 wire        Op2Sel;  
 wire        AluEn;  
-wire        SpEn;  
-wire        SpWe;  
 wire        LrEn;  
 wire        LrWe; 
 wire        LrSel;
@@ -47,8 +45,6 @@ control control (
    .Op2Sel     (Op2Sel     ), 
    .Op1Sel     (Op1Sel     ),
    .AluEn      (AluEn      ),
-   .SpEn       (SpEn       ),
-   .SpWe       (SpWe       ),      
    .LrEn       (LrEn       ),
    .LrWe       (LrWe       ),
    .LrSel      (LrSel      ),
@@ -84,8 +80,6 @@ datapath datapath (
    .Op1Sel     (Op1Sel     ),
    .Op2Sel     (Op2Sel     ),
    .AluEn      (AluEn      ),
-   .SpEn       (SpEn       ),
-   .SpWe       (SpWe       ),
    .LrEn       (LrEn       ),
    .LrWe       (LrWe       ),
    .LrSel      (LrSel      ),

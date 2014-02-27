@@ -39,8 +39,6 @@ typedef enum logic 			{ImmShort=1, ImmLong=0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1, WdAlu=0} 					Wd_select_t;
 typedef enum logic			{Rs1Rd=1, Rs1Ra=0} 					Rs1_select_t;
 typedef enum logic			{LrPc=1, LrSys=0}					Lr_select_t;		
-typedef enum logic 			{SpAlu=1,SpPushPop=0}				Sp_select_t;
-typedef enum logic			{SpInc=1, SpDec=0}					IncDec_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 
@@ -51,12 +49,6 @@ typedef enum logic [2:0] 	{
 				RET = 3'b010, 
 				JMP = 3'b001 
 				} Branch_t;
-typedef enum logic [1:0]	{
-				PUSH		= 2'b10,
-				PUSH_LR 	= 2'b11,
-				POP			= 2'b00,
-				POP_LR		= 2'b01
-				} Stack_t;
 // Define Opcodes:
 //
 //  these could be defined with a further enumerated type declaration

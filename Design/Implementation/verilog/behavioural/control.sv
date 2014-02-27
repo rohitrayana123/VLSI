@@ -3,8 +3,6 @@ module control(
    output opcodes::Op1_select_t     Op1Sel, 
    output opcodes::Op2_select_t     Op2Sel, 
    output logic                     AluEn,
-   output logic                     SpEn,
-   output logic                     SpWe,
    output logic                     LrEn,
    output logic                     LrWe,
    output logic                     PcWe,
@@ -23,9 +21,7 @@ module control(
    output logic                     CFlag,
    output opcodes::Lr_select_t      LrSel,
    output opcodes::Rs1_select_t     Rs1Sel,
-   output logic                     AluWe,
-   output opcodes::Sp_select_t		SpSel,
-   output opcodes::IncDec_select_t	SpIncDec,
+   output logic                     AluWe, 
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
    input  wire                      Clock,
@@ -99,7 +95,7 @@ always_ff@(posedge Clock or negedge nReset) begin
          case(executeSub)
             exe1: case(Opcode)
             		ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                	LDW, STW, STACK: 	executeSub <= #20 exe2;
+                	LDW, STW: 	executeSub <= #20 exe2;
                   endcase
             exe2: case(Opcode)
             		LDW, STW: 	executeSub <= #20 exe3;	
@@ -124,8 +120,6 @@ always_comb begin
    	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
    	AluEn    = 0; 
-   	SpEn     = 0;
-   	SpWe     = 0;
    	LrEn     = 0;
    	LrWe     = 0;
    	LrSel    = LrSys;
@@ -426,13 +420,7 @@ always_comb begin
 									PcWe = 1;
 								end	
 							endcase
-						end
-						STACK:begin		// Begining addressing the SP mem
-							ALE = 1;
-               	 			nWE = 1;
-               	 			nOE = 1;
-							SpEn = 1;;
-						end
+						end	
             		endcase
          		end
          		exe2:begin
@@ -446,15 +434,7 @@ always_comb begin
 							Op1Sel = Op1Rd1;
                         	AluEn = 1;
                      	end	
-            			STACK:begin
-							nME = 0;
-							SpEn = 1;
-							MemEn = 1;
-							nWE = 1;
-							case(StackCode)
-								PUSH,PUSH_LR: nOE = 1;	
-							endcase
-						end
+            			
 					endcase
          		end
          		exe3: begin
@@ -479,11 +459,6 @@ always_comb begin
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
 						end
-						STACK:begin
-							nME = 0;
-							
-						end
-
             		endcase
          		end
          		exe4: begin
@@ -511,11 +486,7 @@ always_comb begin
 							WdSel = WdSys;
 							RegWe = 1;
 						end
-						STW:begin				
-							AluEn = 1;
-                       		nOE = 1;
-					 	end
-           	 		endcase 
+       	 		endcase 
          		end
          	endcase
       	end

@@ -11,9 +11,7 @@ module datapath(
   input  opcodes::Wd_select_t WdSel,
   input  opcodes::Rs1_select_t Rs1Sel,
   input  opcodes::Lr_select_t LrSel,
-  input  opcodes::Sp_select_t SpSel,
-  input  opcodes::IncDec_select_t SpIncDec,
-  input  wire           AluEn, SpEn, SpWe,  LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, Op, CFlag, AluWe
+  input  wire           AluEn, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, Op, CFlag, AluWe
 );
 
 import opcodes::*;
@@ -31,8 +29,7 @@ assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrPc == LrSel) ? Pc : SysBus;
 assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
-assign SpDataIn = (SpSel == SpAlu) ? AluRes : SpNext;
-assign SpNext = (SpIncDec == SpInc) ? Sp + 1 : Sp - 1;
+
 //Multiplexers
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
@@ -95,15 +92,6 @@ trisreg Reg_LR (
 	.Reg_WE (LrWe    ),
 	.DataIn (LrIn    ),
 	.DataOut(Lr      ),
-	.TrisOut(SysBus  )
-);
-trisreg Reg_SP (
-	.Clock  (Clock   ), 
-	.nReset (nReset  ),
-	.Reg_EN (SpEn    ),
-	.Reg_WE (SpWe    ),
-	.DataIn (SpDataIn),
-	.DataOut(Sp      ),
 	.TrisOut(SysBus  )
 );
 trisreg Reg_IR (
