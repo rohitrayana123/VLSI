@@ -96,10 +96,9 @@ always_ff@(posedge Clock or negedge nReset) begin
       if(state == execute) 
          case(executeSub)
             exe1: case(Opcode)
-                	ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI: 	state <= #20 fetch;	// Single cycle ops
-                	LDW, STW: 	executeSub <=#20 exe2;
-                  	BRANCH: state <= #20 fetch;
-				  endcase
+                     ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG,BRANCH: 	state <= #20 fetch;	// Single cycle ops
+                	LDW, STW, JMP: 	executeSub <= exe2;
+                  endcase
             exe2: case(Opcode)
             		LDW, STW: 	executeSub <= exe3;	
 				  endcase
@@ -218,6 +217,15 @@ always_comb begin
                            	PcSel = Pc1;
 				StatusRegWe = 1;
                         end
+                  		NEG:begin
+                        	nME = 1;    // Memory enable
+		            		PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNEG;
+                           	Op1Sel = Op1Rd1;
+                           	PcWe = 1;
+                           	PcSel = Pc1;
+				StatusRegWe = 1;
+                        end
                   		SUBI:begin
                            	nME = 1;    // Memory enable
 		                	PcEn = 1;   // output the PC to SysBus
@@ -276,6 +284,87 @@ always_comb begin
                            	AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		AND:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnAND;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		OR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnOR;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		XOR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnXOR;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		NOR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNOR;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		NAND:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNAND;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		NOT:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNOT;
+                           	Op1Sel = Op1Rd1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		LSL:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnLSL;
+				ImmSel = ImmShort;
+                           	Op1Sel = Op1Rd1;
+				Op2Sel = Op2Imm;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		LSR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnLSR;
+                           	Op1Sel = Op1Rd1;
+				ImmSel = ImmShort;
+				Op2Sel = Op2Imm;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
