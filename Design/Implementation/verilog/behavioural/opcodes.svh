@@ -19,7 +19,9 @@ typedef
 			FnNOR, 
 			FnLSL, 
 			FnLSR,
-			FnASR
+			FnASR,
+			FnLUI,
+			FnLLI
 }
   alu_functions_t;
 //Location of flags in the array
