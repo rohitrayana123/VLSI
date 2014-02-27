@@ -1,5 +1,5 @@
 #Simple assembly program, takes assembly input file and outputs flat binary line with one line per instruction
-#Input syntax rules:	':' for commenting
+#Input syntax rules:	':' or ';' for commenting
 #			'.' must start label names
 #			Parts of instruction must be seperated by one space
 #			Ordering: [LABEL] - INSTRUCTION - OPERANDS - [COMMENTS]
@@ -36,7 +36,7 @@ def OpType(value):	#Determine instruction format type
 		return "A1"
 	elif value in ("ADDI", "ADCI", "SUBI", "SUCI", "CMPI", "LSL", "LSR", "ASR"):
 		return "A2"
-	else
+	else:
 		return "~"
 
 def regcode(value):	#Get binary equivalent of register name
@@ -58,7 +58,7 @@ def regcode(value):	#Get binary equivalent of register name
 		return "111"
 	elif value.upper() == "LR":
 		return "000"
-	else 
+	else:
 		return "~"
 
 def conditioncode(value):	#Get binary code for branching conditions
@@ -78,11 +78,11 @@ def conditioncode(value):	#Get binary code for branching conditions
 		return "010"
 	if value == "JMP":
 		return "001"
-	else 
+	else:
 		return "~"
 
 def branch(value, lineNo):	#Calculate relative branch address for PC
-	for link in LINKTABLE
+	for link in LINKTABLE:
 		if link[0] == value:
 			return '{0:08b}'.format(link[1] - lineNo)
 	return "00000000"
@@ -136,12 +136,12 @@ def OpNum(value):	#Determine specific binary value for instruction
 		return "11010"
 	if value == "LLI":
 		return "11011"
-	else 
+	else:
 		return "~"
 
 #Determine input/output file paths
 assemfile = sys.argv[1]		#filename only
-print 'Converting File " + assemfile + " to machine code\n'
+print '--------Converting File %s.py to machine code--------\n' % assemfile
 INPUTFILE = assemfile + ".asm"
 OUTPUTFILE = assemfile + ".mc"
 
@@ -151,58 +151,87 @@ outfile = open(OUTPUTFILE, 'w')
 LINES = ifile.readlines()	#Read input file contents
 
 #Seperate each line into a list of elements
-print 'Interpreting Syntax...\n'
-for i, line in enumerate(LINES)
-	print line
-	code, sep, comms = line.partition(':')			#remove comments and newline char
-	print code
+print '--------Interpreting Syntax...--------\n'
+for line in LINES:
+	print '1. ' + line.strip('\n').strip('\t')
+	try:
+		code = line.split(':')[0]			#remove comments and newline char
+		code = code.split(';')[0]
+	except:
+		code = line	#no comments on line
+	print '2. ' + code.strip('\t')
+	code = code.replace('\t',' ')				#Remove tabs
 	pass_one = code.split(',')				#seperate by comma
 	print pass_one
-	for j, part in enumerate(pass_one)
-		part = part.strip()				#remove lead/trail spaces
-		if part.count(' ') >= 1:				#check if there are spaces in string
-			pass_two = part.split(' ')		#seperate by spaces
-			pass_one[j] = pass_two			#replace first pass element with seperated list
-	print pass_one
-	for seg in pass_one
-		sline += seg					#create list of segments
-	SEGMLINES.append(sline)					#create list of lists
+	pass_two = []
+	for j, part in enumerate(pass_one):
+		pass_one[j] = pass_one[j].strip()		#remove lead/trail spaces
+		pass_one[j] = pass_one[j].strip('[').strip(']').strip('#')
+		if pass_one[j].count(' ') >= 1:			#check if there are spaces in string
+			pass_two.extend(pass_one[j].split(' '))	#seperate by spaces
+			#pass_one[j] = pass_two			#replace first pass element with seperated list
+		else:
+			pass_two.append(pass_one[j])
+	print pass_two
+	SEGMLINES.append(pass_two)				#create list of lists
 print 'Segmented instruction list:\n'
-print SEGMLINES
+for s in SEGMLINES:
+	print s
 
 #Check each line for a link reference and create link table
-print 'Creating Link Table...\n'
-for i, line in enumerate(SEGMLINES)
+print '--------Creating Link Table...--------\n'
+for i, line in enumerate(SEGMLINES):
 	if line[0].startswith('.'):
-		LINKTABLE.append({line[0], i})			#add link consisting of LABEL and line no.
+		LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 		SEGMLINES[i].remove(line[0])			#remove label from instruction
-print LINKTABLE
+for l in LINKTABLE:
+	print l
 
 #Convert each element to machine code and concatenate
-print 'Converting to machine code...\n'
-for i, line in enumerated(SEGMLINES)
+print '--------Converting to machine code...--------\n'
+for i, line in enumerate(SEGMLINES):
 	if OpType(line[0]) == 'E':				#Stack operations
-		MC[i] = "11100" + ('1' if line[0] == 'PUSH' else '0') + ('1' if line[1] == 'LR' else '0') + '0' + regcode(line[1]) + '00000'
+		temp =  '11100'
+		if line[0] == 'PUSH':
+			temp += '1'
+		else:
+			temp += '0'
+		if line[1] == 'LR':
+			temp += '1'
+		else:
+			temp += '0'
+		temp += '0' + regcode(line[1]) + '00000'
+		MC.append(temp)
 	elif OpType(line[0]) == 'D1':				#Control transfer: Jump
-		MC[i] = '11111' + conditioncode(line[0]) + regcode(line[1]) + '{0:05b}'.format(line[2].lstrip('#'))
+		MC.append('11111' + conditioncode(line[0]) + regcode(line[1]) + '{0:05b}' % line[2])
 	elif OpType(line[0]) == 'D2':				#Control transfer: Others
 		if line[0] == 'RET':				#Specific -> Return
-			MC[i] = '11111' + conditioncode(line[0]) + '00000000'
-		else
-			MC[i] = '11111' + conditioncode(line[0]) + branch(line[1], i)		
+			MC.append('11111' + conditioncode(line[0]) + '00000000')
+		else:
+			MC.append('11111' + conditioncode(line[0]) + branch(line[1], i))
 	elif OpType(line[0]) == 'C':				#Data transfer
-		MC[i] = '1' + ('1' if line[0] == 'STW' else '0') + '101' + regcode(line[1]) + regcode(line[2].lstrip('[')) + '{0:05b}'.format(line[3].rstrip(']'))
+		temp = '1'
+		if line[0] == 'STW':
+			temp += '1'
+		else:
+			temp += '0'
+		temp += '101' + regcode(line[1]) + regcode(line[2]) + '{0:05b}' % line[3]
+		MC.append(temp)
 	elif OpType(line[0]) == 'B':				#Byte immediate
-		MC[i] = OpNum(line[0]) + regcode(line[1]) + '{0:08b}'.format(line[2].lstrip('#'))
+		temp = OpNum(line[0])
+		temp += regcode(line[1]) 
+		temp += '{0:08b}' % line[2] ######FORMATTING ISSUE
+		MC.append(temp)
 	elif OpType(line[0]) == 'A1':				#Data manipulation:Register
-		MC[i] = OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00'
+		MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
 	elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
-		MC[i] = OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '{0:05b}'.format(line[3].lstrip('#'))
-	print MC[i]
+		MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '{0:05b}' % line[3])
+for l in MC:
+	print l
 
 #Output result to file
 print 'Writing machine code to file " + assemfile + ".mc...\n'
-for line in MC
+for line in MC:
 	outfile.write(line + '\n')
 
-print 'Assembly Complete!\n'
+print '--------Assembly Complete!--------\n'
