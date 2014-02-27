@@ -3,8 +3,8 @@ package opcodes;
 // Define ALU Function Codes:
 //
 typedef 
-  enum logic [4:0] { 	FnNOP, //HSL - I don't see the point in this
-			FnA, 
+  enum logic [4:0] { 	
+	  		FnA, 
 			FnB, 
 			FnADD, 
 			FnADC, 
@@ -54,7 +54,6 @@ typedef enum logic [2:0] 	{
 //  unfortunately this doesn't easily map to a situation where opcode lengths are variable
 //
 typedef enum logic [4:0] { 
-NOP 			= 5'b00000, //Type A
 ADD 			= 5'b00100, //Type A
 ADDI 			= 5'b00101, //Type A
 ADDIB	 		= 5'b11000, //Type B

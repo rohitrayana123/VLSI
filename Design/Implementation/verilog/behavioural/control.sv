@@ -114,7 +114,7 @@ end
 
 always_comb begin
    	// Default outputs   
-   	AluOp    = FnNOP;
+   	AluOp    = FnA;
    	AluWe    = 0;
    	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
