@@ -39,7 +39,8 @@ Branch_t BranchCode;
 logic [3:0] StatusReg;
 logic StatusRegWe;
 
-assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
+// Type casting
+assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); 
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
 assign CFlag = StatusReg[`FLAGS_C];
 
@@ -47,7 +48,7 @@ enum {
    fetch,
    execute
 }  state;
-enum { 			// AJR - Save them d-types
+enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 	cycle0,
    	cycle1,
    	cycle2,
