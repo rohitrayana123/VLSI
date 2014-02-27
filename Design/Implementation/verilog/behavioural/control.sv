@@ -350,6 +350,17 @@ always_comb begin
 				StatusRegWe = 1;
                            	PcSel = Pc1;
                         end
+                  		LSR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnLSR;
+                           	Op1Sel = Op1Rd1;
+				ImmSel = ImmShort;
+				Op2Sel = Op2Imm;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
 				LDW,STW:begin			// Add must be done before address out
                            	nME = 1;  
 							ImmSel = ImmShort;
