@@ -1,3 +1,4 @@
+// Written by ajr2g10
 module cpu_core(
   output wire  [15:0]   Data_out,
   output wire           nOE,

@@ -1,3 +1,4 @@
+// Written by ajr2g10
 module control(
    output opcodes::alu_functions_t  AluOp, 
    output opcodes::Op1_select_t     Op1Sel, 

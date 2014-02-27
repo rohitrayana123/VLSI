@@ -1,3 +1,4 @@
+// Written by hl13g10 
 module alu(
   output logic [3:0]             Flags, 
   output logic [15:0]            Result,
