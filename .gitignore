@@ -32,5 +32,9 @@ ncverilog.key
 ## Vim swap
 *.swp
 
+##Magic
+*.ext
+magicext
+magicsim
 ## Misc
 *~
