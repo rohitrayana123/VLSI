@@ -30,7 +30,13 @@ echo "Copying across $VERIF folder..."
 cp -rf $DES/$IMP/$VERIF/*  /$HOME/$USER/$DESIGN/$FCDE/$VER/$BER
 ls -l /$HOME/$USER/$DESIGN/$FCDE/$VER 
 echo ""
-
+#Copy the program folder
+PROG="programs"
+echo "Copying across $PROG folder..."
+mkdir /$HOME/$USER/$DESIGN/$FCDE/$VER/$PROG
+cp -rf $DES/$IMP/$PROG/*  /$HOME/$USER/$DESIGN/$FCDE/$VER/$PROG
+ls -l /$HOME/$USER/$DESIGN/$FCDE/$VER 
+echo ""
 
 
 
