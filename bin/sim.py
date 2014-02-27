@@ -84,9 +84,9 @@ def RunSim(options):
 		magicsim.write("magic -d null %s < magicext\n" % options.module)
 		magicsim.close()
 		cmdmag = ["bash", "magicsim" ]
+		call(cmdmag)		
 		print(cmdmag)
 	if options.debug == False:
-		call(cmdmag)		
 		call(cmd)
 	pass
 
