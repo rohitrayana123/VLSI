@@ -403,7 +403,7 @@ always_comb begin
 							ImmSel = ImmLong;
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
-							AluOp = FnIMM;
+							AluOp = FnB;
 							RegWe = 1;
 							AluEn = 1;
 							PcWe = 1;
@@ -415,7 +415,7 @@ always_comb begin
 							ImmSel = ImmLong;
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
-							AluOp = FnIMM;
+							AluOp = FnB;
 							RegWe = 1;
 							AluEn = 1;
 							PcWe = 1;
@@ -493,7 +493,7 @@ always_comb begin
             		case(Opcode)
                			LDW:begin	
                         	Op1Sel = Op1Rd1;
-							AluOp = FnMEM;		// Nothing done to op1
+							AluOp = FnA;		// Nothing done to op1
                         	Rs1Sel = Rs1Rd;
 							MemEn = 1;
                         	nWE = 1;
@@ -502,7 +502,7 @@ always_comb begin
 						end
 						STW:begin			// Get the data out of the reg
                         	Op1Sel = Op1Rd1;
-							AluOp = FnMEM;		// Nothing done to op1
+							AluOp = FnA;		// Nothing done to op1
                         	Rs1Sel = Rs1Rd;
 							nOE = 1;
                         	nWE = 1;

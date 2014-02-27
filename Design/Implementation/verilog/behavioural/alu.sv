@@ -21,8 +21,8 @@ always_comb
 begin
    	Carry = 0; //default case
    	case (AluOp)
-      	FnMEM		: Result = Op1;
-      	FnIMM		: Result = Op2;	// AJR - Need stright through for LUI,LLI - HSL surely LUI will need a byte shift up
+      	FnA		: Result = Op1;
+      	FnB		: Result = Op2;	// AJR - Need stright through for LUI,LLI - HSL surely LUI will need a byte shift up
   	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
       	FnADC   	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
       	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};

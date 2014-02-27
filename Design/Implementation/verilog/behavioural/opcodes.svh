@@ -3,9 +3,9 @@ package opcodes;
 // Define ALU Function Codes:
 //
 typedef 
-  enum logic [4:0] { 	FnNOP, 
-			FnMEM, //HSL - propose to change this to FnA
-			FnIMM, //HSL - Propose to change this to FnB
+  enum logic [4:0] { 	FnNOP, //HSL - I don't see the point in this
+			FnA, 
+			FnB, 
 			FnADD, 
 			FnADC, 
 			FnSUB, 
