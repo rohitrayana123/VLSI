@@ -25,8 +25,18 @@ CA7F	// SUBIB R2, #127
 6450	// SUCI  R4, R2 #-16
 6848	// CMP   R2, R2
 7084	// CMPI  R4 #15
-A8C0	// LDW R0,[R6,#0]		// 0xFFFF in R0
+8450	// AND   R4, R2 R4
+8C50	// OR	 R4, R2, R4 
+A450	// NAND  R4, R2, R4 
+B450	// NOR   R4, R2, R4 
+9C50	// NOT   R4, R2, R4 
+9450	// XOR   R4, R2, R4 
+A8CA	// LDW R0,[R6,#10]		// 0xFFFF in R0
 E86F 	// STW R0,[R3,#15] 		// FFFF written to 0x7FF in  RAM     
+xxxx
+xxxx
+xxxx
+xxxx
 xxxx
 xxxx
 FFFF

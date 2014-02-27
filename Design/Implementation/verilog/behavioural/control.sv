@@ -290,7 +290,55 @@ always_comb begin
 				StatusRegWe = 1;
                            	PcSel = Pc1;
                         end
-				
+                  		OR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnOR;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		XOR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnXOR;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		NOR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNOR;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		NAND:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNAND;
+                           	Op1Sel = Op1Rd1;
+                           	Op2Sel = Op2Rd2;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		NOT:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnNOT;
+                           	Op1Sel = Op1Rd1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
 				LDW,STW:begin			// Add must be done before address out
                            	nME = 1;  
 							ImmSel = ImmShort;
