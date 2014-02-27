@@ -54,6 +54,8 @@ def RunSim(options):
 	else:
 		cmd.append(behave)
 		cmd.append("+incdir+%s" % behave)
+	# opcodes comes before stim file
+	cmd.append(behave+"/opcodes.svh")
 	#top level stim file
 	if (None != options.module): #use the stim file
 		#cmd.append("-v")
@@ -71,7 +73,7 @@ def RunSim(options):
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 
 	#opcodes.svh
-	cmd.append(behave+"/opcodes.svh")
+	#cmd.append(behave+"/opcodes.svh") # will work here but not first time
 
 	#print the command
 	print " ".join(cmd)
@@ -84,7 +86,7 @@ def RunSim(options):
 		magicsim.write("magic -d null %s < magicext\n" % options.module)
 		magicsim.close()
 		cmdmag = ["bash", "magicsim" ]
-		call(cmdmag)		
+		call(cmdmag)
 		print(cmdmag)
 	if options.debug == False:
 		call(cmd)

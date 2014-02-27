@@ -35,81 +35,63 @@ import opcodes::*;
 Opcode_t Opcode;
 Branch_t BranchCode;
 
-assign Opcode = OpcodeCondIn[7:3]; // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
-assign BranchCode = OpcodeCondIn[2:0];
-assign StackCode = OpcodeCondIn[2:1];
+//Flags register
+logic [3:0] StatusReg;
+logic StatusRegWe;
+
+assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
+assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
+assign CFlag = StatusReg[`FLAGS_C];
 
 enum {
    fetch,
    execute
 }  state;
-enum {
-   fet1,
-   fet2,
-   fet3,
-   fet4       
-}  fetchSub;
-enum {
-   exe1,
-   exe2,
-   exe3,
-   exe4,
-   exe5
-}  executeSub;
-
-//Flags register
-logic [3:0] StatusReg;
-logic StatusRegWe;
-//HSL - @todo this shouldn't always update. either put it in the control ff below, or make it sensitive to the alu op
-always_ff@(posedge Clock or negedge nReset)
-	if (!nReset)
-		StatusReg <= #20 0;
-	else
-		if (StatusRegWe)
-			StatusReg <= #20 Flags;
-assign CFlag = StatusReg[`FLAGS_C];
+enum { 			// AJR - Save them d-types
+	cycle0,
+   	cycle1,
+   	cycle2,
+   	cycle3,
+   	cycle4     
+}  	stateSub;
 
 always_ff@(posedge Clock or negedge nReset) begin
-   // Major states
-   if(!nReset) begin
-      state <= #20 fetch;
-      fetchSub <= #20 fet1;
-      executeSub <= #20 exe1;
-   end else begin 
-      // Fetch  
-      if(state == fetch)
-         case(fetchSub)
-            fet1: fetchSub <= #20 fet2;
-            fet2: fetchSub <= #20 fet3;
-            fet3: fetchSub <= #20 fet4;
-            fet4: begin
-                     state <= #20 execute;
-                     fetchSub <= #20 fet1;
-                     executeSub <= #20 exe1;
-                  end
-            default: fetchSub <= #20 fet1;
-         endcase
-      // Execute     
-      if(state == execute) 
-         case(executeSub)
-            exe1: case(Opcode)
-            		ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                	LDW, STW: 	executeSub <= #20 exe2;
-                  endcase
-            exe2: case(Opcode)
-            		LDW, STW: 	executeSub <= #20 exe3;	
-				  endcase
-            exe3: case(Opcode)
-                	LDW, STW: 	executeSub <= #20 exe4;
-				  endcase
-            exe4: case(Opcode)
-                     LDW, STW: 	executeSub <= #20 exe5;
-                  endcase
-            exe5: case(Opcode)
-                     LDW, STW:	state <= #20 fetch;
-                  endcase
-         endcase
-   end
+	// Major states
+	if(!nReset) begin
+      	StatusReg <= #20 0;
+	  	state <= #20 fetch;
+      	stateSub <= #20 cycle0;
+	end else begin 
+		// Status update
+      	if (StatusRegWe)
+			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
+	  	// Fetch  
+      	if(state == fetch)
+         	case(stateSub)
+            	cycle0: stateSub <= #20 cycle1;
+            	cycle1: stateSub <= #20 cycle2;
+            	cycle2: stateSub <= #20 cycle3;
+            	default:begin							// Should never get in cycle4 in fetch 
+							state <= #20 execute;
+         					stateSub <= #20 cycle0;
+						end
+		 	endcase
+    	// Execute     
+      	if(state == execute) 
+         	case(stateSub)
+            	cycle0: case(Opcode)
+            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
+                			LDW, STW: 	stateSub <= #20 cycle1;
+                  		endcase
+            	cycle1:	stateSub <= #20 cycle2;	
+            	cycle2: stateSub <= #20 cycle3;  		
+            	cycle3: stateSub <= #20 cycle4;
+        		default:begin
+                    		state <= #20 fetch;
+                  			stateSub <= #20 cycle0;
+						end
+         	endcase
+   	end
 end
 
 always_comb begin
@@ -138,15 +120,15 @@ always_comb begin
 	StatusRegWe= 0;
    	case(state)
       	fetch : 
-         	case(fetchSub)
-            	fet1: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
-            	fet2: begin nME = 0; nWE = 1; MemEn = 1; end
-            	fet3: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; end 
-            	fet4: begin nWE = 1; MemEn = 1; IrWe  = 1;  end
+         	case(stateSub)
+            	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
+            	cycle1: begin nME = 0; nWE = 1; MemEn = 1; end
+            	cycle2: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; end 
+            	cycle3: begin nWE = 1; MemEn = 1; IrWe  = 1;  end
          	endcase
       	execute: begin
-         	case(executeSub)
-            	exe1: begin    					// Single cycle ops
+         	case(stateSub)
+            	cycle0: begin    					// Single cycle ops
                		case(Opcode)
                   		ADD:begin
 		            		PcEn = 1;   		// output the PC to SysBus
@@ -413,21 +395,16 @@ always_comb begin
 						end	
             		endcase
          		end
-         		exe2:begin
-            		case(Opcode)
-               			LDW,STW:begin  
-							ALE = 1;
-               	 			nWE = 1;
-               	 			nOE = 1; 
-							ImmSel = ImmShort;
-							AluOp = FnADD;
-							Op1Sel = Op1Rd1;
-                        	AluEn = 1;
-                     	end	
-            			
-					endcase
+         		cycle1:begin 
+					ALE = 1;
+               		nWE = 1;
+               		nOE = 1; 
+					ImmSel = ImmShort;
+					AluOp = FnADD;
+					Op1Sel = Op1Rd1;
+                	AluEn = 1; 
          		end
-         		exe3: begin
+         		cycle2: begin
             		case(Opcode)
                			LDW:begin
 							nME = 0;
@@ -451,7 +428,7 @@ always_comb begin
 						end
             		endcase
          		end
-         		exe4: begin
+         		cycle3: begin
             		case(Opcode)
 						LDW:begin
 							nME = 0;
@@ -466,17 +443,15 @@ always_comb begin
                      	end   
             		endcase  
          		end
-         		exe5: begin
+         		cycle4: begin
 					PcWe = 1;
                     PcSel = Pc1;		// Done, move on
-   					case(Opcode)
-						LDW:begin
-							nWE = 1;
-							MemEn = 1;
-							WdSel = WdSys;
-							RegWe = 1;
-						end
-       	 		endcase 
+   					if(Opcode == LDW) begin
+						nWE = 1;
+						MemEn = 1;
+						WdSel = WdSys;
+						RegWe = 1;
+					end
          		end
          	endcase
       	end
