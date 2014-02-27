@@ -223,6 +223,7 @@ always_comb begin
 		            		PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnNEG;
                            	Op1Sel = Op1Rd1;
+                           	RegWe = 1;
                            	PcWe = 1;
                            	PcSel = Pc1;
 				StatusRegWe = 1;
@@ -295,6 +296,7 @@ always_comb begin
                            	AluOp = FnAND;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -305,6 +307,7 @@ always_comb begin
                            	AluOp = FnOR;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -315,6 +318,7 @@ always_comb begin
                            	AluOp = FnXOR;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -325,6 +329,7 @@ always_comb begin
                            	AluOp = FnNOR;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -335,6 +340,7 @@ always_comb begin
                            	AluOp = FnNAND;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -344,6 +350,7 @@ always_comb begin
 		                	PcEn = 1;   // output the PC to SysBus
                            	AluOp = FnNOT;
                            	Op1Sel = Op1Rd1;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -355,6 +362,7 @@ always_comb begin
 				ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
 				Op2Sel = Op2Imm;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -366,6 +374,19 @@ always_comb begin
                            	Op1Sel = Op1Rd1;
 				ImmSel = ImmShort;
 				Op2Sel = Op2Imm;
+                           	RegWe = 1;
+                           	PcWe = 1;
+				StatusRegWe = 1;
+                           	PcSel = Pc1;
+                        end
+                  		ASR:begin
+                           	nME = 1;    // Memory enable
+		                	PcEn = 1;   // output the PC to SysBus
+                           	AluOp = FnASR;
+                           	Op1Sel = Op1Rd1;
+				ImmSel = ImmShort;
+				Op2Sel = Op2Imm;
+                           	RegWe = 1;
                            	PcWe = 1;
 				StatusRegWe = 1;
                            	PcSel = Pc1;

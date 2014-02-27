@@ -35,7 +35,7 @@ begin
 	FnNOR		: Result = ~ ( Op1 | Op2 );
       	FnLSL		: Result = Op1 << Op2;
       	FnLSR		: Result = Op1 >> Op2;
-       	FnASR		: Result = Op1 >> Op2; //HSL @todo - complete this
+       	FnASR		: Result = Op1 >>> Op2;
 	FnNEG		: Result = ~Op1 + 1;
  	FnNOP    	: Result = 0;		// AJR - I would like to keep this for testing
       	default  	: Result = Op1;
