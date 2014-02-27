@@ -34,7 +34,6 @@ import opcodes::*;
 
 Opcode_t Opcode;
 Branch_t BranchCode;
-Stack_t  StackCode;
 
 assign Opcode = OpcodeCondIn[7:3]; // This assignment is a violation of SystemVerilog strong typing rules for enumeration datatypes.
 assign BranchCode = OpcodeCondIn[2:0];
