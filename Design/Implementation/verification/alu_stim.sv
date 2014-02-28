@@ -24,7 +24,9 @@ begin
 	Op1 = $random();
 	Op2 = $random();
 	#1000 assert( Result == Op1 ) else begin errors++; $display("Error in FnA"); end
-
+	//Test Zero flag
+	Op1 = 0;
+	#1000 assert( Flags[`FLAGS_Z] == 1) else begin errors++; $display("Zero Flag error"); end
 	AluOp = FnB;
 	Op1 = $random();
 	Op2 = $random();
@@ -34,8 +36,27 @@ begin
 	Op1 = $random();
 	Op2 = $random();
 	#1000 assert( Result == (Op1 + Op2)) else begin errors++; $display("Error in FnADD"); end
-
+	
+	//Test carry out
+	Op1 = 16'hFFFF;
+	Op2 = 16'hFFFF;
+	#1000 assert( Flags[`FLAGS_C] == 1 ) else begin errors++; $display("Error with C Flag"); end
+	//also result should be negative
+	assert ( Flags[`FLAGS_N] == 1) else begin errors++; $display("Error with N flag"); end
+	
+	//Two's overflow
+	Op1 = 16'h7FFF;
+	Op2 = 16'h7FFF;
+	#1000 assert( Flags[`FLAGS_V] == 1 ) else begin errors++; $display("Error with V Flag"); end
+		
+	
 	AluOp = FnADC;
+	Op1 = $random();
+	Op2 = $random();
+	#1000 assert( Result == (Op1 + Op2)) else begin errors++; $display("Error in FnADC"); end
+	CarryIn = 1;
+	#1000 assert( Result == (Op1 + Op2 + 1)) else begin errors++; $display("Error in FnADC"); end
+	CarryIn = 0;
 	
 
 	AluOp = FnSUB;
@@ -47,7 +68,9 @@ begin
 	Op1 = $random();
 	Op2 = $random();
 	#1000 assert( Result == (Op1 - Op2 + 1)) else begin errors++; $display("Error in FnSUC"); end
-
+	CarryIn = 1;
+	#1000 assert( Result == (Op1 - Op2 + 2)) else begin errors++; $display("Error in FnSUC"); end
+	CarryIn = 0;
 
 	AluOp = FnNEG;
 	Op1 = $random();

@@ -17,29 +17,29 @@ logic Carry;
 assign Flags[`FLAGS_Z] = (Result == 0);
 assign Flags[`FLAGS_N] = Result[15];
 assign Flags[`FLAGS_C] = Carry;
-assign Flags[`FLAGS_V] = ~Op1[15] & Op2[15] & ~Result[15] |  Op1[15] & ~Op2[15] & Result[15];
+assign Flags[`FLAGS_V] = (~Op1[15] & Op2[15] & ~Result[15]) | ( Op1[15] & ~Op2[15] & Result[15]);
 always_comb
 begin
    	Carry = 0; //default case
    	case (AluOp)
-      	FnA			: Result = Op1;
-      	FnB			: Result = Op2;	
-		FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
+      	FnA		: Result = Op1;
+      	FnB		: Result = Op2;	
+	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
       	FnADC   	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
-      	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
-		FnSUC		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
+	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
+	FnSUC		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
       	FnAND		: Result = Op1 & Op2;
       	FnOR	   	: Result = Op1 | Op2;
       	FnNOT		: Result = ~Op1;
-		FnXOR		: Result = Op1 ^ Op2;
-		FnNAND 		: Result = ~ ( Op1 & Op2 ); 
-		FnNOR		: Result = ~ ( Op1 | Op2 );
+	FnXOR		: Result = Op1 ^ Op2;
+	FnNAND 		: Result = ~ ( Op1 & Op2 ); 
+	FnNOR		: Result = ~ ( Op1 | Op2 );
       	FnLSL		: Result = Op1 << Op2;
       	FnLSR		: Result = Op1 >> Op2;
        	FnASR		: Result = Op1 >>> Op2;
-		FnNEG		: Result = ~Op1 + 1;
+	FnNEG		: Result = ~Op1 + 1;
       	FnLUI		: Result = {Op2[7:0],8'h00};
-		default  	: Result = 16'hxxxx;	// AJR - Help fault find?
+	default  	: Result = 16'hxxxx;	// AJR - Help fault find?
    	endcase
 end
 endmodule
