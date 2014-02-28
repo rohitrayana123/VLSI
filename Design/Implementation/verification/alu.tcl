@@ -16,6 +16,7 @@ set wave_signal_list {
   alu_stim.Result
   alu_stim.Flags
   alu_stim.CarryIn
+  alu_stim.errors
 }
 
 # View Results

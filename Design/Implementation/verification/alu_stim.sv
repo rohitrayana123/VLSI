@@ -110,7 +110,11 @@ begin
 	Op1 = $random();
 	Op2 = $random();
 	#1000 assert( Result == {Op2[7:0], 8'd0}) else begin errors++; $display("Error in FnLUI"); end
-
+	
+	if(errors > 0)
+		$display("Simulation FAILED");
+	else
+		$display("Simulation PASSED");
 	#1000 $stop();
 end
 

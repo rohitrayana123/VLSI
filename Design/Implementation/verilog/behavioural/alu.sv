@@ -38,7 +38,7 @@ begin
       	FnLSR		: Result = Op1 >> Op2;
        	FnASR		: Result = Op1 >>> Op2;
 		FnNEG		: Result = ~Op1 + 1;
-      	FnLUI		: Result = {Op2[15:8],8'h00};
+      	FnLUI		: Result = {Op2[7:0],8'h00};
 		default  	: Result = 16'hxxxx;	// AJR - Help fault find?
    	endcase
 end
