@@ -347,7 +347,8 @@ always_comb begin
                            	PcSel = Pc1;
                         end
 						LDW,STW:begin			// Add must be done before address out
-   							ImmSel = ImmShort;
+   							AluEn = 1;
+							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
 							AluOp = FnADD;	
                            	AluWe = 1;
