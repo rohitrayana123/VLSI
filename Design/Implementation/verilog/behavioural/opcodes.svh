@@ -56,34 +56,33 @@ typedef enum logic [2:0] 	{
 //  unfortunately this doesn't easily map to a situation where opcode lengths are variable
 //
 typedef enum logic [4:0] { 
-ADD 			= 5'b00100, //Type A
-ADDI 			= 5'b00101, //Type A
-ADDIB	 		= 5'b11000, //Type B
-ADC			= 5'b00110, //Type A
-ADCI			= 5'b00111, //Type A
-NEG                  	= 5'b01000, //Type A
-SUB                  	= 5'b01001, //Type A
-SUBI                 	= 5'b01010, //Type A
-SUBIB                	= 5'b11001, //Type B
-SUC                  	= 5'b01011, //Type A
-SUCI                 	= 5'b01100, //Type A
-CMP                  	= 5'b01101, //Type A
-CMPI                 	= 5'b01110, //Type A
-AND                  	= 5'b10000, //Type A
-OR                   	= 5'b10001, //Type A
-XOR                  	= 5'b10010, //Type A
-NOT                  	= 5'b10011, //Type A
-NAND                 	= 5'b10100, //Type A
-NOR                  	= 5'b10110, //Type A
-LSL                  	= 5'b00001, //Type A
-LSR                  	= 5'b00010, //Type A
-ASR                  	= 5'b00011, //Type A
-LDW              	= 5'b10101, //Type C
-STW                  	= 5'b11101, //Type C
-LUI                  	= 5'b11010, //Type B
-LLI						= 5'b11110,
-BRANCH               	= 5'b11111, //Type D
-STACK             	= 5'b11100 //Type E
-//POP                  	= 5'b11100 //Type E
+ADD 	= 5'b00010, // Type A
+ADDI 	= 5'b00110, // Type A
+ADDIB	= 5'b00011, // Type B
+ADC		= 5'b00101, // Type A
+ADCI	= 5'b00111, // Type A
+NEG  	= 5'b11011, // Type A
+SUB    	= 5'b01010, // Type A
+SUBI   	= 5'b01110, // Type A
+SUBIB  	= 5'b01011, // Type B
+SUC    	= 5'b01101, // Type A
+SUCI   	= 5'b01111, // Type A
+CMP    	= 5'b11010, // Type A
+CMPI   	= 5'b11110, // Type A
+AND    	= 5'b10000, // Type A
+OR     	= 5'b10001, // Type A
+XOR    	= 5'b10011, // Type A
+NOT    	= 5'b10010, // Type A
+NAND   	= 5'b10110, // Type A
+NOR    	= 5'b10111, // Type A
+LSL    	= 5'b01100, // Type A
+LSR    	= 5'b11100, // Type A
+ASR    	= 5'b10100, // Type A
+LDW   	= 5'b00001, // Type C
+STW    	= 5'b01001, // Type C
+LUI    	= 5'b10101, // Type B
+LLI	  	= 5'b11101, // Type B
+BRANCH 	= 5'b11111, // Type D
+STACK 	= 5'b00000  // Type E
 } Opcode_t;
 endpackage
