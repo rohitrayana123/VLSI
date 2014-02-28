@@ -347,20 +347,31 @@ always_comb begin
                            	PcSel = Pc1;
                         end
 						LDW,STW:begin			// Add must be done before address out
-   							ImmSel = ImmShort;
+   							AluEn = 1;
+							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
 							AluOp = FnADD;	
                            	AluWe = 1;
                     	end
 						LUI:begin
-							ImmSel = ImmLong;
+							ImmSel = ImmLong;		// SHould be combined with LLI
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
 							AluOp = FnLUI;
 							RegWe = 1;	
 							PcWe = 1;
 							PcSel = Pc1;
-						end	
+						end
+						LLI:begin
+							ImmSel = ImmLong;
+							Op2Sel = Op2Imm;
+							WdSel = WdAlu;
+							AluOp = FnLLI;
+							RegWe = 1;	
+							PcWe = 1;
+							PcSel = Pc1;
+	
+						end
 						BRANCH:begin
 							case(BranchCode)	
 								BR,BNE,BE,BLT,BGE,BWL:begin		// Conditional branching
