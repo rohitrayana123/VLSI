@@ -17,7 +17,7 @@ logic Carry;
 assign Flags[`FLAGS_Z] = (Result == 0);
 assign Flags[`FLAGS_N] = Result[15];
 assign Flags[`FLAGS_C] = Carry;
-assign Flags[`FLAGS_V] = (~Op1[15] & Op2[15] & ~Result[15]) | ( Op1[15] & ~Op2[15] & Result[15]);
+assign Flags[`FLAGS_V] = (~Op1[15] & ~Op2[15] & Result[15]) | ( Op1[15] & Op2[15] & ~Result[15]);
 always_comb
 begin
    	Carry = 0; //default case

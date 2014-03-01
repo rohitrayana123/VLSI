@@ -48,6 +48,10 @@ begin
 	Op1 = 16'h7FFF;
 	Op2 = 16'h7FFF;
 	#1000 assert( Flags[`FLAGS_V] == 1 ) else begin errors++; $display("Error with V Flag"); end
+	
+	Op1 = 16'h8000;
+	Op2 = 16'h8000;
+	#1000 assert( Flags[`FLAGS_V] == 1 ) else begin errors++; $display("Error with V Flag"); end
 		
 	
 	AluOp = FnADC;
