@@ -13,25 +13,30 @@ while true; do
    esac
 done
 mkdir /$HOME/$USER/$DESIGN/$FCDE
-# Folder layout
 DES="../Design"
 IMP="Implementation"
-# Copy the verilog folder
 VER="verilog"
+VERIF="verification"
+BER="behavioural"
+PROG="programs"
+BIN="bin"
+# Build hex file
+echo "Building asm submission..."
+cd $DES/$IMP/$PROG
+python assemble.py multiply
+cd ../../../$BIN
+# Copy the verilog folder
 echo "Copying across $VER folder..."
 mkdir /$HOME/$USER/$DESIGN/$FCDE/$VER
 cp -rf $DES/$IMP/$VER/*  /$HOME/$USER/$DESIGN/$FCDE/$VER
 ls -l /$HOME/$USER/$DESIGN/$FCDE/$VER 
 echo ""
 #Copy the verify folder
-VERIF="verification"
-BER="behavioural"
 echo "Copying across $VERIF folder..."
 cp -rf $DES/$IMP/$VERIF/*  /$HOME/$USER/$DESIGN/$FCDE/$VER/$BER
 ls -l /$HOME/$USER/$DESIGN/$FCDE/$VER 
 echo ""
 #Copy the program folder
-PROG="programs"
 echo "Copying across $PROG folder..."
 mkdir /$HOME/$USER/$DESIGN/$FCDE/$VER/$PROG
 cp -rf $DES/$IMP/$PROG/*  /$HOME/$USER/$DESIGN/$FCDE/$VER/$PROG
