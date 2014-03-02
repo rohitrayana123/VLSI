@@ -367,10 +367,11 @@ always_comb begin
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
 							AluOp = FnLLI;
+							Op1Sel = Op1Rd1;
 							RegWe = 1;	
 							PcWe = 1;
 							PcSel = Pc1;
-	
+							Rs1Sel = Rs1Rd;	
 						end
 						BRANCH:begin
 							case(BranchCode)	

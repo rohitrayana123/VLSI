@@ -24,22 +24,23 @@ begin
    	case (AluOp)
       	FnA		: Result = Op1;
       	FnB		: Result = Op2;	
-	FnADD		: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
-      	FnADC   	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
-	FnSUB		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
-	FnSUC		: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
-      	FnAND		: Result = Op1 & Op2;
-      	FnOR	   	: Result = Op1 | Op2;
-      	FnNOT		: Result = ~Op1;
-	FnXOR		: Result = Op1 ^ Op2;
-	FnNAND 		: Result = ~ ( Op1 & Op2 ); 
-	FnNOR		: Result = ~ ( Op1 | Op2 );
-      	FnLSL		: Result = Op1 << Op2;
-      	FnLSR		: Result = Op1 >> Op2;
-       	FnASR		: Result = Op1 >>> Op2;
-	FnNEG		: Result = ~Op1 + 1;
-      	FnLUI		: Result = {Op2[7:0],8'h00};
-	default  	: Result = 16'hxxxx;	// AJR - Help fault find?
+		FnADD	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
+    	FnADC   : {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
+		FnSUB	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
+		FnSUC	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
+    	FnAND	: Result = Op1 & Op2;
+    	FnOR	: Result = Op1 | Op2;
+    	FnNOT	: Result = ~Op1;
+		FnXOR	: Result = Op1 ^ Op2;
+		FnNAND 	: Result = ~ ( Op1 & Op2 ); 
+		FnNOR	: Result = ~ ( Op1 | Op2 );
+      	FnLSL	: Result = Op1 << Op2;
+      	FnLSR	: Result = Op1 >> Op2;
+       	FnASR	: Result = Op1 >>> Op2;
+		FnNEG	: Result = ~Op1 + 1;
+      	FnLUI	: Result = {Op2[7:0],8'h00};
+		FnLLI	: Result = {Op1[15:8],Op2[7:0]};
+		default : Result = 16'hxxxx;	// AJR - Help fault find?
    	endcase
 end
 endmodule
