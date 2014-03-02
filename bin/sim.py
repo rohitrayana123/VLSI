@@ -68,7 +68,7 @@ def RunSim(options):
 			print("Invoking compiler...")
 			asmb = os.path.join(programs, programfile)
 			print asmb
-			call(["python", os.path.join(home, "bin/assemble.py"), "-a", asmb+".asm", "-o", asmb+".hex"])
+			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
 
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 

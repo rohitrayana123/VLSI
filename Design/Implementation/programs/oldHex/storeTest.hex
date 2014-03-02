@@ -1,0 +1,39 @@
+281F // ADDI $0 $0 #31	// Init to FFFF                                                                                
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127                                                                                 
+C37F // ADDIB $3 #127	// 16 from edge
+E860 // STW R0,[R3,#0]                                                                                                  
+E861 // STW R0,[R3,#1]                                                                                                  
+E862 // STW R0,[R3,#2]
+E863 // STW R0,[R3,#3]                                                                                                  
+E864 // STW R0,[R3,#4]                                                                                                  
+E865 // STW R0,[R3,#5]
+E866 // STW R0,[R3,#6]                                                                                                  
+E867 // STW R0,[R3,#7]                                                                                                  
+E868 // STW R0,[R3,#8]
+E869 // STW R0,[R3,#9]                                                                                                  
+E86A // STW R0,[R3,#10]                                                                                                  
+E86B // STW R0,[R3,#11]
+E86C // STW R0,[R3,#12]                                                                                                  
+E86D // STW R0,[R3,#13]                                                                                                  
+E86E // STW R0,[R3,#14]
+E86F // STW R0,[R3,#15] // FFFF written to top address of RAM                                                                                   
+0000    
+0000
+0000
+0000
+0000
+0000

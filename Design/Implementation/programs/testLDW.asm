@@ -5,13 +5,16 @@ SUB R3,R3,R3
 SUB R4,R4,R4
 SUB R5,R5,R5
 SUB R6,R6,R6
-SUB R7,R7,R7	// Setup SP
-LUI R7, 7
-LLI R7, 255		// Put stuff here...
-LUI R0, 8		// Address in R0
-LLI R0, 0
-LDW R1,[R0,0]
-LUI R0, 255		// Write to stop mem pos
+SUB R7,R7,R7
+LDW R0,[R7, 0]
+LDW R1,[R7, 1]
+LDW R2,[R7, 2]
+LDW R3,[R7, 3]
+LDW R4,[R7, 4]
+LDW R5,[R7, 5]
+LDW R6,[R7, 6]
+LDW R7,[R7, 7]
+LUI R0, 255	
 LLI R0, 255
 LUI R1, 4 
 LLI R1, 0	

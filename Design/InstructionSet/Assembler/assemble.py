@@ -316,11 +316,12 @@ print '    Binary Output:'
 for l in MC:
 	print l
 
-#Output result to file
-print 'Writing machine code to file %s.mc...\n' % assemfile
-for line in MC:
-	outfile.write(line + '\n')
-
+# AJR - Do we need binary?
+##Output result to file
+#print 'Writing machine code to file %s.mc...\n' % assemfile
+#for line in MC:
+#	outfile.write(line + '\n')
+#
 
 #Output to hex file too
 print ''

@@ -1,0 +1,38 @@
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127                                                                                 
+C37F 	// ADDIB R3,#127		// 0x7F0 in R3
+226C	// ADD   R2,R3,R3		// 0x85D in R2 
+356C	// ADC   R5,R3,R3		// 0x85D in R5
+3C75	// ADCI  R4,R3,#127		
+C61F	// ADDIB R6,#31	
+5121	// SUBI  R4, R4, #1
+CA7F	// SUBIB R2, #127  
+4C50	// SUB   R4, R2, R4    R4 = R2 - R4 (-1 + 127 )
+5C50	// SUC   R4, R2, R4    R4 = R2 - R4 - ~Carry (-1 - 126 )
+6450	// SUCI  R4, R2 #-16
+6848	// CMP   R2, R2
+7084	// CMPI  R4 #15
+C71D	// ADDIB R7,#28 
+F9E1	// JMP R7,#1
+xxxx	// MISS THIS
+A8C4	// LDW R0,[R6,#4]		// 0xFFFF in R0
+E86F 	// STW R0,[R3,#15] 		// FFFF written to 0x7FF in  RAM     
+xxxx
+xxxx
+xxxx
+FFFF
+xxxx
+
