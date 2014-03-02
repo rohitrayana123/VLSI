@@ -72,6 +72,9 @@ def RunSim(options):
 
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 
+	# Hard code for bim
+	cmd.append('+define+switch_value=2569')
+
 	#opcodes.svh
 	#cmd.append(behave+"/opcodes.svh") # will work here but not first time
 

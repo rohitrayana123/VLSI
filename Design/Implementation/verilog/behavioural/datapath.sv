@@ -12,7 +12,7 @@ module datapath(
   input  opcodes::Wd_select_t WdSel,
   input  opcodes::Rs1_select_t Rs1Sel,
   input  opcodes::Lr_select_t LrSel,
-  input  wire           AluEn, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, Op, CFlag, AluWe
+  input  wire           AluEn, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, CFlag, AluWe
 );
 
 import opcodes::*;
