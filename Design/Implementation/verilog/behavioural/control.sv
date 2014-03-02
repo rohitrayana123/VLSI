@@ -459,11 +459,16 @@ always_comb begin
          		cycle4: begin
 					PcWe = 1;
                     PcSel = Pc1;		// Done, move on
-   					if(Opcode == LDW) begin
+   					nME = 1;
+					if(Opcode == LDW) begin
 						nWE = 1;
 						MemEn = 1;
 						WdSel = WdSys;
 						RegWe = 1;
+					end
+					if(Opcode == STW) begin
+						nOE = 1;
+						AluEn = 1;
 					end
          		end
          	endcase
