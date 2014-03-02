@@ -82,7 +82,7 @@ always_ff@(posedge Clock or negedge nReset) begin
       	if(state == execute) 
          	case(stateSub)
             	cycle0: case(Opcode)
-            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
+            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
                 			LDW, STW: 	stateSub <= #20 cycle1;
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
@@ -353,25 +353,29 @@ always_comb begin
 							AluOp = FnADD;	
                            	AluWe = 1;
                     	end
-						LUI:begin
-							ImmSel = ImmLong;		// SHould be combined with LLI
-							Op2Sel = Op2Imm;
-							WdSel = WdAlu;
-							AluOp = FnLUI;
-							RegWe = 1;	
-							PcWe = 1;
-							PcSel = Pc1;
-						end
-						LLI:begin
+						//LUI:begin
+						//	ImmSel = ImmLong;		// SHould be combined with LLI
+						//	Op2Sel = Op2Imm;
+						//	WdSel = WdAlu;
+						//	AluOp = FnLUI;
+						//	RegWe = 1;	
+						//	PcWe = 1;
+						//	PcSel = Pc1;
+						//	Rs1Sel = Rs1Rd;
+						//end
+						LUI,LLI:begin
 							ImmSel = ImmLong;
 							Op2Sel = Op2Imm;
 							WdSel = WdAlu;
-							AluOp = FnLLI;
 							Op1Sel = Op1Rd1;
 							RegWe = 1;	
 							PcWe = 1;
 							PcSel = Pc1;
 							Rs1Sel = Rs1Rd;	
+							if(Opcode == LUI)
+								AluOp = FnLUI;
+							else
+								AluOp = FnLLI;
 						end
 						BRANCH:begin
 							case(BranchCode)	
