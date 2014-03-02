@@ -11,11 +11,13 @@
 #			NO input args checking
 #Version: 1 (CMPI addition onwards)
 #	  2 (Changed to final ISA, added special case I's and error checking
-			
+
 
 import os
 import re
 import sys
+import binascii
+import string
 
 LINES = []
 SEGMLINES = []
@@ -183,9 +185,11 @@ assemfile = sys.argv[1]		#filename only
 print '--------Converting File %s.py to machine code--------\n' % assemfile
 INPUTFILE = assemfile + ".asm"
 OUTPUTFILE = assemfile + ".mc"
+HEXFILE = assemfile + ".hex"
 
 ifile = open(INPUTFILE, 'r')
 outfile = open(OUTPUTFILE, 'w')
+hexfile = open(HEXFILE,'w')
 
 LINES = ifile.readlines()	#Read input file contents
 
@@ -289,7 +293,7 @@ for i, line in enumerate(SEGMLINES):
 		MC.append(temp)
 	elif OpType(line[0]) == 'B':				#Byte immediate
 		temp = OpNum(line[0])
-		temp += regcode(line[1]) 
+		temp += regcode(line[1])
 		temp += ConvertToBin(line[2], 8)
 		MC.append(temp)
 	elif OpType(line[0]) == 'A1':				#Data manipulation:Register
@@ -316,5 +320,14 @@ for l in MC:
 print 'Writing machine code to file %s.mc...\n' % assemfile
 for line in MC:
 	outfile.write(line + '\n')
+
+
+#Output to hex file too
+print ''
+print '    Hex Output:'
+for line in MC:
+	hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
+	print hexline
+	hexfile.write(hexline + '\n')
 
 print '--------Assembly Complete!--------\n'
