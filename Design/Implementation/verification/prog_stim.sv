@@ -113,7 +113,7 @@ initial begin
 	`else;
 	 	while(1) begin
 			@(posedge Clock) 
-			if(system.RAM.Data_stored[2047] ==  16'hFFFF)
+			if(system.RAM.Data_stored[1024] ==  16'hFFFF)	// Middle to avoid stack
 				break;	// Mem stop	
 		end
 		$display("--- DETECTED MEMORY WRITE STOP ---");
