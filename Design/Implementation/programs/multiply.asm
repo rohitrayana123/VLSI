@@ -3,6 +3,7 @@
 		LDW R1,[R7,3]
 		ADD R0,R1,R1
 		STW R0,[R7,1]	; Store in place holder
+		RET
 .main 	SUB R0,R0,R0	; Init regs
 		SUB R1,R1,R1
 		SUB R2,R2,R2
@@ -29,7 +30,7 @@
 		LLI R0, #170
 		STW R0,[R7,0]	; Place holder on stack
 		SUBIB R7,#1		; Call subroutineh
-		BR .multi
+		BWL .multi
 		ADDIB R7,#1		; Return here
 		LDW R0,[R7,0]	; Result in R0	
 		ADDIB R7,#1

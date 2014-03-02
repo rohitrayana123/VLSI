@@ -353,16 +353,6 @@ always_comb begin
 							AluOp = FnADD;	
                            	AluWe = 1;
                     	end
-						//LUI:begin
-						//	ImmSel = ImmLong;		// SHould be combined with LLI
-						//	Op2Sel = Op2Imm;
-						//	WdSel = WdAlu;
-						//	AluOp = FnLUI;
-						//	RegWe = 1;	
-						//	PcWe = 1;
-						//	PcSel = Pc1;
-						//	Rs1Sel = Rs1Rd;
-						//end
 						LUI,LLI:begin
 							ImmSel = ImmLong;
 							Op2Sel = Op2Imm;
@@ -372,6 +362,7 @@ always_comb begin
 							PcWe = 1;
 							PcSel = Pc1;
 							Rs1Sel = Rs1Rd;	
+							AluEn = 1;
 							if(Opcode == LUI)
 								AluOp = FnLUI;
 							else
@@ -383,6 +374,8 @@ always_comb begin
 									PcWe = 1;
 									AluOp = FnADD;
 									ImmSel = ImmLong;
+									Op1Sel = Op1Pc;
+									AluEn = 1;
 									if(	(BranchCode == BR) 	|| 
 										(BranchCode == BWL)	||
 										(BranchCode == BNE 	&& 	(StatusReg[`FLAGS_Z] && BranchCode == BNE)	)		||

@@ -18,7 +18,7 @@ module datapath(
 import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
-wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn;
+wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
 logic [2:0] Rs1In;
 
@@ -28,8 +28,9 @@ assign Opcode = {Ir[15:8]};
 assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
-assign LrIn = (LrPc == LrSel) ? Pc : SysBus;
+assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
 assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
+assign PcInc = Pc + 1;
 
 //Multiplexers
 always_comb begin : PcInMux
@@ -37,7 +38,7 @@ always_comb begin : PcInMux
             PcLr        :  PcIn <= Lr;
             PcAluOut    :  PcIn <= AluRes;
             PcSysbus    :  PcIn <= SysBus;
-            Pc1         :  PcIn <= Pc + 1;
+            Pc1         :  PcIn <= PcInc;
          endcase
 end
 
