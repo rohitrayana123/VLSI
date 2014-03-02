@@ -3,12 +3,14 @@
 #			'.' must start label names
 #			Parts of instruction must be seperated by one space
 #			Ordering: [LABEL] - INSTRUCTION - OPERANDS - [COMMENTS]
-#			Instructionless lines not allowed
 #Currently supports: 	Only R0-R7 & LR
 #			8 condition codes
 #			Output to same directory as input file
+#			Symbolic and numeric branching
+#			Checking of immediate values size
 #			NO input args checking
 #Version: 1 (CMPI addition onwards)
+#	  2 (Changed to final ISA, added special case I's and error checking
 			
 
 import os
@@ -19,6 +21,21 @@ LINES = []
 SEGMLINES = []
 LINKTABLE = []
 MC = []
+
+def ConvertToBin(x, length):
+	if type(x) == str:
+		val = int(x)
+	else:
+		val = x
+	mask = 1 << length - 1
+	binary = ""
+	while mask > 0:
+		if mask & val:
+			binary+="1"
+		else:
+			binary+="0"
+		mask >>= 1
+	return binary
 
 #Conversion functions
 def OpType(value):	#Determine instruction format type
@@ -37,7 +54,8 @@ def OpType(value):	#Determine instruction format type
 	elif value in ("ADDI", "ADCI", "SUBI", "SUCI", "CMPI", "LSL", "LSR", "ASR"):
 		return "A2"
 	else:
-		return "~"
+		print 'ERROR1: Unrecognised Mneumonic'
+		sys.exit()
 
 def regcode(value):	#Get binary equivalent of register name
 	if value.upper() == "R0":
@@ -59,7 +77,8 @@ def regcode(value):	#Get binary equivalent of register name
 	elif value.upper() == "LR":
 		return "000"
 	else:
-		return "~"
+		print 'ERROR2: Unrecognized Register Code'
+		sys.exit()
 
 def conditioncode(value):	#Get binary code for branching conditions
 	if value == "BR":
@@ -79,65 +98,85 @@ def conditioncode(value):	#Get binary code for branching conditions
 	if value == "JMP":
 		return "001"
 	else:
-		return "~"
+		print 'ERROR3: Unrecognized Branch Condition'
+		sys.exit()
 
-def branch(value, lineNo):	#Calculate relative branch address for PC
-	for link in LINKTABLE:
-		if link[0] == value:
-			return '{0:08b}'.format(link[1] - lineNo)
-	return "00000000"
+def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
+	try:
+		if b:
+			return ConvertToBin(int(value), 8)
+		else:
+			return int(value)
+	except:
+		for link in LINKTABLE:
+			if link[0] == value:
+				if b:
+					return ConvertToBin(link[1] - lineNo, 8)
+				else:
+					return link[1] - lineNo
+		print 'ERROR4: Unknown Link Label'
+		sys.exit()
 
 def OpNum(value):	#Determine specific binary value for instruction
+	if value == "C":
+		return "00000"
+	if value == "D1":
+		return "11110"
+	if value == "D2":
+		return "11110"
+	if value == "E":
+		return "00001"
 	if value == "ADD":
-		return "00100"
+		return "00010"
 	if value == "ADDI":
-		return "00101"
-	if value == "ADDIB":
-		return "11000"
-	if value == "ADC":
 		return "00110"
+	if value == "ADDIB":
+		return "00011"
+	if value == "ADC":
+		return "00100"
 	if value == "ADCI":
-		return "00111"
+		return "00101"
 	if value == "NEG":
-		return "01000"
+		return "11010"
 	if value == "SUB":
-		return "01001"
-	if value == "SUBI":
 		return "01010"
-	if value == "SUBIB":
-		return "11001"
-	if value == "SUC":
-		return "01011"
-	if value == "SUCI":
-		return "01100"
-	if value == "CMP":
-		return "01101"
-	if value == "CMPI":
+	if value == "SUBI":
 		return "01110"
+	if value == "SUBIB":
+		return "01011"
+	if value == "SUC":
+		return "01100"
+	if value == "SUCI":
+		return "01101"
+	if value == "CMP":
+		return "00111"
+	if value == "CMPI":
+		return "01111"
 	if value == "AND":
 		return "10000"
 	if value == "OR":
 		return "10001"
 	if value == "XOR":
-		return "10010"
-	if value == "NOT":
 		return "10011"
+	if value == "NOT":
+		return "10010"
 	if value == "NAND":
-		return "10100"
-	if value == "NOR":
 		return "10110"
+	if value == "NOR":
+		return "10111"
 	if value == "LSL":
-		return "00001"
+		return "11111"
 	if value == "LSR":
-		return "00010"
+		return "11101"
 	if value == "ASR":
-		return "00011"
+		return "11100"
 	if value == "LUI":
-		return "11010"
+		return "10100"
 	if value == "LLI":
-		return "11011"
+		return "10101"
 	else:
-		return "~"
+		print 'ERROR5: Unrecognised Mneumonic'
+		sys.exit()
 
 #Determine input/output file paths
 assemfile = sys.argv[1]		#filename only
@@ -151,86 +190,130 @@ outfile = open(OUTPUTFILE, 'w')
 LINES = ifile.readlines()	#Read input file contents
 
 #Seperate each line into a list of elements
-print '--------Interpreting Syntax...--------\n'
+print '--------Interpreting Syntax-----------'
 for line in LINES:
-	print '1. ' + line.strip('\n').strip('\t')
+	#print '1. ' + line.strip('\n').strip('\t')
 	try:
 		code = line.split(':')[0]			#remove comments and newline char
 		code = code.split(';')[0]
 	except:
 		code = line	#no comments on line
-	print '2. ' + code.strip('\t')
+	if code.strip('\t').strip('\n') == '':			#skip blank lines
+		continue
+	#print '2. ' + code.strip('\t')
 	code = code.replace('\t',' ')				#Remove tabs
 	pass_one = code.split(',')				#seperate by comma
-	print pass_one
+	#print pass_one
 	pass_two = []
 	for j, part in enumerate(pass_one):
 		pass_one[j] = pass_one[j].strip()		#remove lead/trail spaces
 		pass_one[j] = pass_one[j].strip('[').strip(']').strip('#')
 		if pass_one[j].count(' ') >= 1:			#check if there are spaces in string
 			pass_two.extend(pass_one[j].split(' '))	#seperate by spaces
-			#pass_one[j] = pass_two			#replace first pass element with seperated list
 		else:
 			pass_two.append(pass_one[j])
-	print pass_two
+	#print pass_two
 	SEGMLINES.append(pass_two)				#create list of lists
-print 'Segmented instruction list:\n'
-for s in SEGMLINES:
-	print s
+print 'Done\n'
 
 #Check each line for a link reference and create link table
-print '--------Creating Link Table...--------\n'
+print '--------Creating Link Table----------\n'
 for i, line in enumerate(SEGMLINES):
 	if line[0].startswith('.'):
 		LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 		SEGMLINES[i].remove(line[0])			#remove label from instruction
+		SEGMLINES[i].remove(line[0])			#remove empty element from seperation bug
+print '    Link Table'
 for l in LINKTABLE:
 	print l
+print '    Segmented instruction list:'
+for s in SEGMLINES:
+	print s
+
+#Check for over-sized immediate values
+for i, line in enumerate(SEGMLINES):
+	if line[0] in ('LSL', 'LSR', 'ASR'):
+		if int(line[3]) > 16:
+			print 'ERROR6: Shifting By More Than 16'
+			sys.exit()
+	elif line[0] in ('ADDI', 'ADCI', 'SUBI', 'SUCI', 'LDW', 'STW'):
+		if int(line[3]) > 32:
+			print 'ERROR7: Imm5 Out Of Bounds'
+			sys.exit()
+	elif line[0] in ('CMPI', 'JMP'):
+		if int(line[2]) > 32:
+			print 'ERROR8: Imm5 Out Of Bounds'
+			sys.exit()
+	elif line[0] in ('ADDIB', 'SUBIB', 'LUI', 'LLI'):
+		if int(line[2]) > 256:
+			print 'ERROR9: Imm8 Out Of Bounds'
+			sys.exit()
 
 #Convert each element to machine code and concatenate
-print '--------Converting to machine code...--------\n'
+print '--------Converting to machine code-----------\n'
+print 'Converting::',
 for i, line in enumerate(SEGMLINES):
+	print line[0],
 	if OpType(line[0]) == 'E':				#Stack operations
-		temp =  '11100'
+		temp = '0'
 		if line[0] == 'PUSH':
 			temp += '1'
 		else:
 			temp += '0'
+		temp += '001'
 		if line[1] == 'LR':
 			temp += '1'
 		else:
 			temp += '0'
-		temp += '0' + regcode(line[1]) + '00000'
+		temp += '00' + regcode(line[1]) + '00000'
 		MC.append(temp)
 	elif OpType(line[0]) == 'D1':				#Control transfer: Jump
-		MC.append('11111' + conditioncode(line[0]) + regcode(line[1]) + '{0:05b}' % line[2])
+		MC.append(OpNum('D1') + conditioncode(line[0]) + regcode(line[1]) + ConvertToBin(line[2], 5))
 	elif OpType(line[0]) == 'D2':				#Control transfer: Others
 		if line[0] == 'RET':				#Specific -> Return
-			MC.append('11111' + conditioncode(line[0]) + '00000000')
+			MC.append(OpNum('D2') + conditioncode(line[0]) + '00000000')
 		else:
-			MC.append('11111' + conditioncode(line[0]) + branch(line[1], i))
+			MC.append(OpNum('D2') + conditioncode(line[0]) + branch(line[1], i))
+			tempi = branch(line[1], i, 0)
+			if  tempi > 127 or tempi < -128:
+				print 'ERROR10: Imm8 Branch Out Of Bounds'
+				sys.exit()
 	elif OpType(line[0]) == 'C':				#Data transfer
-		temp = '1'
+		temp = '0'
 		if line[0] == 'STW':
 			temp += '1'
 		else:
 			temp += '0'
-		temp += '101' + regcode(line[1]) + regcode(line[2]) + '{0:05b}' % line[3]
+		temp += '000'
+		temp += regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5)
 		MC.append(temp)
 	elif OpType(line[0]) == 'B':				#Byte immediate
 		temp = OpNum(line[0])
 		temp += regcode(line[1]) 
-		temp += '{0:08b}' % line[2] ######FORMATTING ISSUE
+		temp += ConvertToBin(line[2], 8)
 		MC.append(temp)
 	elif OpType(line[0]) == 'A1':				#Data manipulation:Register
-		MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
+		if (line[0] == 'NEG'):	#NEG
+			MC.append(OpNum(line[0]) + regcode(line[1]) + '000' + '000' + '00')
+		elif (line[0] == 'CMP'):#CMP
+			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
+		elif (line[0] == 'NOT'):#NOT
+			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
+		else:
+			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
 	elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
-		MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '{0:05b}' % line[3])
+		if (line[0] == 'CMPI'):	#CMPI
+			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + ConvertToBin(line[2], 5))
+		else:
+			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
+	print ',',
+print ''
+print '    Binary Output:'
 for l in MC:
 	print l
 
 #Output result to file
-print 'Writing machine code to file " + assemfile + ".mc...\n'
+print 'Writing machine code to file %s.mc...\n' % assemfile
 for line in MC:
 	outfile.write(line + '\n')
 
