@@ -3,14 +3,17 @@
 #			'.' must start label names
 #			Parts of instruction must be seperated by one space
 #			Ordering: [LABEL] - INSTRUCTION - OPERANDS - [COMMENTS]
-#Currently supports: 	Only R0-R7 & LR
+#Currently supports: 	Only R0-R7, LR & recognises SP == R7
 #			8 condition codes
 #			Output to same directory as input file
 #			Symbolic and numeric branching
-#			Checking of immediate values size
+#			Checking of immediate value sizes
 #			NO input args checking
+#			Instruction-less lines allowed (empty line or comments)
 #Version: 1 (CMPI addition onwards)
 #	  2 (Changed to final ISA, added special case I's and error checking
+#         3 (Ajr changes - Hex output added, bug fix)
+#	  4 (Added SP symbol)
 
 
 import os
@@ -75,6 +78,8 @@ def regcode(value):	#Get binary equivalent of register name
 	elif value.upper() == "R6":
 		return "110"
 	elif value.upper() == "R7":
+		return "111"
+	elif value.upper() == "SP":
 		return "111"
 	elif value.upper() == "LR":
 		return "000"

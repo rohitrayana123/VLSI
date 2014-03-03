@@ -1,14 +1,7 @@
 This is the coding scheme I used when writing up the instruction set.
 
 OpCodes:
-Shifting starts 000
-Addition starts 001
-Subtraction starts 01 (01111 not used)
-Logic starts 10 (10110, 10111 not used)
-Type B instructions start 110
-Others (E,C,D) start 111
-
-Can set opcode of type D to 1111, allowing 4 bits for branch type selection (Not implemented)
+	See KMap
 
 Conditions:
 Unconditional starts 0
