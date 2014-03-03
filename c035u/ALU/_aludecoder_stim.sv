@@ -9,7 +9,7 @@ logic LLI;
 
 initial
     OpCode = 5'b11000; //Default to NOP
-    imm4 = 0; LastCIn = 0; COut = 0; Sum = 0; nZ = 0; 
+    imm4 = 0; LastCIn = 0; COut = 0; Sum = 0; nZ = 0; ASign = 0; 
     
     #50 OpCode = 5'b00000; //LDW
     #50 assert(FAOut == 1);
@@ -74,6 +74,7 @@ initial
 	assert(Sh2 == imm4[2]);
 	assert(Sh1 == imm4[0]);
 	assert(ShiftInBit == 0);
+	//inner signal N= = 1
     #50 OpCode = 5'b00100; //LSR
     #50 assert(ShOut == 1);
 	assert(ShR == 1);
@@ -82,6 +83,7 @@ initial
 	assert(Sh2 == imm4[2]);
 	assert(Sh1 == imm4[0]);
 	assert(ShiftInBit == 0);
+	//inner signal N == 1
     #50 OpCode = 5'b00100; //ASR
     #50 assert(ShOut == 1);
 	assert(ShR == 1);
@@ -90,6 +92,7 @@ initial
 	assert(Sh2 == imm4[2]);
 	assert(Sh1 == imm4[0]);
 	assert(ShiftInBit == ASign);
+	//inner signal N == 1
 
     #50 OpCode = 5'b00100; //AND
     #50 assert(AND == 1);
@@ -111,3 +114,4 @@ initial
 	assert(ShR = 1);
 	assert(ShB == 1);
 	assert(Sh8 == 1);
+	//inner signal N == 0
