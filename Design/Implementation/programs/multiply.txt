@@ -13,7 +13,7 @@
 		
 		; Call subroutine 
 		STW R0,[R7,#0]	; Param 1 = R1, Upper	
-		SUBIB R7,#1
+		SUBIB R8,#1
 		STW R1,[R7,#0]	; Param 2 = R2, Lower
 		SUBIB R7,#1
 		STW R2,[R7,#0]	; Placeholder = 0
