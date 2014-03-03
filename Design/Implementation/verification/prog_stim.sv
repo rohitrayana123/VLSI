@@ -15,8 +15,8 @@ wire [15:0] Data;
 wire [15:0] Address;
 
 wire ALE, nME, nOE, RnW;
-tri1 nIRQ, nWait;
-
+tri1 nIRQTest, nWait;
+logic nIRQ;
 cpu cpu ( 
    .Data    (Data), 
    .nME     (nME), 
@@ -34,7 +34,7 @@ cpu cpu (
 
 // define the interconnect fabric based on a SystemVerilog interface
 
-demux_bus Bus ( nIRQ, nWait, Data, Address, ALE, nME, nOE, RnW, Test, nReset );
+demux_bus Bus ( nIRQTest, nWait, Data, Address, ALE, nME, nOE, RnW, Test, nReset );
 
 decoder Decoder ( Bus, nSelRAM, nSelLED, nSelSwitch, nSelTimer, nSelSerial );
 
@@ -105,6 +105,11 @@ end
    `include "monitor.sv"
 `endif
 
+initial begin
+	nIRQ = 1;
+	#10000 nIRQ = 0;
+	#500   nIRQ = 1;
+end
 
 initial begin
    	integer done;

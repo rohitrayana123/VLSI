@@ -27,6 +27,9 @@ module control(
    input  wire    [3:0]             Flags,
    input  wire                      Clock,
    input  wire                      nReset
+`ifndef nointerrupt
+,   input  wire 			nIRQ
+`endif
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -45,9 +48,27 @@ assign Opcode = Opcode_t'(OpcodeCondIn[7:3]);
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
 assign CFlag = StatusReg[`FLAGS_C];
 
+`ifndef nointerrupt
+//double buffer the IRQ signal
+logic IRQ1, IntReq;
+always_ff @ (posedge Clock or negedge nReset) begin
+	if(!nReset) begin
+		IRQ1 <= #20 0;
+		IntReq <= #20 0;
+		end
+	else begin
+		IRQ1 <= #20 ~nIRQ;
+		if (IRQ1) //this will include a test of the intEn flag.
+			IntReq <= #20 1; //request an interrupt
+	end
+end
+
+`endif
+
 enum {
    fetch,
-   execute
+   execute,
+   interrupt
 }  state;
 enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 	cycle0,
@@ -70,7 +91,12 @@ always_ff@(posedge Clock or negedge nReset) begin
 	  	// Fetch  
       	if(state == fetch)
          	case(stateSub)
-            	cycle0: stateSub <= #20 cycle1;
+            	cycle0: begin	
+			if (IntReq) //if an interrupt has been requested
+				state <= #20 interrupt;
+			else
+				stateSub <= #20 cycle1;
+		end
             	cycle1: stateSub <= #20 cycle2;
             	cycle2: stateSub <= #20 cycle3;
             	default:begin							// Should never get in cycle4 in fetch 

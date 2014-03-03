@@ -7,7 +7,9 @@ module cpu_core(
   output wire           ENB, 
   output wire           SDO,
   input  wire  [15:0]   Data_in,
+`ifndef nointerrupt
   input  wire           nIRQ, 
+`endif
   input  wire           nWait,
   input  wire           Test, 
   input  wire           SDI, 
@@ -69,6 +71,9 @@ control control (
    .AluWe      (AluWe      ),
    .Clock      (Clock      ),
    .nReset     (nReset     )
+`ifndef nointerrupt 
+,   .nIRQ	(nIRQ	)
+`endif
 );
 
 datapath datapath ( 
