@@ -1,0 +1,29 @@
+magic
+tech c035u
+timestamp 1393855517
+<< metal1 >>
+rect 0 892 119 902
+rect 0 51 71 61
+rect 85 51 143 61
+rect 157 51 192 61
+<< m2contact >>
+rect 119 890 133 904
+rect 71 49 85 63
+rect 143 49 157 63
+<< metal2 >>
+rect 48 865 60 1042
+rect 120 865 132 890
+rect 48 0 60 66
+rect 72 63 84 66
+rect 144 63 156 66
+use mux2 mux2_0
+timestamp 1386235218
+transform 1 0 0 0 1 66
+box 0 0 192 799
+<< labels >>
+rlabel metal2 48 0 60 0 1 LLI
+rlabel metal1 0 51 0 61 3 LLIIn
+rlabel metal1 192 51 192 61 1 ALUOut
+rlabel metal2 48 1042 60 1042 5 LLI
+rlabel metal1 0 892 0 902 3 B
+<< end >>
