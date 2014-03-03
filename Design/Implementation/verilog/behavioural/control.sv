@@ -50,7 +50,7 @@ assign CFlag = StatusReg[`FLAGS_C];
 
 `ifndef nointerrupt
 //double buffer the IRQ signal
-logic IRQ1, IntReq;
+logic IRQ1, IntReq, IntClear;
 always_ff @ (posedge Clock or negedge nReset) begin
 	if(!nReset) begin
 		IRQ1 <= #20 0;
@@ -60,6 +60,8 @@ always_ff @ (posedge Clock or negedge nReset) begin
 		IRQ1 <= #20 ~nIRQ;
 		if (IRQ1) //this will include a test of the intEn flag.
 			IntReq <= #20 1; //request an interrupt
+		else if (IntClear)
+			IntReq <= #20 0;
 	end
 end
 
@@ -88,6 +90,14 @@ always_ff@(posedge Clock or negedge nReset) begin
 		// Status update
       	if (StatusRegWe)
 			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
+	if(state == interrupt)
+	case(stateSub)
+		cycle0: stateSub <= #20 cycle1;
+		cycle1: stateSub <= #20 cycle2;
+		cycle2: stateSub <= #20 cycle3;
+		cycle3: stateSub <= #20 cycle4;
+		cycle4: begin stateSub <= #20 cycle0; state <= #20 fetch;  end
+	endcase
 	  	// Fetch  
       	if(state == fetch)
          	case(stateSub)
@@ -146,6 +156,7 @@ always_comb begin
    	ENB      = 0;
    	ALE      = 0;
 	StatusRegWe= 0;
+	IntClear = 0;
    	case(state)
       	fetch : 
          	case(stateSub)
@@ -433,70 +444,108 @@ always_comb begin
             		endcase
          		end
          		cycle1:begin 
-					ALE = 1;
-               		nWE = 1;
-               		nOE = 1; 
-					ImmSel = ImmShort;
-					AluOp = FnADD;
-					Op1Sel = Op1Rd1;
-                	AluEn = 1; 
+				ALE = 1;
+               			nWE = 1;
+        	       		nOE = 1; 
+				ImmSel = ImmShort;
+				AluOp = FnADD;
+				Op1Sel = Op1Rd1;
+                		AluEn = 1; 
          		end
          		cycle2: begin
             		case(Opcode)
                			LDW:begin
-							nME = 0;
-                        	Op1Sel = Op1Rd1;
-							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Rs1Rd;
-							MemEn = 1;
-                        	nWE = 1;
-                     		AluWe = 1;			// Pass right through on next clock
-                        	AluEn = 1;
-						end
-						STW:begin			// Get the data out of the reg
-                        	nME = 0;
-							Op1Sel = Op1Rd1;
-							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Rs1Rd;
-							nOE = 1;
-                        	nWE = 1;
-                     		AluWe = 1;			// Pass right through on next clock
-                        	AluEn = 1;
-						end
+					nME = 0;
+                        		Op1Sel = Op1Rd1;
+					AluOp = FnA;		// Nothing done to op1
+                        		Rs1Sel = Rs1Rd;
+					MemEn = 1;
+	                        	nWE = 1;
+        	             		AluWe = 1;			// Pass right through on next clock
+                	        	AluEn = 1;
+				end
+				STW:begin			// Get the data out of the reg
+                        		nME = 0;
+					Op1Sel = Op1Rd1;
+					AluOp = FnA;		// Nothing done to op1
+		                       	Rs1Sel = Rs1Rd;
+					nOE = 1;
+	                	       	nWE = 1;
+                     			AluWe = 1;			// Pass right through on next clock
+                        		AluEn = 1;
+				end
             		endcase
          		end
          		cycle3: begin
-            		case(Opcode)
-						LDW:begin
-							nME = 0;
-							MemEn = 1;
-							ENB = 1;
-							nWE = 1;
-						end
-               			STW:begin
-							nME = 0;
-                        	AluEn = 1;			// Hold data on sysbus
-                        	nOE = 1;               
-                     	end   
-            		endcase  
+            			case(Opcode)
+					LDW:begin
+						nME = 0;
+						MemEn = 1;
+						ENB = 1;
+						nWE = 1;
+					end
+               				STW:begin
+						nME = 0;
+	                        		AluEn = 1;			// Hold data on sysbus
+        	                		nOE = 1;               
+                		     	end   
+	            		endcase  
          		end
          		cycle4: begin
-					PcWe = 1;
-                    PcSel = Pc1;		// Done, move on
-   					nME = 1;
-					if(Opcode == LDW) begin
-						nWE = 1;
-						MemEn = 1;
-						WdSel = WdSys;
-						RegWe = 1;
-					end
-					if(Opcode == STW) begin
-						nOE = 1;
-						AluEn = 1;
-					end
+				PcWe = 1;
+        			PcSel = Pc1;		// Done, move on
+   				nME = 1;
+				if(Opcode == LDW) begin
+					nWE = 1;
+					MemEn = 1;
+					WdSel = WdSys;
+					RegWe = 1;
+				end
+				if(Opcode == STW) begin
+					nOE = 1;
+					AluEn = 1;
+				end
          		end
          	endcase
-      	end
+	end
+	interrupt:
+		case(stateSub)
+			cycle0:
+			begin
+				Rs1Sel = Seven;//choose sp
+				AluOp = FnA; //pass it through
+				Op1Sel = Op1Rd1;
+				AluWe = 1;
+				AluEn = 1;
+			end
+			cycle1:
+			begin
+               			nWE = 1;
+        	       		nOE = 1; 
+				AluOp = FnA;
+				Op1Sel = Op1Rd1;
+				Rs1Sel = Seven;
+				AluEn = 1;
+				ALE = 1;
+			end
+			cycle2: begin
+                        	nME = 0;
+				AluOp = FnA;		// Nothing done to op1
+				nOE = 1;
+	                	nWE = 1;
+				PcEn = 1;
+			end
+			cycle3: begin
+				nME = 0;
+	                        PcEn = 1;			// Hold data on sysbus
+        	                nOE = 1;               
+			end
+			cycle4: begin
+				nOE = 1;
+				PcEn = 1;
+				IntClear = 1;
+			end
+		endcase
 	endcase
 end
 endmodule

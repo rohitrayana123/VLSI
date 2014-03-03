@@ -35,7 +35,7 @@ wire        WdSel;
 wire        ImmSel;  
 wire        RegWe; 
 wire        MemEn;
-wire        Rs1Sel;
+wire [1:0]  Rs1Sel;
 wire        CFlag;
 wire [3:0]  Flags;
 wire [7:0]  Opcode;  

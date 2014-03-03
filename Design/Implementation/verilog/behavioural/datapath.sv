@@ -29,10 +29,18 @@ assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
-assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
+//assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
 assign PcInc = Pc + 1;
 
 //Multiplexers
+always_comb begin : Rs1Mux
+	case(Rs1Sel)
+		Rs1Rd: Rs1In = Ir[10:8];
+		Rs1Ra: Rs1In = Ir[7:5];
+		Seven: Rs1In = 3'b111; // used to force SP to bus
+	endcase
+		
+end
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
             PcLr        :  PcIn <= Lr;
