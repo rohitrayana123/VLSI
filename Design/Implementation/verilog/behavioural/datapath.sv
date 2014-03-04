@@ -43,10 +43,11 @@ always_comb begin : Rs1Mux
 end
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
-            PcLr        :  PcIn <= Lr;
-            PcAluOut    :  PcIn <= AluRes;
-            PcSysbus    :  PcIn <= SysBus;
-            Pc1         :  PcIn <= PcInc;
+            PcLr        :  PcIn = Lr;
+            PcAluOut    :  PcIn = AluRes;
+            PcSysbus    :  PcIn = SysBus;
+            Pc1         :  PcIn = PcInc;
+	    PcInt	:  PcIn = 16'h0010;
          endcase
 end
 

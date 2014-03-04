@@ -544,6 +544,8 @@ always_comb begin
 				nOE = 1;
 				PcEn = 1;
 				IntClear = 1;
+				PcSel = PcInt;
+				PcWe = 1;
 			end
 		endcase
 	endcase

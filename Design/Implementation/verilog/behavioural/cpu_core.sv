@@ -28,7 +28,7 @@ wire        LrEn;
 wire        LrWe; 
 wire        LrSel;
 wire        PcWe;  
-wire [1:0]  PcSel;  
+wire [2:0]  PcSel;  
 wire        PcEn;  
 wire        IrWe;
 wire        WdSel;  
