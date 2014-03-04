@@ -1,0 +1,1415 @@
+
+
+##
+## c035u.tech
+## ============
+##
+## Function:
+## ---------
+## Magic technology file for the On Semi C035U 0.35 micron CMOS process.
+##
+## Author:
+## --------
+## Iain McNally @ ecs.soton.ac.uk
+## ECS
+## University of Southamton
+##
+## History:
+## --------
+## 30/11/2013 2.3 correct widespacing rules (>10um not >=10um)
+## 30/11/2013 2.2 new patterns for contact cuts
+## 30/11/2013 2.1 read in explicit pwell
+## 29/11/2013 2.0 read in pimplant in raw_contacts mode
+## 21/11/2013 1.9 bug fixes
+## 20/11/2013 1.8 first working system with raw contacts
+## 20/11/2013 1.7 add raw contact layers
+## 26/07/2013 1.6 add metdis layer to avoid automatic metal generation
+## 08/11/2012 1.5 add twin tub option for extract
+## 05/11/2012 1.4 try to add tests for L-shaped active area
+## 13/11/2011 1.3 change CIF names for compatibility with L-Edit
+## - and allow cif output with scalefactor 5 (only applicable to magic v 7.5)
+## 10/11/2011 1.2 adjust gridspacing
+## 21/09/2011 1.1 remove implied NOT_PWELL
+## 21/09/2011 1.0 twin tub version
+## 20/07/2011 0.8 add not_pwell
+## 29/06/2011 0.7 pad overlap rules for magic 7.0/7.1 now use pad/m3
+## 24/03/2011 0.6 maxwidth rules now exclude pads
+## 22/03/2011 0.5 add basic wide metal rules
+## - widespacing only works with magic 7.5
+## 16/03/2011 0.4 add M1 surround to avoid lonely via problem
+## - didn't work so go back to no M1 surround
+## 14/03/2011 0.3 remove metal5 and adjust pad rules
+## 11/02/2011 0.2 Remove unwanted shrink/grow
+## 22/12/2010 0.1 First cut from cmos035.tech v1.6
+##
+
+## technology is "c035u"
+tech
+
+    format 33
+
+    c035u
+end
+
+version
+    version 2.3
+    description "ON Semi C035U 0.35 um CMOS - December 2013"
+end
+
+## everything on a plane electrically interacts
+## (9 planes are allowed here)
+planes
+    not_well
+    well,w
+    select
+    active
+    metal1,m1
+    metal2,m2
+    metal3,m3
+    metal4,m4
+    # metal5,m5
+    nitride
+end
+
+## tile types - i.e. all the layers and combinations of layers
+types
+
+    # Order here seems to determine behaviour of label command
+    # where layer is not specified - we will order largely by
+    # plane to ensure top layers are labelled wherever possible
+
+    # we don't want to label these so we've put them first (out of order)
+
+        # additional stuff, used in pads
+        nitride glass,nitride
+ # metdis is a virtual layer to prevent automated generation of metal
+ # shouldn't need metdis overlapping glass
+        nitride metdis
+
+        # explicit P implant
+        select pimplant,pselect
+
+    # wells
+    not_well not_pwell,not_pw
+    well nwell,nw
+    # to avoid upsetting cifinput and to help with connectivity
+    # check we have a pwell defined
+    well pwell,pw
+    # outside_nwell exists only for connectivity
+    well outside_nwell
+
+
+    # active plane conductors
+    active polysilicon,red,poly,p
+    active ndiffusion,green,ndiff
+    active pdiffusion,brown,pdiff
+    # ohmic regions
+    active pohmic,psubstratepdiff
+    active nohmic,nsubstratendiff
+    # transistors
+    active ntransistor,nfet
+    active ptransistor,pfet
+
+    # contacts between active and metal1 planes
+    active polycontact,pc
+    active ndiffcontact,ndc,ndcontact
+    active pdiffcontact,pdc,pdcontact
+    # well contacts
+    active psubstratetap,psubstratepcontact,pst
+    active nsubstratetap,nwelltap,nsubstratencontact,nwt
+
+    # raw_contacts
+    active raw_pc
+    active raw_ndc
+    active raw_pdc
+    active raw_pst
+    active raw_nwt
+
+    # metal1 plane conductors
+    metal1 metal1,m1,blue
+
+    metal1 m1_contact
+
+    # contacts between metal1 and metal2 planes
+    metal1 m2contact,via,via1
+
+    metal1 raw_via1
+
+    # metal2 plane conductors
+    metal2 metal2,m2,purple
+
+    metal2 m2_contact
+
+    # contacts between metal2 and metal3 planes
+    metal2 via2
+
+    metal2 raw_via2
+
+    # metal3 plane conductors
+    metal3 metal3,m3
+
+    metal3 m3_contact
+
+    # contacts between metal3 and metal4 planes
+    metal3 via3
+
+    metal3 raw_via3
+
+    # metal4 plane conductors
+    metal4 metal4,m4
+
+    metal4 m4_contact
+
+    # contacts between metal4 and metal5 planes
+    # metal4 via4
+
+    # metal5 plane conductors
+    # metal5 metal5,m5
+
+    # contacts between all metal planes
+
+    # by convention on lowest connected plane
+    metal1 pad
+end
+## define what the contacts contact between
+contact
+    pc poly metal1
+    ndc ndiff metal1
+    pdc pdiff metal1
+    psubstratetap pohmic metal1
+    nsubstratetap nohmic metal1
+    via metal2 metal1
+    via2 metal3 metal2
+    via3 metal4 metal3
+    # via4 metal5 metal4
+    raw_pc poly metal1
+    raw_ndc ndiff metal1
+    raw_pdc pdiff metal1
+    raw_pst pohmic metal1
+    raw_nwt nohmic metal1
+    raw_via1 metal2 metal1
+    raw_via2 metal3 metal2
+    raw_via3 metal4 metal3
+    stackable
+    # pad nitride metal5 metal4 metal3 metal2 metal1
+    pad nitride metal4 metal3 metal2 metal1
+end
+## assorted useful definitions
+aliases
+    # allMetal5 *metal5
+    allMetal4 *metal4
+    allMetal3 *metal3
+    allMetal2 *metal2
+    allMetal1 *metal1
+    allMetal4NoPad m4,via3/m4,raw_via3/m4,m4_contact
+    allMetal3NoPad m3,via2/m3,via3/m3,raw_via2/m3,m3_contact,raw_via3/m3
+    allMetal2NoPad m2,via/m2,via2/m2,raw_via1/m2,m2_contact,raw_via2/m2
+    allMetal1NoPad m1,via/m1,pc/m1,ndc/m1,pdc/m1,psubstratetap/m1,nsubstratetap/m1,m1_contact,raw_pc/m1,raw_ndc/m1,raw_pdc/m1,raw_pst/m1,raw_nwt/m1
+    allNOmhic nohmic,nsubstratetap/active,raw_nwt/active
+    allPOmhic pohmic,psubstratetap/active,raw_pst/active
+    allNSourceDrain ndiff,ndc/active,raw_ndc/active
+    allPSourceDrain pdiff,pdc/active,raw_pdc/active
+    allTransistors pfet,nfet
+    allOmhic allNOmhic,allPOmhic
+    allSourceDrain allNSourceDrain,allPSourceDrain
+    allDiffNoTran allSourceDrain,allOmhic
+    allDiff allDiffNoTran,allTransistors
+    allDiffO allOmhic
+    allDiffNO allTransistors,allSourceDrain
+    allNDiff allNOmhic,allNSourceDrain,nfet
+    allPDiff allPOmhic,allPSourceDrain,pfet
+    extPoly poly,polycontact,raw_pc
+    allPoly extPoly,allTransistors
+    allDiffRawContacts raw_ndc,raw_pdc,raw_nwt,raw_pst
+    allRawContacts raw_pc,allDiffRawContacts
+end
+## what the tiles look like
+styles
+    styletype mos
+    poly 1
+    ndiff 2
+    pdiff 4
+    nfet 6
+    nfet 7
+    pfet 8
+    pfet 9
+    metal1 20
+    metal2 21
+    metal3 22
+    metal4 23
+    # metal5 24
+    pc 1
+    pc 20
+    pc 32
+    ndc 2
+    ndc 20
+    ndc 32
+    pdc 4
+    pdc 20
+    pdc 32
+    via 20
+    via 21
+    via 33
+    via2 21
+    via2 22
+    via2 37
+    via3 22
+    via3 23
+    via3 38
+    # via4 23
+    # via4 24
+    # via4 39
+    psubstratetap 5
+    psubstratetap 20
+    psubstratetap 32
+    nsubstratetap 3
+    nsubstratetap 20
+    nsubstratetap 32
+    pohmic 5
+    nohmic 3
+    nwell 12
+    not_pwell 10
+    outside_nwell 11
+    m1_contact 20
+    m2_contact 21
+    m3_contact 22
+    m4_contact 23
+    # coarse checkerboard over correct colours
+    raw_pc 59
+    raw_ndc 59
+    raw_pdc 59
+    raw_pst 59
+    raw_nwt 59
+    raw_pc 20
+    raw_ndc 20
+    raw_pdc 20
+    raw_pst 20
+    raw_nwt 20
+    raw_pc 1
+    raw_ndc 2
+    raw_pdc 4
+    raw_pst 5
+    raw_nwt 3
+    # same as standard versions
+    raw_via1 20
+    raw_via1 21
+    raw_via1 33
+    raw_via2 21
+    raw_via2 22
+    raw_via2 37
+    raw_via3 22
+    raw_via3 23
+    raw_via3 38
+    pad 20
+    pad 21
+    pad 22
+    pad 23
+    pad 24
+    pad 34
+    glass 34
+    metdis 35
+    error_p 42
+    error_s 42
+    error_ps 42
+    # pimplant not always necessary
+    pimplant 31
+    # pwell not really used
+    pwell 13
+end
+## assorted clever things to do with painting which would
+## otherwise just paint what it is asked
+compose
+    # poly and p/ndiff give a p/nfet
+    compose nfet poly ndiff
+    compose pfet poly pdiff
+    # painting n well over a "p well" area will convert the types
+    # of the transistors etc to save time.
+    # (handy if you have symmetry but otherwise not much help)
+    paint ndc/active nwell pdc/active
+    paint raw_ndc/active nwell raw_pdc/active
+    paint ndc/m1 nwell pdc/m1
+    paint raw_ndc/m1 nwell raw_pdc/m1
+    paint nfet nwell pfet
+    paint ndiff nwell pdiff
+    paint pohmic nwell nohmic
+    paint psubstratetap/active nwell nsubstratetap/active
+    paint raw_pst/active nwell raw_nwt/active
+    paint psubstratetap/m1 nwell nsubstratetap/m1
+    paint raw_pst/m1 nwell raw_nwt/m1
+    # painting p well over a "n well" area will convert the types
+    # of the transistors etc to save time.
+    # (handy if you have symmetry but otherwise not much help)
+    paint pdc/active pwell ndc/active
+    paint raw_pdc/active pwell raw_ndc/active
+    paint pdc/m1 pwell ndc/m1
+    paint raw_pdc/m1 pwell raw_ndc/m1
+    paint pfet pwell nfet
+    paint pdiff pwell ndiff
+    paint nohmic pwell pohmic
+    paint nsubstratetap/active pwell psubstratetap/active
+    paint raw_nwt/active pwell raw_pst/active
+    paint nsubstratetap/m1 pwell psubstratetap/m1
+    paint raw_nwt/m1 pwell raw_pst/m1
+    # painting pwell stuff over nwell deletes it
+    paint nwell ndc space
+    paint nwell raw_ndc space
+    paint nwell nfet space
+    paint nwell ndiff space
+    paint nwell pohmic space
+    paint nwell psubstratetap space
+    paint nwell raw_pst space
+    # painting outside_nwell has no effect where wells are defined
+    paint nwell outside_nwell nwell
+    paint pwell outside_nwell pwell
+    # painting pimplant over "n active" deletes it
+    paint ndc/active pimplant space
+    paint raw_ndc/active pimplant space
+    paint ndc/m1 pimplant space
+    paint raw_ndc/m1 pimplant space
+    paint nfet pimplant poly
+    paint ndiff pimplant space
+    paint nohmic pimplant space
+    paint nsubstratetap/active pimplant space
+    paint raw_nwt/active pimplant space
+    paint nsubstratetap/m1 pimplant space
+    paint raw_nwt/m1 pimplant space
+    # painting "n active" over pimplant deletes it
+    paint pimplant ndc space
+    paint pimplant raw_ndc space
+    paint pimplant nfet space
+    paint pimplant ndiff space
+    paint pimplant nohmic space
+    paint pimplant nsubstratetap space
+    paint pimplant raw_nwt space
+    # wouldn't it be nice if pwell didn't paint elsewhere
+    #paint space pwell space
+    # painting pad over any metal gives pad
+    paint pad metal1 pad
+    paint pad m1_contact pad
+    paint pad via pad
+    paint pad raw_via1 pad
+    paint pad metal2 pad
+    paint pad via2 pad
+    paint pad raw_via2 pad
+    paint pad metal3 pad
+    paint pad via3 pad
+    paint pad raw_via3 pad
+    paint pad metal4 pad
+    # paint pad via4 pad
+    # paint pad metal5 pad
+    # these wouldn't be necessary if raw_ contacts were properly composed 
+    paint raw_ndc/active metal1 raw_ndc/active
+    paint raw_ndc/m1 metal1 raw_ndc/m1
+    erase raw_ndc/active metal1 ndiff/active
+    erase raw_ndc/m1 metal1 space
+    paint raw_pdc/active metal1 raw_pdc/active
+    paint raw_pdc/m1 metal1 raw_pdc/m1
+    erase raw_pdc/active metal1 pdiff/active
+    erase raw_pdc/m1 metal1 space
+    paint raw_nwt/active metal1 raw_nwt/active
+    paint raw_nwt/m1 metal1 raw_nwt/m1
+    erase raw_nwt/active metal1 nohmic/active
+    erase raw_nwt/m1 metal1 space
+    paint raw_pst/active metal1 raw_pst/active
+    paint raw_pst/m1 metal1 raw_pst/m1
+    erase raw_pst/active metal1 pohmic/active
+    erase raw_pst/m1 metal1 space
+    paint raw_pc/active metal1 raw_pc/active
+    paint raw_pc/m1 metal1 raw_pc/m1
+    erase raw_pc/active metal1 poly/active
+    erase raw_pc/m1 metal1 space
+    paint raw_via1/m1 metal2 raw_via1/m1
+    paint raw_via1/m2 metal2 raw_via1/m2
+    erase raw_via1/m1 metal2 m1/m1
+    erase raw_via1/m2 metal2 space
+    paint raw_via2/m2 metal3 raw_via2/m2
+    paint raw_via2/m3 metal3 raw_via2/m3
+    erase raw_via2/m2 metal3 m2/m2
+    erase raw_via2/m3 metal3 space
+    paint raw_via3/m3 metal4 raw_via3/m3
+    paint raw_via3/m4 metal4 raw_via3/m4
+    erase raw_via3/m3 metal4 m3/m3
+    erase raw_via3/m4 metal4 space
+end
+## connectivity between stuff
+connect
+    # allMetal5 allMetal5
+    allMetal4 allMetal4
+    allMetal3 allMetal3
+    allMetal2 allMetal2
+    allMetal1 allMetal1
+    allPoly allPoly
+    allNSourceDrain allNSourceDrain
+    allPSourceDrain allPSourceDrain
+    nwell,allNOmhic nwell,allNOmhic
+    pwell,allPOmhic pwell,allPOmhic
+    # magic doesn't see pohmic in the tap so must specify the tap itself 
+    pwell allPOmhic
+    outside_nwell allPOmhic
+    outside_nwell pwell
+end
+# WARNING ::::: automatic generation of wells does not guarantee
+# rules on width and spacing of wells are followed !!
+# It is strongly recommended that designers layout their own wells
+## Yes I agree. I don't trust this at all..............
+cifoutput
+style c035u
+    # 5 centimicrons = 1 magic unit
+    scalefactor 5
+    # N well
+    layer NW nwell
+ bloat-or allPSourceDrain,pfet * 100
+ or allNOmhic
+ grow 69
+ shrink 69
+ calma 01 0
+    # P well
+    templayer MIN_PWELL pwell
+ bloat-or allNSourceDrain,nfet * 100
+ bloat-or allPOmhic * 50
+ grow 84
+ shrink 84
+    # Not P well
+    layer NOT_PWELL not_pwell
+ calma 08 0
+    # P well
+    layer PWI MIN_PWELL
+     and NOT_PWELL
+ calma 50 0
+    # Active Area
+    layer AA allDiff
+ calma 02 0
+    # Polysilicon
+    layer POLY allPoly
+ calma 13 0
+    # P diffusion
+    layer PPI
+ bloat-or allPDiff * 30 allNDiff 0
+ grow 24
+ shrink 24
+        or pimplant
+ calma 17 0
+    # Contacts
+    layer CON ndc,pdc
+ squares-grid 20 40 40 5
+ calma 19 0
+    # seperate processing to avoid contacts on boundary between ndc and psubstratetap etc
+    layer CON nsubstratetap,psubstratetap
+ squares-grid 20 40 40 5
+ calma 19 0
+    # seperate processing
+    layer CON pc
+ squares-grid 20 40 40 5
+ calma 19 0
+    # seperate processing
+    layer CON allRawContacts
+ calma 19 0
+    # Metal 1
+    layer M1 allMetal1
+ calma 23 0
+    # Via 1
+    templayer PADvia1 pad
+ squares-grid 400 40 160 5
+    layer V1 m2c
+ squares-grid 15 40 50 5
+ or PADvia1
+ or raw_via1
+ calma 25 0
+    # Metal 2
+    layer M2 allMetal2
+ calma 27 0
+    # Via 2
+    templayer PADvia2 pad
+ squares-grid 300 40 160 5
+    layer V2 via2
+ squares-grid 15 40 50 5
+ or PADvia2
+ or raw_via2
+ calma 32 0
+    # Metal 3
+    layer M3 allMetal3
+ calma 34 0
+    # Via 3
+    templayer PADvia3 pad
+ squares-grid 200 40 160 5
+    layer V3 via3
+ squares-grid 15 40 50 5
+ or PADvia3
+ or raw_via3
+ calma 35 0
+    # Metal 4
+    layer M4 allMetal4
+ calma 36 0
+    # Via 4
+    # templayer PADvia4 pad
+ # squares-grid 100 40 160 5
+    # layer V4 via4
+ # squares-grid 15 40 50 5
+ # or PADvia4
+ # or raw_via4
+ # calma 52 0
+    # Metal 5
+    # layer M5 allMetal5
+ # calma 53 0
+    # METDIS - prevents automated metal generation
+    layer METDIS metdis
+ calma 63 0
+    # Passivation
+    layer PASSIVATION pad
+ calma 31 0
+    # Labels
+    layer POLY
+ labels allPoly
+ calma 13 21
+    # Labels
+    layer M1
+ labels allMetal1
+ calma 23 21
+    # Labels
+    layer M2
+ labels allMetal2
+ calma 27 21
+    # Labels
+    layer M3
+ labels allMetal3
+ calma 34 21
+    # Labels
+    layer M4
+ labels allMetal4
+ calma 36 21
+    # Labels
+    # layer M5
+ # labels allMetal5
+ # calma 52 21
+    layer TEXT
+ labels ndiff,pdiff,space
+ calma 0 0
+style cifdrc
+    # 5 centimicrons = 1 magic unit
+    scalefactor 5
+    # N well
+    layer NW nwell
+ bloat-or allPSourceDrain,pfet * 100
+ or allNOmhic
+ grow 69
+ shrink 69
+ calma 01 0
+    # P well
+    templayer MIN_PWELL pwell
+ bloat-or allNSourceDrain,nfet * 100
+ bloat-or allPOmhic * 50
+ grow 84
+ shrink 84
+    # Not P well
+    layer NOT_PWELL not_pwell
+ calma 08 0
+    # P well
+    layer PWI MIN_PWELL
+     and NOT_PWELL
+ calma 50 0
+    # P diffusion
+    layer PPI
+ bloat-or allPDiff * 30 allNDiff 0
+ grow 24
+ shrink 24
+        or pimplant
+ calma 17 0
+end
+cifinput
+style c035u
+    scalefactor 5
+# coductors:
+    # n well
+    layer nwell NW
+ labels NW
+    # metal 5
+    # layer m5 M5
+ # labels M5
+    # metal 4
+    layer m4 M4
+ labels M4
+    # metal 3
+    layer m3 M3
+ labels M3
+    # metal 2
+    layer m2 M2
+ labels M2
+    # metal 1
+    layer m1 M1
+ labels M1
+    # poly
+    layer poly POLY
+ labels POLY
+# diffusions: start by assuming we are outside nwell and pplus
+# modified to avoid writing ndiff/pohmic over nwell
+    # ndiff
+    layer ndiff AA
+        and-not NW
+        and-not NPW
+    # pohmic
+    layer pohmic AA
+        and PPI
+        and-not NW
+        and-not NPW
+    # nohmic
+    layer nohmic AA
+        and NW
+    # pdiff
+    layer pdiff AA
+        and PPI
+        and NW
+# transistors: start by assuming we are outside nwell
+# modified to avoid writing nfet over nwell
+    # n transistors
+    layer nfet AA
+ and POLY
+        and-not NW
+        and-not NPW
+    # p transistors
+    layer pfet AA
+ and POLY
+        and NW
+    # pwell
+    layer pwell PWI
+    # not p well
+    layer not_pwell NPW
+ labels NPW
+    # metdis
+    layer metdis MD
+# contacts:
+    # vias
+    # layer via4 V4
+ # grow 25
+ # shrink 10
+ # and M5
+ # and M4
+    layer via3 V3
+ grow 25
+ shrink 10
+ and M4
+ and M3
+    layer via2 V2
+ grow 25
+ shrink 10
+ and M3
+ and M2
+    layer m2c V1
+ grow 25
+ shrink 10
+ and M2
+ and M1
+    # poly contacts
+    layer pc CON
+ grow 20
+ and POLY
+ and M1
+# diffusion contacts: no assumptions to avoid touching contacts
+    # n diffusion contact
+    layer ndc CON
+ and AA
+ and M1
+ and-not PPI
+ and-not NW
+        and-not NPW
+ grow 20
+    # p substrate taps
+    layer psubstratetap CON
+ and AA
+ and M1
+ and PPI
+ and-not NW
+        and-not NPW
+ grow 20
+    # n well taps
+    layer nsubstratetap CON
+ and AA
+ and M1
+ and-not PPI
+ and NW
+ grow 20
+    # p diffusion contact
+    layer pdc CON
+ and AA
+ and M1
+ and PPI
+ and NW
+ grow 20
+    # pads
+    # layer pad M5
+ # and M4
+    layer pad M4
+ and M3
+ shrink 20
+ and M2
+ shrink 20
+ and M1
+ shrink 20
+ and PASSIVATION
+   ignore TEXT
+   calma NW 01 *
+   calma NPW 08 *
+   calma PWI 50 *
+   calma AA 02 *
+   calma POLY 13 *
+   calma PPI 17 *
+   calma CON 19 *
+   calma M1 23 *
+   calma V1 25 *
+   calma M2 27 *
+   calma V2 32 *
+   calma M3 34 *
+   calma V3 35 *
+   calma M4 36 *
+   # calma V4 52 *
+   # calma M5 53 *
+   calma PASSIVATION 31 *
+   calma TEXT 63 *
+style raw_contacts
+    scalefactor 5
+# coductors:
+    # n well
+    layer nwell NW
+ labels NW
+    # metal 5
+    # layer m5 M5
+ # labels M5
+    # metal 4
+    layer m4 M4
+ labels M4
+    # metal 3
+    layer m3 M3
+ labels M3
+    # metal 2
+    layer m2 M2
+ labels M2
+    # metal 1
+    layer m1 M1
+ labels M1
+    # poly
+    layer poly POLY
+ labels POLY
+# diffusions: start by assuming we are outside nwell and pplus
+# modified to avoid writing ndiff/pohmic over nwell
+    # ndiff
+    layer ndiff AA
+        and-not NW
+        and-not NPW
+    # pohmic
+    layer pohmic AA
+        and PPI
+        and-not NW
+        and-not NPW
+    # nohmic
+    layer nohmic AA
+        and NW
+    # pdiff
+    layer pdiff AA
+        and PPI
+        and NW
+# transistors: start by assuming we are outside nwell
+# modified to avoid writing nfet over nwell
+    # n transistors
+    layer nfet AA
+ and POLY
+        and-not NW
+        and-not NPW
+    # p transistors
+    layer pfet AA
+ and POLY
+        and NW
+    # pimplant
+    layer pimplant PPI
+    # pwell
+    layer pwell PWI
+    # not p well
+    layer not_pwell NPW
+    # metdis
+    layer metdis MD
+# contacts:
+    # vias
+    # layer raw_via4 V4
+ # and M5
+ # and M4
+    layer raw_via3 V3
+ and M4
+ and M3
+    layer raw_via2 V2
+ and M3
+ and M2
+    layer raw_via1 V1
+ and M2
+ and M1
+    # poly contacts
+    layer raw_pc CON
+ and POLY
+ and M1
+# diffusion contacts: no assumptions to avoid touching contacts
+    # n diffusion contact
+    layer raw_ndc CON
+ and AA
+ and M1
+ and-not PPI
+ and-not NW
+        and-not NPW
+    # p substrate taps
+    layer raw_pst CON
+ and AA
+ and M1
+ and PPI
+ and-not NW
+        and-not NPW
+    # n well taps
+    layer raw_nwt CON
+ and AA
+ and M1
+ and-not PPI
+ and NW
+    # p diffusion contact
+    layer raw_pdc CON
+ and AA
+ and M1
+ and PPI
+ and NW
+    # pads
+    # layer pad M5
+ # and M4
+    layer pad M4
+ and M3
+ shrink 20
+ and M2
+ shrink 20
+ and M1
+ shrink 20
+ and PASSIVATION
+   ignore TEXT
+   calma NW 01 *
+   calma NPW 08 *
+   calma PWI 50 *
+   calma AA 02 *
+   calma POLY 13 *
+   calma PPI 17 *
+   calma CON 19 *
+   calma M1 23 *
+   calma V1 25 *
+   calma M2 27 *
+   calma V2 32 *
+   calma M3 34 *
+   calma V3 35 *
+   calma M4 36 *
+   # calma V4 52 *
+   # calma M5 53 *
+   calma PASSIVATION 31 *
+   calma TEXT 63 *
+style nocontacts
+    scalefactor 5
+# coductors:
+    # n well
+    layer nwell NW
+ labels NW
+    # n well
+    layer not_pwell NPW
+ labels NPW
+    # metal 5
+    # layer m5 M5
+ # labels M5
+    # metal 4
+    layer m4 M4
+ labels M4
+    # metal 3
+    layer m3 M3
+ labels M3
+    # metal 2
+    layer m2 M2
+ labels M2
+    # metal 1
+    layer m1 M1
+ labels M1
+    # poly
+    layer poly POLY
+ labels POLY
+# diffusions: start by assuming we are outside nwell and pplus
+# modified to avoid writing ndiff/pohmic over nwell
+    # ndiff
+    layer ndiff AA
+        and-not NW
+        and-not NPW
+    # pohmic
+    layer pohmic AA
+        and PPI
+        and-not NW
+        and-not NPW
+    # nohmic
+    layer nohmic AA
+        and NW
+    # pdiff
+    layer pdiff AA
+        and PPI
+        and NW
+# transistors: start by assuming we are outside nwell
+# modified to avoid writing nfet over nwell
+    # n transistors
+    layer nfet AA
+ and POLY
+        and-not NW
+        and-not NPW
+    # p transistors
+    layer pfet AA
+ and POLY
+        and NW
+   ignore TEXT
+   calma NW 01 *
+   calma NPW 08 *
+   calma AA 02 *
+   calma POLY 13 *
+   calma PPI 17 *
+   calma M1 23 *
+   calma M2 27 *
+   calma M3 34 *
+   calma M4 36 *
+   # calma M5 53 *
+   calma TEXT 63 *
+style metalonly
+    scalefactor 5
+# coductors:
+    # metal 5
+    # layer m5 M5
+ # labels M5
+    # metal 4
+    layer m4 M4
+ labels M4
+    # metal 3
+    layer m3 M3
+ labels M3
+    # metal 2
+    layer m2 M2
+ labels M2
+    # metal 1
+    layer m1 M1
+ labels M1
+   ignore TEXT
+   calma M1 23 *
+   calma M2 27 *
+   calma M3 34 *
+   calma M4 36 *
+   # calma M5 53 *
+   calma TEXT 63 *
+end
+mzrouter
+  style irouter
+    # m1 preferred horizontal (I'm not sure if irouter cares about this)
+    layer m1 32 64 256 1
+    # m2 preferred vertical
+    layer m2 64 32 256 1
+    # poly discouraged
+    layer poly 128 128 512 1
+    contact m2contact metal1 metal2 1024
+    contact polycontact metal1 poly 2056
+    # poly disabled by default
+    notactive poly polycontact
+  style garouter
+    layer m1 32 64 256 1
+    layer m2 64 32 256 1
+    contact m2contact metal1 metal2 1024
+end
+## ===================================
+## = ON Semi 0.35um U CMOS DESIGN RULES =
+## ===================================
+## Based on C035U paper rules
+drc
+## cif checking
+## ------------
+# this could turn out to be very slow but it is very useful
+    cifstyle c035u
+# 1.1
+    cifwidth NW 170 "Combined width of drawn + auto-generated N-Well must be at least 1.7u (On Semi rule #1.1)"
+# 50.1
+# cifwidth MIN_PWELL 140 \# "Combined width of drawn + auto-generated P-Well must be at least 1.4u (On Semi rule #50.1)"
+# 50.1
+    cifwidth PWI 140 "Combined width of drawn + auto-generated P-Well must be at least 1.4u (On Semi rule #50.1)"
+# 17.1
+    cifwidth PPI 50 "Auto-generated P Implant width must be at least 0.5u (On Semi rule #17.1)"
+# 17.2
+    cifspacing PPI PPI 50 touching_ok "Auto-generated P Implant spacing must be at least 0.5u (On Semi rule #17.2)"
+    # should we allow explicit pplus specification? - lots more design rules required?
+# Not applicable since this is a twin tub version
+#
+# ## P-well Implant
+# ## --------------
+#
+# maxwidth pwell 0 bend_ok \# "P-Well should not be drawn - please delete (On Semi rule)"
+## N-well Implant
+## --------------
+## WARNING: if wells are auto generated they may not meet design rules
+## (which I reckon serves you right - they are useful anyway)
+## The following rules have been created with a 0.05u grid in mind
+## by Iain McNally.
+# 1.1
+    width nwell 34 "N-Well width must be at least 1.7u (On Semi rule #1.1)"
+# 1.2
+    spacing nwell nwell 28 touching_ok "N-Well spacing must be at least 1.4u else merge (On Semi rule #1.2)"
+    # 1.2 says wells at same potential should be merged if less than 1.4u apart
+    # 1.2 says wells at different potentials must be 2.1u apart
+    # This should not occur in digital designs
+# 1.3
+    spacing allNSourceDrain,nfet nwell 20 touching_illegal "N-diffusion and N-well must be separated by 1.0u (On Semi rule #1.3)"
+    spacing nwell allNSourceDrain,nfet 20 touching_illegal "N-diffusion and N-well must be separated by 1.0u (On Semi rule #1.3)"
+# 1.4
+    spacing allPOmhic nwell 10 touching_illegal "Psubstratetap  and N-well must be separated by 0.5u (On Semi rule #1.4)"
+    spacing nwell allPOmhic 10 touching_illegal "Psubstratetap  and N-well must be separated by 0.5u (On Semi rule #1.4)"
+## Extra rules to account for undrawn N-well
+## -----------------------------------------
+    # N-well needn't overlap nohmic (1.5), plus ndiff 1.0u from N-well (1.3) 
+    spacing allNSourceDrain,nfet allNOmhic 20 touching_illegal "N-type diffusion must be 1.0u away from N-well contact (On Semi rule #1.3 + #1.5)"
+    # N-well overlaps pdiff by 1.0u (1.6), plus pohmic 0.5u from N-well (1.4))
+    spacing allPSourceDrain,pfet allPOmhic 30 touching_illegal "P-type diffusion must be 1.5u away from P-substrate contact (On Semi rule #1.4 + #1.6)"
+    # N-well needn't overlap nohmic (1.5), plus pohmic 0.5u from N-well (1.4)
+    spacing allNOmhic allPOmhic 10 touching_illegal "Opposite well contacts must be separated by 0.5u (On Semi rule #1.4 + #1.5)"
+    # N-well overlaps pdiff by 1.0u (1.6), plus ndiff 1.0u from N-well (1.3)
+    spacing allNSourceDrain,nfet allPSourceDrain,pfet 40 touching_illegal "P-type diffusion must be 2.0u away from N-type (On Semi rule #1.3 + #1.6)"
+## Not_P-well Implant
+## --------------
+# 8.1
+    spacing not_pwell not_pwell 28 touching_ok "NOT_P-Well spacing must be at least 1.4u (On Semi rule #8.1)"
+# 8.5
+    width not_pwell 34 "NOT_P-Well width must be at least 1.7u (On Semi rule #8.5)"
+## P-well Implant
+## --------------
+# 50.1
+    width nwell 28 "P-Well width must be at least 1.4u (On Semi rule #50.1)"
+# 50.2
+    spacing pwell pwell 34 touching_ok "P-Well spacing must be at least 1.7u else merge (On Semi rule #50.2)"
+# 50.7
+    spacing allPSourceDrain,pfet pwell 20 touching_illegal "P-diffusion and P-well must be separated by 1.0u (On Semi rule #50.7)"
+    spacing pwell allPSourceDrain,pfet 20 touching_illegal "P-diffusion and P-well must be separated by 1.0u (On Semi rule #50.7)"
+## Active Area
+## -----------
+# 2.1
+    width allDiffNO 8 "Diffusion width must be at least 0.4u (On Semi rule #2.1)"
+# 2.2
+    # These rules should have no effect -- see #2.1
+    edge4way extPoly pfet 10 pfet 0 0 "P Transistors must be at least 0.5u wide (On Semi rule #2.2)"
+    edge4way extPoly nfet 10 nfet 0 0 "N Transistors must be at least 0.5u wide (On Semi rule #2.2)"
+# 2.3
+    # 2.3 is a general separation of active areas
+    spacing allDiff allDiff 12 touching_ok "Diffusion spacing must be at least 0.6u (On Semi rule #2.3)"
+    spacing allPSourceDrain allNOmhic 1 touching_ok "PMOS combined contact and tap not permitted for this design (BIM rule)"
+    spacing allNSourceDrain allPOmhic 1 touching_ok "NMOS combined contact and tap not permitted for this design (BIM rule)"
+# 2.6
+    edge4way nfet allNSourceDrain 13 allNDiff allNSourceDrain 13 "N Diffusion must overhang transistor by at least 0.65u (On Semi rule #2.6)"
+    edge4way pfet allPSourceDrain 13 allPDiff allPSourceDrain 13 "P Diffusion must overhang transistor by at least 0.65u (On Semi rule #2.6)"
+## Polysilicon
+## -----------
+# 13.1
+    width allPoly 7 "Polysilicon width must be at least 0.35u (On Semi rule #13.1)"
+# 13.2a
+    spacing allPoly allPoly 10 touching_ok "Polysilicon spacing must be at least 0.5u (On Semi rule #13.2a)"
+# 13.2b
+    # no coding possible ?
+# 13.3
+    edge4way nfet,pfet extPoly 8 extPoly extPoly 8 "Poly must overhang transistor by at least 0.4u (On Semi rule #13.3)"
+    edge4way nfet,pfet space 1 poly 0 0 "Transistor overhang is missing (On Semi rule #13.3)"
+# 13.4 Completely re-written BIM - best guess and it seems to work
+    # this one just says that extPoly may only touch pfet,nfet on active plane
+    # (no corner check is performed)
+    edge4way extPoly allDiffNoTran 1 0 0 0 "Poly and diffusion must not touch - needs 0.25u gap (On Semi rule #13.4)"
+    # This one does checking where there is space between poly and diffusion
+    # Corner checking is done if we have a poly corner i.e. space to right and above
+    edge4way extPoly space 5 ~(allDiffNoTran)/active space 5 "Poly and diffusion must be separated by at least 0.25u (On Semi rule #13.4)"
+# 13.5
+    # not yet coded
+# 13.7
+    # not coded
+## P+ Source/Drain Implant
+## -----------------------
+# 17.1 taken care of in 2.2 and 2.3 ???
+# Problems with L-shaped Active Area
+    edge4way allPDiff space 6 ~(allNDiff)/active allPDiff 6 "N diffusion too close to P diffusion (<0.3um) will cause problems for autogenerated P implant (On Semi rule #17.3)"
+# Problems with L-shaped Active Area
+    edge4way allNDiff space 6 ~(allPDiff)/active allNDiff 6 "P diffusion too close to N diffusion (<0.3um) will cause problems for autogenerated P implant (On Semi rule #17.4)"
+# 17.4
+    edge4way allNDiff ~(allDiff)/active 6 ~pimplant/select 0 0 "P implant and n+ active area must be separated by at least 0.3u (On Semi rule #17.4)" select
+# 17.5
+    # spacing pst nfet 16 touching_illegal /###
+    # I think this is checking too much - try edge4way instead
+    edge4way nfet allDiffNoTran 16 ~(allPOmhic)/active 0 0 "spacing of P substrate tap to poly gate of nfet is 0.8u (On Semi #17.5)"
+# 17.6
+    # spacing nwt pfet 16 touching_illegal /###
+    # I think this is checking too much - try edge4way instead
+    edge4way pfet allDiffNoTran 16 ~(allNOmhic)/active 0 0 "spacing of N well tap to poly gate of pfet is 0.8u (On Semi #17.6)"
+# 17.7
+    # Actually this rule should only apply if ohmic butts transistor source
+    width allNOmhic 10 "Nohmic width must be at least 0.5u (On Semi rule #17.7)"
+# 17.8
+    # Actually this rule should only apply if ohmic butts transistor source
+    width allPOmhic 10 "Pohmic width must be at least 0.5u (On Semi rule #17.8)"
+# 17.9 taken care of in 2.2
+# 17.10 taken care of in 2.2
+# 17.12
+    # not yet coded
+## contacts
+## --------
+# 19.1/19.3/19.4
+    # Metal1 requires less overlap (0.1) than active area (0.2)
+    # - take active area value
+    width ndc 16 "N-Diffusion contact width must be at least 0.8u (On Semi rule #19.1+2x#19.3/23.3)"
+    width pdc 16 "P-Diffusion contact width must be at least 0.8u (On Semi rule #19.1+2x#19.3/23.3)"
+    width psubstratetap 16 "P-substrate contact width must be at least 0.8u (On Semi rule #19.1+2x#19.3/23.3)"
+    width nsubstratetap 16 "N-substrate contact width must be at least 0.8u (On Semi rule #19.1+2x#19.3/23.3)"
+    # Metal1 requires less overlap (0.1) than polysilicon (0.2)
+    # - take polysilicon value
+    width pc 16 "Poly Contact width must be at least 0.8u (On Semi rule #19.1+2x#19.4/23.3)"
+## raw contacts
+## --------
+    width raw_ndc 8 "Contact Window must be exactly 0.4u (On Semi rule #19.1)"
+    width raw_pdc 8 "Contact Window must be exactly 0.4u (On Semi rule #19.1)"
+    width raw_nwt 8 "Contact Window must be exactly 0.4u (On Semi rule #19.1)"
+    width raw_pst 8 "Contact Window must be exactly 0.4u (On Semi rule #19.1)"
+    width raw_pc 8 "Contact Window must be exactly 0.4u (On Semi rule #19.1)"
+    spacing allRawContacts allRawContacts 8 touching_ok "Contact Window spacing must be at least 0.4u (On Semi rule #19.2)"
+    spacing raw_via1 raw_via1 10 touching_ok "Via 1 spacing must be at least 0.5u (On Semi rule #25.2)"
+    spacing raw_via2 raw_via2 10 touching_ok "Via 2 spacing must be at least 0.5u (On Semi rule #32.2)"
+    spacing raw_via3 raw_via3 10 touching_ok "Via 3 spacing must be at least 0.5u (On Semi rule #35.2)"
+    edge4way raw_ndc (~(raw_ndc))/active 4 ndiff ndiff 4 "Active Area must overlap Contact Window by at least 0.2u (On Semi rule #19.3)"
+    edge4way raw_pdc (~(raw_pdc))/active 4 pdiff pdiff 4 "Active Area must overlap Contact Window by at least 0.2u (On Semi rule #19.3)"
+    edge4way raw_nwt (~(raw_nwt))/active 4 nohmic nohmic 4 "Active Area must overlap Contact Window by at least 0.2u (On Semi rule #19.3)"
+    edge4way raw_pst (~(raw_pst))/active 4 pohmic pohmic 4 "Active Area must overlap Contact Window by at least 0.2u (On Semi rule #19.3)"
+    edge4way raw_pc (~(raw_pc))/active 4 allPoly allPoly 4 "Poly must overlap Contact Window by at least 0.2u (On Semi rule #19.4)"
+    edge4way (allRawContacts)/m1 (~(allRawContacts))/m1 2 allMetal1 allMetal1 2 "Metal 1 must overlap Contact Window by at least 0.1u (On Semi rule #23.3)"
+    edge4way raw_via1/m1 (~raw_via1)/m1 3 allMetal1 allMetal1 3 "Metal 1 must overlap Via 1 by at least 0.15u (On Semi rule #25.3)"
+    edge4way raw_via1/m2 (~raw_via1)/m2 3 allMetal2 allMetal2 3 "Metal 2 must overlap Via 1 by at least 0.15u (On Semi rule #27.3)"
+    edge4way raw_via2/m2 (~raw_via2)/m2 3 allMetal2 allMetal2 3 "Metal 2 must overlap Via 2 by at least 0.15u (On Semi rule #32.3)"
+    edge4way raw_via2/m3 (~raw_via2)/m3 3 allMetal3 allMetal3 3 "Metal 3 must overlap Via 2 by at least 0.15u (On Semi rule #34.3)"
+    edge4way raw_via3/m3 (~raw_via3)/m3 3 allMetal3 allMetal3 3 "Metal 3 must overlap Via 3 by at least 0.15u (On Semi rule #35.3)"
+    edge4way raw_via3/m4 (~raw_via3)/m4 3 allMetal4 allMetal4 3 "Metal 4 must overlap Via 3 by at least 0.15u (On Semi rule #36.3)"
+# not required for C035U
+# # 19.2
+# # contact spacing must be 0.5u only a problem for normally butting contacts
+# spacing ndc pst 2 touching_illegal \# "N-Diffusion contact must be at least 0.1u from P-substrate tap (On Semi rule #19.2 - 2*#19.3)"
+# spacing pdc nwt 2 touching_illegal \# "P-Diffusion contact must be at least 0.1u from N-Well tap (On Semi rule #19.2 - 2*#19.3)"
+# # must allow for like contacts too close as well
+# spacing pc pc 2 touching_ok \# "Like contacts must be at least 0.1u apart (On Semi rule #19.2 - 2*#19.4)"
+# spacing ndc ndc 2 touching_ok \# "Like contacts must be at least 0.1u apart (On Semi rule #19.2 - 2*#19.3)"
+# spacing pdc pdc 2 touching_ok \# "Like contacts must be at least 0.1u apart (On Semi rule #19.2 - 2*#19.3)"
+# spacing pst pst 2 touching_ok \# "Like contacts must be at least 0.1u apart (On Semi rule #19.2 - 2*#19.3)"
+# spacing nwt nwt 2 touching_ok \# "Like contacts must be at least 0.1u apart (On Semi rule #19.2 - 2*#19.3)"
+# # with current geometries, other rules will keep other contacts sufficiently spaced
+# 19.5
+    # poly contact spacing to active area 0.35u
+    spacing pc allDiff 3 touching_illegal "Poly contact and diffusion spacing must be at least 0.15u (On Semi rule #19.5 - #19.4)"
+# 19.6
+    # active area contact spacing to poly gate 0.3u
+    spacing pfet,nfet pdc,ndc,psubstratetap,nsubstratetap 2 touching_illegal "Minimum active area contact spacing to poly gate : 0.1u (On Semi rule #19.6 - #19.3)"
+## Metal 1
+## -------
+# 23.1
+    width allMetal1 10 "First-level metal width must be at least 0.5u (On Semi rule #23.1)"
+# 23.2
+    spacing allMetal1 allMetal1 10 touching_ok "First-level metal spacing must be at least 0.5u (On Semi rule #23.2)"
+# 23.3 covered in contacts section
+# 23.4
+    maxwidth allMetal1NoPad 600 bend_ok "Maximum metal 1 width simultaneously in both directions is 30.0u (On Semi rule #23.4)"
+# 23.5
+    widespacing allMetal1 201 allMetal1 20 touching_ok "Minimum wide metal 1 spacing to any metal 1 must be at least 1.0u (On Semi rule #23.5)"
+# 23.6
+    # not yet covered
+## Via 1
+## -----
+    width m2c 14 "Via1 width must be at least 0.7u (On Semi rule #25.1+2x#25.3/27.3)"
+    spacing m2c m2c 4 touching_ok "Via1s must be at least 0.2u apart (On Semi rule #25.2 - 2*#25.3)"
+# 25.7
+    # not covered
+## Metal 2
+## -------
+# 27.1
+    width allMetal2 12 "Second-level metal width must be at least 0.6u (On Semi rule #27.1)"
+# 27.2
+    spacing allMetal2 allMetal2 10 touching_ok "Second-level metal spacing must be at least 0.5u (On Semi rule #27.2)"
+# 27.3 covered in via 1 section
+# 27.4
+    maxwidth allMetal2NoPad 600 bend_ok "Maximum metal 2 width simultaneously in both directions is 30.0u (On Semi rule #27.4)"
+# 27.5
+    widespacing allMetal2 201 allMetal2 20 touching_ok "Minimum wide metal 2 spacing to any metal 2 must be at least 1.0u (On Semi rule #27.5)"
+# 27.6
+    # not yet covered
+## Via 2 ** need to check how namy layers we will use **
+## -----
+    width via2 14 "Via2 width must be at least 0.7u (On Semi rule #32.1+2x#32.3/34.3)"
+    spacing via2 via2 4 touching_ok "Via2s must be at least 0.2u apart (On Semi rule #32.2 - 2*#32.3)"
+## Metal 3 ** need to check how namy layers we will use **
+## -------
+# 34.1
+    width allMetal3 12 "Third-level metal width must be at least 0.6u (On Semi rule #34.1)"
+# 34.2
+    spacing allMetal3 allMetal3 10 touching_ok "Third-level metal spacing must be at least 0.5u (On Semi rule #34.2)"
+# 34.3 covered in via 2 section
+# 34.4
+    maxwidth allMetal3NoPad 600 bend_ok "Maximum metal 3 width simultaneously in both directions is 30.0u (On Semi rule #34.4)"
+# 34.5
+    widespacing allMetal3 201 allMetal3 20 touching_ok "Minimum wide metal 3 spacing to any metal 3 must be at least 1.0u (On Semi rule #34.5)"
+## Via 3 ** need to check how many layers we will use **
+## -----
+    width via3 14 "Via3 width must be at least 0.7u (On Semi rule #35.1+2x#35.3/36.3)"
+    spacing via3 via3 4 touching_ok "Via3s must be at least 0.2u apart (On Semi rule #35.2 - 2*#35.3)"
+## Metal 4 ** need to check how namy layers we will use **
+## -------
+# 36.1
+    width allMetal4 12 "Fourth-level metal width must be at least 0.6u (On Semi rule #36.1)"
+# 36.2
+    spacing allMetal4 allMetal4 10 touching_ok "Fourth-level metal spacing must be at least 0.5u (On Semi rule #36.2)"
+# 36.3 covered in via 3 section
+# 36.4
+    maxwidth allMetal4NoPad 600 bend_ok "Maximum metal 4 width simultaneously in both directions is 30.0u (On Semi rule #36.4)"
+# 36.5
+    widespacing allMetal4 201 allMetal4 20 touching_ok "Minimum wide metal 4 spacing to any metal 4 must be at least 1.0u (On Semi rule #36.5)"
+# ## Via 4 ** need to check how namy layers we will use **
+# ## -----
+#
+# width via4 14 \# "Via4 width must be at least 0.7u (On Semi rule #52.1+2x#52.3)"
+#
+# spacing via4 via4 4 touching_ok \# "Via4s must be at least 0.2u apart (On Semi rule #52.2 - 2*#52.3)"
+#
+# ## Metal 5 ** need to check how namy layers we will use **
+# ## -------
+#
+# # 53.1
+# width allMetal5 16 \# "Fifth-level metal width must be at least 0.8u (On Semi rule #53.1)"
+#
+# # 53.2
+# spacing allMetal5 allMetal5 40 touching_ok \# "Fifth-level metal spacing must be at least 2.0u (On Semi rule #53.2)"
+#
+# # 53.3
+# #ifdef 1
+# surround via4 metal5 1 absence_illegal \# "Fifth-level metal must overlap via4 by at least 0.05u (On Semi rule #53.3-#52.3)"
+# #else
+# edge4way via4/m5 ~via4/m5 1 metal5 ~via4/m5 1 \# "Fifth-level metal must overlap via4 by at least 0.05u (On Semi rule #53.3-#52.3)"
+# #endif
+## Bonding Pads & Passivation ** need to check how namy layers we will use **
+## --------------------------
+    width pad 1300 "Bond pad must be at least 65u (Assembly rules?)"
+    # surround pad metal5 60 absence_illegal \# "Fifth-level metal must overlap pad by at least 3u (On Semi rule #82.1)"
+    surround pad metal4 60 absence_illegal "Fourth-level metal must overlap pad by at least 3u (On Semi rule #82.2)"
+    surround pad metal3 60 absence_illegal "Third-level metal must overlap pad by at least 3u (On Semi rule #82.3)"
+    surround pad metal2 40 absence_illegal "Second-level metal must overlap pad by at least 2u (On Semi rule #82.4)"
+    surround pad metal1 20 absence_illegal "First-level metal must overlap pad by at least 1u (On Semi rule #82.5)"
+    # this should be absence_ok but that doesn't seem to work
+    surround pad nwell 160 absence_illegal "N-well must overlap pad by at least 8u (optional?) (On Semi rule #82.18)"
+## Extra Rules for Magic
+## ---------------------
+## magic likes rectangular contacts - don't we all?
+## overlapping rules
+    # contacts must exactly overlap
+    # exact_overlap m2c,ndc,pdc,pc,psubstratetap,nsubstratetap
+    # contacts must not overlap because we are using "squares-grid"
+    no_overlap m2c,ndc,pdc,pc,psubstratetap,nsubstratetap m2c,ndc,pdc,pc,psubstratetap,nsubstratetap
+    # trannies mustn't overlap at all 
+    no_overlap pfet,nfet pfet,nfet
+  # angles *metal5 90 "Only manhattan geometry supported in this version (m5)"
+  angles *metal4 90 "Only manhattan geometry supported in this version (m4)"
+  angles *metal3 90 "Only manhattan geometry supported in this version (m3)"
+  angles *metal2 90 "Only manhattan geometry supported in this version (m2)"
+  angles *metal1 90 "Only manhattan geometry supported in this version (m1)"
+  angles *poly 90 "Only manhattan geometry supported in this version (poly)"
+end
+extract
+style poor
+# scale factor: output units (centimicrons) per lambda
+    lambda 5
+# chunk size for hierarchical extraction, in lambda - this is the default
+    step 100
+# when should we consider the effects of parallel conductors?
+# this is currently ignored since we have no "sidewall" lines below
+    sidehalo 16
+# this information is used to allow items on intermediate planes to shield perimeter capacitance
+    planeorder not_well 0
+    planeorder well 1
+    planeorder select 2
+    planeorder active 3
+    planeorder metal1 4
+    planeorder metal2 5
+    planeorder metal3 6
+    planeorder metal4 7
+    planeorder nitride 8
+    # planeorder metal5 8
+    # planeorder nitride 9
+# Resistance taking typical values - there's lots missing here
+ # sheet resistivity milli-ohms per square
+    resist poly 2.35
+    resist metal1 72
+    resist metal2 55
+# Capacitance taking typical values - there's lots missing here too
+# interconnect - lets ignore contacts since they are small
+    areacap poly 0.227
+    areacap metal1,pad/metal1 0.060
+    areacap metal2 0.029
+ # sidewall capacitance to substrate (GND) atto-farads/lambda
+    perimc poly space 2.32
+    perimc metal1 space 2.03
+    perimc metal2 space 1.80
+# transitor gates are explicitly ignored since SPICE should sort this out
+    areacap nfet,pfet 0
+# Transistor connectivity extraction
+    fet pfet allPSourceDrain 2 pfet Vdd! 0 0
+    fet nfet allNSourceDrain 2 nfet GND! 0 0
+style twin_tub
+# scale factor: output units (centimicrons) per lambda
+    lambda 5
+# chunk size for hierarchical extraction, in lambda - this is the default
+    step 100
+# when should we consider the effects of parallel conductors?
+# this is currently ignored since we have no "sidewall" lines below
+    sidehalo 16
+# this information is used to allow items on intermediate planes to shield perimeter capacitance
+    planeorder not_well 0
+    planeorder well 1
+    planeorder select 2
+    planeorder active 3
+    planeorder metal1 4
+    planeorder metal2 5
+    planeorder metal3 6
+    planeorder metal4 7
+    planeorder nitride 8
+    # planeorder metal5 8
+    # planeorder nitride 9
+# Resistance - ignored
+# Capacitance taking typical values - there's lots missing here too
+# interconnect - lets just add m1/poly/m2
+    areacap nwt/active 1000.000
+    areacap pst/active 1000.000
+    areacap pdc/active 1000.000
+    areacap ndc/active 1000.000
+    areacap extPoly 1000.000
+    areacap metal1,via/metal1 1000.000
+    areacap metal2 1000.000
+# transitor gates are explicitly ignored since SPICE should sort this out
+    areacap nfet,pfet 0
+# Transistor connectivity extraction
+    fet pfet allPSourceDrain 2 pfet dodgy! nwell 0 0
+    fet nfet allNSourceDrain 2 nfet bulk! pwell,outside_nwell 0 0
+end
+# Information for the wiring interface on how to place contacts:
+wiring
+    contact pdiffcontact 16 metal1 0 pdiff 0
+    contact ndiffcontact 16 metal1 0 ndiff 0
+    contact polycontact 16 metal1 0 poly 0
+    contact m2contact 14 metal1 0 metal2 0
+end
+router
+    # My best guess for metal only routing BIM 7/9/99
+    # m1 preferred - I think this ignores H/V cost in mzrouter section
+    layer1 metal1 10 allMetal1 10
+    layer2 metal2 12 allMetal2 10
+    # add M1 surround to avoid lonely via problem
+    # contacts m2contact 14 1 0
+    # - didn't work so go back to no M1 surround
+    contacts m2contact 14
+    # this is the correct value for C035U?
+    gridspacing 24
+end
+# Information to guide plowing
+plowing
+    fixed pfet,nfet,glass,pad
+    covered pfet,nfet
+    drag pfet,nfet
+end
+plot
+end
