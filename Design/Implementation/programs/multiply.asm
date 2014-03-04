@@ -30,14 +30,14 @@
 		STW R2,[R4,#0]	; Result on LEDS
 
 		; Finish loop
-.end 	BR .end			; Finshed loop
+.end 	BR .end
 
 		; Multiply loop
 .multi  LDW R0,[R7,#2]	; Op1 in R0
 		LDW R1,[R7,#3]	; Op2 in R1
 		SUB R2,R2,R2	; Zero in R2
         ADDIB R1,#0		; Check Op2 is not zero
-		BNE .done
+		BNE .done		; Get out if zero
 .loop  	ADD R2,R2,R0	; Add Op1
 		SUBIB R1,#1		; Dec Op2
 		BE .loop
