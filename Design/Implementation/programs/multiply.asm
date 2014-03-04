@@ -9,7 +9,7 @@
 		LUI R1, #0		
 		LLI R1, #255	; 0x00FF in R1
 		AND R1,R0,R1	; Lower byte of switches in R1	
-		LSR R0,R1,#8	; Upper byte of switches in R0	
+		LSR R0,R0,#8	; Upper byte of switches in R0	
 		
 		; Call subroutine 
 		STW R0,[R7,#0]	; Param 1 = R1, Upper	
