@@ -30,7 +30,8 @@ typedef
 `define FLAGS_C  1
 `define FLAGS_V  2
 `define FLAGS_N  3
-
+`define FLAGS_IRQ 4
+`define FLAGS_IEN 5
 
 //Program Counter Selction Codes
 typedef enum logic [2:0] 	{PcLr, PcSysbus, PcAluOut, Pc1, PcInt } 	pc_select_t;
