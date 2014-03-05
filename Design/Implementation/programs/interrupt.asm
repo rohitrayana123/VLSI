@@ -1,49 +1,30 @@
-		SUB R0,R0,R0	; Init regs
+		LUI R7, #7		; Setup SP
+		LLI R7, #255
+		LUI	R0,	#1		; R0 is read ptr
+		LUI R1, #1		' R1 in write ptr
+		LLI R1, #1
+		TOGI			; Enable interrupts
+		LUI R0,#A0		; Address of Serial control reg
+		LLI R1,#01		; Data to enable ints
+		STW R1,[R0,#1]	; Store 0x001 @ 0xA001		AJR - Ints from here should be OK
+		LLI R0,#17		; main line -1 in R0	
+		JMP R0,#0		; Jump to main, line number - 1
+		ADDIB R0,#0		; Unreachable code to position isr
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0	
+.isr  	ADDIB R0,#0
+		RETI
+.main	SUB R0,R0,R0	; START OF MAIN
 		SUB R1,R1,R1
 		SUB R2,R2,R2
-		SUB R3,R3,R3
+		SUB R3,R3,R3	; Dummy prog, waiting for int
 		SUB R4,R4,R4
+		BWL .isr
 		SUB R5,R5,R5
 		SUB R6,R6,R6
-		SUB R7,R7,R7	
-		LUI R7, #7		; Setup SP
-		BR .main
-.multi  LDW R0,[R7,2]	; Op1 in R0
-		LDW R1,[R7,3]	; Op2 in R1
-		SUB R2,R2,R2	; Zero in R2
-        ADDIB R1,#0		; Check Op2 is not zero
-		BNE .done
-.loop  ADD R2,R2,R0	; Add Op1
-		SUBIB R1,#1		; Dec Op2
-		BE .loop
-.done  STW R2,[R7,1]	; Store result in place holder
-		RET
-.end  BR .end			; finshed loop
-.main  LLI R7, #255	
-		LUI R0, #8		; Address in R0
-		LLI R0, #0
-		LDW R1,[R0,0]	; Switches in R1
-		LUI R2, #0		
-		LLI R2, #255
-		AND R3,R1,R2	
-		STW R3,[R7,0]
-		SUBIB R7,#1		; Lower byte on stack
-		LDW R1,[R0,0]	; Switches in R1 again
-		LSR R1,R1,#8	
-		STW R1,[R7,0]
-		SUBIB R7,#1		; Upper byte on stack
-		LUI R0, #170
-		LLI R0, #170
-		STW R0,[R7,0]	; Place holder on stack
-		SUBIB R7,#1		; Call subroutineh
-		BWL .multi
-		ADDIB R7,#1		; Return here
-		LDW R0,[R7,0]	; Result in R0	
-		ADDIB R7,#1
-		LDW R1,[R7,0]
-		ADDIB R7,#1
-		LDW R2,[R7,0]	; Stack frame destoryed
-		LUI R1, #8
-		LLI R1, #1		; Addres of LEDS
-		STW R0,[R1,0]	; Result on LEDS
-		BR .end         ; done	
+		BR .main       	; done	
