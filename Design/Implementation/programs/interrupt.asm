@@ -14,7 +14,36 @@
 		ADDIB R0,#0
 		ADDIB R0,#0
 		ADDIB R0,#0
-.isr  	ADDIB R0,#0
+.isr  	SUBIB R7,#1		; Dec SP		; Save regs
+		STW R0,[R7,#0]	; Push data
+		SUBIB R7,#1		; Dec SP
+		STW R1,[R7,#0]	; Push data
+		SUBIB R7,#1		; Dec SP
+		STW R2,[R7,#0]	; Push data
+		SUBIB R7,#1		; Dec SP
+		STW R3,[R7,#0]	; Push data
+		SUBIB R7,#1		; Dec SP
+		STW R4,[R7,#0]	; Push data
+		SUBIB R7,#1		; Dec SP
+		STW R5,[R7,#0]	; Push data
+		SUBIB R7,#1		; Dec SP
+		STW R6,[R7,#0]	; Push data
+		ADDIB R0,#0
+		
+		LDW R6,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
+		LDW R5,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
+		LDW R4,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
+		LDW R3,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
+		LDW R2,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
+		LDW R1,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
+		LDW R0,[R7,#0]	; Pop data
+		ADDIB R7,#1		; Iin SP
 		RET
 .main	LUI R0, #1		; Read ptr address in R0
 		LLI R0, #0	
