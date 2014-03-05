@@ -119,7 +119,7 @@ always_ff@(posedge Clock or negedge nReset) begin
          	case(stateSub)
             	cycle0: case(Opcode)
             				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                			LDW, STW: 	stateSub <= #20 cycle1;
+                			INTERRUPT, LDW, STW: 	stateSub <= #20 cycle1;
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
@@ -383,12 +383,12 @@ always_comb begin
 							StatusRegWe = 1;
                            	PcSel = Pc1;
                         end
-						LDW,STW:begin			// Add must be done before address out
-   							AluEn = 1;
-							ImmSel = ImmShort;
-                           	Op1Sel = Op1Rd1;
-							AluOp = FnADD;	
-                           	AluWe = 1;
+				LDW,STW:begin			// Add must be done before address out
+   					AluEn = 1;
+					ImmSel = ImmShort;
+					Op1Sel = Op1Rd1;
+					AluOp = FnADD;	
+                           		AluWe = 1;
                     	end
 						LUI,LLI:begin
 							ImmSel = ImmLong;
@@ -441,16 +441,40 @@ always_comb begin
 								end	
 							endcase
 						end	
-            		endcase
-         		end
+					INTERRUPT: begin
+					case(BranchCode)
+						0: begin //RETI
+							Rs1Sel = Seven; //chose SP
+   							AluEn = 1;
+							Op1Sel = Op1Rd1;
+							AluOp = FnA;	
+	                        	   		AluWe = 1;
+							
+						end //0 
+					endcase
+					end //INTERRUPT
+            		endcase //opcode
+         		end //cycle0
          		cycle1:begin 
-				ALE = 1;
-               			nWE = 1;
-        	       		nOE = 1; 
-				ImmSel = ImmShort;
-				AluOp = FnADD;
-				Op1Sel = Op1Rd1;
-                		AluEn = 1; 
+				if(Opcode == INTERRUPT)
+				begin
+					ALE = 1;
+					nWE = 1;
+					nOE = 1;
+					AluOp = FnA;
+					Op1Sel = Op1Rd1;
+					Rs1Sel = Seven;
+					AluEn = 1;
+				end 
+				else begin //STW LDW
+					ALE = 1;
+        	       			nWE = 1;
+        		       		nOE = 1; 
+					ImmSel = ImmShort;
+					AluOp = FnADD;
+					Op1Sel = Op1Rd1;
+        	        		AluEn = 1; 
+				end
          		end
          		cycle2: begin
             		case(Opcode)
@@ -474,6 +498,16 @@ always_comb begin
                      			AluWe = 1;			// Pass right through on next clock
                         		AluEn = 1;
 				end
+				INTERRUPT: begin
+					nME = 0;
+					Op1Sel = Op1Rd1;
+					Rs1Sel = Seven;
+					AluOp = FnA;
+					MemEn = 1;
+					nWE = 1;
+					AluWe = 1;
+					AluEn = 1;
+				end
             		endcase
          		end
          		cycle3: begin
@@ -489,22 +523,37 @@ always_comb begin
 	                        		AluEn = 1;			// Hold data on sysbus
         	                		nOE = 1;               
                 		     	end   
+					INTERRUPT: begin
+						nME = 0;
+						MemEn = 1;
+						ENB = 1;
+						nWE = 1;
+					end
 	            		endcase  
          		end
          		cycle4: begin
-				PcWe = 1;
-        			PcSel = Pc1;		// Done, move on
-   				nME = 1;
-				if(Opcode == LDW) begin
-					nWE = 1;
+				if (Opcode == INTERRUPT) begin
+					PcWe = 1;
+					PcSel = PcSysbus;
+					nME = 1;
 					MemEn = 1;
-					WdSel = WdSys;
-					RegWe = 1;
-				end
-				if(Opcode == STW) begin
-					nOE = 1;
-					AluEn = 1;
-				end
+					nWE = 1;
+				end //end INTERRUPT
+				else begin //LDW or STW
+					PcWe = 1;
+        				PcSel = Pc1;		// Done, move on
+   					nME = 1;
+					if(Opcode == LDW) begin
+						nWE = 1;
+						MemEn = 1;
+						WdSel = WdSys;
+						RegWe = 1;
+					end
+					if(Opcode == STW) begin
+						nOE = 1;
+						AluEn = 1;
+					end
+				end //else //LDW or STW
          		end
          	endcase
 	end

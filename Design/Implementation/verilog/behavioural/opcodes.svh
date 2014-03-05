@@ -82,6 +82,7 @@ LDW   	= 5'b00000,
 STW    	= 5'b01000, 
 LUI    	= 5'b10100, 
 LLI	  	= 5'b10101, 
-BRANCH 	= 5'b11110
+BRANCH 	= 5'b11110,
+INTERRUPT = 5'b11001
 } Opcode_t;
 endpackage
