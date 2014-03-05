@@ -107,7 +107,7 @@ end
 
 initial begin
 	nIRQ = 1;
-	#10000 nIRQ = 0;
+	#40000 nIRQ = 0;
 	#500   nIRQ = 1;
 end
 
