@@ -11,6 +11,11 @@
 #			Checking of immediate value sizes
 #			NO input args checking
 #			Instruction-less lines allowed (empty line or comments)
+#Version: 1 (CMPI addition onwards)
+#	  2 (Changed to final ISA, added special case I's and error checking
+#         3 (Ajr changes - Hex output added, bug fix)
+#	  4 (Added SP symbol)
+
 
 import os
 import re

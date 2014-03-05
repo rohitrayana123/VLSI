@@ -30,11 +30,10 @@ typedef
 `define FLAGS_C  1
 `define FLAGS_V  2
 `define FLAGS_N  3
-`define FLAGS_IRQ 4
-`define FLAGS_IEN 5
+
 
 //Program Counter Selction Codes
-typedef enum logic [2:0] 	{PcLr, PcSysbus, PcAluOut, Pc1, PcInt } 	pc_select_t;
+typedef enum logic [1:0] 	{PcLr, PcSysbus, PcAluOut, Pc1 } 	pc_select_t;
 typedef enum logic [1:0] 	{Op1Pc, Op1Rd1, Op1Sp } 			Op1_select_t;
 typedef enum logic 			{Op2Rd2=1, Op2Imm=0} 				Op2_select_t;
 typedef enum logic 			{ImmShort=1, ImmLong=0} 			Imm_select_t;
@@ -83,7 +82,6 @@ LDW   	= 5'b00000,
 STW    	= 5'b01000, 
 LUI    	= 5'b10100, 
 LLI	  	= 5'b10101, 
-BRANCH 	= 5'b11110,
-INTERRUPT = 5'b11001
+BRANCH 	= 5'b11110
 } Opcode_t;
 endpackage

@@ -174,6 +174,7 @@ always_comb begin
    	nME      = 1;
    	ENB      = 0;
    	ALE      = 0;
+		PcSel = Pc1;
 	StatusRegWe= 0;
 	IntClear = 0;
 	IntEnable = 0;

@@ -7,29 +7,41 @@
 		SUB R6,R6,R6
 		SUB R7,R7,R7	
 		LUI R7, #7		; Setup SP
-		BR .main
-		ADDIB,R0,#0
-		ADDIB,R0,#0
-		ADDIB,R0,#0
-		ADDIB,R0,#0
-		ADDIB,R0,#0
-		ADDIB,R0,#0
-	SUBIB R7, #1 ; decrement SP (Pc has just been put there)
-	STW R0,[R7,0] ; push R0 to stack
- 	SUBIB R7, #1 ; decrement SP
-	STW R1,[R7,0] ; push R1 to stack
-	LUI R0, #0 ; write 0x46 == 0d70 to R0
-	LLI R0, #70
-	LDW R1,[R0,0] ; Read from mem[0x...] to R1
-	ADDIB R1,#1 ; Incrment R1
-	STW R1,[R0,0] ; Store R1 to mem[0x...]
-	LDW R1,[R7,0] ; return R1 from stack
-	ADDIB R7,#1 
-	LDW R0,[R7,0]; return R0 from stack
-	ADDIB R7,#1 ; increment stack ready to pull Pc off 
-	ADD R0,R0,R0  ; return from ISR
-.multi  LDW R0,[R7,2]	; Op1 in R0
-		LDW R1,[R7,3]	; Op2 in R1
+		LLI R7, #255
+		
+		; Read data		
+		LUI R0, #8		; Address in R0
+		LLI R0, #0
+		LDW R0,[R0,#0]	; Read switches into R0
+		LUI R1, #0		
+		LLI R1, #255	; 0x00FF in R1
+		AND R1,R0,R1	; Lower byte of switches in R1	
+		LSR R0,R0,#8	; Upper byte of switches in R0	
+		
+		; Call subroutine 
+		STW R0,[R7,#0]	; Param 1 = R1, Upper	
+		SUBIB R7,#1
+		STW R1,[R7,#0]	; Param 2 = R2, Lower
+		SUBIB R7,#1
+		STW R2,[R7,#0]	; Placeholder = 0
+		SUBIB R7,#1		; Created stack frame	
+		BWL .multi		; Run Subroutine
+		ADDIB R7,#1		; Restore registers
+		LDW R2,[R7,#0]	; Result in R2
+		ADDIB R7,#1	
+		LDW R1,[R7,#0]	; Restore R1	
+		ADDIB R7,#1
+		LDW R0,[R7,#0]	; Restire R0	
+		LUI R4, #8
+		LLI R4, #1		; Address of LEDS
+		STW R2,[R4,#0]	; Result on LEDS
+
+		; Finish loop
+.end 	BR .end
+
+		; Multiply loop
+.multi  LDW R0,[R7,#2]	; Op1 in R0
+		LDW R1,[R7,#3]	; Op2 in R1
 		SUB R2,R2,R2	; Zero in R2
         ADDIB R1,#0		; Check Op2 is not zero
 		BNE .done
@@ -67,6 +79,3 @@
 		LLI R1, #1		; Addres of LEDS
 		STW R0,[R1,0]	; Result on LEDS
 		BR .end         ; done	
-ADD,R0,R0,R0
-ADD,R0,R0,R0
-ADD,R0,R0,R0

@@ -111,6 +111,13 @@ initial begin
 	#500   nIRQ = 1;
 end
 
+// If this stops sim then probably looped
+initial begin
+	#1000000
+	$stop;
+	$finish;
+end
+
 initial begin
    	integer done;
    	`ifdef sim_time
