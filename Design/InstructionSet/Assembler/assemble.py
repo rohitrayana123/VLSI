@@ -341,6 +341,8 @@ print ''
 print '    Hex Output:'
 for line in MC:
 	hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
+	while(len(hexline) < 4):
+		hexline = '0'+ hexline
 	print hexline
 	hexfile.write(hexline + '\n')
 
