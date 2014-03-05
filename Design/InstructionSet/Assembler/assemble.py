@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Simple assembly program, takes assembly input file and outputs flat binary line with one line per instruction
 #Input syntax rules:	':' or ';' for commenting
 #			'.' must start label names
