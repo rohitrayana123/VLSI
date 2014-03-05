@@ -298,9 +298,9 @@ for i, line in enumerate(SEGMLINES):
 	print line[0],
 	if OpType(line[0]) == 'F':				#Interrupt operations
 		if line[0] == 'ENAI':
-			MC.append(OpNum('F') + '010' + '00000000')
-		elif line[0] == 'DISI':
 			MC.append(OpNum('F') + '001' + '00000000')
+		elif line[0] == 'DISI':
+			MC.append(OpNum('F') + '010' + '00000000')
 		elif line[0] == 'RETI':
 			MC.append(OpNum('F') + '000' + '11100000')#Always reads location pointed to by SP
 	elif OpType(line[0]) == 'E':				#Stack operations
