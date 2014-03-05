@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Thu 27 Feb 2014 16:23:16 GMT by hl13g10 on hart2.ecs.soton.ac.uk +>
+# <+Last Edited: Wed 05 Mar 2014 12:54:31 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -64,12 +64,15 @@ def RunSim(options):
 		#cmd.append("-v")
 		cmd.append(os.path.join(stim, "prog_stim.sv"))
 		programfile, fileExtension = os.path.splitext(options.program)
+		
 		if os.path.exists(os.path.join(programs, programfile+".asm")): #found us some assembler - compile it!
-			print("Invoking compiler...")
-			asmb = os.path.join(programs, programfile)
-			print asmb
-			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
-
+			if options.compile:
+				print("Invoking compiler...")
+				asmb = os.path.join(programs, programfile)
+				print asmb
+				call(["python", os.path.join(home, "bin/assemble.py"), asmb])
+			else:
+				print("Not recompiling the assembly language")
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 
 	# Hard code for bim
@@ -115,6 +118,10 @@ if "__main__" == __name__:
 	parser.add_option("-p", "--prog", dest="program",
                   help="program to run (hex file) should not be defined if module is")
 
+	parser.add_option("-X", "",
+                  action="store_false", dest="compile", default=True,
+                  help="Do not recompile the assembly language")
+	
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
