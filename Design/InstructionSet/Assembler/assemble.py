@@ -3,15 +3,13 @@
 #			'.' must start label names
 #			Parts of instruction must be seperated by one space
 #			Ordering: [LABEL] - INSTRUCTION - OPERANDS - [COMMENTS]
-#Currently supports: 	Only R0-R7 & LR
+#Currently supports: 	Only R0-R7, LR & recognises SP == R7
 #			8 condition codes
 #			Output to same directory as input file
 #			Symbolic and numeric branching
-#			Checking of immediate values size
+#			Checking of immediate value sizes
 #			NO input args checking
-#Version: 1 (CMPI addition onwards)
-#	  2 (Changed to final ISA, added special case I's and error checking
-
+#			Instruction-less lines allowed (empty line or comments)
 
 import os
 import re
@@ -41,7 +39,9 @@ def ConvertToBin(x, length):
 
 #Conversion functions
 def OpType(value):	#Determine instruction format type
-	if value in ("PUSH", "POP"):
+	if value in ("ENAI", "DISI", "RETI"):
+		return "F"
+	elif value in ("PUSH", "POP"):
 		return "E"
 	elif value in ("JMP"):
 		return "D1"
@@ -51,7 +51,7 @@ def OpType(value):	#Determine instruction format type
 		return "C"
 	elif value in ("ADDIB", "SUBIB", "LUI", "LLI"):
 		return "B"
-	elif value in ("ADD", "ADC", "NEG", "SUB", "SUC", "CMP", "AND", "OR", "XOR", "NOT", "NAND", "NOR"):
+	elif value in ("ADD", "ADC", "NEG", "SUB", "SUC", "CMP", "AND", "OR", "XOR", "NOT", "NAND", "NOR", "NOP"):
 		return "A1"
 	elif value in ("ADDI", "ADCI", "SUBI", "SUCI", "CMPI", "LSL", "LSR", "ASR"):
 		return "A2"
@@ -75,6 +75,8 @@ def regcode(value):	#Get binary equivalent of register name
 	elif value.upper() == "R6":
 		return "110"
 	elif value.upper() == "R7":
+		return "111"
+	elif value.upper() == "SP":
 		return "111"
 	elif value.upper() == "LR":
 		return "000"
@@ -120,65 +122,92 @@ def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
 		sys.exit()
 
 def OpNum(value):	#Determine specific binary value for instruction
+	if value == "F":
+		return "11001"
 	if value == "C":
 		return "00000"
-	if value == "D1":
+	elif value == "D1":
 		return "11110"
-	if value == "D2":
+	elif value == "D2":
 		return "11110"
-	if value == "E":
+	elif value == "E":
 		return "00001"
-	if value == "ADD":
+	elif value == "ADD":
 		return "00010"
-	if value == "ADDI":
+	elif value == "ADDI":
 		return "00110"
-	if value == "ADDIB":
+	elif value == "ADDIB":
 		return "00011"
-	if value == "ADC":
+	elif value == "ADC":
 		return "00100"
-	if value == "ADCI":
+	elif value == "ADCI":
 		return "00101"
-	if value == "NEG":
+	elif value == "NEG":
 		return "11010"
-	if value == "SUB":
+	elif value == "SUB":
 		return "01010"
-	if value == "SUBI":
+	elif value == "SUBI":
 		return "01110"
-	if value == "SUBIB":
+	elif value == "SUBIB":
 		return "01011"
-	if value == "SUC":
+	elif value == "SUC":
 		return "01100"
-	if value == "SUCI":
+	elif value == "SUCI":
 		return "01101"
-	if value == "CMP":
+	elif value == "CMP":
 		return "00111"
-	if value == "CMPI":
+	elif value == "CMPI":
 		return "01111"
-	if value == "AND":
+	elif value == "AND":
 		return "10000"
-	if value == "OR":
+	elif value == "OR":
 		return "10001"
-	if value == "XOR":
+	elif value == "XOR":
 		return "10011"
-	if value == "NOT":
+	elif value == "NOT":
 		return "10010"
-	if value == "NAND":
+	elif value == "NAND":
 		return "10110"
-	if value == "NOR":
+	elif value == "NOR":
 		return "10111"
-	if value == "LSL":
+	elif value == "LSL":
 		return "11111"
-	if value == "LSR":
+	elif value == "LSR":
 		return "11101"
-	if value == "ASR":
+	elif value == "ASR":
 		return "11100"
-	if value == "LUI":
+	elif value == "LUI":
 		return "10100"
-	if value == "LLI":
+	elif value == "LLI":
 		return "10101"
 	else:
 		print 'ERROR5: Unrecognised Mneumonic'
 		sys.exit()
+
+if sys.argv[1] == "":
+	print "Please provide input file name, type 'help' or '-h' for information and version history"
+	sys.exit()
+elif sys.argv[1] in ("help", "-h"):
+	print "---Team R4 Assembler Help---"
+	print "------Version: 1 (CMPI addition onwards)"
+	print "               2 (Changed to final ISA, added special case I's and error checking"
+        print "               3 (Ajr changes - Hex output added, bug fix)"
+	print "               4 (Added SP symbol)"
+	print "               5 (NOP support added, help added) UNTESTED"
+	print "               6 (Interrupt support added [ENAI, DISI, RETI]. New sub-encoding type F |11001|Cond[3]|Ra[3]|xxxxx|.) UNTESTED"
+	print "      Current is most recent iteration"
+	print "Input Syntax: ./assemble filename"
+	print "Commenting uses : or ;"
+	print "Labels start with ."
+	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
+	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
+	print "Branching: Symbolic and Numeric supported"
+	print ""
+	print "Notes: Input and output file directory are the same"
+	print "       Input files assume .asm, no extension needed"
+	print "       Immediate value sizes are checked"
+	print "       Instruction-less lines allowed"
+	sys.exit()
 
 #Determine input/output file paths
 assemfile = sys.argv[1]		#filename only
@@ -204,9 +233,16 @@ for line in LINES:
 		code = line	#no comments on line
 	if code.strip('\t').strip('\n') == '':			#skip blank lines
 		continue
+	#print code
 	#print '2. ' + code.strip('\t')
-	code = code.replace('\t',' ')				#Remove tabs
-	pass_one = code.split(',')				#seperate by comma
+	code = code.replace('\n',',')
+	code = code.replace('\t',',')				#Remove tabs
+	code = code.replace(' ',',')
+	pass_zero = code.split(',')				#seperate by comma
+	pass_one = []
+	for seg in pass_zero:
+		if(seg != ''):
+			pass_one.append(seg)
 	#print pass_one
 	pass_two = []
 	for j, part in enumerate(pass_one):
@@ -218,6 +254,7 @@ for line in LINES:
 			pass_two.append(pass_one[j])
 	#print pass_two
 	SEGMLINES.append(pass_two)				#create list of lists
+	#print pass_two
 print 'Done\n'
 
 #Check each line for a link reference and create link table
@@ -226,7 +263,7 @@ for i, line in enumerate(SEGMLINES):
 	if line[0].startswith('.'):
 		LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 		SEGMLINES[i].remove(line[0])			#remove label from instruction
-		SEGMLINES[i].remove(line[0])			#remove empty element from seperation bug
+		#SEGMLINES[i].remove(line[0])			#remove empty element from seperation bug
 print '    Link Table'
 for l in LINKTABLE:
 	print l
@@ -258,7 +295,14 @@ print '--------Converting to machine code-----------\n'
 print 'Converting::',
 for i, line in enumerate(SEGMLINES):
 	print line[0],
-	if OpType(line[0]) == 'E':				#Stack operations
+	if OpType(line[0]) == 'F':				#Interrupt operations
+		if line[0] == 'ENAI':
+			MC.append(OpNum('F') + '010' + '00000000')
+		elif line[0] == 'DISI':
+			MC.append(OpNum('F') + '001' + '00000000')
+		elif line[0] == 'RETI':
+			MC.append(OpNum('F') + '000' + '11100000')#Always reads location pointed to by SP
+	elif OpType(line[0]) == 'E':				#Stack operations
 		temp = '0'
 		if line[0] == 'PUSH':
 			temp += '1'
@@ -297,12 +341,14 @@ for i, line in enumerate(SEGMLINES):
 		temp += ConvertToBin(line[2], 8)
 		MC.append(temp)
 	elif OpType(line[0]) == 'A1':				#Data manipulation:Register
-		if (line[0] == 'NEG'):	#NEG
+		if (line[0] == 'NEG'):
 			MC.append(OpNum(line[0]) + regcode(line[1]) + '000' + '000' + '00')
-		elif (line[0] == 'CMP'):#CMP
+		elif (line[0] == 'CMP'):
 			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
-		elif (line[0] == 'NOT'):#NOT
+		elif (line[0] == 'NOT'):
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
+		elif (line[0] == 'NOP'):
+			MC.append(OpNum(line[0]) + '00000000000')
 		else:
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
 	elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
@@ -311,10 +357,10 @@ for i, line in enumerate(SEGMLINES):
 		else:
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
 	print ',',
-print ''
-print '    Binary Output:'
-for l in MC:
-	print l
+#print ''
+#print '    Binary Output:'
+#for l in MC:
+#	print l
 
 # AJR - Do we need binary?
 ##Output result to file
@@ -328,6 +374,8 @@ print ''
 print '    Hex Output:'
 for line in MC:
 	hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
+	while(len(hexline) < 4):
+		hexline = '0'+ hexline
 	print hexline
 	hexfile.write(hexline + '\n')
 
