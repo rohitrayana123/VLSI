@@ -50,18 +50,23 @@ assign CFlag = StatusReg[`FLAGS_C];
 
 `ifndef nointerrupt
 //double buffer the IRQ signal
-logic IRQ1, IntReq, IntClear;
+logic IRQ1, IntReq, IntClear, IntEnable, IntDisable, IntStatus;
 always_ff @ (posedge Clock or negedge nReset) begin
 	if(!nReset) begin
 		IRQ1 <= #20 0;
 		IntReq <= #20 0;
+		IntStatus <= #20 0;
 		end
 	else begin
 		IRQ1 <= #20 ~nIRQ;
-		if (IRQ1) //this will include a test of the intEn flag.
+		if (IRQ1 && IntStatus) //this will include a test of the intEn flag.
 			IntReq <= #20 1; //request an interrupt
 		else if (IntClear)
 			IntReq <= #20 0;
+		if(IntEnable)
+			IntStatus <= #20 1;
+		if(IntDisable)
+			IntStatus <= #20 0;
 	end
 end
 
@@ -119,7 +124,13 @@ always_ff@(posedge Clock or negedge nReset) begin
          	case(stateSub)
             	cycle0: case(Opcode)
             				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                			INTERRUPT, LDW, STW: 	stateSub <= #20 cycle1;
+                			LDW, STW: 	stateSub <= #20 cycle1;
+					INTERRUPT: begin
+					if ( BranchCode == 0)
+						stateSub <= #20 cycle1; //if a return from interrupt
+					else
+						state <= #20 fetch; //else single cycle
+					end//INTERRUPT
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
@@ -157,6 +168,8 @@ always_comb begin
    	ALE      = 0;
 	StatusRegWe= 0;
 	IntClear = 0;
+	IntEnable = 0;
+	IntDisable = 0;
    	case(state)
       	fetch : 
          	case(stateSub)
@@ -448,9 +461,20 @@ always_comb begin
    							AluEn = 1;
 							Op1Sel = Op1Rd1;
 							AluOp = FnA;	
-	                        	   		AluWe = 1;
-							
+	                        	   		AluWe = 1;	
 						end //0 
+						1: begin
+							PcWe = 1;
+							PcSel = Pc1;
+							PcEn = 1; 
+							IntEnable = 1;
+						end //1
+						2: begin
+							PcWe = 1;
+							PcSel = Pc1;
+							PcEn = 1; 
+							IntDisable = 1;
+						end //2
 					endcase
 					end //INTERRUPT
             		endcase //opcode
