@@ -1,3 +1,5 @@
+; This is passed, as is, to an assembler
+; The associated hex file is the assembler output, not hand built
 		; Sys Init		
 		LUI R7, #7		; Setup SP
 		LLI R7, #255
