@@ -25,6 +25,9 @@ module control(
    output logic                     AluWe, 
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
+`ifndef nowait
+  	input wire						nWait,
+`endif
    input  wire                      Clock,
    input  wire                      nReset
 );
@@ -87,8 +90,9 @@ always_ff@(posedge Clock or negedge nReset) begin
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
-            	cycle3: stateSub <= #20 cycle4;
-        		default:begin
+				cycle3: if(nWait)						// Data setup, stay in place
+							stateSub <= #20 cycle4;	
+				default:begin
                     		state <= #20 fetch;
                   			stateSub <= #20 cycle0;
 						end
