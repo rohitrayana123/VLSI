@@ -614,7 +614,7 @@ always_comb begin
 				AluOp = FnA;		// Nothing done to op1
 				nOE = 1;
 	                	nWE = 1;
-				PcEn = 1;
+				AluEn = 1;
 			end
 			cycle3: begin
 				nME = 0;
