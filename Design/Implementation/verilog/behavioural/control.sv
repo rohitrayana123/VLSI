@@ -50,26 +50,25 @@ assign CFlag = StatusReg[`FLAGS_C];
 
 `ifndef nointerrupt
 //double buffer the IRQ signal
-logic IRQ1, IntReq, IntClear, IntEnable, IntDisable, IntStatus;
+logic IRQ1, IRQ2, IntReq, IntClear, IntEnable, IntDisable, IntStatus, InISR;
 always_ff @ (posedge Clock or negedge nReset) begin
 	if(!nReset) begin
 		IRQ1 <= #20 0;
-		IntReq <= #20 0;
+		IRQ2 <= #20 0;
 		IntStatus <= #20 0;
 		end
 	else begin
 		IRQ1 <= #20 ~nIRQ;
-		if (IRQ1 && IntStatus) //this will include a test of the intEn flag.
-			IntReq <= #20 1; //request an interrupt
-		else if (IntClear)
-			IntReq <= #20 0;
+		IRQ2 <= #20 IRQ1;
 		if(IntEnable)
 			IntStatus <= #20 1;
 		if(IntDisable)
 			IntStatus <= #20 0;
 	end
 end
-
+assign IntReq = (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2); //first - if we're not in an
+//interupt and we get a request. Second, if request is satisfied and we get a
+//new one, we want to go back in - allows nestedd
 `endif
 
 enum {
@@ -88,16 +87,17 @@ enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states
 	if(!nReset) begin
-      	StatusReg <= #20 0;
+	      	StatusReg <= #20 0;
 	  	state <= #20 fetch;
-      	stateSub <= #20 cycle0;
+      		stateSub <= #20 cycle0;
+		InISR <= #20 0;
 	end else begin 
 		// Status update
       	if (StatusRegWe)
 			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
 	if(state == interrupt)
 	case(stateSub)
-		cycle0: stateSub <= #20 cycle1;
+		cycle0: begin stateSub <= #20 cycle1; InISR <= #20 1; end
 		cycle1: stateSub <= #20 cycle2;
 		cycle2: stateSub <= #20 cycle3;
 		cycle3: stateSub <= #20 cycle4;
@@ -146,6 +146,7 @@ end
 				else
 	                    		state <= #20 fetch;
                   		stateSub <= #20 cycle0; //always go to cycle 0
+				if(Opcode == INTERRUPT) InISR <= #20 0; //
 						end
          	endcase
    	end
