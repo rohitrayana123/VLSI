@@ -10,11 +10,6 @@
 #			Checking of immediate value sizes
 #			NO input args checking
 #			Instruction-less lines allowed (empty line or comments)
-#Version: 1 (CMPI addition onwards)
-#	  2 (Changed to final ISA, added special case I's and error checking
-#         3 (Ajr changes - Hex output added, bug fix)
-#	  4 (Added SP symbol)
-
 
 import os
 import re
@@ -54,7 +49,7 @@ def OpType(value):	#Determine instruction format type
 		return "C"
 	elif value in ("ADDIB", "SUBIB", "LUI", "LLI"):
 		return "B"
-	elif value in ("ADD", "ADC", "NEG", "SUB", "SUC", "CMP", "AND", "OR", "XOR", "NOT", "NAND", "NOR"):
+	elif value in ("ADD", "ADC", "NEG", "SUB", "SUC", "CMP", "AND", "OR", "XOR", "NOT", "NAND", "NOR", "NOP"):
 		return "A1"
 	elif value in ("ADDI", "ADCI", "SUBI", "SUCI", "CMPI", "LSL", "LSR", "ASR"):
 		return "A2"
@@ -184,6 +179,31 @@ def OpNum(value):	#Determine specific binary value for instruction
 	else:
 		print 'ERROR5: Unrecognised Mneumonic'
 		sys.exit()
+
+if sys.argv[1] == "":
+	print "Please provide input file name, type 'help' or '-h' for information and version history"
+	sys.exit()
+elif sys.argv[1] in ("help", "-h"):
+	print "---Team R4 Assembler Help---"
+	print "------Version: 1 (CMPI addition onwards)"
+	print "               2 (Changed to final ISA, added special case I's and error checking"
+        print "               3 (Ajr changes - Hex output added, bug fix)"
+	print "               4 (Added SP symbol)"
+	print "               5 (NOP support added, help added) UNTESTED"
+	print "               TODO 6 (Interrupt support) - will add myself, please be patient as im out tonight"
+	print "      Current is most recent iteration"
+	print "Input Syntax: ./assemble filename"
+	print "Commenting uses : or ;"
+	print "Labels start with ."
+	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
+	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
+	print "Branching: Symbolic and Numeric supported"
+	print ""
+	print "Notes: Input and output file directory are the same"
+	print "       Input files assume .asm, no extension needed"
+	print "       Immediate value sizes are checked"
+	print "       Instruction-less lines allowed"
+	sys.exit()
 
 #Determine input/output file paths
 assemfile = sys.argv[1]		#filename only
@@ -316,6 +336,8 @@ for i, line in enumerate(SEGMLINES):
 			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
 		elif (line[0] == 'NOT'):#NOT
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
+		elif (line[0] == 'NOP'):#NOP
+			MC.append(OpNum(line[0]) + '00000000000')
 		else:
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
 	elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
