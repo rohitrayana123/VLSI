@@ -14,19 +14,19 @@
 		ADDIB,R0,#0
 		ADDIB,R0,#0
 		ADDIB,R0,#0
-.isr	SUBIB R7, #1 ; decrement SP (Pc has just been put there)
+	SUBIB R7, #1 ; decrement SP (Pc has just been put there)
 	STW R0,[R7,0] ; push R0 to stack
  	SUBIB R7, #1 ; decrement SP
 	STW R1,[R7,0] ; push R1 to stack
-	LUI R0, #0 ; write 0x46 == 0d70 to R1
-	LUI R0, #70
-	LDW R0,[R1,0] ; Read from mem[0x...] to R0
-	ADDIB R0,#1 ; Incrment R0
-	STW R0,[R1,0] ; Store R0 to mem[0x...]
+	LUI R0, #0 ; write 0x46 == 0d70 to R0
+	LLI R0, #70
+	LDW R1,[R0,0] ; Read from mem[0x...] to R1
+	ADDIB R1,#1 ; Incrment R1
+	STW R1,[R0,0] ; Store R1 to mem[0x...]
 	LDW R1,[R7,0] ; return R1 from stack
 	ADDIB R7,#1 
 	LDW R0,[R7,0]; return R0 from stack
-	ADDIB R7,#2 ; increment stack ready to pull Pc off 
+	ADDIB R7,#1 ; increment stack ready to pull Pc off 
 	ADD R0,R0,R0  ; return from ISR
 .multi  LDW R0,[R7,2]	; Op1 in R0
 		LDW R1,[R7,3]	; Op2 in R1
