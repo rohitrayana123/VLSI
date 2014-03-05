@@ -347,11 +347,11 @@ for i, line in enumerate(SEGMLINES):
 		temp += ConvertToBin(line[2], 8)
 		MC.append(temp)
 	elif OpType(line[0]) == 'A1':				#Data manipulation:Register
-		if (line[0] == 'NEG'):
+		if (line[0] == 'NEG'):	#NEG
 			MC.append(OpNum(line[0]) + regcode(line[1]) + '000' + '000' + '00')
-		elif (line[0] == 'CMP'):
+		elif (line[0] == 'CMP'):#CMP
 			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
-		elif (line[0] == 'NOT'):
+		elif (line[0] == 'NOT'):#NOT
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
 		elif (line[0] == 'NOP'):
 			MC.append(OpNum(line[0]) + '00000000000')
