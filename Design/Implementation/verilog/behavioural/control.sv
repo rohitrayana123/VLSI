@@ -107,9 +107,9 @@ always_ff@(posedge Clock or negedge nReset) begin
       	if(state == fetch)
          	case(stateSub)
             	cycle0: begin	
-			if (IntReq) //if an interrupt has been requested
-				state <= #20 interrupt;
-			else
+//			if (IntReq) //if an interrupt has been requested
+//				state <= #20 interrupt;
+//			else
 				stateSub <= #20 cycle1;
 		end
             	cycle1: stateSub <= #20 cycle2;
@@ -123,7 +123,12 @@ always_ff@(posedge Clock or negedge nReset) begin
       	if(state == execute) 
          	case(stateSub)
             	cycle0: case(Opcode)
-            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
+            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
+	if (IntReq) 
+		state <= #20 interrupt; //got an interrupt
+	else 
+		state <= #20 fetch;	// Single cycle ops
+end
                 			LDW, STW: 	stateSub <= #20 cycle1;
 					INTERRUPT: begin
 					if ( BranchCode == 0)
@@ -136,8 +141,11 @@ always_ff@(posedge Clock or negedge nReset) begin
             	cycle2: stateSub <= #20 cycle3;  		
             	cycle3: stateSub <= #20 cycle4;
         		default:begin
-                    		state <= #20 fetch;
-                  			stateSub <= #20 cycle0;
+				if(IntReq)
+					state<= #20 interrupt;
+				else
+	                    		state <= #20 fetch;
+                  		stateSub <= #20 cycle0; //always go to cycle 0
 						end
          	endcase
    	end
