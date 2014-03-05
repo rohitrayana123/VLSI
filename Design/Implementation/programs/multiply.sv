@@ -1,90 +1,53 @@
 ///////////////////////////////////////////////////////////////////////
-//
 // code_mem module
-//     This module is used to perform a simple program assembly
-//
-//
+//		We use the assembler instead	
 ///////////////////////////////////////////////////////////////////////
-
 `include "opcodes.sv"
 `ifdef prog_file
   // already defined - do nothing
 `else
   `define prog_file  "program.hex"
 `endif
-
 module code_mem();
-
 reg [15:0] Data_stored [ 0 : 255 ];
-
-initial
-   begin
-      //
-      // multiply program for simple processor
-      //
-
-      // Define locations of I/O devices 2048,2049
-      `define SWITCHES  12'd2048
-      `define LEDS      12'd2049
-
-      // Define locations of variables 256-258
-      `define VAR_Op1      12'd256
-      `define VAR_Op2      12'd257
-      `define VAR_Res      12'd258
-
-      // Define locations of constants 50-52
-      `define CONST_0   12'd50
-      `define CONST_1   12'd51
-      `define CONST_255 12'd52
-      Data_stored[50] = {16'd0};
-      Data_stored[51] = {16'd1};
-      Data_stored[52] = {16'd255};
-
-      // CODE:
-      Data_stored[0] = {`LDA,`SWITCHES};  // copy low byte to Operand1
-      Data_stored[1] = {`AND,`CONST_255};
-      Data_stored[2] = {`STA,`VAR_Op1};
-
-      Data_stored[3] = {`LDA,`SWITCHES};  // copy high byte to Operand2
-      Data_stored[4] = {`LSR,12'd0};
-      Data_stored[5] = {`LSR,12'd0};
-      Data_stored[6] = {`LSR,12'd0};
-      Data_stored[7] = {`LSR,12'd0};
-      Data_stored[8] = {`LSR,12'd0};
-      Data_stored[9] = {`LSR,12'd0};
-      Data_stored[10] = {`LSR,12'd0};
-      Data_stored[11] = {`LSR,12'd0};
-      Data_stored[12] = {`STA,`VAR_Op2};
-
-      Data_stored[13] = {`LDA,`CONST_0};  // copy zero to Result
-      Data_stored[14] = {`STA,`VAR_Res};
-
-      // .loop
-      Data_stored[15] = {`LDA,`VAR_Op2};  // Acc <- Op2
-      Data_stored[16] = {`JMPZ,12'd23};   // If Acc = 0 then Jump .done
-
-      Data_stored[17] = {`SUB,`CONST_1};  // decrement Operand2
-      Data_stored[18] = {`STA,`VAR_Op2};
-
-      Data_stored[19] = {`LDA,`VAR_Res};  // Result <- Result + Operand1
-      Data_stored[20] = {`ADD,`VAR_Op1};
-      Data_stored[21] = {`STA,`VAR_Res};
-    
-      Data_stored[22] = {`JMP,12'd15};    // Jump .loop
-
-      // .done
-      Data_stored[23] = {`LDA,`VAR_Res};  // copy Result to LEDs
-      Data_stored[24] = {`STA,`LEDS};
-
-      Data_stored[25] = {`JMP,12'd99};    // Jump .end
-
-      // .end
-      Data_stored[99] = {`JMP,12'd99};    // Jump .end
-
-      $writememh( `prog_file, Data_stored );
-
-   end
-
-
+initial begin
+	Data_stored[0] 	= {`LUI,	11'h707}; 
+	Data_stored[1] 	= {`LLI,	11'h7ff);
+	Data_stored[2] 	= {`LUI,	11'h008};
+	Data_stored[3] 	= {`LLI,	11'h000};
+	Data_stored[4] 	= {`LDW,	11'h000};
+	Data_stored[5] 	= {`LUI,	11'h000};
+	Data_stored[6] 	= {`LLI,	11'h1ff};
+	Data_stored[7] 	= {`AND,	11'h104};
+	Data_stored[8] 	= {`LSR,	11'h008};
+	Data_stored[9] 	= {`STW,	11'h0e0};
+	Data_stored[10] = {`SUBIB,	11'h701};
+	Data_stored[11] = {`STW,	11'h1e0};
+	Data_stored[12] = {`SUBIB,	11'h701};
+	Data_stored[13] = {`STW,	11'h2e0};
+	Data_stored[14] = {`SUBIB,	11'h701};
+	Data_stored[15] = {`BRANCH,	11'h30b};
+	Data_stored[16] = {`ADDIB,	11'h701};
+	Data_stored[17] = {`LDW,	11'h2e0};
+	Data_stored[18] = {`ADDIB,	11'h701};
+	Data_stored[19] = {`LDW,	11'h1e0};
+	Data_stored[20] = {`ADDIB,	11'h701};
+	Data_stored[21] = {`LDW,	11'h0e0};
+	Data_stored[22] = {`LUI,	11'h408};
+	Data_stored[23] = {`LLI,	11'h401};
+	Data_stored[24] = {`STW,	11'h280};
+	Data_stored[25] = {`BRANCH,	11'h000};
+	Data_stored[26] = {`LDW,	11'h0e2};
+	Data_stored[27] = {`LDW,	11'h1e3};
+	Data_stored[28] = {`SUB,	11'h248};
+	Data_stored[29] = {`ADDIB,	11'h100};
+	Data_stored[30] = {`BNE,	11'h604};
+	Data_stored[31] = {`ADD,	11'h240};
+	Data_stored[32] = {`SUBIB,	11'h101};
+	Data_stored[33] = {`BE,		11'h7fe};
+	Data_stored[34] = {`STW,	11'h2e1};
+	Data_stored[35] = {`RET,	11'h200};
+	$writememh( `prog_file, Data_stored );
+end
 endmodule
 
