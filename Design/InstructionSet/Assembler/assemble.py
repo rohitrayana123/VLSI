@@ -199,7 +199,7 @@ elif sys.argv[1] in ("help", "-h"):
 	print "Input Syntax: ./assemble filename"
 	print "Commenting uses : or ;"
 	print "Labels start with ."
-	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
+	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
 	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
 	print "Branching: Symbolic and Numeric supported"
 	print ""
