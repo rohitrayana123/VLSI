@@ -38,7 +38,7 @@ typedef enum logic [1:0] 	{Op1Pc, Op1Rd1, Op1Sp } 			Op1_select_t;
 typedef enum logic 			{Op2Rd2=1'b1, Op2Imm=1'b0} 				Op2_select_t;
 typedef enum logic 			{ImmShort=1'b1, ImmLong=1'b0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1'b1, WdAlu=1'b0} 					Wd_select_t;
-typedef enum logic			{Rs1Rd=1'b1, Rs1Ra=1'b0} 					Rs1_select_t;
+typedef enum logic  [1:0]	{Rs1Rd=1, Rs1Ra=0,Seven=2} 					Rs1_select_t;
 typedef enum logic			{LrPc=1'b1, LrSys=1'b0}					Lr_select_t;		
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
@@ -82,6 +82,8 @@ LDW   	= 5'b00000,
 STW    	= 5'b01000, 
 LUI    	= 5'b10100, 
 LLI	  	= 5'b10101, 
-BRANCH 	= 5'b11110
+BRANCH 	= 5'b11110,
+PUSH	= 5'b01001,
+POP		= 5'b00001
 } Opcode_t;
 endpackage
