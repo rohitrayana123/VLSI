@@ -70,7 +70,7 @@ def RunSim(options):
 			print asmb
 			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
 
-		cmd.append('+define+prog_file=\"\\\\\\%s\\\\\\\"' % os.path.join(programs, programfile+".hex"))
+		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 
 	# Hard code for bim
 	cmd.append('+define+switch_value=2569')
