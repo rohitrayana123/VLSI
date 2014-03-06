@@ -195,7 +195,7 @@ elif sys.argv[1] in ("help", "-h"):
 	print "Input Syntax: ./assemble filename"
 	print "Commenting uses : or ;"
 	print "Labels start with ."
-	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
+	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
 	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
 	print "Branching: Symbolic and Numeric supported"
 	print ""
@@ -302,7 +302,7 @@ for i, line in enumerate(SEGMLINES):
 			temp += '1'
 		else:
 			temp += '0'
-		temp += '00' + regcode(line[1]) + '00000'
+		temp += '00' + regcode(line[1]) + '00001'
 		MC.append(temp)
 	elif OpType(line[0]) == 'D1':				#Control transfer: Jump
 		MC.append(OpNum('D1') + conditioncode(line[0]) + regcode(line[1]) + ConvertToBin(line[2], 5))

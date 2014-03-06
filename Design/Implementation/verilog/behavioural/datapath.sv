@@ -12,6 +12,7 @@ module datapath(
   input  opcodes::Wd_select_t WdSel,
   input  opcodes::Rs1_select_t Rs1Sel,
   input  opcodes::Lr_select_t LrSel,
+  input  opcodes::Rw_select_t RwSel,
   input  wire           AluEn, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, CFlag, AluWe
 );
 
@@ -19,7 +20,7 @@ import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
-logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
+logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn, Rw;
 logic [2:0] Rs1In;
 
 //Combinational logic for tristate bus, reg inputs or outputs
@@ -29,6 +30,7 @@ assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
+assign Rw = (RwSel == RwSeven) ? 3'b111 : Ir[10:8];  
 //assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
 assign PcInc = Pc + 1;
 
@@ -71,7 +73,7 @@ regBlock regBlock(      // Register block instance
    .WData   (WData   ),
    .Rs1     (Rs1In   ),
    .Rs2     (Ir[4:2] ),
-   .Rw      (Ir[10:8]),
+   .Rw      (Rw		), //Ir[10:8]),
    .Clock   (Clock   ),
    .nReset  (nReset  ),
    .We      (RegWe   )
