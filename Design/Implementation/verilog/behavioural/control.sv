@@ -526,7 +526,8 @@ always_comb begin
 					AluOp = FnA;		// Nothing done to op1
                         		Rs1Sel = Rs1Rd;
 					MemEn = 1;
-	                        	nWE = 1;
+						nOE = 1;
+						nWE = 1;
         	             		AluWe = 1;			// Pass right through on next clock
                 	        	AluEn = 1;
 				end
