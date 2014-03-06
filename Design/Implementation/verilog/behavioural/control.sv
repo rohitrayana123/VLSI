@@ -58,18 +58,20 @@ always_ff @ (posedge Clock or negedge nReset) begin
 	if(!nReset) begin
 		IRQ1 <= #20 0;
 		IRQ2 <= #20 0;
+		IntReq <= #20 0;
 		IntStatus <= #20 0;
 		end
 	else begin
 		IRQ1 <= #20 ~nIRQ;
 		IRQ2 <= #20 IRQ1;
+		IntReq <= #20 (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2) | (IntReq & ~IntClear);
 		if(IntEnable)
 			IntStatus <= #20 1;
 		if(IntDisable)
 			IntStatus <= #20 0;
 	end
 end
-assign IntReq = (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2); //first - if we're not in an
+//assign IntReq = (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2); //first - if we're not in an
 //interupt and we get a request. Second, if request is satisfied and we get a
 //new one, we want to go back in - allows nestedd
 `endif
@@ -128,11 +130,11 @@ always_ff@(posedge Clock or negedge nReset) begin
          	case(stateSub)
             	cycle0: case(Opcode)
             				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
-	if (IntReq) 
-		state <= #20 interrupt; //got an interrupt
-	else 
-		state <= #20 fetch;	// Single cycle ops
-end
+								if (IntReq) 
+									state <= #20 interrupt; //got an interrupt
+								else 
+									state <= #20 fetch;	// Single cycle ops
+							end
                 			LDW, STW: 	stateSub <= #20 cycle1;
 					INTERRUPT: begin
 					if ( BranchCode == 0)
