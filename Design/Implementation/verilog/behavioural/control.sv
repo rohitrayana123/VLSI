@@ -22,6 +22,7 @@ module control(
    output logic                     CFlag,
    output opcodes::Lr_select_t      LrSel,
    output opcodes::Rs1_select_t     Rs1Sel,
+   output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
@@ -126,7 +127,8 @@ always_comb begin
    	ALE      = 0;
 		PcSel = Pc1;
 	StatusRegWe= 0;
-   	case(state)
+   RwSel = 0;
+   case(state)
       	fetch : 
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
@@ -410,14 +412,14 @@ always_comb begin
 								end	
 							endcase
 						end	
-						PUSH:begin
+						PUSH,POP:begin
 							AluEn = 1;
 							ImmSel = ImmShort;
                            	Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
 							AluOp = FnADD;	
                            	AluWe = 1;	
-						end
+						end	
             		endcase
          		end
          		cycle1:begin 
@@ -431,7 +433,7 @@ always_comb begin
 							Op1Sel = Op1Rd1;
                 			AluEn = 1; 
          				end
-						PUSH:begin
+						PUSH,POP:begin
 							ALE = 1;
                				nWE = 1;
                				nOE = 1; 
@@ -440,7 +442,7 @@ always_comb begin
 							Op1Sel = Op1Rd1;
 							Rs1Sel = Seven;
                 			AluEn = 1;
-						end
+						end	
 					endcase
 				end
          		cycle2: begin
@@ -475,6 +477,17 @@ always_comb begin
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
 						end
+						POP:begin
+							nME = 0;
+                        	Op1Sel = Op1Rd1;
+							AluOp = FnA;		// Nothing done to op1
+                        	Rs1Sel = Seven;
+							MemEn = 1;
+                        	nWE = 1;
+                     		AluWe = 1;			// Pass right through on next clock
+                        	AluEn = 1;
+						end
+
             		endcase
          		end
          		cycle3: begin
@@ -491,11 +504,15 @@ always_comb begin
                         	nOE = 1;               
                      	end  
 						PUSH:begin
+							nME = 0;	
+							nOE = 1;	
+							LrEn = 1;
+						end
+						POP:begin
 							nME = 0;
 							MemEn = 1;
 							ENB = 1;
 							nWE = 1;
-							LrEn = 1;
 						end
             		endcase  
          		end
@@ -517,6 +534,13 @@ always_comb begin
 						PUSH:begin
 							nOE = 1;
 							LrEn = 1;
+						end
+						POP:begin
+							nWE = 1;
+							MemEn = 1;
+							WdSel = WdSys;
+							RegWe = 1;
+							LrWe = 1;	
 						end
 					endcase
          		end
