@@ -1,0 +1,45 @@
+						; Sys Init		
+@0000	a707			LUI R7, #7		; Setup SP
+@0001	afff			LLI R7, #255
+		
+						; Read data		
+@0002	a008			LUI R0, #8		; Address in R0
+@0003	a800			LLI R0, #0
+@0004	0000			LDW R0,[R0,#0]	; Read switches into R0
+@0005	a100			LUI R1, #0		
+@0006	a9ff			LLI R1, #255	; 0x00FF in R1
+@0007	8104			AND R1,R0,R1	; Lower byte of switches in R1	
+@0008	e808			LSR R0,R1,#8	; Upper byte of switches in R0	
+
+						; Call subroutine 
+@0009	40e0			STW R0,[R7,#0]	; Param 1 = R1, Upper	
+@000a	5f01			SUBIB R8,#1
+@000b	41e0			STW R1,[R7,#0]	; Param 2 = R2, Lower
+@000c	5f01			SUBIB R7,#1
+@000d	42e0			STW R2,[R7,#0]	; Placeholder = 0
+@000e	5f01			SUBIB R7,#1		; Created stack frame	
+@000f	f30b			BWL .multi		; Run Subroutine
+@0010	1f01			ADDIB R7,#1		; Restore regist
+@0011	02e0        	LDW R2,[R7,#0]	; Result in R2
+@0012	1f01        	ADDIB R7,#1	
+@0013	01e0        	LDW R1,[R7,#0]	; Restore R1	
+@0014	1f01        	ADDIB R7,#1
+@0015	00e0        	LDW R0,[R7,#0]	; Restire R0	
+@0016	a408        	LUI R4, #8
+@0017	ac01        	LLI R4, #1		; Address of LEDS
+@0018	4280        	STW R2,[R4,#0]	; Result on LEDS
+
+						; Finish loop
+@0019	f000	.end 	BR .end			; Finshed loop
+
+						; Multiply loop
+@001a	00e2	.multi	LDW R0,[R7,#2]	; Op1 in R0
+@001b	01e3            LDW R1,[R7,#3]	; Op2 in R1
+@001c	5248            SUB R2,R2,R2	; Zero in R2
+@001d	1900            ADDIB R1,#0		; Check Op2 is not zero
+@001e	f604            BNE .done
+@001f	1240  	.loop	ADD R2,R2,R0	; Add Op1
+@0020	5901            SUBIB R1,#1		; Dec Op2
+@0021	f7fe            BE .loop
+@0022	42e1  	.done	STW R2,[R7,#1]	; Store result in the place holder
+@0023	f200			RET
