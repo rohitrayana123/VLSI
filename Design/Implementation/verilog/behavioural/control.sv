@@ -75,7 +75,8 @@ always_ff@(posedge Clock or negedge nReset) begin
          	case(stateSub)
             	cycle0: stateSub <= #20 cycle1;
             	cycle1: stateSub <= #20 cycle2;
-            	cycle2: stateSub <= #20 cycle3;
+            	cycle2: if(nWait)
+							stateSub <= #20 cycle3;
             	default:begin							// Should never get in cycle4 in fetch 
 							state <= #20 execute;
          					stateSub <= #20 cycle0;
