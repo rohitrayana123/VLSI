@@ -67,7 +67,10 @@ control control (
    .Rs1Sel     (Rs1Sel     ),
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
-   .OpcodeCondIn(Opcode     ),    // Inputs 
+   .OpcodeCondIn(Opcode     ),    // Inputs
+`ifndef nowait
+  	.nWait		(nWait),
+`endif
    .AluWe      (AluWe      ),
    .Clock      (Clock      ),
    .nReset     (nReset     )

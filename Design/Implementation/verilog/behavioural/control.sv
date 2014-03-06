@@ -25,6 +25,9 @@ module control(
    output logic                     AluWe, 
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
+`ifndef nowait
+  	input wire						nWait,
+`endif
    input  wire                      Clock,
    input  wire                      nReset
 `ifndef nointerrupt
@@ -113,7 +116,8 @@ always_ff@(posedge Clock or negedge nReset) begin
 				stateSub <= #20 cycle1;
 		end
             	cycle1: stateSub <= #20 cycle2;
-            	cycle2: stateSub <= #20 cycle3;
+            	cycle2: if(nWait)
+							stateSub <= #20 cycle3;
             	default:begin							// Should never get in cycle4 in fetch 
 							state <= #20 execute;
          					stateSub <= #20 cycle0;
@@ -139,7 +143,8 @@ end
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
-            	cycle3: stateSub <= #20 cycle4;
+            	cycle3: if(nWait)						// Data setup, stay in place
+							stateSub <= #20 cycle4;	
         		default:begin
 				if(IntReq)
 					state<= #20 interrupt;
@@ -147,6 +152,7 @@ end
 	                    		state <= #20 fetch;
                   		stateSub <= #20 cycle0; //always go to cycle 0
 				if(Opcode == INTERRUPT) InISR <= #20 0; //
+
 						end
          	endcase
    	end
