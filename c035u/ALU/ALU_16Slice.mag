@@ -1,0 +1,308 @@
+magic
+tech c035u
+timestamp 1394129884
+<< error_p >>
+rect 288 16681 300 16682
+rect 5145 0 5151 2
+<< error_ps >>
+rect 288 16682 300 16694
+<< metal1 >>
+rect -10 16522 0 16532
+rect -10 16500 0 16510
+rect -10 15480 0 15490
+rect -10 15458 0 15468
+rect -10 14438 0 14448
+rect -10 14416 0 14426
+rect -10 13396 0 13406
+rect -10 13374 0 13384
+rect -10 12354 0 12364
+rect -10 12332 0 12342
+rect -10 11312 0 11322
+rect -10 11290 0 11300
+rect -10 10270 0 10280
+rect -10 10248 0 10258
+rect -10 9228 0 9238
+rect -10 9206 0 9216
+rect -10 8186 0 8196
+rect -10 8164 0 8174
+rect -10 7144 0 7154
+rect -10 7122 0 7132
+rect -10 6102 0 6112
+rect -10 6080 0 6090
+rect -10 5060 0 5070
+rect -10 5038 0 5048
+rect -10 4018 0 4028
+rect -10 3996 0 4006
+rect -10 2976 0 2986
+rect -10 2954 0 2964
+rect -10 1934 0 1944
+rect -10 1912 0 1922
+rect -10 892 0 902
+rect -10 870 0 880
+<< metal2 >>
+rect 24 16672 36 16684
+rect 288 16682 300 16684
+rect 288 16670 300 16681
+rect 456 16672 468 16684
+rect 624 16668 636 16684
+rect 648 16671 660 16684
+rect 720 16671 732 16684
+rect 936 16672 948 16684
+rect 1080 16672 1092 16684
+rect 1416 16672 1428 16684
+rect 1776 16666 1788 16684
+rect 2184 16672 2196 16684
+rect 2520 16670 2532 16684
+rect 2832 16666 2844 16684
+rect 3168 16672 3180 16684
+rect 3288 16672 3300 16684
+rect 3336 16672 3348 16684
+rect 3504 16672 3516 16684
+rect 3600 16669 3612 16684
+rect 3648 16672 3660 16684
+rect 3696 16672 3708 16684
+rect 3744 16672 3756 16684
+rect 4056 16672 4068 16684
+rect 4104 16672 4116 16684
+rect 4152 16672 4164 16684
+rect 4464 16672 4476 16684
+rect 4512 16672 4524 16684
+rect 4896 16672 4908 16684
+rect 5064 16672 5076 16684
+rect 5089 16671 5101 16684
+rect 5136 16672 5148 16684
+rect 5184 16672 5196 16684
+rect 5232 16672 5244 16684
+rect 5280 16672 5292 16684
+rect 5520 16672 5532 16684
+rect 5592 16672 5604 16684
+rect 5640 16672 5652 16684
+rect 5688 16672 5700 16684
+rect 5928 16672 5940 16684
+rect 6000 16672 6012 16684
+rect 6048 16672 6060 16684
+rect 6288 16672 6300 16684
+rect 6360 16672 6372 16684
+rect 6648 16672 6660 16684
+rect 24 -12 36 0
+rect 288 -12 300 23
+rect 456 -12 468 15
+rect 648 -12 660 12
+rect 936 -12 948 3
+rect 1080 -12 1092 3
+rect 1416 -12 1428 2
+rect 1776 -12 1788 3
+rect 2184 -12 2196 0
+rect 2520 -12 2532 0
+rect 2832 -12 2844 1
+rect 3168 -12 3180 0
+rect 3336 -12 3348 6
+rect 3504 -12 3516 3
+rect 3600 -12 3612 0
+rect 3648 -12 3660 0
+rect 3696 -12 3708 0
+rect 3744 -12 3756 0
+rect 4056 -12 4068 0
+rect 4104 -12 4116 0
+rect 4152 -12 4164 0
+rect 4464 -12 4476 0
+rect 4512 -12 4524 0
+rect 4896 -12 4908 4
+rect 5139 0 5145 2
+rect 5064 -12 5076 0
+rect 5089 -12 5101 0
+rect 5136 -12 5148 0
+rect 5184 -12 5196 0
+rect 5232 -12 5244 0
+rect 5280 -12 5292 0
+rect 5520 -12 5532 3
+rect 5592 -12 5604 0
+rect 5640 -12 5652 0
+rect 5688 -12 5700 0
+rect 5928 -12 5940 0
+rect 6000 -12 6012 0
+rect 6048 -12 6060 0
+rect 6288 -12 6300 4
+rect 6360 -12 6372 0
+rect 6648 -12 6660 0
+use ALUSlice ALUSlice_15
+timestamp 1394128665
+transform 1 0 0 0 1 15630
+box 0 0 6768 1042
+use ALUSlice ALUSlice_14
+timestamp 1394128665
+transform 1 0 0 0 1 14588
+box 0 0 6768 1042
+use ALUSlice ALUSlice_13
+timestamp 1394128665
+transform 1 0 0 0 1 13546
+box 0 0 6768 1042
+use ALUSlice ALUSlice_12
+timestamp 1394128665
+transform 1 0 0 0 1 12504
+box 0 0 6768 1042
+use ALUSlice ALUSlice_11
+timestamp 1394128665
+transform 1 0 0 0 1 11462
+box 0 0 6768 1042
+use ALUSlice ALUSlice_10
+timestamp 1394128665
+transform 1 0 0 0 1 10420
+box 0 0 6768 1042
+use ALUSlice ALUSlice_9
+timestamp 1394128665
+transform 1 0 0 0 1 9378
+box 0 0 6768 1042
+use ALUSlice ALUSlice_8
+timestamp 1394128665
+transform 1 0 0 0 1 8336
+box 0 0 6768 1042
+use ALUSlice ALUSlice_7
+timestamp 1394128665
+transform 1 0 0 0 1 7294
+box 0 0 6768 1042
+use ALUSlice ALUSlice_6
+timestamp 1394128665
+transform 1 0 0 0 1 6252
+box 0 0 6768 1042
+use ALUSlice ALUSlice_5
+timestamp 1394128665
+transform 1 0 0 0 1 5210
+box 0 0 6768 1042
+use ALUSlice ALUSlice_4
+timestamp 1394128665
+transform 1 0 0 0 1 4168
+box 0 0 6768 1042
+use ALUSlice ALUSlice_3
+timestamp 1394128665
+transform 1 0 0 0 1 3126
+box 0 0 6768 1042
+use ALUSlice ALUSlice_2
+timestamp 1394128665
+transform 1 0 0 0 1 2084
+box 0 0 6768 1042
+use ALUSlice ALUSlice_1
+timestamp 1394128665
+transform 1 0 0 0 1 1042
+box 0 0 6768 1042
+use ALUSlice ALUSlice_0
+timestamp 1394128665
+transform 1 0 0 0 1 0
+box 0 0 6768 1042
+<< labels >>
+rlabel metal1 -10 16522 -10 16532 3 B[15]
+rlabel metal1 -10 16500 -10 16510 3 A[15]
+rlabel metal1 -10 15480 -10 15490 3 B[14]
+rlabel metal1 -10 15458 -10 15468 3 A[14]
+rlabel metal1 -10 14416 -10 14426 3 A[13]
+rlabel metal1 -10 14438 -10 14448 3 B[13]
+rlabel metal1 -10 13374 -10 13384 3 A[12]
+rlabel metal1 -10 13396 -10 13406 3 B[12]
+rlabel metal1 -10 12332 -10 12342 3 A[11]
+rlabel metal1 -10 12354 -10 12364 3 B[11]
+rlabel metal1 -10 11290 -10 11300 3 A[10]
+rlabel metal1 -10 11312 -10 11322 3 B[10]
+rlabel metal1 -10 10248 -10 10258 3 A[9]
+rlabel metal1 -10 10270 -10 10280 3 B[9]
+rlabel metal1 -10 9206 -10 9216 3 A[8]
+rlabel metal1 -10 9228 -10 9238 3 B[8]
+rlabel metal1 -10 8164 -10 8174 3 A[7]
+rlabel metal1 -10 8186 -10 8196 3 B[7]
+rlabel metal1 -10 7122 -10 7132 3 A[6]
+rlabel metal1 -10 7144 -10 7154 3 B[6]
+rlabel metal1 -10 6102 -10 6112 3 B[5]
+rlabel metal1 -10 6080 -10 6090 3 A[5]
+rlabel metal1 -10 5038 -10 5048 3 A[4]
+rlabel metal1 -10 5060 -10 5070 3 B[4]
+rlabel metal1 -10 3996 -10 4006 3 A[3]
+rlabel metal1 -10 4018 -10 4028 3 B[3]
+rlabel metal1 -10 2976 -10 2986 3 B[2]
+rlabel metal1 -10 2954 -10 2964 3 A[2]
+rlabel metal1 -10 1934 -10 1943 3 B[1]
+rlabel metal1 -10 1912 -10 1922 3 A[1]
+rlabel metal1 -10 892 -10 902 3 B[0]
+rlabel metal1 -10 870 -10 880 3 A[0]
+rlabel metal2 24 -12 36 -12 1 ZeroA
+rlabel metal2 6360 -12 6372 -12 1 Sh1_R_Out
+rlabel metal2 4896 -12 4908 -12 1 Sh1_L_In
+rlabel metal2 6048 -12 6060 -12 1 Sh2A_R
+rlabel metal2 6000 -12 6012 -12 1 Sh2Z_R
+rlabel metal2 5592 -12 5604 -12 1 Sh4Z_R
+rlabel metal2 5640 -12 5652 -12 1 Sh4A_R
+rlabel metal2 5688 -12 5700 -12 1 Sh4B_R
+rlabel metal2 5136 -12 5148 -12 1 Sh8Z_R
+rlabel metal2 5184 -12 5196 -12 1 Sh8A_R
+rlabel metal2 5232 -12 5244 -12 1 Sh8B_R
+rlabel metal2 5280 -12 5292 -12 1 Sh8C_R
+rlabel metal2 4152 -12 4164 -12 1 Sh4D_L
+rlabel metal2 4104 -12 4116 -12 1 Sh4C_L
+rlabel metal2 4056 -12 4068 -12 1 Sh4B_L
+rlabel metal2 3744 -12 3756 -12 1 Sh8E_L
+rlabel metal2 3696 -12 3708 -12 1 Sh8D_L
+rlabel metal2 3648 -12 3660 -12 1 Sh8C_L
+rlabel metal2 3600 -12 3612 -12 1 Sh8B_L
+rlabel metal2 4512 -12 4524 -12 1 Sh2C_L
+rlabel metal2 4464 -12 4476 -12 1 Sh2B_L
+rlabel metal2 1080 -12 1092 -12 1 FAOut
+rlabel metal2 456 -12 468 -12 1 CIn
+rlabel metal2 1416 -12 1428 -12 1 AND
+rlabel metal2 1776 -12 1788 -12 1 OR
+rlabel metal2 2184 -12 2196 -12 1 XOR
+rlabel metal2 2520 -12 2532 -12 1 NOT
+rlabel metal2 2832 -12 2844 -12 1 NAND
+rlabel metal2 3168 -12 3180 -12 1 NOR
+rlabel metal2 3504 -12 3516 -12 1 ShL
+rlabel metal2 5089 -12 5101 -12 1 ShR
+rlabel metal2 6648 -12 6660 -12 1 ShOut
+rlabel metal2 3336 -12 3348 -12 1 ShB
+rlabel metal2 288 -12 300 -12 1 SUB
+rlabel metal2 5064 -12 5076 -12 1 Sh8
+rlabel metal2 5520 -12 5532 -12 1 Sh4
+rlabel metal2 5928 -12 5940 -12 1 Sh2
+rlabel metal2 6288 -12 6300 -12 1 Sh1
+rlabel metal2 936 -12 948 -12 1 nZ_prev
+rlabel metal2 648 -12 660 -12 1 CIn_Slice
+rlabel metal2 624 16684 636 16684 5 CIn_Slice
+rlabel metal2 3504 16684 3516 16684 5 ShL
+rlabel metal2 5089 16684 5101 16684 5 ShR
+rlabel metal2 4464 16684 4476 16684 5 Sh2A_L
+rlabel metal2 4512 16684 4524 16684 5 Sh2B_L
+rlabel metal2 3600 16684 3612 16684 5 Sh8A_L
+rlabel metal2 3648 16684 3660 16684 5 Sh8B_L
+rlabel metal2 3696 16684 3708 16684 5 Sh8C_L
+rlabel metal2 3744 16684 3756 16684 5 Sh8D_L
+rlabel metal2 4056 16684 4068 16684 5 Sh4A_L
+rlabel metal2 4104 16684 4116 16684 5 Sh4B_L
+rlabel metal2 4152 16684 4164 16684 5 Sh4C_L
+rlabel metal2 5136 16684 5148 16684 5 Sh8A_R
+rlabel metal2 5184 16684 5196 16684 5 Sh8B_R
+rlabel metal2 5232 16684 5244 16684 5 Sh8C_R
+rlabel metal2 5592 16684 5604 16684 5 Sh4A_R
+rlabel metal2 5640 16684 5652 16684 5 Sh4B_R
+rlabel metal2 5688 16684 5700 16684 5 Sh4C_R
+rlabel metal2 6000 16684 6012 16684 5 Sh2A_R
+rlabel metal2 6048 16684 6060 16684 5 Sh2B_R
+rlabel metal2 6648 16684 6660 16684 5 ShOut
+rlabel metal2 5280 16684 5292 16684 5 Sh8D_R
+rlabel metal2 5064 16684 5076 16684 5 Sh8
+rlabel metal2 5520 16684 5532 16684 5 Sh4
+rlabel metal2 5928 16684 5940 16684 5 Sh2
+rlabel metal2 6288 16684 6300 16684 5 Sh1
+rlabel metal2 1080 16684 1092 16684 5 FAOut
+rlabel metal2 936 16684 948 16684 5 nZ
+rlabel metal2 288 16684 300 16684 5 SUB
+rlabel metal2 1416 16684 1428 16684 5 AND
+rlabel metal2 1776 16684 1788 16684 5 OR
+rlabel metal2 2184 16684 2196 16684 5 XOR
+rlabel metal2 2520 16684 2532 16684 5 NOT
+rlabel metal2 2832 16684 2844 16684 5 NAND
+rlabel metal2 3168 16684 3180 16684 5 NOR
+rlabel metal2 3336 16684 3348 16684 5 ShB
+rlabel metal2 648 16684 660 16684 5 COut
+rlabel metal2 720 16684 732 16684 5 Sum
+rlabel metal2 456 16684 468 16684 5 CIn
+rlabel metal2 3288 16684 3300 16684 5 A
+rlabel metal2 4896 16684 4908 16684 5 Sh1_L_Out
+rlabel metal2 6360 16684 6372 16684 5 Sh1_R_In
+rlabel metal2 24 16684 36 16684 5 ZeroA
+<< end >>
