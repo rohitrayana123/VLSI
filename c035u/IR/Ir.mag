@@ -1,0 +1,19 @@
+magic
+tech c035u
+timestamp 1394146718
+use IrAA  IrAA_0
+array 0 0 1008 0 7 1023
+timestamp 1394146470
+transform 1 0 0 0 1 8184
+box 0 0 1008 1023
+use IrBA  IrBA_0
+array 0 0 1008 0 2 1023
+timestamp 1394146615
+transform 1 0 0 0 1 5115
+box 0 0 1008 1023
+use IrBB  IrBB_0
+array 0 0 1008 0 4 1023
+timestamp 1394146628
+transform 1 0 0 0 1 0
+box 0 0 1008 1023
+<< end >>
