@@ -1,8 +1,8 @@
 magic
 tech c035u
-timestamp 1394121372
+timestamp 1394213885
 << metal1 >>
-rect 0 1021 73 1031
+rect 50 1021 73 1031
 rect 88 1021 1225 1031
 rect 1239 1021 2377 1031
 rect 2392 1021 3529 1031
@@ -26,21 +26,7 @@ rect 7574 971 7705 981
 rect 7719 971 7921 981
 rect 8726 971 8857 981
 rect 8871 971 9073 981
-rect 0 928 50 938
-rect 9266 928 9385 938
-rect 0 905 50 915
-rect 9266 905 9385 915
-rect 0 867 50 892
-rect 9266 867 9385 892
-rect 0 222 50 247
-rect 9266 222 9385 247
-rect 0 199 50 209
-rect 9266 199 9385 209
-rect 0 176 50 186
-rect 9266 176 9385 186
-rect 0 153 50 163
-rect 9266 153 9385 163
-rect 0 60 936 70
+rect 50 60 936 70
 rect 951 60 2088 70
 rect 2103 60 3240 70
 rect 3255 60 4393 70
@@ -48,8 +34,8 @@ rect 4408 60 5543 70
 rect 5561 60 6695 70
 rect 6713 60 7847 70
 rect 7865 60 9001 70
-rect 9015 60 9385 70
-rect 0 25 1153 35
+rect 9015 60 9266 70
+rect 50 25 1153 35
 rect 1167 25 2305 35
 rect 2319 25 3457 35
 rect 3471 25 4609 35
@@ -57,7 +43,7 @@ rect 4624 25 5760 35
 rect 5778 25 6912 35
 rect 6930 25 8064 35
 rect 8082 25 9217 35
-rect 9231 25 9385 35
+rect 9231 25 9266 35
 << m2contact >>
 rect 73 1018 88 1034
 rect 1225 1020 1239 1034
@@ -204,113 +190,103 @@ rect 8930 0 8942 146
 rect 9002 72 9014 146
 rect 9146 0 9158 146
 rect 9218 38 9230 146
-use scanreg scanreg_1
+use scanreg  scanreg_1
 timestamp 1386241447
 transform 1 0 50 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_0
+use trisbuf  trisbuf_0
 timestamp 1386237216
 transform 1 0 770 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_1
+use trisbuf  trisbuf_1
 timestamp 1386237216
 transform 1 0 986 0 1 146
 box 0 0 216 799
-use scanreg scanreg_2
+use scanreg  scanreg_2
 timestamp 1386241447
 transform 1 0 1202 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_2
+use trisbuf  trisbuf_2
 timestamp 1386237216
 transform 1 0 1922 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_3
+use trisbuf  trisbuf_3
 timestamp 1386237216
 transform 1 0 2138 0 1 146
 box 0 0 216 799
-use scanreg scanreg_3
+use scanreg  scanreg_3
 timestamp 1386241447
 transform 1 0 2354 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_4
+use trisbuf  trisbuf_4
 timestamp 1386237216
 transform 1 0 3074 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_5
+use trisbuf  trisbuf_5
 timestamp 1386237216
 transform 1 0 3290 0 1 146
 box 0 0 216 799
-use scanreg scanreg_4
+use scanreg  scanreg_4
 timestamp 1386241447
 transform 1 0 3506 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_6
+use trisbuf  trisbuf_6
 timestamp 1386237216
 transform 1 0 4226 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_7
+use trisbuf  trisbuf_7
 timestamp 1386237216
 transform 1 0 4442 0 1 146
 box 0 0 216 799
-use scanreg scanreg_5
+use scanreg  scanreg_5
 timestamp 1386241447
 transform 1 0 4658 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_8
+use trisbuf  trisbuf_8
 timestamp 1386237216
 transform 1 0 5378 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_9
+use trisbuf  trisbuf_9
 timestamp 1386237216
 transform 1 0 5594 0 1 146
 box 0 0 216 799
-use scanreg scanreg_6
+use scanreg  scanreg_6
 timestamp 1386241447
 transform 1 0 5810 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_10
+use trisbuf  trisbuf_10
 timestamp 1386237216
 transform 1 0 6530 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_11
+use trisbuf  trisbuf_11
 timestamp 1386237216
 transform 1 0 6746 0 1 146
 box 0 0 216 799
-use scanreg scanreg_7
+use scanreg  scanreg_7
 timestamp 1386241447
 transform 1 0 6962 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_12
+use trisbuf  trisbuf_12
 timestamp 1386237216
 transform 1 0 7682 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_13
+use trisbuf  trisbuf_13
 timestamp 1386237216
 transform 1 0 7898 0 1 146
 box 0 0 216 799
-use scanreg scanreg_8
+use scanreg  scanreg_8
 timestamp 1386241447
 transform 1 0 8114 0 1 146
 box 0 0 720 799
-use trisbuf trisbuf_14
+use trisbuf  trisbuf_14
 timestamp 1386237216
 transform 1 0 8834 0 1 146
 box 0 0 216 799
-use trisbuf trisbuf_15
+use trisbuf  trisbuf_15
 timestamp 1386237216
 transform 1 0 9050 0 1 146
 box 0 0 216 799
 << labels >>
-rlabel metal1 0 1021 0 1031 1 WData
-rlabel metal1 0 60 0 70 3 Rd1
-rlabel metal1 0 25 0 35 3 Rd2
-rlabel metal1 0 928 0 938 3 ScanReturn
-rlabel metal1 0 905 0 915 3 SDI
-rlabel metal1 0 153 0 163 3 nReset
-rlabel metal1 0 176 0 186 3 Test
-rlabel metal1 0 199 0 209 3 Clock
-rlabel metal1 0 222 0 247 3 GND!
-rlabel metal1 0 867 0 892 3 Vdd!
 rlabel metal2 5474 1075 5486 1075 5 Rs1[4]
 rlabel metal2 4730 1075 4742 1075 5 Rw[4]
 rlabel metal2 4538 1075 4550 1075 5 Rs2[3]
@@ -356,16 +332,12 @@ rlabel metal2 7994 1075 8006 1075 5 Rs2[6]
 rlabel metal2 8930 1075 8942 1075 5 Rs1[7]
 rlabel metal2 9146 1075 9158 1075 5 Rs2[7]
 rlabel metal2 8186 1075 8198 1075 5 Rw[7]
-rlabel metal1 9385 25 9385 35 7 Rd2
-rlabel metal1 9385 60 9385 70 7 Rd1
-rlabel metal1 9385 905 9385 915 7 Scan
-rlabel metal1 9385 928 9385 938 7 ScanReturn
-rlabel metal1 9385 867 9385 892 7 Vdd!
-rlabel metal1 9385 153 9385 163 7 nReset
-rlabel metal1 9385 176 9385 186 7 Test
-rlabel metal1 9385 199 9385 209 7 Clock
-rlabel metal1 9385 223 9385 247 7 GND!
 rlabel metal2 2234 0 2246 0 1 Rs2[1]
 rlabel metal2 122 1075 134 1075 5 Rw[0]
 rlabel metal2 866 0 878 0 1 Rs1[0]
+rlabel metal1 50 60 50 70 3 Rd1
+rlabel metal1 50 25 50 35 3 Rd2
+rlabel metal1 50 1021 50 1031 1 WData
+rlabel metal1 9266 25 9266 35 7 Rd2
+rlabel metal1 9266 60 9266 70 7 Rd1
 << end >>
