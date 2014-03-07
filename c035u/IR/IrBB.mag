@@ -1,11 +1,13 @@
 magic
 tech c035u
-timestamp 1394146628
+timestamp 1394190216
 << metal1 >>
 rect 805 970 935 980
 rect 757 942 887 952
 rect 0 77 23 87
 rect 0 57 599 67
+rect 613 57 743 67
+rect 757 57 791 67
 rect 973 57 1008 67
 << m2contact >>
 rect 791 968 805 982
@@ -14,6 +16,8 @@ rect 743 940 757 954
 rect 887 940 901 954
 rect 23 77 37 91
 rect 599 55 613 69
+rect 743 56 757 70
+rect 791 56 805 70
 rect 959 55 973 69
 << metal2 >>
 rect 72 901 84 1023
@@ -27,21 +31,23 @@ rect 936 901 948 968
 rect 24 91 36 102
 rect 72 0 84 102
 rect 600 69 612 102
+rect 744 70 756 102
+rect 792 70 804 102
 rect 864 0 876 102
 rect 960 69 972 102
-use scanreg  scanreg_0
+use scanreg scanreg_0
 timestamp 1386241447
 transform 1 0 0 0 1 102
 box 0 0 720 799
-use rowcrosser  rowcrosser_0
+use rowcrosser rowcrosser_0
 timestamp 1386086759
 transform 1 0 720 0 1 102
 box 0 0 48 799
-use rowcrosser  rowcrosser_1
+use rowcrosser rowcrosser_1
 timestamp 1386086759
 transform 1 0 768 0 1 102
 box 0 0 48 799
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
 transform 1 0 816 0 1 102
 box 0 0 192 799
