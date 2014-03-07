@@ -2,12 +2,12 @@ module regBlock_stim;
 
 timeunit 1ns; timeprecision 10ps;
 
-parameter CLK_PERIOD = 100;
+parameter CLK_PERIOD = 1000;
 parameter n = 16;
 parameter reg_count = 8;
 parameter addr_size = 3;
-logic [n-1:0]   Rd1;
-logic [n-1:0]   Rd2;
+wire  [n-1:0]   Rd1;
+wire  [n-1:0]   Rd2;
 logic [n-1:0]   WData;
 logic  [addr_size-1:0]    Rs1;
 logic  [addr_size-1:0]    Rs2;
@@ -15,7 +15,7 @@ logic  [addr_size-1:0]    Rw;
 logic   Clock;
 logic   We;
 logic	nReset;
-
+`define magic
 regBlock r(                                          
    .Rd1     (Rd1     ),
    .Rd2     (Rd2     ),
@@ -25,6 +25,9 @@ regBlock r(
    .Rw      (Rw      ),
    .Clock   (Clock   ),
    .We      (We      ),
+`ifdef magic
+   .Test    (0       ),
+`endif
    .nReset  (nReset  )
 );
 
@@ -78,17 +81,17 @@ task WriteReg;
       @(negedge Clock);
       We = 0;
 	Rs1 = addressMe;
-	#10 assert ( writeMe == Rd1 ) else begin errors ++; $display ("Data read back from Rs1 is incorrect"); end
+	#500 assert ( writeMe == Rd1 ) else begin errors ++; $display ("Data read back from Rs1 is incorrect"); end
 	Rs1 = $random();
 	Rs2 = addressMe;
-	#10 assert ( writeMe == Rd2 ) else begin errors ++; $display ("Data read back from Rs2 is incorrect"); end
+	#500 assert ( writeMe == Rd2 ) else begin errors ++; $display ("Data read back from Rs2 is incorrect"); end
    end
 endtask
 
 task PrintRegs;
    integer i;
    for(i=1;i<8;i=i+1)
-      $display("%d: %x",i,r.regs[i]);
+      $display("UNAV");//"%d: %x",i,r.regs[i]);
 endtask
 
 endmodule
