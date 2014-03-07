@@ -15,7 +15,6 @@ logic  [addr_size-1:0]    Rw;
 logic   Clock;
 logic   We;
 logic	nReset;
-`define magic
 regBlock r(                                          
    .Rd1     (Rd1     ),
    .Rd2     (Rd2     ),
@@ -91,7 +90,11 @@ endtask
 task PrintRegs;
    integer i;
    for(i=1;i<8;i=i+1)
-      $display("UNAV");//"%d: %x",i,r.regs[i]);
+`ifndef magic
+      $display("%d: %x",i,r.regs[i]);
+`else
+	$display("Unavailable during magic simulation");
+`endif
 endtask
 
 endmodule
