@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394209539
+timestamp 1394216210
 << metal1 >>
 rect 135 1573 191 1585
 rect 205 1573 839 1585
@@ -349,215 +349,215 @@ rect 7944 0 7956 388
 rect 8136 0 8148 410
 rect 8880 0 8892 432
 rect 9096 0 9108 454
-use nor3 nor3_2
+use nor3  nor3_2
 timestamp 1386235396
 transform 1 0 0 0 1 540
 box 0 0 144 799
-use and2 and2_10
+use and2  and2_10
 timestamp 1386234845
 transform 1 0 144 0 1 540
 box 0 0 120 799
-use nor3 nor3_0
+use nor3  nor3_0
 timestamp 1386235396
 transform 1 0 264 0 1 540
 box 0 0 144 799
-use nor3 nor3_1
+use nor3  nor3_1
 timestamp 1386235396
 transform 1 0 408 0 1 540
 box 0 0 144 799
-use nor2 nor2_12
+use nor2  nor2_12
 timestamp 1386235306
 transform 1 0 552 0 1 540
 box 0 0 120 799
-use and2 and2_11
+use and2  and2_11
 timestamp 1386234845
 transform 1 0 672 0 1 540
 box 0 0 120 799
-use and2 and2_12
+use and2  and2_12
 timestamp 1386234845
 transform 1 0 792 0 1 540
 box 0 0 120 799
-use nor2 nor2_0
+use nor2  nor2_0
 timestamp 1386235306
 transform 1 0 912 0 1 540
 box 0 0 120 799
-use and2 and2_0
+use and2  and2_0
 timestamp 1386234845
 transform 1 0 1032 0 1 540
 box 0 0 120 799
-use nor2 nor2_6
+use nor2  nor2_6
 timestamp 1386235306
 transform 1 0 1152 0 1 540
 box 0 0 120 799
-use and2 and2_5
+use and2  and2_5
 timestamp 1386234845
 transform 1 0 1272 0 1 540
 box 0 0 120 799
-use nor2 nor2_13
+use nor2  nor2_13
 timestamp 1386235306
 transform 1 0 1392 0 1 540
 box 0 0 120 799
-use and2 and2_13
+use and2  and2_13
 timestamp 1386234845
 transform 1 0 1512 0 1 540
 box 0 0 120 799
-use and2 and2_14
+use and2  and2_14
 timestamp 1386234845
 transform 1 0 1632 0 1 540
 box 0 0 120 799
-use nor2 nor2_1
+use nor2  nor2_1
 timestamp 1386235306
 transform 1 0 1752 0 1 540
 box 0 0 120 799
-use and2 and2_1
+use and2  and2_1
 timestamp 1386234845
 transform 1 0 1872 0 1 540
 box 0 0 120 799
-use nor2 nor2_7
+use nor2  nor2_7
 timestamp 1386235306
 transform 1 0 1992 0 1 540
 box 0 0 120 799
-use and2 and2_6
+use and2  and2_6
 timestamp 1386234845
 transform 1 0 2112 0 1 540
 box 0 0 120 799
-use nand2 nand2_6
+use nand2  nand2_6
 timestamp 1386234792
 transform 1 0 2232 0 1 540
 box 0 0 96 799
-use nor2 nor2_14
+use nor2  nor2_14
 timestamp 1386235306
 transform 1 0 2328 0 1 540
 box 0 0 120 799
-use and2 and2_15
+use and2  and2_15
 timestamp 1386234845
 transform 1 0 2448 0 1 540
 box 0 0 120 799
-use nand2 nand2_0
+use nand2  nand2_0
 timestamp 1386234792
 transform 1 0 2568 0 1 540
 box 0 0 96 799
-use nor2 nor2_2
+use nor2  nor2_2
 timestamp 1386235306
 transform 1 0 2664 0 1 540
 box 0 0 120 799
-use nand2 nand2_3
+use nand2  nand2_3
 timestamp 1386234792
 transform 1 0 2784 0 1 540
 box 0 0 96 799
-use nor2 nor2_8
+use nor2  nor2_8
 timestamp 1386235306
 transform 1 0 2880 0 1 540
 box 0 0 120 799
-use nor2 nor2_15
+use nor2  nor2_15
 timestamp 1386235306
 transform 1 0 3000 0 1 540
 box 0 0 120 799
-use and2 and2_16
+use and2  and2_16
 timestamp 1386234845
 transform 1 0 3120 0 1 540
 box 0 0 120 799
-use and2 and2_17
+use and2  and2_17
 timestamp 1386234845
 transform 1 0 3240 0 1 540
 box 0 0 120 799
-use nor2 nor2_3
+use nor2  nor2_3
 timestamp 1386235306
 transform 1 0 3360 0 1 540
 box 0 0 120 799
-use and2 and2_2
+use and2  and2_2
 timestamp 1386234845
 transform 1 0 3480 0 1 540
 box 0 0 120 799
-use nor2 nor2_9
+use nor2  nor2_9
 timestamp 1386235306
 transform 1 0 3600 0 1 540
 box 0 0 120 799
-use and2 and2_7
+use and2  and2_7
 timestamp 1386234845
 transform 1 0 3720 0 1 540
 box 0 0 120 799
-use nand2 nand2_7
+use nand2  nand2_7
 timestamp 1386234792
 transform 1 0 3840 0 1 540
 box 0 0 96 799
-use nor2 nor2_16
+use nor2  nor2_16
 timestamp 1386235306
 transform 1 0 3936 0 1 540
 box 0 0 120 799
-use and2 and2_18
+use and2  and2_18
 timestamp 1386234845
 transform 1 0 4056 0 1 540
 box 0 0 120 799
-use nand2 nand2_1
+use nand2  nand2_1
 timestamp 1386234792
 transform 1 0 4176 0 1 540
 box 0 0 96 799
-use nor2 nor2_4
+use nor2  nor2_4
 timestamp 1386235306
 transform 1 0 4272 0 1 540
 box 0 0 120 799
-use nand2 nand2_4
+use nand2  nand2_4
 timestamp 1386234792
 transform 1 0 4392 0 1 540
 box 0 0 96 799
-use nor2 nor2_10
+use nor2  nor2_10
 timestamp 1386235306
 transform 1 0 4488 0 1 540
 box 0 0 120 799
-use nand2 nand2_8
+use nand2  nand2_8
 timestamp 1386234792
 transform 1 0 4608 0 1 540
 box 0 0 96 799
-use nor2 nor2_17
+use nor2  nor2_17
 timestamp 1386235306
 transform 1 0 4704 0 1 540
 box 0 0 120 799
-use and2 and2_19
+use and2  and2_19
 timestamp 1386234845
 transform 1 0 4824 0 1 540
 box 0 0 120 799
-use nand2 nand2_2
+use nand2  nand2_2
 timestamp 1386234792
 transform 1 0 4944 0 1 540
 box 0 0 96 799
-use nor2 nor2_5
+use nor2  nor2_5
 timestamp 1386235306
 transform 1 0 5040 0 1 540
 box 0 0 120 799
-use nand2 nand2_5
+use nand2  nand2_5
 timestamp 1386234792
 transform 1 0 5160 0 1 540
 box 0 0 96 799
-use nor2 nor2_11
+use nor2  nor2_11
 timestamp 1386235306
 transform 1 0 5256 0 1 540
 box 0 0 120 799
-use and2 and2_20
+use and2  and2_20
 timestamp 1386234845
 transform 1 0 5376 0 1 540
 box 0 0 120 799
-use and2 and2_21
+use and2  and2_21
 timestamp 1386234845
 transform 1 0 5496 0 1 540
 box 0 0 120 799
-use and2 and2_22
+use and2  and2_22
 timestamp 1386234845
 transform 1 0 5616 0 1 540
 box 0 0 120 799
-use and2 and2_3
+use and2  and2_3
 timestamp 1386234845
 transform 1 0 5736 0 1 540
 box 0 0 120 799
-use and2 and2_4
+use and2  and2_4
 timestamp 1386234845
 transform 1 0 5856 0 1 540
 box 0 0 120 799
-use and2 and2_8
+use and2  and2_8
 timestamp 1386234845
 transform 1 0 5976 0 1 540
 box 0 0 120 799
-use and2 and2_9
+use and2  and2_9
 timestamp 1386234845
 transform 1 0 6096 0 1 540
 box 0 0 120 799
@@ -583,17 +583,17 @@ rlabel metal2 7944 0 7956 0 1 Rs2[6]
 rlabel metal2 8136 0 8148 0 1 Rw[7]
 rlabel metal2 8880 0 8892 0 1 Rs1[7]
 rlabel metal2 9096 0 9108 0 1 Rs2[7]
-rlabel metal2 24 1618 36 1618 5 RwIn[0]
-rlabel metal2 48 1618 60 1618 5 RwIn[1]
-rlabel metal2 72 1618 84 1618 5 RwIn[2]
-rlabel metal2 122 1618 134 1618 5 We
-rlabel metal2 288 1618 300 1618 5 Rs1In[0]
-rlabel metal2 312 1618 324 1618 5 Rs1In[1]
-rlabel metal2 336 1618 348 1618 5 Rs1In[2]
-rlabel metal2 432 1618 444 1618 5 Rs2In[0]
-rlabel metal2 456 1618 468 1618 5 Rs2In[1]
-rlabel metal2 480 1618 492 1618 5 Rs2In[2]
 rlabel metal2 1224 0 1236 0 1 Rw[1]
 rlabel metal2 1968 0 1980 0 1 Rs1[1]
 rlabel metal2 4488 0 4500 0 1 Rs2[3]
+rlabel metal2 480 1618 492 1618 5 Rs2In[2]
+rlabel metal2 456 1618 468 1618 5 Rs2In[1]
+rlabel metal2 432 1618 444 1618 5 Rs2In[0]
+rlabel metal2 336 1618 348 1618 5 Rs1In[2]
+rlabel metal2 312 1618 324 1618 5 Rs1In[1]
+rlabel metal2 288 1618 300 1618 5 Rs1In[0]
+rlabel metal2 122 1618 134 1618 5 We
+rlabel metal2 72 1618 84 1618 5 RwIn[2]
+rlabel metal2 48 1618 60 1618 5 RwIn[1]
+rlabel metal2 24 1618 36 1618 5 RwIn[0]
 << end >>

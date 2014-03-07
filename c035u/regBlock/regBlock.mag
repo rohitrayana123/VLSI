@@ -1,13 +1,332 @@
 magic
 tech c035u
-timestamp 1394209539
-use slice17 slice17_0
-timestamp 1394209539
-transform 1 0 50 0 1 8600
+timestamp 1394216430
+<< metal1 >>
+rect -28 10936 50 10961
+rect -28 10291 50 10316
+rect -28 10268 50 10278
+rect -28 10245 50 10255
+rect -28 10222 50 10232
+rect -28 9621 50 9631
+rect -28 9467 50 9492
+rect -28 8822 50 8847
+rect -28 8799 50 8809
+rect -28 8776 50 8786
+rect -28 8753 50 8763
+rect -28 8660 50 8670
+rect -28 8625 50 8635
+rect -28 8546 50 8556
+rect -28 8392 50 8417
+rect -28 7747 50 7772
+rect -28 7724 50 7734
+rect -28 7701 50 7711
+rect -28 7678 50 7688
+rect -28 7585 50 7595
+rect -28 7550 50 7560
+rect -28 7471 50 7481
+rect -28 7317 50 7342
+rect -28 6672 50 6697
+rect -28 6649 50 6659
+rect -28 6626 50 6636
+rect -28 6603 50 6613
+rect -28 6510 50 6520
+rect -28 6475 50 6485
+rect -28 6396 50 6406
+rect -28 6242 50 6267
+rect -28 5597 50 5622
+rect -28 5574 50 5584
+rect -28 5551 50 5561
+rect -28 5528 50 5538
+rect -28 5435 50 5445
+rect -28 5400 50 5410
+rect -28 5321 50 5331
+rect -28 5167 50 5192
+rect -28 4522 50 4547
+rect -28 4499 50 4509
+rect -28 4476 50 4486
+rect -28 4453 50 4463
+rect -28 4360 50 4370
+rect -28 4325 50 4335
+rect -28 4246 50 4256
+rect -28 4092 50 4117
+rect -28 3447 50 3472
+rect -28 3424 50 3434
+rect -28 3401 50 3411
+rect -28 3378 50 3388
+rect -28 3285 50 3295
+rect -28 3250 50 3260
+rect -28 3171 50 3181
+rect -28 3017 50 3042
+rect -28 2372 50 2397
+rect -28 2349 50 2359
+rect -28 2326 50 2336
+rect -28 2303 50 2313
+rect -28 2210 50 2220
+rect -28 2175 50 2185
+rect -28 2096 50 2106
+rect -28 1942 50 1967
+rect -28 1297 50 1322
+rect -28 1274 50 1284
+rect -28 1251 50 1261
+rect -28 1228 50 1238
+rect -28 1135 50 1145
+rect -28 1100 50 1110
+rect -28 1021 50 1031
+rect -28 867 50 892
+rect -28 222 50 247
+rect -28 199 50 209
+rect -28 176 50 186
+rect -28 153 50 163
+rect -28 60 50 70
+rect -28 25 50 35
+rect -28 -54 50 -44
+rect -28 -208 50 -183
+rect -28 -853 50 -828
+rect -28 -876 50 -866
+rect -28 -899 50 -889
+rect -28 -922 50 -912
+rect -28 -1015 50 -1005
+rect -28 -1050 50 -1040
+rect -28 -1129 50 -1119
+rect -28 -1283 50 -1258
+rect -28 -1928 50 -1903
+rect -28 -1951 50 -1941
+rect -28 -1974 50 -1964
+rect -28 -1997 50 -1987
+rect -28 -2090 50 -2080
+rect -28 -2125 50 -2115
+rect -28 -2204 50 -2194
+rect -28 -2358 50 -2333
+rect -28 -3003 50 -2978
+rect -28 -3026 50 -3016
+rect -28 -3049 50 -3039
+rect -28 -3072 50 -3062
+rect -28 -3165 50 -3155
+rect -28 -3200 50 -3190
+rect -28 -3279 50 -3269
+rect -28 -3433 50 -3408
+rect -28 -4078 50 -4053
+rect -28 -4101 50 -4091
+rect -28 -4124 50 -4114
+rect -28 -4147 50 -4137
+rect -28 -4240 50 -4230
+rect -28 -4275 50 -4265
+rect -28 -4354 50 -4344
+rect -28 -4508 50 -4483
+rect -28 -5153 50 -5128
+rect -28 -5176 50 -5166
+rect -28 -5199 50 -5189
+rect -28 -5222 50 -5212
+rect -28 -5315 50 -5305
+rect -28 -5350 50 -5340
+rect -28 -5429 50 -5419
+rect -28 -5583 50 -5558
+rect -28 -6228 50 -6203
+rect -28 -6251 50 -6241
+rect -28 -6274 50 -6264
+rect -28 -6297 50 -6287
+rect -28 -6390 50 -6380
+rect -28 -6425 50 -6415
+rect -28 -6504 50 -6494
+rect -28 -6658 50 -6633
+rect -28 -7303 50 -7278
+rect -28 -7326 50 -7316
+rect -28 -7349 50 -7339
+rect -28 -7372 50 -7362
+rect -28 -7465 50 -7455
+rect -28 -7500 50 -7490
+<< metal2 >>
+rect 74 11293 86 11371
+rect 98 11293 110 11371
+rect 122 11293 134 11371
+rect 172 11293 184 11371
+rect 338 11293 350 11371
+rect 362 11293 374 11371
+rect 386 11293 398 11371
+rect 482 11293 494 11371
+rect 506 11293 518 11371
+rect 530 11293 542 11371
+use slice17  slice17_0
+timestamp 1394216210
+transform 1 0 50 0 1 9675
 box 0 0 9108 1618
-use regBlock_slice regBlock_slice_0
-array 0 0 9385 0 7 1075
-timestamp 1394121372
-transform 1 0 0 0 1 0
-box 0 0 9385 1075
+use regBlock_slice  regBlock_slice_0
+array 0 0 9216 0 15 1075
+timestamp 1394213885
+transform 1 0 0 0 1 -7525
+box 50 0 9266 1075
+<< labels >>
+rlabel metal1 -28 8392 -28 8417 3 Vdd!
+rlabel metal1 -28 7747 -28 7772 3 GND!
+rlabel metal1 -28 7724 -28 7734 3 Clock
+rlabel metal1 -28 7701 -28 7711 3 Test
+rlabel metal1 -28 7678 -28 7688 3 nReset
+rlabel metal1 -28 7317 -28 7342 3 Vdd!
+rlabel metal1 -28 6672 -28 6697 3 GND!
+rlabel metal1 -28 6649 -28 6659 3 Clock
+rlabel metal1 -28 6626 -28 6636 3 Test
+rlabel metal1 -28 6603 -28 6613 3 nReset
+rlabel metal1 -28 4453 -28 4463 3 nReset
+rlabel metal1 -28 4476 -28 4486 3 Test
+rlabel metal1 -28 4499 -28 4509 3 Clock
+rlabel metal1 -28 4522 -28 4547 3 GND!
+rlabel metal1 -28 5167 -28 5192 3 Vdd!
+rlabel metal1 -28 5528 -28 5538 3 nReset
+rlabel metal1 -28 5551 -28 5561 3 Test
+rlabel metal1 -28 5574 -28 5584 3 Clock
+rlabel metal1 -28 5597 -28 5622 3 GND!
+rlabel metal1 -28 6242 -28 6267 3 Vdd!
+rlabel metal1 -28 4092 -28 4117 3 Vdd!
+rlabel metal1 -28 3447 -28 3472 3 GND!
+rlabel metal1 -28 3424 -28 3434 3 Clock
+rlabel metal1 -28 3401 -28 3411 3 Test
+rlabel metal1 -28 3378 -28 3388 3 nReset
+rlabel metal1 -28 3017 -28 3042 3 Vdd!
+rlabel metal1 -28 2372 -28 2397 3 GND!
+rlabel metal1 -28 2349 -28 2359 3 Clock
+rlabel metal1 -28 2326 -28 2336 3 Test
+rlabel metal1 -28 2303 -28 2313 3 nReset
+rlabel metal1 -28 1228 -28 1238 3 nReset
+rlabel metal1 -28 1251 -28 1261 3 Test
+rlabel metal1 -28 1274 -28 1284 3 Clock
+rlabel metal1 -28 1297 -28 1322 3 GND!
+rlabel metal1 -28 1942 -28 1967 3 Vdd!
+rlabel metal1 50 1135 50 1145 3 Rd1
+rlabel metal1 50 1100 50 1110 3 Rd2
+rlabel metal1 50 2096 50 2106 1 WData
+rlabel metal1 50 2210 50 2220 3 Rd1
+rlabel metal1 50 2175 50 2185 3 Rd2
+rlabel metal1 50 3171 50 3181 1 WData
+rlabel metal1 50 3285 50 3295 3 Rd1
+rlabel metal1 50 3250 50 3260 3 Rd2
+rlabel metal1 50 4246 50 4256 1 WData
+rlabel metal1 -28 867 -28 892 3 Vdd!
+rlabel metal1 -28 222 -28 247 3 GND!
+rlabel metal1 -28 199 -28 209 3 Clock
+rlabel metal1 -28 176 -28 186 3 Test
+rlabel metal1 -28 153 -28 163 3 nReset
+rlabel metal1 -28 -208 -28 -183 3 Vdd!
+rlabel metal1 -28 -853 -28 -828 3 GND!
+rlabel metal1 -28 -876 -28 -866 3 Clock
+rlabel metal1 -28 -899 -28 -889 3 Test
+rlabel metal1 -28 -922 -28 -912 3 nReset
+rlabel metal1 -28 -3072 -28 -3062 3 nReset
+rlabel metal1 -28 -3049 -28 -3039 3 Test
+rlabel metal1 -28 -3026 -28 -3016 3 Clock
+rlabel metal1 -28 -3003 -28 -2978 3 GND!
+rlabel metal1 -28 -2358 -28 -2333 3 Vdd!
+rlabel metal1 -28 -1997 -28 -1987 3 nReset
+rlabel metal1 -28 -1974 -28 -1964 3 Test
+rlabel metal1 -28 -1951 -28 -1941 3 Clock
+rlabel metal1 -28 -1928 -28 -1903 3 GND!
+rlabel metal1 -28 -1283 -28 -1258 3 Vdd!
+rlabel metal1 -28 -3433 -28 -3408 3 Vdd!
+rlabel metal1 -28 -4078 -28 -4053 3 GND!
+rlabel metal1 -28 -4101 -28 -4091 3 Clock
+rlabel metal1 -28 -4124 -28 -4114 3 Test
+rlabel metal1 -28 -4147 -28 -4137 3 nReset
+rlabel metal1 -28 -4508 -28 -4483 3 Vdd!
+rlabel metal1 -28 -5153 -28 -5128 3 GND!
+rlabel metal1 -28 -5176 -28 -5166 3 Clock
+rlabel metal1 -28 -5199 -28 -5189 3 Test
+rlabel metal1 -28 -5222 -28 -5212 3 nReset
+rlabel metal1 -28 -7372 -28 -7362 3 nReset
+rlabel metal1 -28 -7349 -28 -7339 3 Test
+rlabel metal1 -28 -7326 -28 -7316 3 Clock
+rlabel metal1 -28 -7303 -28 -7278 3 GND!
+rlabel metal1 -28 -6658 -28 -6633 3 Vdd!
+rlabel metal1 -28 -6297 -28 -6287 3 nReset
+rlabel metal1 -28 -6274 -28 -6264 3 Test
+rlabel metal1 -28 -6251 -28 -6241 3 Clock
+rlabel metal1 -28 -6228 -28 -6203 3 GND!
+rlabel metal1 -28 -5583 -28 -5558 3 Vdd!
+rlabel space 50 -7579 50 -7569 1 WData
+rlabel metal1 50 -7465 50 -7455 3 Rd1
+rlabel metal1 50 -7500 50 -7490 3 Rd2
+rlabel metal1 50 -6504 50 -6494 1 WData
+rlabel metal1 50 -6390 50 -6380 3 Rd1
+rlabel metal1 50 -6425 50 -6415 3 Rd2
+rlabel metal1 50 -5315 50 -5305 3 Rd1
+rlabel metal1 50 -5350 50 -5340 3 Rd2
+rlabel metal1 50 -4240 50 -4230 3 Rd1
+rlabel metal1 50 -3279 50 -3269 1 WData
+rlabel metal1 50 -3165 50 -3155 3 Rd1
+rlabel metal1 50 -3200 50 -3190 3 Rd2
+rlabel metal1 50 -2204 50 -2194 1 WData
+rlabel metal1 50 -2090 50 -2080 3 Rd1
+rlabel metal1 50 -2125 50 -2115 3 Rd2
+rlabel metal1 50 -1015 50 -1005 3 Rd1
+rlabel metal1 50 -1050 50 -1040 3 Rd2
+rlabel metal1 50 -54 50 -44 1 WData
+rlabel metal1 50 60 50 70 3 Rd1
+rlabel metal1 50 25 50 35 3 Rd2
+rlabel metal1 50 1021 50 1031 1 WData
+rlabel metal1 -28 -7500 -28 -7490 3 Rd2[0]
+rlabel metal1 -28 -7465 -28 -7455 3 Rd1[0]
+rlabel metal1 -28 -6504 -28 -6494 3 WData[0]
+rlabel metal1 -28 -6425 -28 -6415 3 Rd2[1]
+rlabel metal1 -28 -6390 -28 -6380 3 Rd1[1]
+rlabel metal1 -28 -5429 -28 -5419 3 WData[1]
+rlabel metal1 -28 -5350 -28 -5340 3 Rd2[2]
+rlabel metal1 -28 -5315 -28 -5305 3 Rd1[2]
+rlabel metal1 -28 -4354 -28 -4344 3 WData[2]
+rlabel metal1 -28 -4275 -28 -4265 3 Rd2[3]
+rlabel metal1 -28 -4240 -28 -4230 3 Rd1[3]
+rlabel metal1 -28 -3279 -28 -3269 3 WData[3]
+rlabel metal1 -28 -3200 -28 -3190 3 Rd2[4]
+rlabel metal1 -28 -3165 -28 -3155 3 Rd1[4]
+rlabel metal1 -28 -2204 -28 -2194 3 WData[4]
+rlabel metal1 -28 -2125 -28 -2115 3 Rd2[5]
+rlabel metal1 -28 -2090 -28 -2080 3 Rd1[5]
+rlabel metal1 -28 -1129 -28 -1119 3 WData[5]
+rlabel metal1 -28 -1050 -28 -1040 3 Rd2[6]
+rlabel metal1 -28 -1015 -28 -1005 3 Rd1[6]
+rlabel metal1 -28 -54 -28 -44 3 WData[6]
+rlabel metal1 -28 25 -28 35 3 Rd2[7]
+rlabel metal1 -28 60 -28 70 3 Rd1[7]
+rlabel metal1 -28 1021 -28 1031 3 WData[7]
+rlabel metal1 -28 1135 -28 1145 3 Rd1[8]
+rlabel metal1 -28 1100 -28 1110 3 Rd2[8]
+rlabel metal1 -28 2096 -28 2106 3 WData[8]
+rlabel metal1 -28 2175 -28 2185 3 Rd2[9]
+rlabel metal1 -28 2210 -28 2220 3 Rd1[9]
+rlabel metal1 -28 3171 -28 3181 3 WData[9]
+rlabel metal1 -28 3250 -28 3260 3 Rd2[10]
+rlabel metal1 -28 3285 -28 3295 3 Rd1[10]
+rlabel metal1 -28 4246 -28 4256 3 WData[10]
+rlabel metal1 -28 4325 -28 4335 3 Rd2[11]
+rlabel metal1 -28 4360 -28 4370 3 Rd1[11]
+rlabel metal1 -28 5321 -28 5331 3 WData[11]
+rlabel metal1 -28 5400 -28 5410 3 Rd2[12]
+rlabel metal1 -28 5435 -28 5445 3 Rd1[12]
+rlabel metal1 -28 6396 -28 6406 3 WData[12]
+rlabel metal1 -28 6475 -28 6485 3 Rd2[13]
+rlabel metal1 -28 6510 -28 6520 3 Rd1[13]
+rlabel metal1 -28 7471 -28 7481 3 WData[13]
+rlabel metal1 -28 7550 -28 7560 3 Rd2[14]
+rlabel metal1 -28 7585 -28 7595 3 Rd1[14]
+rlabel metal1 -28 10936 -28 10961 3 Vdd!
+rlabel metal1 -28 10291 -28 10316 3 GND!
+rlabel metal1 -28 10268 -28 10278 3 Clock
+rlabel metal1 -28 10245 -28 10255 3 Test
+rlabel metal1 -28 10222 -28 10232 3 nReset
+rlabel metal2 74 11371 86 11371 5 Rw[0]
+rlabel metal2 98 11371 110 11371 5 Rw[1]
+rlabel metal2 122 11371 134 11371 5 Rw[2]
+rlabel metal2 172 11371 184 11371 5 We
+rlabel metal2 338 11371 350 11371 5 Rs1[0]
+rlabel metal2 362 11371 374 11371 5 Rs1[1]
+rlabel metal2 386 11371 398 11371 5 Rs1[2]
+rlabel metal2 482 11371 494 11371 5 Rs2[0]
+rlabel metal2 506 11371 518 11371 5 Rs2[1]
+rlabel metal2 530 11371 542 11371 5 Rs2[2]
+rlabel metal1 -28 9621 -28 9631 3 WData[15]
+rlabel metal1 -28 8753 -28 8763 3 nReset
+rlabel metal1 -28 8776 -28 8786 3 Test
+rlabel metal1 -28 8799 -28 8809 3 Clock
+rlabel metal1 -28 8822 -28 8847 3 GND!
+rlabel metal1 -28 9467 -28 9492 3 Vdd!
+rlabel metal1 -28 8546 -28 8556 3 WData[14]
+rlabel metal1 -28 8625 -28 8635 3 Rd2[15]
+rlabel metal1 -28 8660 -28 8670 3 Rd1[15]
 << end >>
