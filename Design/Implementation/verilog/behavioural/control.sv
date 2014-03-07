@@ -412,13 +412,26 @@ always_comb begin
 								end	
 							endcase
 						end	
-						PUSH,POP:begin
+						PUSH:begin
+							AluEn = 1;
+							ImmSel = ImmShort;
+                           	Rs1Sel = Seven;
+							RwSel = RwSeven;
+							Op1Sel = Op1Rd1;
+							AluOp = FnSUB;	
+                           	AluWe = 1;
+							RegWe = 1;
+							WdSel = WdAlu;
+
+						end	
+						POP:begin
 							AluEn = 1;
 							ImmSel = ImmShort;
                            	Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
-							AluOp = FnADD;	
+							AluOp = FnB;	
                            	AluWe = 1;	
+							RegWe = 1;
 						end	
             		endcase
          		end
@@ -541,6 +554,11 @@ always_comb begin
 							WdSel = WdSys;
 							RegWe = 1;
 							LrWe = 1;	
+							Rs1Sel = Seven;
+							RwSel = RwSeven;
+							AluOp = FnADD;
+							RegWe = 1;
+							WdSel = WdAlu;
 						end
 					endcase
          		end
