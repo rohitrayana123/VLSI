@@ -1,12 +1,15 @@
 magic
 tech c035u
-timestamp 1394308440
+timestamp 1394309685
 << metal1 >>
 rect 805 886 935 896
 rect 757 864 887 874
 rect 0 44 599 54
 rect 613 44 743 54
 rect 757 44 791 54
+rect 0 -16 23 -6
+rect 37 -16 1008 -6
+rect 973 -38 1008 -28
 << m2contact >>
 rect 791 884 805 898
 rect 935 884 949 898
@@ -15,22 +18,24 @@ rect 887 862 901 876
 rect 599 42 613 56
 rect 743 42 757 56
 rect 791 42 805 56
+rect 23 -18 37 -4
+rect 959 -40 973 -26
 << metal2 >>
-rect 72 859 84 939
-rect 744 876 756 939
-rect 792 898 804 939
+rect 72 859 84 968
+rect 744 876 756 968
+rect 792 898 804 968
 rect 744 859 756 862
 rect 792 859 804 884
-rect 864 859 876 939
+rect 864 859 876 968
 rect 888 859 900 862
 rect 936 859 948 884
-rect 24 0 36 60
-rect 72 0 84 60
+rect 24 -4 36 60
+rect 72 -111 84 60
 rect 600 56 612 60
 rect 744 56 756 60
 rect 792 56 804 60
-rect 864 0 876 60
-rect 960 0 972 60
+rect 864 -111 876 60
+rect 960 -26 972 60
 use scanreg  scanreg_1
 timestamp 1386241447
 transform 1 0 0 0 1 60
@@ -48,13 +53,14 @@ timestamp 1386235218
 transform 1 0 816 0 1 60
 box 0 0 192 799
 << labels >>
-rlabel metal2 744 939 756 939 5 Ext0
-rlabel metal2 792 939 804 939 5 Ext1
-rlabel metal2 864 939 876 939 5 ImmSel
-rlabel metal2 72 939 84 939 5 IrWe
 rlabel metal1 0 44 0 54 3 Ir
-rlabel metal2 864 0 876 0 1 ImmSel
-rlabel metal2 72 0 84 0 1 IrWe
-rlabel metal2 24 0 36 0 1 IrIn
-rlabel metal2 960 0 972 0 1 Imm
+rlabel metal2 864 968 876 968 5 ImmSel
+rlabel metal2 792 968 804 968 5 Ext1
+rlabel metal2 744 968 756 968 5 Ext0
+rlabel metal2 72 968 84 968 5 IrWe
+rlabel metal2 864 -111 876 -111 1 ImmSel
+rlabel metal2 72 -111 84 -111 1 IrWe
+rlabel metal1 0 -16 0 -6 3 SysBus
+rlabel metal1 1008 -16 1008 -6 7 SysBus
+rlabel metal1 1008 -38 1008 -28 7 Imm
 << end >>
