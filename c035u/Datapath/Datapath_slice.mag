@@ -1,11 +1,10 @@
 magic
 tech c035u
-timestamp 1394307282
+timestamp 1394308779
 << metal1 >>
 rect 4050 1062 5500 1072
 rect 5514 1062 14837 1072
-rect 0 155 1469 165
-rect 0 95 1492 105
+rect 1469 95 1492 105
 rect 1506 95 5380 105
 rect 5394 95 5548 105
 rect 5562 95 14841 105
@@ -24,11 +23,6 @@ rect 5092 49 5106 63
 rect 14572 27 14586 41
 rect 14788 5 14802 19
 << metal2 >>
-rect 5 970 205 1079
-rect 221 970 233 1079
-rect 245 970 257 1079
-rect 269 970 281 1079
-rect 293 970 305 1079
 rect 1541 1050 1553 1079
 rect 2213 1050 2225 1079
 rect 2261 1050 2273 1079
@@ -70,11 +64,6 @@ rect 13757 1050 13769 1079
 rect 14501 1050 14513 1079
 rect 14717 1050 14729 1079
 rect 5573 970 5585 1050
-rect 5 0 205 171
-rect 221 0 233 171
-rect 245 0 257 171
-rect 269 0 281 171
-rect 293 0 305 171
 rect 1493 107 1505 111
 rect 1541 0 1553 111
 rect 2213 0 2225 111
@@ -119,23 +108,19 @@ rect 14501 0 14513 111
 rect 14573 41 14585 111
 rect 14717 0 14729 111
 rect 14789 19 14801 111
-use leftbuf leftbuf_0
-timestamp 1386242881
-transform 1 0 5 0 1 171
-box 0 0 1464 799
-use IrAA IrAA_0
+use IrAA  IrAA_0
 timestamp 1394294731
 transform 1 0 1469 0 1 111
 box 0 0 1008 939
-use Pc_slice Pc_slice_0
+use Pc_slice  Pc_slice_0
 timestamp 1394294966
 transform 1 0 2477 0 1 111
 box 0 0 2952 939
-use mux2 mux2_0
+use mux2  mux2_0
 timestamp 1386235218
 transform 1 0 5429 0 1 171
 box 0 0 192 799
-use regBlock_slice regBlock_slice_0
+use regBlock_slice  regBlock_slice_0
 timestamp 1394295027
 transform 1 0 5621 0 1 111
 box 0 0 9216 939
@@ -144,11 +129,6 @@ rlabel metal1 5573 100 5573 100 1 SysBus
 rlabel metal1 14835 1067 14835 1067 6 AluOut
 rlabel metal1 14830 34 14830 34 1 Rd1
 rlabel metal1 14832 11 14832 11 1 Rd2
-rlabel metal2 5 0 205 0 1 Vdd!
-rlabel metal2 221 0 233 0 1 SDI
-rlabel metal2 245 0 257 0 1 Test
-rlabel metal2 269 0 281 0 1 Clock
-rlabel metal2 293 0 305 0 1 nReset
 rlabel metal2 2333 0 2345 0 1 ImmSel
 rlabel metal2 2261 0 2273 0 1 Ext1
 rlabel metal2 2213 0 2225 0 1 Ext0
@@ -224,13 +204,7 @@ rlabel metal2 2333 1079 2345 1079 5 ImmSel
 rlabel metal2 2261 1079 2273 1079 5 Ext1
 rlabel metal2 2213 1079 2225 1079 5 Ext0
 rlabel metal2 1541 1079 1553 1079 5 IrWe
-rlabel metal2 5 1079 205 1079 5 Vdd!
-rlabel metal2 221 1079 233 1079 5 SDO
-rlabel metal2 245 1079 257 1079 5 Test
-rlabel metal2 269 1079 281 1079 5 Clock
-rlabel metal2 293 1079 305 1079 5 nReset
-rlabel metal1 0 95 0 105 3 SysBus
-rlabel metal1 0 155 0 165 3 Ir
 rlabel metal2 5693 0 5705 0 1 Rw[0]
 rlabel metal2 6653 0 6665 0 1 Rs2[0]
+rlabel metal1 1469 95 1469 105 3 SysBus
 << end >>
