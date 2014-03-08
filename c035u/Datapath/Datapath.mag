@@ -1,33 +1,33 @@
 magic
 tech c035u
-timestamp 1394311562
-use slice17  slice17_0
+timestamp 1394314607
+use slice17 slice17_0
 timestamp 1394305018
 transform 1 0 4334 0 1 17264
 box -4329 0 10503 1795
-use leftbuf_slice  leftbuf_slice_0
+use leftbuf_slice leftbuf_slice_0
 array 0 0 1469 0 15 1079
 timestamp 1394308690
 transform 1 0 0 0 1 0
 box 0 0 1469 1079
-use IrAA  IrAA_0
+use IrAA IrAA_0
 array 0 0 1008 0 7 1079
 timestamp 1394309515
 transform 1 0 1469 0 1 8632
 box 0 0 1008 1079
-use IrBA  IrBA_0
+use IrBA IrBA_0
 array 0 0 1008 0 2 1079
 timestamp 1394309607
 transform 1 0 1469 0 1 5395
 box 0 0 1008 1079
-use IrBB  IrBB_0
+use IrBB IrBB_0
 array 0 0 1008 0 4 1079
 timestamp 1394309685
 transform 1 0 1469 0 1 111
 box 0 -111 1008 968
-use Datapath_slice  Datapath_slice_0
+use Datapath_slice Datapath_slice_0
 array 0 0 12364 0 15 1079
-timestamp 1394311158
-transform 1 0 0 0 1 0
-box 2477 0 14841 1079
+timestamp 1394314552
+transform 1 0 2477 0 1 0
+box 0 0 12364 1079
 << end >>
