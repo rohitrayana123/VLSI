@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394309607
+timestamp 1394314839
 << metal1 >>
 rect 805 997 935 1007
 rect 757 975 887 985
@@ -34,19 +34,19 @@ rect 744 167 756 171
 rect 792 0 804 171
 rect 864 0 876 171
 rect 960 85 972 171
-use scanreg  scanreg_1
+use scanreg scanreg_0
 timestamp 1386241447
-transform -1 0 720 0 1 171
+transform 1 0 0 0 1 171
 box 0 0 720 799
-use rowcrosser  rowcrosser_2
+use rowcrosser rowcrosser_2
 timestamp 1386086759
 transform 1 0 720 0 1 171
 box 0 0 48 799
-use rowcrosser  rowcrosser_3
+use rowcrosser rowcrosser_3
 timestamp 1386086759
 transform 1 0 768 0 1 171
 box 0 0 48 799
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
 transform 1 0 816 0 1 171
 box 0 0 192 799
@@ -54,7 +54,6 @@ box 0 0 192 799
 rlabel metal1 0 155 0 165 3 Ir
 rlabel metal2 864 1079 876 1079 5 ImmSel
 rlabel metal2 792 1079 804 1079 5 Ext1
-rlabel metal2 744 1079 756 1079 5 Ext0
 rlabel metal2 72 1079 84 1079 5 IrWe
 rlabel metal1 1008 73 1008 83 7 Imm
 rlabel metal1 1008 95 1008 105 7 SysBus
@@ -62,4 +61,5 @@ rlabel metal1 0 95 0 105 3 SysBus
 rlabel metal2 72 0 84 0 1 IrWe
 rlabel metal2 792 0 804 0 1 Ext1
 rlabel metal2 864 0 876 0 1 ImmSel
+rlabel metal2 744 1079 756 1079 5 Ir
 << end >>
