@@ -1,10 +1,6 @@
 magic
 tech c035u
-timestamp 1394314683
-<< checkpaint >>
-rect 0 0 10613 18962
-rect -1340 -1300 10613 0
-rect -1340 -1361 10573 -1300
+timestamp 1394315362
 << metal1 >>
 rect 0 16010 91 16020
 rect 0 15903 68 15913
@@ -861,5 +857,5 @@ rlabel metal2 548 17662 560 17662 5 Rs2[2]
 rlabel metal2 92 17662 104 17662 5 Rw[0]
 rlabel metal2 116 17662 128 17662 5 Rw[1]
 rlabel metal2 140 17662 152 17662 5 Rw[2]
-rlabel metal2 190 17662 202 17662 5 RegWe
+rlabel metal2 190 17662 202 17662 5 We
 << end >>
