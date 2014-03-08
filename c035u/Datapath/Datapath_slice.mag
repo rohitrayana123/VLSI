@@ -1,0 +1,60 @@
+magic
+tech c035u
+timestamp 1394296390
+<< metal1 >>
+rect 5509 1013 14832 1023
+rect 0 106 1464 116
+rect 0 46 1487 56
+rect 1501 46 5375 56
+rect 5389 46 5543 56
+rect 5557 46 14836 56
+rect 2437 24 14836 34
+rect 5101 2 14836 12
+<< m2contact >>
+rect 5495 1011 5509 1025
+rect 1487 44 1501 58
+rect 5375 44 5389 58
+rect 5543 44 5557 58
+rect 2423 22 2437 36
+rect 5087 0 5101 14
+<< metal2 >>
+rect 5472 921 5484 1027
+rect 5496 921 5508 1011
+rect 5568 1001 5652 1013
+rect 5568 921 5580 1001
+rect 5472 88 5484 122
+rect 1488 58 1500 62
+rect 2424 36 2436 62
+rect 5088 14 5100 62
+rect 5376 58 5388 62
+rect 5544 58 5556 122
+use leftbuf leftbuf_0
+timestamp 1386242881
+transform 1 0 0 0 1 122
+box 0 0 1464 799
+use IrAA IrAA_0
+timestamp 1394294731
+transform 1 0 1464 0 1 62
+box 0 0 1008 939
+use Pc_slice Pc_slice_0
+timestamp 1394294966
+transform 1 0 2472 0 1 62
+box 0 0 2952 939
+use mux2 mux2_0
+timestamp 1386235218
+transform 1 0 5424 0 1 122
+box 0 0 192 799
+use regBlock_slice regBlock_slice_0
+timestamp 1394295027
+transform 1 0 5616 0 1 62
+box 0 0 9216 939
+<< labels >>
+rlabel metal1 14625 51 14625 51 1 SysBus
+rlabel metal1 14626 29 14626 29 1 Imm
+rlabel metal1 14627 7 14627 7 1 Pc
+rlabel metal1 5568 51 5568 51 1 SysBus
+rlabel metal1 14830 1018 14830 1018 6 AluOut
+rlabel metal2 5472 1027 5484 1027 5 WdSel
+rlabel metal1 0 46 0 56 3 SysBus
+rlabel metal1 0 106 0 116 3 Ir
+<< end >>
