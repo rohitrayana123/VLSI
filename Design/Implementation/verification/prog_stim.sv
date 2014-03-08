@@ -92,11 +92,12 @@ always @(posedge Clock) begin
 end
 
 initial begin
-   `ifdef switch_value
-      switches = `switch_value;
-   `else
-      switches = 1;
-   `endif
+   //`ifdef switch_value
+   //   switches = `switch_value;
+   //`else
+      
+	switches = 8;
+   //`endif
    Test = 0;
    SDI = 0;
 end
@@ -106,14 +107,50 @@ end
 `endif
 
 initial begin
+	
+// int 1
+	switches = 8;
 	nIRQ = 1;
-	#40000 nIRQ = 0;
+	#400000 nIRQ = 0;
 	#500   nIRQ = 1;
+	
+// int 2
+	#100000000
+	switches = 7;
+	#40000 nIRQ = 0;
+	#500 nIRQ = 1;
+	#1000
+	switches = 6;
+	#40000 nIRQ = 0;
+	#500 nIRQ = 1;
+
+// int 4
+	#100000000
+	switches = 5;
+	#40000 nIRQ = 0;
+	#500 nIRQ = 1;
+
+// int 5
+	#100000000
+	switches = 4;
+	#40000 nIRQ = 0;
+	#500 nIRQ = 1;
+
+
+// int 6
+	#100000000
+	switches = 3;
+	#40000 nIRQ = 0;
+	#500 nIRQ = 1;
+
+
+
+
 end
 
 // If this stops sim then probably looped
 initial begin
-	#10000000
+	#100000000000
 	$stop;
 	$finish;
 end
