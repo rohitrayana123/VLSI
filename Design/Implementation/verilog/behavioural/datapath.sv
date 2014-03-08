@@ -20,8 +20,8 @@ import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
-logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn, Rw;
-logic [2:0] Rs1In;
+logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
+logic [2:0] Rs1In,Rw;
 
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
@@ -30,16 +30,24 @@ assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
 assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
-assign Rw = (RwSel == RwSeven) ? 3'b111 : Ir[10:8];  
+//assign Rw = (RwSel == RwSeven) ? 3'b111 : Ir[10:8];  
 //assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
 assign PcInc = Pc + 1;
 
 //Multiplexers
 always_comb begin
+	case(RwSel)
+		RwSeven: Rw = 3'b111;
+		RwRd: Rw = Ir[10:8];
+		RwRa: Rw = Ir[7:5];
+	endcase
+end
+
+always_comb begin
 	case(Rs1Sel)
 		Rs1Rd: Rs1In = Ir[10:8];
 		Rs1Ra: Rs1In = Ir[7:5];
-		Seven: Rs1In = 3'b111;
+		default: Rs1In = 3'b111;
 	endcase
 end
 

@@ -127,7 +127,7 @@ always_comb begin
    	ALE      = 0;
 		PcSel = Pc1;
 	StatusRegWe= 0;
-   RwSel = 0;
+   RwSel = RwRd;
    case(state)
       	fetch : 
          	case(stateSub)
@@ -554,7 +554,9 @@ always_comb begin
 							nWE = 1;
 							MemEn = 1;
 							WdSel = WdSys;
+							RwSel = RwRd;
 							RegWe = 1;
+							WdSel = WdSys;
 						end
 						STW: begin
 							nOE = 1;
@@ -578,8 +580,8 @@ always_comb begin
 								LrWe = 1;
 							end else begin
 								RegWe = 1;
-								Rs1Sel = Rs1Ra;
-								RwSel = RwData;
+								Rs1Sel = Rs1Rd;
+								RwSel = RwRa;
 								AluOp = FnADD;
 								WdSel = WdSys;
 							end
