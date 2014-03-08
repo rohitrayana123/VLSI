@@ -1,0 +1,5 @@
+addpath ../cell_lib
+addpath ../IR
+addpath ../Pc
+addpath ../ALU
+addpath ../regBlock
