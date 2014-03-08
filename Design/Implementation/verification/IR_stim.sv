@@ -22,7 +22,7 @@ Ir instance1(
 	.Ir ( Ir ),
 	.Clock ( Clock ),
 	.ImmSel ( ImmSel ),
-	.SysBus ( IrIn ),
+	.SysBus ( SysBus ),
 	.IrWe ( IrWe ),
 	.nReset ( nReset ),
 	.SDI ( SDI ),
