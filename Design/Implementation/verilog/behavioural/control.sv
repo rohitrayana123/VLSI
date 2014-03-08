@@ -429,9 +429,8 @@ always_comb begin
 							ImmSel = ImmShort;
                            	Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
-							AluOp = FnB;	
-                           	AluWe = 1;	
-							RegWe = 1;
+							AluOp = FnA;	
+                           	AluWe = 1;		
 						end	
             		endcase
          		end
@@ -454,7 +453,7 @@ always_comb begin
 							AluOp = FnADD;
 							Op1Sel = Op1Rd1;
 							Rs1Sel = Seven;
-                			AluEn = 1;
+                			AluEn = 1;	
 						end	
 					endcase
 				end
@@ -484,11 +483,12 @@ always_comb begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
 							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Seven;
+                        	Rs1Sel = Rs1Ra;
 							nOE = 1;
                         	nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
+
 						end
 						POP:begin
 							nME = 0;
@@ -497,7 +497,7 @@ always_comb begin
                         	Rs1Sel = Seven;
 							MemEn = 1;
                         	nWE = 1;
-                     		AluWe = 1;			// Pass right through on next clock
+                     		//AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
 						end
 
@@ -519,13 +519,29 @@ always_comb begin
 						PUSH:begin
 							nME = 0;	
 							nOE = 1;	
-							LrEn = 1;
+							//LrEn = 1;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrEn = 1;
+							end else begin
+								AluEn = 1;
+								AluWe = 1;
+								Rs1Sel = Rs1Ra;
+								AluOp = FnA;
+							end
 						end
 						POP:begin
 							nME = 0;
 							MemEn = 1;
 							ENB = 1;
 							nWE = 1;
+							WdSel = WdAlu;
+							ImmSel = ImmShort;
+							Op2Sel = Op2Imm;
+							RegWe = 1;
+							Rs1Sel = Seven;
+							WdSel = WdAlu;
+							RwSel = RwSeven;
+							AluOp = FnADD;
 						end
             		endcase  
          		end
@@ -546,19 +562,27 @@ always_comb begin
 						end
 						PUSH:begin
 							nOE = 1;
-							LrEn = 1;
+							//LrEn = 1;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrEn = 1;
+							end else begin
+								AluEn = 1;
+								Rs1Sel = Rs1Ra;
+								AluOp = FnA;
+							end
 						end
 						POP:begin
 							nWE = 1;
 							MemEn = 1;
-							WdSel = WdSys;
-							RegWe = 1;
-							LrWe = 1;	
-							Rs1Sel = Seven;
-							RwSel = RwSeven;
-							AluOp = FnADD;
-							RegWe = 1;
-							WdSel = WdAlu;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrWe = 1;
+							end else begin
+								RegWe = 1;
+								Rs1Sel = Rs1Ra;
+								RwSel = RwData;
+								AluOp = FnADD;
+								WdSel = WdSys;
+							end
 						end
 					endcase
          		end
