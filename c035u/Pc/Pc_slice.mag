@@ -1,149 +1,149 @@
 magic
 tech c035u
-timestamp 1394283971
+timestamp 1394284196
 << metal1 >>
-rect 172 903 2533 913
-rect 1227 880 1669 890
-rect 387 858 493 868
-rect 507 858 1621 868
-rect 1708 857 1812 867
-rect 1899 857 1957 867
-rect 2547 863 2677 873
-rect 0 835 110 845
-rect 2870 835 2935 845
-rect 0 774 110 799
-rect 2870 774 2935 799
-rect 0 129 110 154
-rect 2870 129 2935 154
-rect 0 106 110 116
-rect 2870 106 2935 116
-rect 0 83 110 93
-rect 2870 83 2935 93
-rect 0 60 110 70
-rect 2870 60 2935 70
-rect 0 37 541 47
-rect 555 37 1500 47
-rect 1516 37 2820 47
-rect 2836 37 2935 47
+rect 172 901 2533 911
+rect 1227 878 1669 888
+rect 387 856 493 866
+rect 507 856 1621 866
+rect 1708 855 1812 865
+rect 1899 855 1957 865
+rect 2547 861 2677 871
+rect 0 833 110 843
+rect 2870 833 2935 843
+rect 0 772 110 797
+rect 2870 772 2935 797
+rect 0 127 110 152
+rect 2870 127 2935 152
+rect 0 104 110 114
+rect 2870 104 2935 114
+rect 0 81 110 91
+rect 2870 81 2935 91
+rect 0 58 110 68
+rect 2870 58 2935 68
+rect 0 35 541 45
+rect 555 35 1500 45
+rect 1516 35 2820 45
+rect 2836 35 2935 45
 << m2contact >>
-rect 158 901 172 915
-rect 2533 901 2548 915
-rect 1213 879 1227 893
-rect 1669 879 1683 893
-rect 373 856 387 870
-rect 493 856 507 870
-rect 1621 856 1635 870
-rect 1693 855 1708 869
-rect 1812 856 1827 870
-rect 1885 856 1899 870
-rect 1957 855 1971 869
-rect 2532 861 2547 875
-rect 2677 862 2691 876
-rect 541 36 555 50
-rect 1500 36 1516 50
-rect 2820 35 2836 49
+rect 158 899 172 913
+rect 2533 899 2548 913
+rect 1213 877 1227 891
+rect 1669 877 1683 891
+rect 373 854 387 868
+rect 493 854 507 868
+rect 1621 854 1635 868
+rect 1693 853 1708 867
+rect 1812 854 1827 868
+rect 1885 854 1899 868
+rect 1957 853 1971 867
+rect 2532 859 2547 873
+rect 2677 860 2691 874
+rect 541 34 555 48
+rect 1500 34 1516 48
+rect 2820 33 2836 47
 << metal2 >>
-rect 158 852 170 901
-rect 326 852 338 922
-rect 374 852 386 856
-rect 470 852 482 922
-rect 494 852 506 856
-rect 566 852 650 864
-rect 686 852 698 922
-rect 1214 864 1226 879
-rect 1214 852 1370 864
-rect 1430 852 1442 922
-rect 1598 852 1610 922
-rect 1622 852 1634 856
-rect 1670 852 1682 879
-rect 1694 852 1706 855
-rect 1790 852 1802 922
-rect 1814 852 1826 856
-rect 1862 852 1874 922
-rect 1886 852 1898 856
-rect 1958 852 1970 855
-rect 2006 852 2018 922
-rect 2534 875 2546 901
-rect 2534 852 2546 861
-rect 2678 852 2690 862
-rect 2750 852 2762 922
-rect 182 43 194 53
-rect 182 31 338 43
-rect 326 2 338 31
-rect 470 2 482 53
-rect 542 50 554 53
-rect 686 2 698 53
-rect 1430 2 1442 53
-rect 1502 50 1514 53
-rect 1598 2 1610 53
-rect 1790 2 1802 53
-rect 2006 2 2018 53
-rect 2534 2 2546 53
-rect 2750 2 2762 53
-rect 2822 49 2834 53
-use halfadder  halfadder_0
+rect 158 850 170 899
+rect 326 850 338 920
+rect 374 850 386 854
+rect 470 850 482 920
+rect 494 850 506 854
+rect 566 850 650 862
+rect 686 850 698 920
+rect 1214 862 1226 877
+rect 1214 850 1370 862
+rect 1430 850 1442 920
+rect 1598 850 1610 920
+rect 1622 850 1634 854
+rect 1670 850 1682 877
+rect 1694 850 1706 853
+rect 1790 850 1802 920
+rect 1814 850 1826 854
+rect 1862 850 1874 920
+rect 1886 850 1898 854
+rect 1958 850 1970 853
+rect 2006 850 2018 920
+rect 2534 873 2546 899
+rect 2534 850 2546 859
+rect 2678 850 2690 860
+rect 2750 850 2762 920
+rect 182 41 194 51
+rect 182 29 338 41
+rect 326 0 338 29
+rect 470 0 482 51
+rect 542 48 554 51
+rect 686 0 698 51
+rect 1430 0 1442 51
+rect 1502 48 1514 51
+rect 1598 0 1610 51
+rect 1790 0 1802 51
+rect 2006 0 2018 51
+rect 2534 0 2546 51
+rect 2750 0 2762 51
+rect 2822 47 2834 51
+use halfadder halfadder_0
 timestamp 1386235204
-transform 1 0 110 0 1 53
+transform 1 0 110 0 1 51
 box 0 0 312 799
-use mux2  mux2_2
+use mux2 mux2_2
 timestamp 1386235218
-transform 1 0 422 0 1 53
+transform 1 0 422 0 1 51
 box 0 0 192 799
-use scanreg  scanreg_0
+use scanreg scanreg_0
 timestamp 1386241447
-transform 1 0 614 0 1 53
+transform 1 0 614 0 1 51
 box 0 0 720 799
-use trisbuf  trisbuf_0
+use trisbuf trisbuf_0
 timestamp 1386237216
-transform 1 0 1334 0 1 53
+transform 1 0 1334 0 1 51
 box 0 0 216 799
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
-transform 1 0 1550 0 1 53
+transform 1 0 1550 0 1 51
 box 0 0 192 799
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
-transform 1 0 1742 0 1 53
+transform 1 0 1742 0 1 51
 box 0 0 192 799
-use scanreg  scanreg_1
+use scanreg scanreg_1
 timestamp 1386241447
-transform 1 0 1934 0 1 53
+transform 1 0 1934 0 1 51
 box 0 0 720 799
-use trisbuf  trisbuf_1
+use trisbuf trisbuf_1
 timestamp 1386237216
-transform 1 0 2654 0 1 53
+transform 1 0 2654 0 1 51
 box 0 0 216 799
 << labels >>
-rlabel metal1 2935 774 2935 799 7 Vdd!
-rlabel metal1 2935 835 2935 845 7 ScanReturn
-rlabel metal1 2935 129 2935 154 7 GND!
-rlabel metal1 2935 60 2935 70 7 nReset
-rlabel metal1 2935 83 2935 93 7 Test
-rlabel metal1 2935 106 2935 116 7 Clock
-rlabel metal1 0 774 0 799 3 Vdd!
-rlabel metal1 0 835 0 845 3 ScanReturn
-rlabel metal1 0 60 0 70 3 nReset
-rlabel metal1 0 83 0 93 3 Test
-rlabel metal1 0 106 0 116 3 Clock
-rlabel metal1 0 129 0 154 3 GND!
-rlabel metal2 2750 922 2762 922 1 PcEn
-rlabel metal2 2006 922 2018 922 1 PcWe
-rlabel metal2 1862 922 1874 922 1 ALU
-rlabel metal2 1790 922 1802 922 1 PcSel[1]
-rlabel metal2 1598 922 1610 922 1 PcSel[0]
-rlabel metal2 1430 922 1442 922 1 LrEn
-rlabel metal2 686 922 698 922 1 LrWe
-rlabel metal2 470 922 482 922 1 LrSel
-rlabel metal2 326 922 338 922 5 PcIncCout
-rlabel metal1 2935 37 2935 47 7 DataBus
-rlabel metal1 0 37 0 47 3 DataBus
-rlabel metal2 326 2 338 2 1 PcIncCin
-rlabel metal2 470 2 482 2 1 LrSel
-rlabel metal2 686 2 698 2 1 LrWe
-rlabel metal2 1430 2 1442 2 1 LrEn
-rlabel metal2 1598 2 1610 2 1 PcSel[0]
-rlabel metal2 1790 2 1802 2 1 PcSel[1]
-rlabel metal2 2006 2 2018 2 1 PcWe
-rlabel metal2 2534 2 2546 2 1 Pc
-rlabel metal2 2750 2 2762 2 1 PcEn
+rlabel metal1 2935 772 2935 797 7 Vdd!
+rlabel metal1 2935 833 2935 843 7 ScanReturn
+rlabel metal1 2935 127 2935 152 7 GND!
+rlabel metal1 2935 58 2935 68 7 nReset
+rlabel metal1 2935 81 2935 91 7 Test
+rlabel metal1 2935 104 2935 114 7 Clock
+rlabel metal1 0 772 0 797 3 Vdd!
+rlabel metal1 0 833 0 843 3 ScanReturn
+rlabel metal1 0 58 0 68 3 nReset
+rlabel metal1 0 81 0 91 3 Test
+rlabel metal1 0 104 0 114 3 Clock
+rlabel metal1 0 127 0 152 3 GND!
+rlabel metal2 2750 920 2762 920 1 PcEn
+rlabel metal2 2006 920 2018 920 1 PcWe
+rlabel metal2 1862 920 1874 920 1 ALU
+rlabel metal2 1790 920 1802 920 1 PcSel[1]
+rlabel metal2 1598 920 1610 920 1 PcSel[0]
+rlabel metal2 1430 920 1442 920 1 LrEn
+rlabel metal2 686 920 698 920 1 LrWe
+rlabel metal2 470 920 482 920 1 LrSel
+rlabel metal2 326 920 338 920 5 PcIncCout
+rlabel metal1 2935 35 2935 45 7 DataBus
+rlabel metal1 0 35 0 45 3 DataBus
+rlabel metal2 326 0 338 0 1 PcIncCin
+rlabel metal2 470 0 482 0 1 LrSel
+rlabel metal2 686 0 698 0 1 LrWe
+rlabel metal2 1430 0 1442 0 1 LrEn
+rlabel metal2 1598 0 1610 0 1 PcSel[0]
+rlabel metal2 1790 0 1802 0 1 PcSel[1]
+rlabel metal2 2006 0 2018 0 1 PcWe
+rlabel metal2 2534 0 2546 0 1 Pc
+rlabel metal2 2750 0 2762 0 1 PcEn
 << end >>
