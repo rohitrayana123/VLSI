@@ -14,21 +14,14 @@
 		ADDIB R0,#0
 		ADDIB R0,#0
 		ADDIB R0,#0
-.isr  	SUBIB R7,#1		; Dec SP		; Save regs
-		STW R0,[R7,#0]	; Push data
-		SUBIB R7,#1		; Dec SP
-		STW R1,[R7,#0]	; Push data
-		SUBIB R7,#1		; Dec SP
-		STW R2,[R7,#0]	; Push data
-		SUBIB R7,#1		; Dec SP
-		STW R3,[R7,#0]	; Push data
-		SUBIB R7,#1		; Dec SP
-		STW R4,[R7,#0]	; Push data
-		SUBIB R7,#1		; Dec SP
-		STW R5,[R7,#0]	; Push data
-		SUBIB R7,#1		; Dec SP
-		STW R6,[R7,#0]	; Push data
-			
+.isr  	PUSH R0
+		PUSH R1
+		PUSH R2
+		PUSH R3
+		PUSH R4
+		PUSH R5
+		PUSH R6
+
 		; Read serial data
 		LUI R0,#160
 		LLI R0,#0
@@ -47,21 +40,14 @@
 		STW R1,[R4,#0]	; Write to buffer
 		ADDIB R4,#1
 		STW R4,[R3,#0]	; Inc write ptr
-						
-.skip	LDW R6,[R7,#0]	; Pop data	; Rstore regs
-		ADDIB R7,#1		; Iin SP
-		LDW R5,[R7,#0]	; Pop data
-		ADDIB R7,#1		; Iin SP
-		LDW R4,[R7,#0]	; Pop data
-		ADDIB R7,#1		; Iin SP
-		LDW R3,[R7,#0]	; Pop data
-		ADDIB R7,#1		; Iin SP
-		LDW R2,[R7,#0]	; Pop data
-		ADDIB R7,#1		; Iin SP
-		LDW R1,[R7,#0]	; Pop data
-		ADDIB R7,#1		; Iin SP
-		LDW R0,[R7,#0]	; Pop data
-		ADDIB R7,#1
+
+		POP R6
+		POP R5
+		POP R4
+		POP R3
+		POP R2
+		POP R1
+		POP R0
 		RETI
 		
 .main	LUI R0, #1		; Read ptr address in R0
@@ -71,9 +57,59 @@
 		SUB R5,R2,R3		 
 		BNE .main		; Jump back if the same
 		LDW R3,[R2,#0] 	; Load data out of buffer
+		PUSH R3
+		BWL .fact
+		POP R3
 		LUI R4,#8	
 		LLI R4,#1		; Address of LEDs
 		STW R3,[R4,#0]	; Put read data on LEDs
 		ADDIB R2,#1		; Inc read ptr
 		STW R2,[R0,#0]	; Store new read pointer
 		BR .main       	; look again	
+
+
+; Recurrisve factorial
+.fact   PUSH R0
+		PUSH R1
+		PUSH LR
+		LDW R1,[SP,#3]  ; Get para
+		ADDIB R1,#0
+		BNE .retOne             ; 0! = 1
+		SUBI R0,R1,#1
+		PUSH R0                 ; Pass para
+		BWL .fact               ; The output from fact to multi remains on the stack
+		PUSH R1                 ; Pass para
+		BWL .multi
+		POP R1                  ; Get res
+		ADDIB SP,#1             ; POP
+		STW R1,[SP,#3]
+		POP LR
+		POP R1
+		POP R0
+		RET
+.retOne ADDIB R1,#1             ; Trade off code size to avoid jump checking
+		STW R1,[SP,#3]                                                                                                  
+		POP LR                                                                                                          
+		POP R1                                                                                                          
+		POP R0                                                                                                          
+		RET
+
+
+; Multiply routine
+.multi  PUSH R2
+		PUSH R3
+		PUSH R4
+		LDW R2,[SP,#3]
+		LDW R3,[SP,#4]                                                                                                  
+		SUB R4,R4,R4                                                                                                    
+	    ADDIB R3,#0                                                                                                     
+		BNE .end                                                                                                       
+.loop   ADD R4,R4,R2                                                                                                            
+		SUBIB R3,#1                                                                                                     
+	 	BE .loop                                                                                                        
+.end    STW R4,[SP,#3]                                                                                                          
+	 	POP R4
+		POP R3
+		POP R2
+		RET
+
