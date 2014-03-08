@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394315259
+timestamp 1394315736
 << pwell >>
 rect 0 16432 54 16457
 rect 0 15353 54 15378
@@ -179,6 +179,9 @@ rect 0 178 54 188
 rect 0 155 54 165
 rect 0 95 54 105
 rect 1062 73 1091 83
+<< metal2 >>
+rect 126 17264 138 17296
+rect 918 17264 930 17296
 use IrAA IrAA_0
 array 0 0 1008 0 7 1079
 timestamp 1394309515
@@ -355,4 +358,6 @@ rlabel metal1 1091 13021 1091 13031 7 Imm[12]
 rlabel metal1 1091 14100 1091 14110 7 Imm[13]
 rlabel metal1 1091 15179 1091 15189 7 Imm[14]
 rlabel metal1 1091 16258 1091 16268 7 Imm[15]
+rlabel metal2 126 17296 138 17296 5 IrWe
+rlabel metal2 918 17296 930 17296 5 ImmSel
 << end >>

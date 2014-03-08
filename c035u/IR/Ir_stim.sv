@@ -8,7 +8,7 @@ timeprecision 10ps;
 
 logic Clock ;
 logic ImmSel ;
-logic [15:0] IrIn ;
+logic [15:0] SysBus ;
 logic IrWe ;
 logic nReset ;
 logic SDI ;
@@ -22,7 +22,7 @@ Ir instance1(
 	.Ir ( Ir ),
 	.Clock ( Clock ),
 	.ImmSel ( ImmSel ),
-	.IrIn ( IrIn ),
+	.SysBus ( IrIn ),
 	.IrWe ( IrWe ),
 	.nReset ( nReset ),
 	.SDI ( SDI ),
@@ -49,7 +49,7 @@ initial
   begin
     errors = 0;
     ImmSel = 0;
-    IrIn = 0;
+    SysBus = 0;
     IrWe = 0;
     nReset = 1;
     SDI = 0;
@@ -58,15 +58,15 @@ initial
 	#250 nReset = 0;
 	#250 nReset = 1;
 	
-	IrIn = 16'hFFFF;
+	SysBus = 16'hFFFF;
 	#1000 //wait a clock cycle
 	assert(Ir == 0) else begin errors++; $display("Ir We fail"); end
 	IrWe = 1;
-	#1000 assert(Ir == IrIn) else begin errors++; $display("Ir We Fail");
+	#1000 assert(Ir == SysBus) else begin errors++; $display("Ir We Fail");
 end
 	
 	IrWe = 0;
-	IrIn = 16'h001F;
+	SysBus = 16'h001F;
 	
 	#1000 assert ( Ir == 16'hFFFF ) else begin errors++; $display("Ir We Fail");end
 	
@@ -77,7 +77,7 @@ end
 	ImmSel = `IMMLONG;
 	#1000 assert(Imm == 16'h001F) else begin errors++; $display("ImmSel Long error"); end
 	
-	IrIn = 16'h00EF;
+	SysBus = 16'h00EF;
 	
 	ImmSel = `IMMSHORT;
 	#1000 assert(Imm == 16'h000F) else begin errors++; $display("ImmSel Short Error"); end
@@ -100,7 +100,7 @@ initial
   $monitor($time,
     ,"%b", Clock ,
     ,"%b", ImmSel ,
-    ,"%b", IrIn ,
+    ,"%b", SysBus ,
     ,"%b", IrWe ,
     ,"%b", nReset ,
     ,"%b", SDI ,
