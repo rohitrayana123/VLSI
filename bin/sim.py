@@ -64,22 +64,16 @@ def RunSim(options):
 		#cmd.append("-v")
 		cmd.append(os.path.join(stim, "prog_stim.sv"))
 		programfile, fileExtension = os.path.splitext(options.program)
-
 		if os.path.exists(os.path.join(programs, programfile+".asm")): #found us some assembler - compile it!
-			if options.compile:
-				print("Invoking compiler...")
-				asmb = os.path.join(programs, programfile)
-				print asmb
-				call(["python", os.path.join(home, "bin/assemble.py"), asmb])
-			else:
-				print("Not recompiling the assembly language")
+			print("Invoking compiler...")
+			asmb = os.path.join(programs, programfile)
+			print asmb
+			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
+
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 
 	# Hard code for bim
 	cmd.append('+define+switch_value=2569')
-
-	# Hard code again
-	cmd.append('+define+data_file=\\\"%s\\\"' % os.path.join(stim,"serial_data.hex" ))
 
 	#opcodes.svh
 	#cmd.append(behave+"/opcodes.svh") # will work here but not first time
@@ -120,10 +114,6 @@ if "__main__" == __name__:
 
 	parser.add_option("-p", "--prog", dest="program",
                   help="program to run (hex file) should not be defined if module is")
-
-	parser.add_option("-X", "",
-                  action="store_false", dest="compile", default=True,
-                  help="Do not recompile the assembly language")
 
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,

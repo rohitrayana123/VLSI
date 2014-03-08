@@ -319,7 +319,7 @@ for i, line in enumerate(SEGMLINES):
 			temp += '1'
 		else:
 			temp += '0'
-		temp += '00' + regcode(line[1]) + '00000'
+		temp += '00' + regcode(line[1]) + '00001'
 		MC.append(temp)
 	elif OpType(line[0]) == 'D1':				#Control transfer: Jump
 		MC.append(OpNum('D1') + conditioncode(line[0]) + regcode(line[1]) + ConvertToBin(line[2], 5))

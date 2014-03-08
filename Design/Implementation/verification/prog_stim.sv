@@ -113,7 +113,7 @@ end
 
 // If this stops sim then probably looped
 initial begin
-	#1000000
+	#10000000
 	$stop;
 	$finish;
 end

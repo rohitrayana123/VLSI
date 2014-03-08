@@ -22,6 +22,7 @@ module control(
    output logic                     CFlag,
    output opcodes::Lr_select_t      LrSel,
    output opcodes::Rs1_select_t     Rs1Sel,
+   output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
@@ -92,7 +93,7 @@ enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states
 	if(!nReset) begin
-	      	StatusReg <= #20 0;
+      	StatusReg <= #20 0;
 	  	state <= #20 fetch;
       		stateSub <= #20 cycle0;
 		InISR <= #20 0;
@@ -145,7 +146,7 @@ always_ff@(posedge Clock or negedge nReset) begin
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
-            	cycle3: if(nWait)						// Data setup, stay in place
+				cycle3: if(nWait)						// Data setup, stay in place
 							stateSub <= #20 cycle4;	
         		default:begin
 				if(IntReq)
@@ -414,12 +415,12 @@ always_comb begin
 							StatusRegWe = 1;
                            	PcSel = Pc1;
                         end
-				LDW,STW:begin			// Add must be done before address out
-   					AluEn = 1;
-					ImmSel = ImmShort;
-					Op1Sel = Op1Rd1;
-					AluOp = FnADD;	
-                           		AluWe = 1;
+						LDW,STW:begin			// Add must be done before address out
+   							AluEn = 1;
+							ImmSel = ImmShort;
+                           	Op1Sel = Op1Rd1;
+							AluOp = FnADD;	
+                           	AluWe = 1;
                     	end
 						LUI,LLI:begin
 							ImmSel = ImmLong;
@@ -554,37 +555,50 @@ always_comb begin
             		endcase
          		end
          		cycle3: begin
-            			case(Opcode)
-					LDW:begin
-						nME = 0;
-						MemEn = 1;
-						ENB = 1;
-						nWE = 1;
-					end
-               				STW:begin
-						nME = 0;
-	                        		AluEn = 1;			// Hold data on sysbus
-        	                		nOE = 1;               
-                		     	end   
-					INTERRUPT: begin
-						nME = 0;
-						MemEn = 1;
-						ENB = 1;
-						nWE = 1;
-					end
-	            		endcase  
+            		case(Opcode)
+						LDW:begin
+							nME = 0;
+							MemEn = 1;
+							ENB = 1;
+							nWE = 1;
+						end
+               			STW:begin
+							nME = 0;
+                        	AluEn = 1;			// Hold data on sysbus
+                        	nOE = 1;               
+                     	end  
+						PUSH:begin
+							nME = 0;	
+							nOE = 1;	
+							//LrEn = 1;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrEn = 1;
+							end else begin
+								AluEn = 1;
+								AluWe = 1;
+								Rs1Sel = Rs1Ra;
+								AluOp = FnA;
+							end
+						end
+						POP:begin
+							nME = 0;
+							MemEn = 1;
+							ENB = 1;
+							nWE = 1;
+							WdSel = WdAlu;
+							ImmSel = ImmShort;
+							Op2Sel = Op2Imm;
+							RegWe = 1;
+							Rs1Sel = Seven;
+							WdSel = WdAlu;
+							RwSel = RwSeven;
+							AluOp = FnADD;
+						end
+            		endcase  
          		end
          		cycle4: begin
-				if (Opcode == INTERRUPT) begin
 					PcWe = 1;
-					PcSel = PcSysbus;
-					nME = 1;
-					MemEn = 1;
-					nWE = 1;
-				end //end INTERRUPT
-				else begin //LDW or STW
-					PcWe = 1;
-        				PcSel = Pc1;		// Done, move on
+                    PcSel = Pc1;		// Done, move on
    					nME = 1;
 					if(Opcode == LDW) begin
 						nWE = 1;
@@ -596,50 +610,9 @@ always_comb begin
 						nOE = 1;
 						AluEn = 1;
 					end
-				end //else //LDW or STW
          		end
          	endcase
-	end
-	interrupt:
-		case(stateSub)
-			cycle0:
-			begin
-				Rs1Sel = Seven;//choose sp
-				AluOp = FnA; //pass it through
-				Op1Sel = Op1Rd1;
-				AluWe = 1;
-				AluEn = 1;
-			end
-			cycle1:
-			begin
-               			nWE = 1;
-        	       		nOE = 1; 
-				AluOp = FnA;
-				Op1Sel = Op1Rd1;
-				Rs1Sel = Seven;
-				AluEn = 1;
-				ALE = 1;
-			end
-			cycle2: begin
-                        	nME = 0;
-				AluOp = FnA;		// Nothing done to op1
-				nOE = 1;
-	                	nWE = 1;
-				AluEn = 1;
-			end
-			cycle3: begin
-				nME = 0;
-	                        PcEn = 1;			// Hold data on sysbus
-        	                nOE = 1;               
-			end
-			cycle4: begin
-				nOE = 1;
-				PcEn = 1;
-				IntClear = 1;
-				PcSel = PcInt;
-				PcWe = 1;
-			end
-		endcase
+      	end
 	endcase
 end
 endmodule

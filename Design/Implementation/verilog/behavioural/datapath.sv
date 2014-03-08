@@ -12,6 +12,7 @@ module datapath(
   input  opcodes::Wd_select_t WdSel,
   input  opcodes::Rs1_select_t Rs1Sel,
   input  opcodes::Lr_select_t LrSel,
+  input  opcodes::Rw_select_t RwSel,
   input  wire           AluEn, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, CFlag, AluWe
 );
 
@@ -33,14 +34,22 @@ assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
 assign PcInc = Pc + 1;
 
 //Multiplexers
-always_comb begin : Rs1Mux
+always_comb begin
+	case(RwSel)
+		RwSeven: Rw = 3'b111;
+		RwRd: Rw = Ir[10:8];
+		RwRa: Rw = Ir[7:5];
+	endcase
+end
+
+always_comb begin
 	case(Rs1Sel)
 		Rs1Rd: Rs1In = Ir[10:8];
 		Rs1Ra: Rs1In = Ir[7:5];
-		Seven: Rs1In = 3'b111; // used to force SP to bus
+		default: Rs1In = 3'b111;
 	endcase
-		
 end
+
 always_comb begin : PcInMux
 	case(PcSel)                      // 3 input mux
             PcLr        :  PcIn = Lr;

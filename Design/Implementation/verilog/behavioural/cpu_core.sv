@@ -28,7 +28,7 @@ wire        LrEn;
 wire        LrWe; 
 wire        LrSel;
 wire        PcWe;  
-wire [2:0]  PcSel;  
+wire [1:0]  PcSel;  
 wire        PcEn;  
 wire        IrWe;
 wire        WdSel;  
@@ -40,7 +40,7 @@ wire        CFlag;
 wire [3:0]  Flags;
 wire [7:0]  Opcode;  
 wire        AluWe;
-
+wire[1:0]	RwSel;
 assign SDO = SDI; // No sim 
 
 control control ( 
@@ -65,6 +65,7 @@ control control (
    .ENB        (ENB        ),
    .ALE        (ALE        ),
    .Rs1Sel     (Rs1Sel     ),
+   .RwSel		(RwSel),
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
    .OpcodeCondIn(Opcode     ),    // Inputs
@@ -100,6 +101,7 @@ datapath datapath (
    .RegWe      (RegWe      ),
    .MemEn      (MemEn      ),
    .Rs1Sel     (Rs1Sel     ),
+   .RwSel		(RwSel),
    .CFlag      (CFlag      ),
    .AluWe      (AluWe      ),
    .Clock      (Clock      ),
