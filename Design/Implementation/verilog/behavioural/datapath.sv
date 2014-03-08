@@ -21,7 +21,7 @@ timeunit 1ns; timeprecision 100ps;
 
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
-logic [2:0] Rs1In;
+logic [2:0] Rs1In,Rw;
 
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
@@ -81,7 +81,7 @@ regBlock regBlock(      // Register block instance
    .WData   (WData   ),
    .Rs1     (Rs1In   ),
    .Rs2     (Ir[4:2] ),
-   .Rw      (Ir[10:8]),
+   .Rw      (Rw		),//Ir[10:8]),
    .Clock   (Clock   ),
    .nReset  (nReset  ),
    .We      (RegWe   )
