@@ -554,7 +554,9 @@ always_comb begin
 							nWE = 1;
 							MemEn = 1;
 							WdSel = WdSys;
+							RwSel = RwRd;
 							RegWe = 1;
+							WdSel = WdSys;
 						end
 						STW: begin
 							nOE = 1;
