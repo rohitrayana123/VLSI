@@ -40,7 +40,7 @@ typedef enum logic 			{ImmShort=1'b1, ImmLong=1'b0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1'b1, WdAlu=1'b0} 					Wd_select_t;
 typedef enum logic  [1:0]	{Rs1Rd=1, Rs1Ra=0,Seven=2} 					Rs1_select_t;
 typedef enum logic			{LrPc=1'b1, LrSys=1'b0}					Lr_select_t;		
-typedef enum logic			{RwSeven=1,RwData=0}		Rw_select_t;
+typedef enum logic  [1:0]	{RwSeven=1,RwRa=0,RwRd = 2}		Rw_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 

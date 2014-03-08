@@ -38,7 +38,7 @@ wire        CFlag;
 wire [3:0]  Flags;
 wire [7:0]  Opcode;  
 wire        AluWe;
-wire		RwSel;
+wire[1:0]	RwSel;
 assign SDO = SDI; // No sim 
 
 control control ( 
