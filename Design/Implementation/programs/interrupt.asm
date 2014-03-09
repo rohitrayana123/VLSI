@@ -18,9 +18,6 @@
 		PUSH R1
 		PUSH R2
 		PUSH R3
-		PUSH R4
-		PUSH R5
-		PUSH R6
 
 		; Read serial data
 		LUI R0,#160
@@ -34,16 +31,13 @@
 		
 		; Get write ptr
 		ADDI R3,R0,#1
-		LDW R4,[R3,#0]	; R4 contain the write ptr
+		LDW R2,[R3,#0]	; R4 contain the write ptr
 	
 		; Put serial data at ptr address
-		STW R1,[R4,#0]	; Write to buffer
-		ADDIB R4,#1
-		STW R4,[R3,#0]	; Inc write ptr
-
-		POP R6
-		POP R5
-		POP R4
+		STW R1,[R2,#0]	; Write to buffer
+		ADDIB R2,#1
+		STW R2,[R3,#0]	; Inc write ptr
+	
 		POP R3
 		POP R2
 		POP R1
@@ -56,8 +50,15 @@
 		LDW R3,[R0,#1]	; Write ptr in R3
 		SUB R5,R2,R3		 
 		BNE .main		; Jump back if the same
-		LDW R3,[R2,#0] 	; Load data out of buffer
-		PUSH R3
+		LDW R3,[R2,#0] 	; Load data out of buffer	
+		SUB R4,R4,R4
+		LLI R4,#15
+		AND R3,R4,R3
+		CMPI R3,#8
+		BNE .do
+		LLI R4,#7
+		AND R3,R3,R4	
+.do 	PUSH R3
 		BWL .fact
 		POP R3
 		LUI R4,#8	
@@ -72,7 +73,7 @@
 .fact   PUSH R0
 		PUSH R1
 		PUSH LR
-		LDW R1,[SP,#3]  ; Get para
+		LDW R1,[SP,#3]  ; Get para	
 		ADDIB R1,#0
 		BNE .retOne             ; 0! = 1
 		SUBI R0,R1,#1
