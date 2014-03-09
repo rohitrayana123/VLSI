@@ -14,7 +14,8 @@
 		ADDIB R0,#0
 		ADDIB R0,#0
 		ADDIB R0,#0
-.isr  	DISI			; Don's lose event
+.isr  	DISI
+		STF				; Keep flags
 		PUSH R0			; Save only this for now
 		LUI R0,#160
 		LLI R0,#0
@@ -56,9 +57,9 @@
 		POP R2
 		POP R1
 		POP R0
+		LDF
 		RETI
-	
-
+		
 
 .main	LUI R0, #1		; Read ptr address in R0
 		LLI R0, #0	

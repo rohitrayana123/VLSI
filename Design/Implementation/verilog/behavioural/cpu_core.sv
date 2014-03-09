@@ -41,6 +41,10 @@ wire [3:0]  Flags;
 wire [7:0]  Opcode;  
 wire        AluWe;
 wire[1:0]	RwSel;
+wire [15:0]	SysBus;
+wire [3:0]	FlagsOut;
+wire FlagListen;
+wire FlagSel;
 assign SDO = SDI; // No sim 
 
 control control ( 
@@ -66,12 +70,13 @@ control control (
    .ALE        (ALE        ),
    .Rs1Sel     (Rs1Sel     ),
    .RwSel		(RwSel),
+   .FlagSel		(FlagSel),
+   .StatusReg	(FlagsOut),
+   .StatusOut	(FlagListen),
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
    .OpcodeCondIn(Opcode     ),    // Inputs
-	.SysBusOut		(SysBus),	// AJR - This should be an inout?
-	.SysBusIn	(SysBus),		
-`ifndef nowait
+	`ifndef nowait
   	.nWait		(nWait),
 `endif
    .AluWe      (AluWe      ),
@@ -106,6 +111,9 @@ datapath datapath (
    .RwSel		(RwSel),
    .CFlag      (CFlag      ),
    .AluWe      (AluWe      ),
+   .FlagSel		(FlagSel),
+   .FlagsIn		(FlagsOut),
+   .FlagListen	(FlagListen),
    .Clock      (Clock      ),
    .nReset     (nReset     )
 );

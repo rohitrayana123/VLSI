@@ -7,6 +7,8 @@ typedef
   enum logic [4:0] { 	
 	  		FnA, 
 			FnB, 
+			FnDEC,
+			FnINC,
 			FnADD, 
 			FnADC, 
 			FnSUB, 
@@ -41,6 +43,7 @@ typedef enum logic 			{WdSys=1'b1, WdAlu=1'b0} 					Wd_select_t;
 typedef enum logic	[1:0]	{Rs1Rd, Rs1Ra,Seven} 					Rs1_select_t;
 typedef enum logic			{LrPc=1'b1, LrSys=1'b0}					Lr_select_t;		
 typedef enum logic  [1:0]	{RwSeven=1,RwRa=0,RwRd = 2}		Rw_select_t;
+typedef enum logic 			{FlagAlu=1,FlagSys = 0}	Flag_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 

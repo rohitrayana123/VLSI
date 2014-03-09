@@ -24,6 +24,8 @@ begin
    	case (AluOp)
       	FnA		: Result = Op1;
       	FnB		: Result = Op2;	
+		FnDEC	: Result = Op1 - 1;
+		FnINC	: Result = Op1 + 1;
 		FnADD	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
     	FnADC   : {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
 		FnSUB	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};

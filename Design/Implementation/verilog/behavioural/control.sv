@@ -24,7 +24,9 @@ module control(
    output opcodes::Rs1_select_t     Rs1Sel,
    output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
-   output wire						SysBusOut,
+   output logic[3:0]			StatusReg,
+   output logic 		StatusOut,
+   output opcodes::Flag_select_t	FlagSel,
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
 `ifndef nowait
@@ -33,10 +35,8 @@ module control(
    input  wire                      Clock,
    input  wire                      nReset
 `ifndef nointerrupt
-,   input  wire 			nIRQ,
-`endif
-	input wire 	SysBusIn
-	
+,   input  wire 			nIRQ
+`endif	
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -47,26 +47,13 @@ Opcode_t Opcode;
 Branch_t BranchCode;
 
 //Flags register
-wire [3:0] StatusRegOut;
-wire [15:0] StatusRegIn;
-logic StatusRegWe,StatusRegEn,StatusRestore;
+logic StatusRegWe;
 
-assign StatusRegIn = (StatusRestore) ? SysBusIn : {12'h000,Flags};
-
-trisreg Status(
-	.Clock	(Clock),
-	.nReset	(nReset),
-	.Reg_EN	(StatusRegEn),
-	.Reg_WE	(StatusRegWe),
-	.DataIn	(StatusRegIn),		// Only 4 bit wide required
-	.DataOut (StatusRegOut),
-	.TrisOut (SysBusOut)
-);
 
 // Type casting
 assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); 
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
-assign CFlag = StatusRegOut[`FLAGS_C];
+assign CFlag = StatusReg[`FLAGS_C];
 
 `ifndef nointerrupt
 //double buffer the IRQ signal
@@ -109,14 +96,14 @@ enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states
 	if(!nReset) begin
-      //	StatusRegIn <= #20 0;
+      	StatusReg <= #20 0;
 	  	state <= #20 fetch;
       	stateSub <= #20 cycle0;
 		InISR <= #20 0;
 	end else begin 
 		// Status update
-    //  	if (StatusRegWe)
-	//		StatusRegIn <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
+      	if (StatusRegWe)
+			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
 		// Interrupt
 		if(state == interrupt)
 			case(stateSub)
@@ -152,7 +139,7 @@ always_ff@(posedge Clock or negedge nReset) begin
                 			LDW, STW,PUSH,POP: 	
 								stateSub <= #20 cycle1;
 							INTERRUPT: begin
-								if ( BranchCode == 0)
+								if ( BranchCode == 0 | BranchCode == 3 | BranchCode == 4)
 									stateSub <= #20 cycle1; //if a return from interrupt
 								else
 									state <= #20 fetch; //else single cycle
@@ -168,7 +155,7 @@ always_ff@(posedge Clock or negedge nReset) begin
 						state<= #20 interrupt;
 					else
 	                    state <= #20 fetch;	
-					if(Opcode == INTERRUPT) InISR <= #20 0; //
+					if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
 				end
          	endcase
    	end
@@ -203,8 +190,8 @@ always_comb begin
 	IntClear = 0;
 	IntEnable = 0;
 	IntDisable = 0;
-	StatusRegEn = 0;
-	StatusRestore = 0;
+	StatusOut = 0;
+	FlagSel = FlagAlu;
 	case(state)
       	fetch : 
          	case(stateSub)
@@ -463,10 +450,10 @@ always_comb begin
 									AluEn = 1;
 									if(	(BranchCode == BR) 	|| 
 										(BranchCode == BWL)	||
-										(BranchCode == BNE 	&& 	(StatusRegOut[`FLAGS_Z] && BranchCode == BNE)	)		||
-										(BranchCode == BE 	&& 	(~StatusRegOut[`FLAGS_Z] && BranchCode == BE)	)		||
-										(BranchCode == BLT	&&  ((StatusRegOut[`FLAGS_N] && ~StatusRegOut[`FLAGS_V]) || (~StatusRegOut[`FLAGS_N] && StatusRegOut[`FLAGS_V]))	)	||
-										(BranchCode == BGE	&&  ((StatusRegOut[`FLAGS_N] && StatusRegOut[`FLAGS_V]) || (~StatusRegOut[`FLAGS_N] && ~StatusRegOut[`FLAGS_V])))	) begin 
+										(BranchCode == BNE 	&& 	(StatusReg[`FLAGS_Z] && BranchCode == BNE)	)		||
+										(BranchCode == BE 	&& 	(~StatusReg[`FLAGS_Z] && BranchCode == BE)	)		||
+										(BranchCode == BLT	&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
+										(BranchCode == BGE	&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
 										PcSel = PcAluOut;
 										if(BranchCode == BWL) begin	// Branch with link
 											LrWe = 1;
@@ -510,12 +497,12 @@ always_comb begin
 						end 
 						INTERRUPT: begin
 							case(BranchCode)
-								0: begin //RETI
+								0,4: begin //RETI and LDF
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
 									AluOp = FnA;	
-	            		            	   		AluWe = 1;	
+	            		            AluWe = 1;	
 								end //0 
 								1: begin
 									PcWe = 1;
@@ -529,12 +516,15 @@ always_comb begin
 									PcEn = 1; 
 									IntDisable = 1;
 								end //2
-								3: begin
-									StatusRegEn = 1;	
-								end
-								4: begin
-									StatusRestore = 1;
-									StatusRegWe = 1;
+								3: begin // STF
+									Rs1Sel = Seven; //chose SP
+   									AluEn = 1;
+									Op1Sel = Op1Rd1;
+									AluOp = FnDEC;	
+	            		            AluWe = 1;
+									RegWe = 1;
+									WdSel = WdAlu;
+									RwSel = RwSeven;
 								end
 							endcase
 						end //INTERRUPT
@@ -565,7 +555,10 @@ always_comb begin
 							ALE = 1;
 							nWE = 1;
 							nOE = 1;
-							AluOp = FnA;
+							if(BranchCode == 3 )
+								AluOp = FnDEC;
+							else
+								AluOp = FnINC;
 							Op1Sel = Op1Rd1;
 							Rs1Sel = Seven;
 							AluEn = 1;
@@ -668,10 +661,19 @@ always_comb begin
 							AluOp = FnADD;
 						end
 						INTERRUPT: begin
-							nME = 0;
-							MemEn = 1;
-							ENB = 1;
-							nWE = 1;
+							case(BranchCode)
+								0,4:begin
+									nME = 0;
+									MemEn = 1;
+									ENB = 1;
+									nWE = 1;
+								end
+								3:begin
+									StatusOut = 1;
+									nME = 0;
+									nOE = 1;
+								end
+							endcase
 						end
             		endcase  
          		end
@@ -723,14 +725,26 @@ always_comb begin
 									PcSel = PcSysbus;
 									MemEn = 1;
 									nME = 1;
+									Rs1Sel = Seven;
+									AluOp = FnINC;
+									WdSel = WdAlu;
+									RwSel = RwSeven;
+									RegWe = 1;
 								end
 								3: begin
 									nOE = 1;
-									StatusRegEn = 1;
+									StatusOut = 1;
 								end
 								4:	begin
-									StatusRegWe = 1;
+									Rs1Sel = Seven;
+									MemEn = 1;
 									nWE = 1;	
+									AluOp = FnINC;
+									WdSel = WdAlu;
+									RwSel = RwSeven;
+									RegWe = 1;
+									FlagSel = FlagSys;
+									StatusRegWe = 1;
 								end
 							endcase
 						end
@@ -744,15 +758,18 @@ always_comb begin
 		case(stateSub)
 			cycle0:begin
 				Rs1Sel = Seven;//choose sp
-				AluOp = FnA; //pass it through
+				AluOp = FnDEC; //pass it through
 				Op1Sel = Op1Rd1;
+				RegWe = 1;
+				RwSel = RwSeven;
+				WdSel = WdAlu;
 				AluWe = 1;
 				AluEn = 1;
 			end
 			cycle1:begin
 	            nWE = 1;
 				nOE = 1;
-				AluOp = FnA;
+				AluOp = FnDEC;
 				Op1Sel = Op1Rd1;
 				Rs1Sel = Seven;
 				AluEn = 1;
@@ -760,7 +777,7 @@ always_comb begin
 			end
 			cycle2: begin
 				nME = 0;
-				AluOp = FnA; // Nothing done to op1
+				AluOp = FnDEC; // Nothing done to op1
 				nOE = 1;
 				nWE = 1;
 				AluEn = 1;
