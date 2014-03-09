@@ -45,7 +45,7 @@ def ConvertToBin(x, length):
 
 #Conversion functions
 def OpType(value):	#Determine instruction format type
-	if value in ("ENAI", "DISI", "RETI"):
+	if value in ("ENAI", "DISI", "RETI","STF","LDF"):
 		return "F"
 	elif value in ("PUSH", "POP"):
 		return "E"
@@ -308,6 +308,10 @@ for i, line in enumerate(SEGMLINES):
 			MC.append(OpNum('F') + '010' + '00000000')
 		elif line[0] == 'RETI':
 			MC.append(OpNum('F') + '000' + '11100000')#Always reads location pointed to by SP
+		elif line[0] == 'STF':
+			MC.append(OpNum('F') + '011' + '00000000')
+		elif line[0] == 'LDF':
+			MC.append(OpNum('F') + '100' + '00000000')
 	elif OpType(line[0]) == 'E':				#Stack operations
 		temp = '0'
 		if line[0] == 'PUSH':
