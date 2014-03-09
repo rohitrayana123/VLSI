@@ -534,6 +534,7 @@ always_comb begin
 								end
 								4: begin
 									StatusRestore = 1;
+									StatusRegWe = 1;
 								end
 							endcase
 						end //INTERRUPT
@@ -715,11 +716,23 @@ always_comb begin
 							end
 						end
 						INTERRUPT:begin
-							PcWe = 1;
-							PcSel = PcSysbus;
-							nME = 1;
-							MemEn = 1;
-							nWE = 1;
+							case(BranchCode)
+								0: begin
+									nWE = 1;
+									PcWe = 1;
+									PcSel = PcSysbus;
+									MemEn = 1;
+									nME = 1;
+								end
+								3: begin
+									nOE = 1;
+									StatusRegEn = 1;
+								end
+								4:	begin
+									StatusRegWe = 1;
+									nWE = 1;	
+								end
+							endcase
 						end
 					endcase
 				
