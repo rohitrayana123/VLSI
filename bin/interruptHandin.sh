@@ -24,6 +24,7 @@ BIN="bin"
 echo "Building asm submission..."
 cd $DES/$IMP/$PROG
 python assemble.py multiply
+python assemble.py interrupt
 cd ../../../$BIN
 # Copy the verilog folder
 echo "Copying across $VER folder..."
