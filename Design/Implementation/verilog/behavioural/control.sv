@@ -24,6 +24,7 @@ module control(
    output opcodes::Rs1_select_t     Rs1Sel,
    output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
+   output wire						SysBusOut,
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
 `ifndef nowait
@@ -32,8 +33,10 @@ module control(
    input  wire                      Clock,
    input  wire                      nReset
 `ifndef nointerrupt
-,   input  wire 			nIRQ
+,   input  wire 			nIRQ,
 `endif
+	input wire 	SysBusIn
+	
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -44,13 +47,26 @@ Opcode_t Opcode;
 Branch_t BranchCode;
 
 //Flags register
-logic [3:0] StatusReg;
-logic StatusRegWe;
+wire [3:0] StatusRegOut;
+wire [15:0] StatusRegIn;
+logic StatusRegWe,StatusRegEn,StatusRestore;
+
+assign StatusRegIn = (StatusRestore) ? SysBusIn : {12'h000,Flags};
+
+trisreg Status(
+	.Clock	(Clock),
+	.nReset	(nReset),
+	.Reg_EN	(StatusRegEn),
+	.Reg_WE	(StatusRegWe),
+	.DataIn	(StatusRegIn),		// Only 4 bit wide required
+	.DataOut (StatusRegOut),
+	.TrisOut (SysBusOut)
+);
 
 // Type casting
 assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); 
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
-assign CFlag = StatusReg[`FLAGS_C];
+assign CFlag = StatusRegOut[`FLAGS_C];
 
 `ifndef nointerrupt
 //double buffer the IRQ signal
@@ -93,14 +109,14 @@ enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states
 	if(!nReset) begin
-      	StatusReg <= #20 0;
+      //	StatusRegIn <= #20 0;
 	  	state <= #20 fetch;
       	stateSub <= #20 cycle0;
 		InISR <= #20 0;
 	end else begin 
 		// Status update
-      	if (StatusRegWe)
-			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
+    //  	if (StatusRegWe)
+	//		StatusRegIn <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
 		// Interrupt
 		if(state == interrupt)
 			case(stateSub)
@@ -187,7 +203,9 @@ always_comb begin
 	IntClear = 0;
 	IntEnable = 0;
 	IntDisable = 0;
-   	case(state)
+	StatusRegEn = 0;
+	StatusRestore = 0;
+	case(state)
       	fetch : 
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
@@ -445,10 +463,10 @@ always_comb begin
 									AluEn = 1;
 									if(	(BranchCode == BR) 	|| 
 										(BranchCode == BWL)	||
-										(BranchCode == BNE 	&& 	(StatusReg[`FLAGS_Z] && BranchCode == BNE)	)		||
-										(BranchCode == BE 	&& 	(~StatusReg[`FLAGS_Z] && BranchCode == BE)	)		||
-										(BranchCode == BLT	&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
-										(BranchCode == BGE	&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
+										(BranchCode == BNE 	&& 	(StatusRegOut[`FLAGS_Z] && BranchCode == BNE)	)		||
+										(BranchCode == BE 	&& 	(~StatusRegOut[`FLAGS_Z] && BranchCode == BE)	)		||
+										(BranchCode == BLT	&&  ((StatusRegOut[`FLAGS_N] && ~StatusRegOut[`FLAGS_V]) || (~StatusRegOut[`FLAGS_N] && StatusRegOut[`FLAGS_V]))	)	||
+										(BranchCode == BGE	&&  ((StatusRegOut[`FLAGS_N] && StatusRegOut[`FLAGS_V]) || (~StatusRegOut[`FLAGS_N] && ~StatusRegOut[`FLAGS_V])))	) begin 
 										PcSel = PcAluOut;
 										if(BranchCode == BWL) begin	// Branch with link
 											LrWe = 1;
@@ -511,6 +529,12 @@ always_comb begin
 									PcEn = 1; 
 									IntDisable = 1;
 								end //2
+								3: begin
+									StatusRegEn = 1;	
+								end
+								4: begin
+									StatusRestore = 1;
+								end
 							endcase
 						end //INTERRUPT
             		endcase //opcode

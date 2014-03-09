@@ -69,6 +69,8 @@ control control (
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
    .OpcodeCondIn(Opcode     ),    // Inputs
+	.SysBusOut		(SysBus),	// AJR - This should be an inout?
+	.SysBusIn	(SysBus),		
 `ifndef nowait
   	.nWait		(nWait),
 `endif
