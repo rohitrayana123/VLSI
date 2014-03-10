@@ -17,7 +17,7 @@
 .isr  	DISI
 		STF				; Keep flags
 		PUSH R0			; Save only this for now
-		LUI R0,#160
+		LUI R0,#8;#160
 		LLI R0,#0
 		LDW R0,[R0,#0]	; R1 contains read serial data
 		ENAI
@@ -35,22 +35,35 @@
 		ADDI R3,R1,#1
 		LDW R4,[R3,#0]	; R4 contain the write ptr
 
-		; See how far behind the read ptr is
-			
+		
+		SUBIB R2,#1		; Get out if W == R - 1
+		CMP R4,R2
+		BE .isrOut
+		ADDIB R2,#1
 
+		LUI R1,#1
+		LLI R1,#2
+		CMP R2,R1
+		BNE .write	
+		ADDIB R1,#3
+		CMP R4,R1
+		BE .isrOut
 
 		; Put serial data at ptr address
-		STW R0,[R4,#0]	; Write to buffer
+.write	STW R0,[R4,#0]	; Write to buffer
 		ADDIB R4,#1
-		SUB R1,R1,R1
+		;LUI R1,#1
+		;LLI R1,#2
+		;CMP R2,R1
+		;BNE .wrapW
+		;SUB R1,R1,R1
 		LUI R1,#1
 		LLI R1,#6
-		SUB R1,R1,R4
-		BE .wrapW
+		CMP R1,R4
+		BNE .wrapW
 		SUBIB R4,#4
 .wrapW	STW R4,[R3,#0]	; Inc write ptr
 	
-
 
 .isrOut	POP R4
 		POP R3
@@ -65,14 +78,14 @@
 		LLI R0, #0	
 		LDW R2,[R0,#0]	; Read ptr in R2
 		LDW R3,[R0,#1]	; Write ptr in R3
-		SUB R5,R2,R3		 
-		BNE .main		; Jump back if the same
+		CMP R2,R3		 
+		BE .main		; Jump back if the same
 		LDW R3,[R2,#0] 	; Load data out of buffer	
 		SUB R4,R4,R4
 		LLI R4,#15
 		AND R3,R4,R3
 		CMPI R3,#8
-		BNE .do
+		BE .do
 		LLI R4,#7
 		AND R3,R3,R4	
 .do 	PUSH R3
@@ -86,7 +99,7 @@
 		LUI R0,#1
 		LLI R0,#6
 		SUB R0,R0,R2
-		BE .wrapR
+		BNE .wrapR
 		SUBIB R2,#4
 .wrapR	LUI R0, #1		; Read ptr address in R0
 		LLI R0, #0	
@@ -100,7 +113,7 @@
 		PUSH LR
 		LDW R1,[SP,#3]  ; Get para	
 		ADDIB R1,#0
-		BNE .retOne             ; 0! = 1
+		BE .retOne             ; 0! = 1
 		SUBI R0,R1,#1
 		PUSH R0                 ; Pass para
 		BWL .fact               ; The output from fact to multi remains on the stack
@@ -129,10 +142,10 @@
 		LDW R3,[SP,#4]                                                                                                  
 		SUB R4,R4,R4                                                                                                    
 	    ADDIB R3,#0                                                                                                     
-		BNE .end                                                                                                       
+		BE .end                                                                                                       
 .loop   ADD R4,R4,R2                                                                                                            
 		SUBIB R3,#1                                                                                                     
-	 	BE .loop                                                                                                        
+	 	BNE .loop                                                                                                        
 .end    STW R4,[SP,#3]                                                                                                          
 	 	POP R4
 		POP R3

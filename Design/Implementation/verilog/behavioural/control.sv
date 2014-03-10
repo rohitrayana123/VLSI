@@ -450,10 +450,10 @@ always_comb begin
 									AluEn = 1;
 									if(	(BranchCode == BR) 	|| 
 										(BranchCode == BWL)	||
-										(BranchCode == BNE 	&& 	(StatusReg[`FLAGS_Z] && BranchCode == BNE)	)		||
-										(BranchCode == BE 	&& 	(~StatusReg[`FLAGS_Z] && BranchCode == BE)	)		||
-										(BranchCode == BLT	&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
-										(BranchCode == BGE	&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
+										((BranchCode == BNE) 	&&   (StatusReg[`FLAGS_Z] == 0))		||
+										((BranchCode == BE 	) && 	(StatusReg[`FLAGS_Z] == 1)	) ||
+										((BranchCode == BLT	)&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
+										((BranchCode == BGE	)&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
 										PcSel = PcAluOut;
 										if(BranchCode == BWL) begin	// Branch with link
 											LrWe = 1;
