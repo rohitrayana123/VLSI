@@ -17,7 +17,7 @@
 .isr  	DISI
 		STF				; Keep flags
 		PUSH R0			; Save only this for now
-		LUI R0,#8;#160
+		LUI R0,#160
 		LLI R0,#0
 		LDW R0,[R0,#0]	; R1 contains read serial data
 		ENAI
@@ -52,11 +52,6 @@
 		; Put serial data at ptr address
 .write	STW R0,[R4,#0]	; Write to buffer
 		ADDIB R4,#1
-		;LUI R1,#1
-		;LLI R1,#2
-		;CMP R2,R1
-		;BNE .wrapW
-		;SUB R1,R1,R1
 		LUI R1,#1
 		LLI R1,#6
 		CMP R1,R4
@@ -81,6 +76,16 @@
 		CMP R2,R3		 
 		BE .main		; Jump back if the same
 		LDW R3,[R2,#0] 	; Load data out of buffer	
+		ADDIB R2,#1		; Inc read ptr
+		SUB R0,R0,R0
+		LUI R0,#1
+		LLI R0,#6
+		SUB R0,R0,R2
+		BNE .wrapR
+		SUBIB R2,#4
+.wrapR	LUI R0, #1		; Read ptr address in R0
+		LLI R0, #0	
+		STW R2,[R0,#0]	; Store new read pointer
 		SUB R4,R4,R4
 		LLI R4,#15
 		AND R3,R4,R3
@@ -93,17 +98,7 @@
 		POP R3
 		LUI R4,#8	
 		LLI R4,#1		; Address of LEDs
-		STW R3,[R4,#0]	; Put factorial on LEDs
-		ADDIB R2,#1		; Inc read ptr
-		SUB R0,R0,R0
-		LUI R0,#1
-		LLI R0,#6
-		SUB R0,R0,R2
-		BNE .wrapR
-		SUBIB R2,#4
-.wrapR	LUI R0, #1		; Read ptr address in R0
-		LLI R0, #0	
-		STW R2,[R0,#0]	; Store new read pointer
+		STW R3,[R4,#0]	; Put factorial on LEDs	
 		BR .main       	; look again	
 
 
