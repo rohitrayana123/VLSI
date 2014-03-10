@@ -1,8 +1,6 @@
 magic
 tech c035u
-timestamp 1394479763
-<< checkpaint >>
-rect 6212 -435 8824 2342
+timestamp 1394490761
 << metal1 >>
 rect 4693 1025 6455 1035
 rect 4237 1003 5999 1013
@@ -101,7 +99,6 @@ rect 2965 51 3287 61
 rect 3301 51 7247 61
 rect 7261 51 7296 61
 rect 7488 51 7511 61
-rect 7669 51 7704 61
 rect 3661 29 3671 39
 rect 3709 29 3719 39
 rect 3757 29 3767 39
@@ -293,7 +290,6 @@ rect 2951 49 2965 63
 rect 3287 49 3301 63
 rect 7247 49 7261 63
 rect 7511 49 7525 63
-rect 7655 49 7669 63
 rect 3647 27 3661 41
 rect 3671 27 3685 41
 rect 3695 27 3709 41
@@ -620,7 +616,7 @@ rect 7176 0 7188 66
 rect 7248 63 7260 66
 rect 7512 63 7524 66
 rect 7584 0 7596 66
-rect 7656 63 7668 66
+rect 7656 0 7668 66
 use tielow  tielow_0
 timestamp 1386086605
 transform 1 0 0 0 1 66
@@ -939,7 +935,6 @@ rlabel metal2 6576 0 6588 0 1 Sh2A_R
 rlabel metal2 6888 0 6900 0 1 Sh1_R_Out
 rlabel metal2 6888 1042 6900 1042 5 Sh1_R_In
 rlabel metal2 7584 1042 7596 1042 5 ALUEnable
-rlabel metal1 7704 51 7704 61 7 ALU_Out
 rlabel metal2 7584 0 7596 0 1 ALUEnable
 rlabel metal1 7296 51 7296 61 1 LLI_In
 rlabel metal1 7296 892 7296 902 1 B
@@ -980,4 +975,5 @@ rlabel metal2 3840 0 3852 0 1 Sh8E_L
 rlabel metal2 3888 0 3900 0 1 Sh8F_L
 rlabel metal2 3936 0 3948 0 1 Sh8G_L
 rlabel metal2 7512 1042 7524 1042 5 AluOut
+rlabel metal2 7656 0 7668 0 1 SysBus
 << end >>
