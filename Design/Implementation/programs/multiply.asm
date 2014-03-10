@@ -44,10 +44,10 @@
 		LDW R1,[R7,#3]	; Op2 in R1
 		SUB R2,R2,R2	; Zero in R2
         ADDIB R1,#0		; Check Op2 is not zero
-		BNE .done
+		BE .done
 .loop  ADD R2,R2,R0	; Add Op1
 		SUBIB R1,#1		; Dec Op2
-		BE .loop
+		BNE .loop
 .done  STW R2,[R7,1]	; Store result in place holder
 		RET
 .end  BR .end			; finshed loop
