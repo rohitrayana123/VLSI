@@ -2,8 +2,9 @@
 // created by ext2svmod 5.5
 
 module ALUSlice(
-	output ALUOut ,
+	output ALU_Out ,
 	output COut ,
+	output LLI_In ,
 	output nZ ,
 	output Sh1_L_Out ,
 	output Sh1_R_Out ,
@@ -15,10 +16,12 @@ module ALUSlice(
 	output Sh8Z_R ,
 	output Sum ,
 	input A ,
+	input ALUEnable ,
 	input AND ,
 	input B ,
 	input CIn_Slice ,
 	input FAOut ,
+	input LLI_Out ,
 	input NAND ,
 	input NOR ,
 	input NOT ,

@@ -1,5 +1,6 @@
 // stimulus file ALUSlice_stim.sv for ALUSlice
 // created by ext2svmod 5.5
+// ALU_Out from ALUEnable untested
 
 module ALUSlice_stim;
 
@@ -7,7 +8,7 @@ timeunit 1ns;
 timeprecision 10ps;
 
 logic A, B;						//Operand Inputs, and sign output
-wire ALUOut; 				//***POSS CHANGING TO LLI_IN
+wire ALU_Out; 
 logic SUB, ZeroA, CIn_Slice, nZ_prev, FAOut;		//Arith Inputs
 wire COut, nZ, Sum;					//Arith Outputs
 logic AND, OR, XOR, NOT, NAND, NOR;			//Logic Inputs
@@ -18,7 +19,7 @@ logic Sh8D_R, Sh4C_R, Sh2B_R, Sh1_R_In; 		//Shift inter-bit Right Inputs
 wire Sh8Z_R, Sh4Z_R, Sh2Z_R, Sh1_R_Out; 		//Shift inter-bit Right Outputs
 
 ALUSlice a(
-	.ALUOut ( ALUOut ),
+	.ALU_Out ( ALU_Out ),
 	.COut ( COut ),
 	.nZ ( nZ ),
 	.Sh1_L_Out ( Sh1_L_Out ),
@@ -66,13 +67,28 @@ task checkArith;
 	assert(a.FA_1 == (A & ~ZeroA));
 	assert(a.FA_2 == B ^ SUB);
 	assert(Sum == a.FA_1 ^ a.FA_2 ^ CIn_Slice);
-	assert(ALUOut == Sum & FAOut);
+	assert(a.LLI_In == Sum & FAOut);
 	assert(COut == (a.FA_1&a.FA_2) | (CIn_Slice&(a.FA_1^a.FA_2)));
 	assert(nZ == nZ_prev | Sum);
+	if (ZeroA == 1)
+		$write("~");
+	else
+		$write(" ");
+	$write("%b ", A);
+	if (SUB == 1)
+		$write("-");
+	else
+		$write("+");
+	$write(" %b ", B);
+	if (SUB == 1)
+		$write("-");
+	else
+		$write("+");
+	$write(" %b -> S = %b, C = %b ::: a.LLI_In = %b\n", CIn_Slice, Sum, COut, a.LLI_In);
 endtask
 //Check Expected Shifting Operations
 task checkShift;
-    assert(ALUOut == Sh1);
+    assert(a.LLI_In == Sh1);
     if (ShL == 1)
     begin
 	assert(Sh8A_L == (A&~ShB) | (B&ShB));
@@ -100,7 +116,7 @@ initial
     Sh8D_R = 0; Sh4C_R = 0; Sh2B_R = 0; Sh1_R_In = 0;
 
 	//Arithmetic Testing
-    #50 FAOut = 1;				//Sum == ALUOut
+    #50 FAOut = 1;				//Sum == a.LLI_In
     #50 checkArith;
     #50 B = 1;
     #50 checkArith;
@@ -117,33 +133,33 @@ initial
 
 	//Logic Testing
     #50 FAOut = 0; AND = 1;
-    #50 assert(ALUOut == 1);
+    #50 assert(a.LLI_In == 1); $display("%b & %b = %b", A, B, a.LLI_In);
     #50 B = 0; 
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0); $display("%b & %b = %b", A, B, a.LLI_In);
     #50 AND = 0; OR = 1; 
-    #50 assert(ALUOut == 1);
+    #50 assert(a.LLI_In == 1); $display("%b | %b = %b", A, B, a.LLI_In);
     #50 A = 0; 
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0); $display("%b | %b = %b", A, B, a.LLI_In);
     #50 A = 1; OR = 0; XOR = 1; 
-    #50 assert(ALUOut == 1);
+    #50 assert(a.LLI_In == 1); $display("%b ^ %b = %b", A, B, a.LLI_In);
     #50 B = 1; 
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0); $display("%b ^ %b = %b", A, B, a.LLI_In);
     #50 XOR = 0; NOT = 1;
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0); $display("~%b = %b", A, a.LLI_In);
     #50 A = 0; 
-    #50 assert(ALUOut == 1);
+    #50 assert(a.LLI_In == 1); $display("~%b = %b", A, a.LLI_In);
     #50 NOT = 0; NAND = 1;
-    #50 assert(ALUOut == 1);
+    #50 assert(a.LLI_In == 1); $display("~(%b & %b) = %b", A, B, a.LLI_In);
     #50 A = 1; 
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0); $display("~(%b & %b) = %b", A, B, a.LLI_In);
     #50 NAND = 0; NOR = 1;
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0); $display("~(%b | %b) = %b", A, B, a.LLI_In);
     #50 A = 0; B = 0; 
-    #50 assert(ALUOut == 1);
+    #50 assert(a.LLI_In == 1); $display("~(%b | %b) = %b", A, B, a.LLI_In);
 
 	//Shifting Testing
     #50 NOR = 0; ShOut = 1;
-    #50 assert(ALUOut == 0);
+    #50 assert(a.LLI_In == 0);
     #50 Sh8E_L = 1; Sh4D_L = 1; Sh2C_L = 1; Sh1_L_In = 1; //Feed 1's in inter-bit signals
 	Sh8D_R = 1; Sh4C_R = 1; Sh2B_R = 1; Sh1_R_In = 1;
     #50 checkShift;
