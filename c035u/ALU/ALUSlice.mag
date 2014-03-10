@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394458482
+timestamp 1394472218
 << metal1 >>
 rect 4693 1025 6455 1035
 rect 4237 1003 5999 1013
@@ -900,10 +900,7 @@ rlabel metal2 72 0 84 0 1 ZeroA
 rlabel metal2 72 1042 84 1042 5 ZeroA
 rlabel metal1 0 892 0 902 3 B
 rlabel metal1 0 870 0 880 3 A
-rlabel metal2 3696 0 3708 0 1 Sh8B_L
-rlabel metal2 3744 0 3756 0 1 Sh8C_L
 rlabel metal2 3792 1042 3804 1042 5 Sh8D_L
-rlabel metal2 3648 0 3660 0 1 Sh8A_L
 rlabel metal2 3696 1042 3708 1042 5 Sh8B_L
 rlabel metal2 5760 1042 5772 1042 5 Sh8H_R
 rlabel metal2 5712 1042 5724 1042 5 Sh8G_R
@@ -943,7 +940,6 @@ rlabel metal1 7296 892 7296 902 1 B
 rlabel metal1 7488 51 7488 61 1 LLI_Out
 rlabel metal2 6072 0 6084 0 1 Sh4Y_L
 rlabel metal2 6072 1042 6084 1042 5 Sh4Z_R
-rlabel metal2 3984 0 3996 0 1 Sh8H_L
 rlabel metal2 4296 1042 4308 1042 5 Sh4Z_L
 rlabel metal2 4344 1042 4356 1042 5 Sh4A_L
 rlabel metal2 4296 0 4308 0 1 Sh4A_L
@@ -972,8 +968,21 @@ rlabel metal2 3888 1042 3900 1042 5 Sh8F_L
 rlabel metal2 3840 1042 3852 1042 5 Sh8E_L
 rlabel metal2 3936 1042 3948 1042 5 Sh8G_L
 rlabel metal2 3984 1042 3996 1042 5 Sh8H_L
-rlabel metal2 3792 0 3804 0 1 Sh8D_L
-rlabel metal2 3840 0 3852 0 1 Sh8E_L
-rlabel metal2 3888 0 3900 0 1 Sh8F_L
-rlabel metal2 3936 0 3948 0 1 Sh8G_L
+rlabel metal2 3648 0 3660 0 1 Sh8B_L
+rlabel metal2 3696 0 3708 0 1 Sh8C_L
+rlabel metal2 3936 0 3948 0 1 Sh8H_L
+rlabel metal2 3744 0 3756 0 1 Sh8D_L
+rlabel metal2 3792 0 3804 0 1 Sh8E_L
+rlabel metal2 3840 0 3852 0 1 Sh8F_L
+rlabel metal2 3888 0 3900 0 1 Sh8G_L
+rlabel metal2 3984 0 3996 0 1 Sh8I_L
+rlabel metal1 7086 877 7086 877 1 SHR1Out_i
+rlabel metal1 6924 876 6924 876 1 SHR2Out_i
+rlabel metal1 6578 875 6578 875 1 SHR4Out_i
+rlabel metal1 6245 873 6245 873 1 SHR8Out_i
+rlabel metal1 5789 873 5789 873 1 SHL1Out_i
+rlabel metal1 5149 876 5149 876 1 SHL2Out)i
+rlabel metal1 4821 875 4821 875 1 SHL4Out_i
+rlabel metal1 4447 873 4447 873 1 SHL8Out_i
+rlabel metal1 4008 872 4008 872 1 SHStart_i
 << end >>

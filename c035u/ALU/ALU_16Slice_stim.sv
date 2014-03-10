@@ -67,51 +67,70 @@ initial
     ALUEnable = 0;
 
     //Arithmetic Testing
-    #50 A = 5; B = 17;
-    #50 assert(ALUOut == 16'bz); $display("%b;\n", ALUOut);
-    #50 ALUEnable = 1; $write("Enabled: ");
-    #50 assert(ALUOut == 16'bz); $display("%b;\n", ALUOut);
-    #50 FAOut = 1; $write("%2d + %2d = ", A, B);
-    #50 assert(ALUOut == 22); $write("%2d;\n", ALUOut);
-    #50 CIn = 1; $write("%2d + %2d + %b = ", A, B, CIn);
-    #50 assert(ALUOut == 23); $write("%2d;\n", ALUOut);
-    #50 SUB = 1; $write("%2d - %2d + %b = ", A, B, CIn);
-    #50 assert(ALUOut == 16'b1111111111110011); $write("%3d;\n", ALUOut);  //Confused CIn negation?
-    #50 CIn = 0; $write("%2d - %2d = ", A, B);
-    #50 assert(ALUOut == 16'b1111111111110100); $write("%3d;\n", ALUOut);  //Confused CIn negation?
-    #50 ZeroA = 1; $write("0 - %2d = ", B);
-    #50 assert(ALUOut == 16'b1111111111101111); $write("%3d;\n", ALUOut);  //Confused CIn negation?
-    #50 SUB = 0; $write("0 + %2d = ", B);
-    #50 assert(ALUOut == 17); $write("%2d;\n", ALUOut);
+    #50 A = 16328; B = 9000;
+    //#50 assert(ALUOut == 16'bz); $display("%b;\n", ALUOut);
+    #50 ALUEnable = 1;
+    //#50 assert(ALUOut == 16'bz); $display("%b;\n", ALUOut);
+    #50 FAOut = 1; $write("%5d + %5d = ", A, B);
+    #50 $write("%2d", ALUOut); $write("          FLAGS: CIn = %b, COut = %b, nZ = %b, Sum = %b\n", CIn_Slice, COut, nZ, Sum);
+	assert(ALUOut == (A+B));
+	assert(CIn_Slice == 1'b0); 
+	assert(COut == 1'b0);
+	assert(nZ == 1'b1);
+	assert(Sum == 1'b0);
+    #50 CIn = 1; $write("%5d + %5d + %b = ", A, B, CIn);
+    #50 $write("%2d", ALUOut); $write("      FLAGS: CIn = %b, COut = %b, nZ = %b, Sum = %b\n", CIn_Slice, COut, nZ, Sum);
+	assert(ALUOut == (A+B+1));
+	assert(CIn_Slice == 1'b0); 
+	assert(COut == 1'b0);
+	assert(nZ == 1'b1);
+	assert(Sum == 1'b0);
+    #50 SUB = 1; $write("%5d - %5d - ~%b = ", A, B, CIn);
+    #50 $write("%3d", ALUOut); $write("  FLAGS: CIn = %b, COut = %b, nZ = %b, Sum = %b\n", CIn_Slice, COut, nZ, Sum);
+	assert(ALUOut == (A-B-(~CIn)+65536)); 
+	assert(CIn_Slice == 1'b0); 
+	assert(COut == 1'b0);
+	assert(nZ == 1'b1);
+	assert(Sum == 1'b1);
+    #50 CIn = 0; $write("%5d - %5d - ~0 = ", A, B);
+    #50 $write("%3d", ALUOut); $write("  FLAGS: CIn = %b, COut = %b, nZ = %b, Sum = %b\n", CIn_Slice, COut, nZ, Sum);
+	assert(ALUOut == (A-B-(~CIn)+65536));
+	assert(CIn_Slice == 1'b0); 
+	assert(COut == 1'b0);
+	assert(nZ == 1'b1);
+	assert(Sum == 1'b1);
+    #50 ZeroA = 1; $write("    0 - %5d - ~0 = ", B);
+    #50 $write("%3d", ALUOut); $write("  FLAGS: CIn = %b, COut = %b, nZ = %b, Sum = %b\n", CIn_Slice, COut, nZ, Sum);
+	assert(ALUOut == (0-B-(~CIn)+65536));
+	assert(CIn_Slice == 1'b0); 
+	assert(COut == 1'b0);
+	assert(nZ == 1'b1);
+	assert(Sum == 1'b1);
+    #50 SUB = 0; $write("    0 + %5d = ", B);
+    #50 $write("%2d", ALUOut); $write("          FLAGS: CIn = %b, COut = %b, nZ = %b, Sum = %b\n", CIn_Slice, COut, nZ, Sum);
+	assert(ALUOut == B);
+	assert(CIn_Slice == 1'b0); 
+	assert(COut == 1'b0);
+	assert(nZ == 1'b1);
+	assert(Sum == 1'b0);
 
     //Logical Testing
     #50 FAOut = 0; AND = 1;
-    #50 $display("%b AND %b = %b", A, B, ALUOut); assert(ALUOut == A&B); //fails for unknown reason (output is correct)
+    #50 $display("%b AND  %b = %b", A, B, ALUOut); assert(ALUOut == (A&B)); //fails for unknown reason (output is correct)
     #50 AND = 0; OR = 1;
-    #50 $display("%b OR %b = %b", A, B, ALUOut); assert(ALUOut == A|B);
+    #50 $display("%b OR   %b = %b", A, B, ALUOut); assert(ALUOut == A|B);
     #50 OR = 0; XOR = 1;
-    #50 $display("%b XOR %b = %b", A, B, ALUOut); assert(ALUOut == A^B);
+    #50 $display("%b XOR  %b = %b", A, B, ALUOut); assert(ALUOut == A^B);
     #50 XOR = 0; NOT = 1;
-    #50 $display("NOT %b = %b", A, ALUOut); assert(ALUOut == ~A);
+    #50 $display("                 NOT %b = %b", A, ALUOut); assert(ALUOut == ~A);
     #50 NOT = 0; NAND = 1;
     #50 $display("%b NAND %b = %b", A, B, ALUOut); assert(ALUOut == ~(A&B));
     #50 NAND = 0; NOR = 1;
-    #50 $display("%b NOR %b = %b", A, B, ALUOut); assert(ALUOut == ~(A|B));
+    #50 $display("%b NOR  %b = %b", A, B, ALUOut); assert(ALUOut == ~(A|B));
 
     //Shifting Testing
     #50 NOR = 0; ShOut = 1;
     #50 $display("%b NS = %b", A, ALUOut); assert(ALUOut == A);
-		$display("%b", a.ALUSlice_0.ALU_Out);
-//		$display("%b", a.ShiftValue_inter);
-//		$display("%b", a.SHL8Out_inter);
-//		$display("%b", a.SHL4Out_inter);
-//		$display("%b", a.SHL2Out_inter);
-//		$display("%b", a.SHL1Out_inter);
-//		$display("%b", a.SHR8Out_inter);
-//		$display("%b", a.SHR4Out_inter);
-//		$display("%b", a.SHR2Out_inter);
-//		$display("%b", a.SHR1Out_inter);
-//		$display("%b", a.LLI_inter);
     #50 ShL = 1;
     #50 $display("%b LS0 = %b", A, ALUOut); assert(ALUOut == A);
     #50 Sh1 = 1;
@@ -133,19 +152,20 @@ initial
     #50 ShB = 1;
     #50 $display("%b RS15(B) = %b", B, ALUOut); assert(ALUOut == B>>15);
     #50 ShSignIn = 1;
-    #50 $display("%b ARS15_1(B) = %b", B, ALUOut); assert(ALUOut == B>>>15);
+    #50 $display("%b ARS15_1(B) = %b", B, ALUOut); assert(ALUOut == 16'b1111111111111110);
     #50 B = -23;
-    #50 $display("%b ARS15_1(B) = %b", B, ALUOut); assert(ALUOut == B>>>15);
+    #50 $display("%b ARS15_1(B) = %b", B, ALUOut); assert(ALUOut == 16'b1111111111111111);
     #50 ShSignIn = 0;
-    #50 $display("%b RS15(B) = %b", B, ALUOut); assert(ALUOut == B>>15);
+    #50 $display("%b RS15(B) = %b", B, ALUOut); assert(ALUOut == 16'b0000000000000001);
 
     //LLI Testing
-    #50 ShOut = 0; LLI = 1;
-    #50 assert(ALUOut == {A[15:8],B[7:0]});
+    #50 ShOut = 1; LLI = 1; Sh1 = 0; Sh2 = 0; Sh4 = 0; Sh8 = 0; ShL = 0; ShR = 0; ShB = 0; 
+    #50 $display("%b, %b -> %b", A, B, ALUOut); assert(ALUOut == {A[15:8],B[7:0]});
     #50 B = 67;
-    #50 assert(ALUOut == {A[15:8],B[7:0]});
+    #50 $display("%b, %b -> %b", A, B, ALUOut); assert(ALUOut == {A[15:8],B[7:0]});
 
-    #50 $stop;
+    #50 $finish;
+
   end
 
 //SIMVISION SCRIPT:ALU_16Slice.tcl

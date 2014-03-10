@@ -15,6 +15,7 @@
 94 leftbuf_15/active_1161_216# 5855 79765 green;
 94 leftbuf_15/active_824_216# 4170 79765 green;
 94 leftbuf_15/active_487_216# 2485 79765 green;
+94 Vdd! 50 1785 m2;
 94 ALUSlice_15/and2_0/active_35_331# 8385 80340 green;
 94 ALUSlice_15/and2_0/active_10_331# 8260 80340 ndc;
 94 ALUSlice_15/inv_1/Y 7965 78600 via;
@@ -102,6 +103,7 @@
 94 ALUSlice_15/mux2_1/active_16_317# 27370 80270 ndc;
 94 ALUSlice_15/mux2_1/active_41_643# 27495 81900 brown;
 94 ALUSlice_15/mux2_1/active_41_317# 27495 80270 green;
+94 ALUSlice_15/Sh8A_L 24830 79945 green;
 94 ALUSlice_15/mux2_1/active_41_252# 27495 79945 green;
 94 ALUSlice_15/mux2_1/S 25455 80340 green;
 94 ALUSlice_15/and2_3/active_35_331# 28425 80340 green;
@@ -165,7 +167,7 @@
 94 ALUSlice_15/mux2_8/active_41_252# 42015 79945 green;
 94 ALUSlice_15/mux2_8/S 41655 80340 green;
 94 ALUSlice_15/trisbuf_7/active_74_274# 43140 80055 green;
-94 ALUSlice_15/mux2_8/Y 42590 79945 green;
+94 ALUSlice_15/SHR1Out_i 42590 79945 green;
 94 ALUSlice_15/trisbuf_7/active_74_500# 43140 81185 brown;
 94 ALUSlice_15/trisbuf_7/active_40_335# 42970 80360 green;
 94 ALUSlice_15/trisbuf_7/active_84_558# 43190 81475 pc;
@@ -179,7 +181,7 @@
 94 ALUSlice_15/trisbuf_8/active_40_335# 45010 80360 green;
 94 ALUSlice_15/trisbuf_8/active_84_558# 45230 81475 pc;
 94 leftbuf_15/nSDO 46320 80345 green;
-94 Vdd! 50 1785 m2;
+94 GND! 7485 110 via;
 94 leftbuf_14/m1_1042_7# 5260 73510 m1;
 94 leftbuf_14/m1_216_5# 1130 73500 m1;
 94 leftbuf_14/m1_240_349# 1250 75220 m1;
@@ -280,6 +282,7 @@
 94 ALUSlice_14/mux2_1/active_16_317# 27370 75060 ndc;
 94 ALUSlice_14/mux2_1/active_41_643# 27495 76690 brown;
 94 ALUSlice_14/mux2_1/active_41_317# 27495 75060 green;
+94 ALUSlice_15/Sh8B_L 24830 74735 green;
 94 ALUSlice_14/mux2_1/active_41_252# 27495 74735 green;
 94 ALUSlice_14/mux2_1/S 25455 75130 green;
 94 ALUSlice_14/and2_3/active_35_331# 28425 75130 green;
@@ -343,7 +346,7 @@
 94 ALUSlice_14/mux2_8/active_41_252# 42015 74735 green;
 94 ALUSlice_14/mux2_8/S 41655 75130 green;
 94 ALUSlice_14/trisbuf_7/active_74_274# 43140 74845 green;
-94 ALUSlice_14/mux2_8/Y 42590 74735 green;
+94 ALUSlice_14/SHR1Out_i 42590 74735 green;
 94 ALUSlice_14/trisbuf_7/active_74_500# 43140 75975 brown;
 94 ALUSlice_14/trisbuf_7/active_40_335# 42970 75150 green;
 94 ALUSlice_14/trisbuf_7/active_84_558# 43190 76265 pc;
@@ -457,6 +460,7 @@
 94 ALUSlice_13/mux2_1/active_16_317# 27370 69850 ndc;
 94 ALUSlice_13/mux2_1/active_41_643# 27495 71480 brown;
 94 ALUSlice_13/mux2_1/active_41_317# 27495 69850 green;
+94 ALUSlice_15/Sh8C_L 24830 69525 green;
 94 ALUSlice_13/mux2_1/active_41_252# 27495 69525 green;
 94 ALUSlice_13/mux2_1/S 25455 69920 green;
 94 ALUSlice_13/and2_3/active_35_331# 28425 69920 green;
@@ -521,7 +525,7 @@
 94 ALUSlice_13/mux2_8/active_41_252# 42015 69525 green;
 94 ALUSlice_13/mux2_8/S 41655 69920 green;
 94 ALUSlice_13/trisbuf_7/active_74_274# 43140 69635 green;
-94 ALUSlice_13/mux2_8/Y 42590 69525 green;
+94 ALUSlice_13/SHR1Out_i 42590 69525 green;
 94 ALUSlice_13/trisbuf_7/active_74_500# 43140 70765 brown;
 94 ALUSlice_13/trisbuf_7/active_40_335# 42970 69940 green;
 94 ALUSlice_13/trisbuf_7/active_84_558# 43190 71055 pc;
@@ -635,6 +639,7 @@
 94 ALUSlice_12/mux2_1/active_16_317# 27370 64640 ndc;
 94 ALUSlice_12/mux2_1/active_41_643# 27495 66270 brown;
 94 ALUSlice_12/mux2_1/active_41_317# 27495 64640 green;
+94 ALUSlice_15/Sh8D_L 24830 64315 green;
 94 ALUSlice_12/mux2_1/active_41_252# 27495 64315 green;
 94 ALUSlice_12/mux2_1/S 25455 64710 green;
 94 ALUSlice_12/and2_3/active_35_331# 28425 64710 green;
@@ -699,7 +704,7 @@
 94 ALUSlice_12/mux2_8/active_41_252# 42015 64315 green;
 94 ALUSlice_12/mux2_8/S 41655 64710 green;
 94 ALUSlice_12/trisbuf_7/active_74_274# 43140 64425 green;
-94 ALUSlice_12/mux2_8/Y 42590 64315 green;
+94 ALUSlice_12/SHR1Out_i 42590 64315 green;
 94 ALUSlice_12/trisbuf_7/active_74_500# 43140 65555 brown;
 94 ALUSlice_12/trisbuf_7/active_40_335# 42970 64730 green;
 94 ALUSlice_12/trisbuf_7/active_84_558# 43190 65845 pc;
@@ -813,6 +818,7 @@
 94 ALUSlice_11/mux2_1/active_16_317# 27370 59430 ndc;
 94 ALUSlice_11/mux2_1/active_41_643# 27495 61060 brown;
 94 ALUSlice_11/mux2_1/active_41_317# 27495 59430 green;
+94 ALUSlice_15/Sh8E_L 24830 59105 green;
 94 ALUSlice_11/mux2_1/active_41_252# 27495 59105 green;
 94 ALUSlice_11/mux2_1/S 25455 59500 green;
 94 ALUSlice_11/and2_3/active_35_331# 28425 59500 green;
@@ -878,7 +884,7 @@
 94 ALUSlice_11/mux2_8/active_41_252# 42015 59105 green;
 94 ALUSlice_11/mux2_8/S 41655 59500 green;
 94 ALUSlice_11/trisbuf_7/active_74_274# 43140 59215 green;
-94 ALUSlice_11/mux2_8/Y 42590 59105 green;
+94 ALUSlice_11/SHR1Out_i 42590 59105 green;
 94 ALUSlice_11/trisbuf_7/active_74_500# 43140 60345 brown;
 94 ALUSlice_11/trisbuf_7/active_40_335# 42970 59520 green;
 94 ALUSlice_11/trisbuf_7/active_84_558# 43190 60635 pc;
@@ -992,6 +998,7 @@
 94 ALUSlice_10/mux2_1/active_16_317# 27370 54220 ndc;
 94 ALUSlice_10/mux2_1/active_41_643# 27495 55850 brown;
 94 ALUSlice_10/mux2_1/active_41_317# 27495 54220 green;
+94 ALUSlice_15/Sh8F_L 24830 53895 green;
 94 ALUSlice_10/mux2_1/active_41_252# 27495 53895 green;
 94 ALUSlice_10/mux2_1/S 25455 54290 green;
 94 ALUSlice_10/and2_3/active_35_331# 28425 54290 green;
@@ -1057,7 +1064,7 @@
 94 ALUSlice_10/mux2_8/active_41_252# 42015 53895 green;
 94 ALUSlice_10/mux2_8/S 41655 54290 green;
 94 ALUSlice_10/trisbuf_7/active_74_274# 43140 54005 green;
-94 ALUSlice_10/mux2_8/Y 42590 53895 green;
+94 ALUSlice_10/SHR1Out_i 42590 53895 green;
 94 ALUSlice_10/trisbuf_7/active_74_500# 43140 55135 brown;
 94 ALUSlice_10/trisbuf_7/active_40_335# 42970 54310 green;
 94 ALUSlice_10/trisbuf_7/active_84_558# 43190 55425 pc;
@@ -1171,6 +1178,7 @@
 94 ALUSlice_9/mux2_1/active_16_317# 27370 49010 ndc;
 94 ALUSlice_9/mux2_1/active_41_643# 27495 50640 brown;
 94 ALUSlice_9/mux2_1/active_41_317# 27495 49010 green;
+94 ALUSlice_9/Sh8A_L 24830 48685 green;
 94 ALUSlice_9/mux2_1/active_41_252# 27495 48685 green;
 94 ALUSlice_9/mux2_1/S 25455 49080 green;
 94 ALUSlice_9/and2_3/active_35_331# 28425 49080 green;
@@ -1236,7 +1244,7 @@
 94 ALUSlice_9/mux2_8/active_41_252# 42015 48685 green;
 94 ALUSlice_9/mux2_8/S 41655 49080 green;
 94 ALUSlice_9/trisbuf_7/active_74_274# 43140 48795 green;
-94 ALUSlice_9/mux2_8/Y 42590 48685 green;
+94 ALUSlice_9/SHR1Out_i 42590 48685 green;
 94 ALUSlice_9/trisbuf_7/active_74_500# 43140 49925 brown;
 94 ALUSlice_9/trisbuf_7/active_40_335# 42970 49100 green;
 94 ALUSlice_9/trisbuf_7/active_84_558# 43190 50215 pc;
@@ -1350,6 +1358,7 @@
 94 ALUSlice_8/mux2_1/active_16_317# 27370 43800 ndc;
 94 ALUSlice_8/mux2_1/active_41_643# 27495 45430 brown;
 94 ALUSlice_8/mux2_1/active_41_317# 27495 43800 green;
+94 ALUSlice_9/Sh8B_L 24830 43475 green;
 94 ALUSlice_8/mux2_1/active_41_252# 27495 43475 green;
 94 ALUSlice_8/mux2_1/S 25455 43870 green;
 94 ALUSlice_8/and2_3/active_35_331# 28425 43870 green;
@@ -1415,7 +1424,7 @@
 94 ALUSlice_8/mux2_8/active_41_252# 42015 43475 green;
 94 ALUSlice_8/mux2_8/S 41655 43870 green;
 94 ALUSlice_8/trisbuf_7/active_74_274# 43140 43585 green;
-94 ALUSlice_8/mux2_8/Y 42590 43475 green;
+94 ALUSlice_8/SHR1Out_i 42590 43475 green;
 94 ALUSlice_8/trisbuf_7/active_74_500# 43140 44715 brown;
 94 ALUSlice_8/trisbuf_7/active_40_335# 42970 43890 green;
 94 ALUSlice_8/trisbuf_7/active_84_558# 43190 45005 pc;
@@ -1535,6 +1544,7 @@
 94 ALUSlice_7/mux2_1/active_16_317# 27370 38590 ndc;
 94 ALUSlice_7/mux2_1/active_41_643# 27495 40220 brown;
 94 ALUSlice_7/mux2_1/active_41_317# 27495 38590 green;
+94 ALUSlice_9/Sh8C_L 24830 38265 green;
 94 ALUSlice_7/mux2_1/active_41_252# 27495 38265 green;
 94 ALUSlice_7/mux2_1/S 25455 38660 green;
 94 ALUSlice_7/and2_3/active_35_331# 28425 38660 green;
@@ -1601,7 +1611,7 @@
 94 ALUSlice_7/mux2_8/active_41_252# 42015 38265 green;
 94 ALUSlice_7/mux2_8/S 41655 38660 green;
 94 ALUSlice_7/trisbuf_7/active_74_274# 43140 38375 green;
-94 ALUSlice_7/mux2_8/Y 42590 38265 green;
+94 ALUSlice_7/SHR1Out_i 42590 38265 green;
 94 ALUSlice_7/trisbuf_7/active_74_500# 43140 39505 brown;
 94 ALUSlice_7/trisbuf_7/active_40_335# 42970 38680 green;
 94 ALUSlice_7/trisbuf_7/active_84_558# 43190 39795 pc;
@@ -1721,6 +1731,7 @@
 94 ALUSlice_6/mux2_1/active_16_317# 27370 33380 ndc;
 94 ALUSlice_6/mux2_1/active_41_643# 27495 35010 brown;
 94 ALUSlice_6/mux2_1/active_41_317# 27495 33380 green;
+94 ALUSlice_9/Sh8D_L 24830 33055 green;
 94 ALUSlice_6/mux2_1/active_41_252# 27495 33055 green;
 94 ALUSlice_6/mux2_1/S 25455 33450 green;
 94 ALUSlice_6/and2_3/active_35_331# 28425 33450 green;
@@ -1787,7 +1798,7 @@
 94 ALUSlice_6/mux2_8/active_41_252# 42015 33055 green;
 94 ALUSlice_6/mux2_8/S 41655 33450 green;
 94 ALUSlice_6/trisbuf_7/active_74_274# 43140 33165 green;
-94 ALUSlice_6/mux2_8/Y 42590 33055 green;
+94 ALUSlice_6/SHR1Out_i 42590 33055 green;
 94 ALUSlice_6/trisbuf_7/active_74_500# 43140 34295 brown;
 94 ALUSlice_6/trisbuf_7/active_40_335# 42970 33470 green;
 94 ALUSlice_6/trisbuf_7/active_84_558# 43190 34585 pc;
@@ -1907,6 +1918,7 @@
 94 ALUSlice_5/mux2_1/active_16_317# 27370 28170 ndc;
 94 ALUSlice_5/mux2_1/active_41_643# 27495 29800 brown;
 94 ALUSlice_5/mux2_1/active_41_317# 27495 28170 green;
+94 ALUSlice_9/Sh8E_L 24830 27845 green;
 94 ALUSlice_5/mux2_1/active_41_252# 27495 27845 green;
 94 ALUSlice_5/mux2_1/S 25455 28240 green;
 94 ALUSlice_5/and2_3/active_35_331# 28425 28240 green;
@@ -1973,7 +1985,7 @@
 94 ALUSlice_5/mux2_8/active_41_252# 42015 27845 green;
 94 ALUSlice_5/mux2_8/S 41655 28240 green;
 94 ALUSlice_5/trisbuf_7/active_74_274# 43140 27955 green;
-94 ALUSlice_5/mux2_8/Y 42590 27845 green;
+94 ALUSlice_5/SHR1Out_i 42590 27845 green;
 94 ALUSlice_5/trisbuf_7/active_74_500# 43140 29085 brown;
 94 ALUSlice_5/trisbuf_7/active_40_335# 42970 28260 green;
 94 ALUSlice_5/trisbuf_7/active_84_558# 43190 29375 pc;
@@ -2093,6 +2105,7 @@
 94 ALUSlice_4/mux2_1/active_16_317# 27370 22960 ndc;
 94 ALUSlice_4/mux2_1/active_41_643# 27495 24590 brown;
 94 ALUSlice_4/mux2_1/active_41_317# 27495 22960 green;
+94 ALUSlice_9/Sh8F_L 24830 22635 green;
 94 ALUSlice_4/mux2_1/active_41_252# 27495 22635 green;
 94 ALUSlice_4/mux2_1/S 25455 23030 green;
 94 ALUSlice_4/and2_3/active_35_331# 28425 23030 green;
@@ -2159,7 +2172,7 @@
 94 ALUSlice_4/mux2_8/active_41_252# 42015 22635 green;
 94 ALUSlice_4/mux2_8/S 41655 23030 green;
 94 ALUSlice_4/trisbuf_7/active_74_274# 43140 22745 green;
-94 ALUSlice_4/mux2_8/Y 42590 22635 green;
+94 ALUSlice_4/SHR1Out_i 42590 22635 green;
 94 ALUSlice_4/trisbuf_7/active_74_500# 43140 23875 brown;
 94 ALUSlice_4/trisbuf_7/active_40_335# 42970 23050 green;
 94 ALUSlice_4/trisbuf_7/active_84_558# 43190 24165 pc;
@@ -2279,6 +2292,7 @@
 94 ALUSlice_3/mux2_1/active_16_317# 27370 17750 ndc;
 94 ALUSlice_3/mux2_1/active_41_643# 27495 19380 brown;
 94 ALUSlice_3/mux2_1/active_41_317# 27495 17750 green;
+94 ALUSlice_9/Sh8G_L 24830 17425 green;
 94 ALUSlice_3/mux2_1/active_41_252# 27495 17425 green;
 94 ALUSlice_3/mux2_1/S 25455 17820 green;
 94 ALUSlice_3/and2_3/active_35_331# 28425 17820 green;
@@ -2345,7 +2359,7 @@
 94 ALUSlice_3/mux2_8/active_41_252# 42015 17425 green;
 94 ALUSlice_3/mux2_8/S 41655 17820 green;
 94 ALUSlice_3/trisbuf_7/active_74_274# 43140 17535 green;
-94 ALUSlice_3/mux2_8/Y 42590 17425 green;
+94 ALUSlice_3/SHR1Out_i 42590 17425 green;
 94 ALUSlice_3/trisbuf_7/active_74_500# 43140 18665 brown;
 94 ALUSlice_3/trisbuf_7/active_40_335# 42970 17840 green;
 94 ALUSlice_3/trisbuf_7/active_84_558# 43190 18955 pc;
@@ -2465,6 +2479,7 @@
 94 ALUSlice_2/mux2_1/active_16_317# 27370 12540 ndc;
 94 ALUSlice_2/mux2_1/active_41_643# 27495 14170 brown;
 94 ALUSlice_2/mux2_1/active_41_317# 27495 12540 green;
+94 ALUSlice_9/Sh8H_L 24830 12215 green;
 94 ALUSlice_2/mux2_1/active_41_252# 27495 12215 green;
 94 ALUSlice_2/mux2_1/S 25455 12610 green;
 94 ALUSlice_2/and2_3/active_35_331# 28425 12610 green;
@@ -2531,7 +2546,7 @@
 94 ALUSlice_2/mux2_8/active_41_252# 42015 12215 green;
 94 ALUSlice_2/mux2_8/S 41655 12610 green;
 94 ALUSlice_2/trisbuf_7/active_74_274# 43140 12325 green;
-94 ALUSlice_2/mux2_8/Y 42590 12215 green;
+94 ALUSlice_2/SHR1Out_i 42590 12215 green;
 94 ALUSlice_2/trisbuf_7/active_74_500# 43140 13455 brown;
 94 ALUSlice_2/trisbuf_7/active_40_335# 42970 12630 green;
 94 ALUSlice_2/trisbuf_7/active_84_558# 43190 13745 pc;
@@ -2651,6 +2666,7 @@
 94 ALUSlice_1/mux2_1/active_16_317# 27370 7330 ndc;
 94 ALUSlice_1/mux2_1/active_41_643# 27495 8960 brown;
 94 ALUSlice_1/mux2_1/active_41_317# 27495 7330 green;
+94 ALUSlice_9/Sh8I_L 24830 7005 green;
 94 ALUSlice_1/mux2_1/active_41_252# 27495 7005 green;
 94 ALUSlice_1/mux2_1/S 25455 7400 green;
 94 ALUSlice_1/and2_3/active_35_331# 28425 7400 green;
@@ -2717,7 +2733,7 @@
 94 ALUSlice_1/mux2_8/active_41_252# 42015 7005 green;
 94 ALUSlice_1/mux2_8/S 41655 7400 green;
 94 ALUSlice_1/trisbuf_7/active_74_274# 43140 7115 green;
-94 ALUSlice_1/mux2_8/Y 42590 7005 green;
+94 ALUSlice_1/SHR1Out_i 42590 7005 green;
 94 ALUSlice_1/trisbuf_7/active_74_500# 43140 8245 brown;
 94 ALUSlice_1/trisbuf_7/active_40_335# 42970 7420 green;
 94 ALUSlice_1/trisbuf_7/active_84_558# 43190 8535 pc;
@@ -2850,6 +2866,7 @@
 94 ALUSlice_0/mux2_1/active_16_317# 27370 2120 ndc;
 94 ALUSlice_0/mux2_1/active_41_643# 27495 3750 brown;
 94 ALUSlice_0/mux2_1/active_41_317# 27495 2120 green;
+94 ALUSlice_8/Sh8I_L 24830 1795 green;
 94 ALUSlice_0/mux2_1/active_41_252# 27495 1795 green;
 94 ALUSlice_0/mux2_1/S 25455 2190 green;
 94 ALUSlice_0/and2_3/active_35_331# 28425 2190 green;
@@ -2880,7 +2897,6 @@
 94 ALUSlice_0/mux2_5/active_16_317# 33010 2120 ndc;
 94 ALUSlice_0/mux2_5/active_41_643# 33135 3750 brown;
 94 ALUSlice_0/mux2_5/active_41_317# 33135 2120 green;
-94 GND! 7485 110 via;
 94 ALUSlice_1/Sh1_L_In 32150 1795 green;
 94 ALUSlice_0/mux2_5/active_41_252# 33135 1795 green;
 94 ALUSlice_0/mux2_5/S 32775 2190 green;
@@ -2937,7 +2953,7 @@
 94 ALUSlice_0/mux2_8/active_41_252# 42015 1795 green;
 94 ALUSlice_0/mux2_8/S 41655 2190 green;
 94 ALUSlice_0/trisbuf_7/active_74_274# 43140 1905 green;
-94 ALUSlice_0/mux2_8/Y 42590 1795 green;
+94 ALUSlice_0/SHR1Out_i 42590 1795 green;
 94 ALUSlice_0/trisbuf_7/active_74_500# 43140 3035 brown;
 94 ALUSlice_0/trisbuf_7/active_40_335# 42970 2210 green;
 94 ALUSlice_0/trisbuf_7/active_84_558# 43190 3325 pc;
