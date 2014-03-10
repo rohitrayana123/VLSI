@@ -1,37 +1,39 @@
 magic
 tech c035u
-timestamp 1394308690
+timestamp 1394477042
+<< checkpaint >>
+rect -1300 -1211 2769 1400
 << metal1 >>
 rect 0 155 1469 165
-rect 0 95 1469 105
+rect 0 89 1469 99
 << metal2 >>
-rect 5 970 205 1079
-rect 221 970 233 1079
-rect 245 970 257 1079
-rect 269 970 281 1079
-rect 293 970 305 1079
-rect 5 0 205 171
-rect 221 0 233 171
-rect 245 0 257 171
-rect 269 0 281 171
-rect 293 0 305 171
+rect 5 970 205 1170
+rect 221 970 233 1170
+rect 245 970 257 1170
+rect 269 970 281 1170
+rect 293 970 305 1170
+rect 5 -6 205 171
+rect 221 -6 233 171
+rect 245 -6 257 171
+rect 269 -6 281 171
+rect 293 -6 305 171
 use leftbuf  leftbuf_0
 timestamp 1386242881
 transform 1 0 5 0 1 171
 box 0 0 1464 799
 << labels >>
-rlabel metal2 5 0 205 0 1 Vdd!
-rlabel metal2 221 0 233 0 1 SDI
-rlabel metal2 245 0 257 0 1 Test
-rlabel metal2 269 0 281 0 1 Clock
-rlabel metal2 293 0 305 0 1 nReset
-rlabel metal2 5 1079 205 1079 5 Vdd!
-rlabel metal2 221 1079 233 1079 5 SDO
-rlabel metal2 245 1079 257 1079 5 Test
-rlabel metal2 269 1079 281 1079 5 Clock
-rlabel metal2 293 1079 305 1079 5 nReset
-rlabel metal1 0 95 0 105 3 SysBus
 rlabel metal1 0 155 0 165 3 Ir
-rlabel metal1 1469 95 1469 105 7 SysBus
 rlabel metal1 1469 155 1469 165 7 Ir
+rlabel metal2 5 -6 205 -6 1 Vdd!
+rlabel metal2 221 -6 233 -6 1 SDI
+rlabel metal2 245 -6 257 -6 1 Test
+rlabel metal2 269 -6 281 -6 1 Clock
+rlabel metal2 293 -6 305 -6 1 nReset
+rlabel metal2 5 1170 205 1170 5 Vdd!
+rlabel metal2 221 1170 233 1170 5 SDO
+rlabel metal2 245 1170 257 1170 5 Test
+rlabel metal2 269 1170 281 1170 5 Clock
+rlabel metal2 293 1170 305 1170 5 nReset
+rlabel metal1 0 89 0 99 3 SysBus
+rlabel metal1 1469 89 1469 99 7 SysBus
 << end >>
