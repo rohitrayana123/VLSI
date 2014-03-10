@@ -101,7 +101,7 @@ initial
     //Shifting Testing
     #50 NOR = 0; ShOut = 1;
     #50 $display("%b NS = %b", A, ALUOut); assert(ALUOut == A);
-		$display("%b", a.ALUSlice_0.ALU_Out);
+//		$display("%b", a.ALUSlice_0.ALU_Out);
 //		$display("%b", a.ShiftValue_inter);
 //		$display("%b", a.SHL8Out_inter);
 //		$display("%b", a.SHL4Out_inter);
