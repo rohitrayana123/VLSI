@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1393855556
+timestamp 1394560148
 << metal1 >>
 rect 0 848 192 858
 rect 0 825 192 835
@@ -14,7 +14,6 @@ rect 0 51 192 61
 rect 48 0 60 1042
 << labels >>
 rlabel metal2 48 0 60 0 1 LLI
-rlabel metal1 0 51 0 61 1 LLIIn
 rlabel metal1 192 51 192 61 7 ALUOut
 rlabel metal1 0 73 0 83 1 nReset
 rlabel metal1 0 96 0 106 1 Test
@@ -31,4 +30,5 @@ rlabel metal1 192 848 192 858 7 ScanReturn
 rlabel metal1 192 825 192 835 7 Scan
 rlabel metal1 192 787 192 812 7 Vdd!
 rlabel metal2 48 1042 60 1042 5 LLI
+rlabel metal1 0 51 0 61 3 ALUOut
 << end >>
