@@ -1,6 +1,9 @@
 magic
 tech c035u
-timestamp 1394494637
+timestamp 1394528018
+<< checkpaint >>
+rect -5644 499 -2729 3100
+rect -5629 495 -2729 499
 << nwell >>
 rect -2865 941 -9 1339
 rect 10503 941 11367 1339
@@ -207,4 +210,42 @@ use rightend  rightend_0
 timestamp 1386235834
 transform 1 0 18807 0 1 540
 box 0 0 320 799
+<< labels >>
+rlabel metal2 -4329 0 -4129 0 1 GND!
+rlabel metal2 -4113 0 -4101 0 1 SDI
+rlabel metal2 -4089 0 -4077 0 1 Test
+rlabel metal2 -4065 0 -4053 0 1 Clock
+rlabel metal2 -4041 0 -4029 0 1 nReset
+rlabel metal2 -4329 1795 -4129 1795 1 GND!
+rlabel metal2 -4113 1795 -4101 1795 1 SDI
+rlabel metal2 -4089 1795 -4077 1795 1 Test
+rlabel metal2 -4065 1795 -4053 1795 1 Clock
+rlabel metal2 -4041 1795 -4029 1795 1 nReset
+rlabel metal2 1719 1795 1731 1795 5 Ir[2]
+rlabel metal2 1743 1795 1755 1795 5 Ir[3]
+rlabel metal2 1767 1795 1779 1795 5 Ir[4]
+rlabel metal2 447 1795 459 1795 5 Ir[8]
+rlabel metal2 255 1795 267 1795 5 Ir[9]
+rlabel metal2 63 1795 75 1795 5 Ir[10]
+rlabel metal2 663 1795 675 1795 5 RwSel
+rlabel metal2 111 1795 123 1795 5 Ir[7]
+rlabel metal2 303 1795 315 1795 5 Ir[6]
+rlabel metal2 495 1795 507 1795 5 Ir[5]
+rlabel metal2 39 1795 51 1795 5 Rs1Sel
+rlabel metal2 1409 1795 1421 1795 5 RegWe
+rlabel metal2 11559 1795 11571 1795 5 Ir[15]
+rlabel metal2 11679 1795 11691 1795 5 Ir[14]
+rlabel metal2 11799 1795 11811 1795 5 Ir[13]
+rlabel metal2 11919 1795 11931 1795 5 Ir[12]
+rlabel metal2 12039 1795 12051 1795 5 Ir[11]
+rlabel metal2 13215 1795 13227 1795 5 CFlag
+rlabel metal2 13647 1795 13659 1795 5 Flags[2]
+rlabel metal2 13839 1795 13851 1795 5 Flags[1]
+rlabel metal2 13911 1795 13923 1795 5 Flags[3]
+rlabel metal2 14007 1795 14019 1795 5 Flagss[0]
+rlabel metal2 18135 1795 18147 1795 5 Ir[0]
+rlabel metal2 18015 1795 18027 1795 5 Ir[1]
+rlabel metal2 17895 1795 17907 1795 5 Ir[2]
+rlabel metal2 17679 1795 17691 1795 5 Ir[3]
+rlabel metal2 18519 1795 18531 1795 5 AluEn
 << end >>
