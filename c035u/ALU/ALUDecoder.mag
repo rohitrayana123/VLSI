@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394549670
+timestamp 1394558463
 << metal1 >>
 rect 3709 1442 4751 1452
 rect 3589 1420 4655 1430
@@ -587,7 +587,7 @@ rect 6864 350 6876 375
 rect 7008 350 7020 375
 rect 7032 328 7044 375
 rect 7056 283 7068 375
-rect 7152 350 7164 486
+rect 7152 350 7164 375
 rect 7368 372 7380 375
 rect 7416 328 7428 375
 rect 7176 0 7188 314
@@ -847,6 +847,39 @@ rlabel metal1 747 275 747 275 1 nE
 rlabel metal1 272 364 272 364 1 nA
 rlabel metal1 378 342 378 342 1 nB
 rlabel metal1 627 297 627 297 1 nD
+rlabel metal2 6245 1176 6245 1176 1 N
+rlabel metal1 5502 209 5502 209 1 ShSign
+rlabel metal1 0 1096 0 1121 3 Vdd!
+rlabel metal1 0 451 0 476 3 GND!
+rlabel metal1 7602 1096 7602 1121 7 Vdd!
+rlabel metal1 7602 451 7602 476 7 GND!
+rlabel metal1 1837 232 1837 232 1 UseC
+rlabel metal2 7584 0 7596 0 1 OutEn
+rlabel metal2 7344 0 7356 0 1 LLI
+rlabel metal2 7176 0 7188 0 1 ShOut
+rlabel metal2 6456 0 6468 0 1 Sh2
+rlabel metal2 5377 0 5389 0 1 ShR
+rlabel metal2 6816 0 6828 0 1 Sh1
+rlabel metal2 6000 0 6012 0 1 Sh4
+rlabel metal2 5352 0 5364 0 1 Sh8
+rlabel metal2 72 0 84 0 1 ZeroA
+rlabel metal2 768 0 780 0 1 N
+rlabel metal2 3216 0 3228 0 1 NOR
+rlabel metal2 3384 0 3396 0 1 ShB
+rlabel metal2 3336 0 3348 0 1 ASign
+rlabel metal2 3552 0 3564 0 1 ShL
+rlabel metal2 2568 0 2580 0 1 NOT
+rlabel metal2 2232 0 2244 0 1 XOR
+rlabel metal2 1824 0 1836 0 1 OR
+rlabel metal2 1464 0 1476 0 1 AND
+rlabel metal2 1128 0 1140 0 1 FAOut
+rlabel metal2 984 0 996 0 1 nZ
+rlabel metal2 696 0 708 0 1 COut
+rlabel metal2 672 0 684 0 1 LastCIn
+rlabel metal2 504 0 516 0 1 CIn_slice
+rlabel metal2 336 0 348 0 1 SUB
+rlabel metal2 2880 0 2892 0 1 NAND
+rlabel metal2 5736 0 5748 0 1 ShInBit
 rlabel metal2 192 1459 204 1459 5 OpCode[4]
 rlabel metal2 312 1459 324 1459 5 OpCode[3]
 rlabel metal2 432 1459 444 1459 5 OpCode[2]
@@ -861,37 +894,5 @@ rlabel metal2 6768 1459 6780 1459 5 imm4[0]
 rlabel metal2 6648 1459 6660 1459 5 imm4[1]
 rlabel metal2 6528 1459 6540 1459 5 imm4[2]
 rlabel metal2 6312 1459 6324 1459 5 imm4[3]
-rlabel metal2 6245 1176 6245 1176 1 N
-rlabel metal1 5502 209 5502 209 1 ShSign
-rlabel metal1 0 1096 0 1121 3 Vdd!
-rlabel metal1 0 451 0 476 3 GND!
 rlabel metal2 7152 1459 7164 1459 5 OutEn
-rlabel metal2 5736 0 5748 0 1 ShInBit
-rlabel metal2 2880 0 2892 0 1 NAND
-rlabel metal2 336 0 348 0 1 SUB
-rlabel metal2 504 0 516 0 1 CIn_slice
-rlabel metal2 672 0 684 0 1 LastCIn
-rlabel metal2 696 0 708 0 1 COut
-rlabel metal2 984 0 996 0 1 nZ
-rlabel metal2 1128 0 1140 0 1 FAOut
-rlabel metal2 1464 0 1476 0 1 AND
-rlabel metal2 1824 0 1836 0 1 OR
-rlabel metal2 2232 0 2244 0 1 XOR
-rlabel metal2 2568 0 2580 0 1 NOT
-rlabel metal2 3552 0 3564 0 1 ShL
-rlabel metal2 3336 0 3348 0 1 ASign
-rlabel metal2 3384 0 3396 0 1 ShB
-rlabel metal2 3216 0 3228 0 1 NOR
-rlabel metal2 768 0 780 0 1 N
-rlabel metal2 72 0 84 0 1 ZeroA
-rlabel metal2 5352 0 5364 0 1 Sh8
-rlabel metal2 6000 0 6012 0 1 Sh4
-rlabel metal2 6816 0 6828 0 1 Sh1
-rlabel metal2 5377 0 5389 0 1 ShR
-rlabel metal2 6456 0 6468 0 1 Sh2
-rlabel metal2 7176 0 7188 0 1 ShOut
-rlabel metal2 7344 0 7356 0 1 LLI
-rlabel metal1 7602 1096 7602 1121 7 Vdd!
-rlabel metal1 7602 451 7602 476 7 GND!
-rlabel metal2 7584 0 7596 0 1 OutEn
 << end >>
