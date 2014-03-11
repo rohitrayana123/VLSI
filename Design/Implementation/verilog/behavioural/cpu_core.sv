@@ -108,13 +108,11 @@ datapath datapath (
    .Rs1Sel     (Rs1Sel     ),
    .RwSel		(RwSel),
    .CFlag      (CFlag      ),
-`ifndef crosssim
    .AluWe      (AluWe      ),
-`endif
    .Clock      (Clock      ),
 `ifdef crosssim
    .Test       (1'b0       ),
-//   .SDI	       (1'b0       ),
+   .SDI		(1'b0      ),
 `endif
    .nReset     (nReset     )
 );

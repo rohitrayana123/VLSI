@@ -28,4 +28,4 @@
 //`else
 //  `define switch_value	7
 //`endif
-
+`define crosssim
