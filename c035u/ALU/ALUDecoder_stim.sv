@@ -56,88 +56,92 @@ always @(OpCode)
 begin
 if (ENABLECHECKS == 1);
 begin
-	if ((OpCode == 5'b0????)|(OpCode == 5'b?1?10))
-		assert(FAOut == 1);
-	else
-		assert(FAOut == 0);
-	if ((OpCode == 5'b?1010)|(OpCode == 5'b0?111)|(OpCode == 5'b011??)|(OpCode == 5'b010?1))
-		assert(SUB == 1);
-	else
-		assert(SUB == 0);
-	if ((OpCode == 5'b1?10?)|(OpCode == 5'b111?1)|(OpCode == 5'b1100?))
-		assert(ShOut == 1);
-	else
-		assert(ShOut == 0);
-	if ((OpCode == 5'b1?100)|(OpCode == 5'b1110?))
-		assert(ShR == 1);
-	else
-		assert(ShR == 0);
-	if (OpCode == 5'b0?10?)
-		assert(CIn_Slice == (Cin^SUB));//Check!!
-	else
-		assert(CIn_Slice == SUB);
-	if ((OpCode == 5'b111?1)|(OpCode == 5'b1110?))
-	begin
-		assert(Sh1 == imm4[0]);
-		assert(Sh2 == imm4[1]);
-		assert(Sh4 == imm4[2]);
-	end
-	else
-	begin
-		assert(Sh1 == 0);
-		assert(Sh2 == 0);
-		assert(Sh4 == 0);
-	end
-	if ((OpCode == 5'b111?1)|(OpCode == 5'b1110?))
-		assert(Sh8 == imm4[4]);
-	else if (OpCode == 5'b10100)
-		assert(Sh8 == 1'b1);
-	else
-		assert(Sh8 == 0);
-	if (OpCode == 5'b11010)
-		assert(ZeroA == 1);
-	else
-		assert(ZeroA == 0);
-	if (OpCode == 5'b10000)
-		assert(AND == 1);
-	else
-		assert(AND == 0);
-	if (OpCode == 5'b10001)
-		assert(OR == 1);
-	else
-		assert(OR == 0);
-	if (OpCode == 5'b10011)
-		assert(XOR == 1);
-	else
-		assert(XOR == 0);
-	if (OpCode == 5'b10010)
-		assert(NOT == 1);
-	else
-		assert(NOT == 0);
-	if (OpCode == 5'b10110)
-		assert(NAND == 1);
-	else
-		assert(NAND == 0);
-	if (OpCode == 5'b10111)
-		assert(NOR == 1);
-	else
-		assert(NOR == 0);
-	if (OpCode == 5'b11111)
-		assert(ShL == 1);
-	else
-		assert(ShL == 0);
-	if (OpCode == 5'b11100)
-		assert(ShInBit == 1);
-	else
-		assert(ShInBit == 0);
-	if (OpCode == 5'b10100)
-		assert(ShB == 1);
-	else
-		assert(ShB == 0);
-	if (OpCode == 5'b10101)
-		assert(LLI == 1);
-	else
-		assert(LLI == 0);
+	$write("%b %b %b %b %b ", FAOut, SUB, ShOut, ShR, CIn_Slice);
+	$write("%b %b %b %b %b ", Sh1, Sh2, Sh4, Sh8, ZeroA);
+	$write("%b %b %b %b %b ", AND, OR, XOR, NOT, NAND);
+	$write("%b %b %b %b %b\n", NOR, ShL, ShInBit, ShB, LLI);
+//	if ((OpCode == 5'b0????)|(OpCode == 5'b?1?10))
+//		assert(FAOut == 1);
+//	else
+//		assert(FAOut == 0);
+//	if ((OpCode == 5'b?1010)|(OpCode == 5'b0?111)|(OpCode == 5'b011??)|(OpCode == 5'b010?1))
+//		assert(SUB == 1);
+//	else
+//		assert(SUB == 0);
+//	if ((OpCode == 5'b1?10?)|(OpCode == 5'b111?1)|(OpCode == 5'b1100?))
+//		assert(ShOut == 1);
+//	else
+//		assert(ShOut == 0);
+//	if ((OpCode == 5'b1?100)|(OpCode == 5'b1110?))
+//		assert(ShR == 1);
+//	else
+//		assert(ShR == 0);
+//	if (OpCode == 5'b0?10?)
+//		assert(CIn_Slice == (Cin^SUB));//Check!!
+//	else
+//		assert(CIn_Slice == SUB);
+//	if ((OpCode == 5'b111?1)|(OpCode == 5'b1110?))
+//	begin
+//		assert(Sh1 == imm4[0]);
+//		assert(Sh2 == imm4[1]);
+//		assert(Sh4 == imm4[2]);
+//	end
+//	else
+//	begin
+//		assert(Sh1 == 0);
+//		assert(Sh2 == 0);
+//		assert(Sh4 == 0);
+//	end
+//	if ((OpCode == 5'b111?1)|(OpCode == 5'b1110?))
+//		assert(Sh8 == imm4[4]);
+//	else if (OpCode == 5'b10100)
+//		assert(Sh8 == 1'b1);
+//	else
+//		assert(Sh8 == 0);
+//	if (OpCode == 5'b11010)
+//		assert(ZeroA == 1);
+//	else
+//		assert(ZeroA == 0);
+//	if (OpCode == 5'b10000)
+//		assert(AND == 1);
+//	else
+//		assert(AND == 0);
+//	if (OpCode == 5'b10001)
+//		assert(OR == 1);
+//	else
+//		assert(OR == 0);
+//	if (OpCode == 5'b10011)
+//		assert(XOR == 1);
+//	else
+//		assert(XOR == 0);
+//	if (OpCode == 5'b10010)
+//		assert(NOT == 1);
+//	else
+//		assert(NOT == 0);
+//	if (OpCode == 5'b10110)
+//		assert(NAND == 1);
+//	else
+//		assert(NAND == 0);
+//	if (OpCode == 5'b10111)
+//		assert(NOR == 1);
+//	else
+//		assert(NOR == 0);
+//	if (OpCode == 5'b11111)
+//		assert(ShL == 1);
+//	else
+//		assert(ShL == 0);
+//	if (OpCode == 5'b11100)
+//		assert(ShInBit == 1);
+//	else
+//		assert(ShInBit == 0);
+//	if (OpCode == 5'b10100)
+//		assert(ShB == 1);
+//	else
+//		assert(ShB == 0);
+//	if (OpCode == 5'b10101)
+//		assert(LLI == 1);
+//	else
+//		assert(LLI == 0);
 end
 end
 
@@ -147,49 +151,48 @@ initial
     OpCode = 5'b11000; //Default to NOP
     #10 ENABLECHECKS = 1;
 
-	//Basic Adding Tests
-    #50 $display("LDW"); OpCode = 5'b00000; //LDW
-    #50 $display("POP"); OpCode = 5'b00001; //POP
+	//Column 1
+    #50 $display("LDW");   OpCode = 5'b00000; //LDW
+    #50 $display("POP");   OpCode = 5'b00001; //POP
     #50 $display("ADDIB"); OpCode = 5'b00011; //ADDIB
-    #50 $display("ADD"); OpCode = 5'b00010; //ADD
-    #50 $display("ADDI"); OpCode = 5'b00110; //ADDI
-    #50 $display("CMP"); OpCode = 5'b00111; //CMP
-    #50 $display("ADCI"); OpCode = 5'b00101; //ADCI
-    #50 $display("ADC"); OpCode = 5'b00100; //ADC
+    #50 $display("ADD");   OpCode = 5'b00010; //ADD
+    #50 $display("ADDI");  OpCode = 5'b00110; //ADDI
+    #50 $display("CMP");   OpCode = 5'b00111; //CMP
+    #50 $display("ADCI");  OpCode = 5'b00101; //ADCI
+    #50 $display("ADC");   OpCode = 5'b00100; //ADC
 
-	//Basic Subtraction Tests
-    #50 $display("STW"); OpCode = 5'b00100; //STW
-    #50 $display("PUSH"); OpCode = 5'b00100; //PUSH
-    #50 $display("SUBIB"); OpCode = 5'b00100; //SUBIB
-    #50 $display("SUB"); OpCode = 5'b00100; //SUB
-    #50 $display("SUBI"); OpCode = 5'b00100; //SUBI
-    #50 $display("CMPI"); OpCode = 5'b00100; //CMPI
-    #50 $display("SUCI"); OpCode = 5'b00100; //SUCI
-    #50 $display("SUC"); OpCode = 5'b00100; //SUC
+	//Column 2
+    #50 $display("STW");   OpCode = 5'b01000; //STW
+    #50 $display("PUSH");  OpCode = 5'b01001; //PUSH
+    #50 $display("SUBIB"); OpCode = 5'b01011; //SUBIB
+    #50 $display("SUB");   OpCode = 5'b01010; //SUB
+    #50 $display("SUBI");  OpCode = 5'b01110; //SUBI
+    #50 $display("CMPI");  OpCode = 5'b01111; //CMPI
+    #50 $display("SUCI");  OpCode = 5'b01101; //SUCI
+    #50 $display("SUC");   OpCode = 5'b01100; //SUC
 	//Carry in Tests
 
-	//Basic Shifting Tests
-    #50 $display("NOP"); OpCode = 5'b00100; //NOP
-    #50 $display("NEG"); OpCode = 5'b00100; //NEG
-    #50 $display("'D'"); OpCode = 5'b00100; //'D'
-    #50 $display("LSL"); OpCode = 5'b00100; //LSL
-    #50 $display("LSR"); OpCode = 5'b00100; //LSR
-    #50 $display("ASR"); OpCode = 5'b00100; //ASR
+	//Column 3
+    #50 $display("NOP"); OpCode = 5'b11000; //NOP
+	//INTERUPTS INSTRUCTIONS HERE
+    #50 $display("NEG"); OpCode = 5'b11010; //NEG
+    #50 $display("'D'"); OpCode = 5'b11110; //'D'
+    #50 $display("LSL"); OpCode = 5'b11111; //LSL
+    #50 $display("LSR"); OpCode = 5'b11101; //LSR
+    #50 $display("ASR"); OpCode = 5'b11100; //ASR
 	//Shifting Amount Tests
 
 	//Shifting Bit In Tests
 
-	//Basic Logic Tests
-    #50 $display("AND"); OpCode = 5'b00100; //AND
-    #50 $display("OR"); OpCode = 5'b00100; //OR
-    #50 $display("XOR"); OpCode = 5'b00100; //XOR
-    #50 $display("NOT"); OpCode = 5'b00100; //NOT
-    #50 $display("NAND"); OpCode = 5'b00100; //NAND
-    #50 $display("NOR"); OpCode = 5'b00100; //NOR
-
-	//Basic Loading Tests
-    #50 $display("LLI"); OpCode = 5'b00100; //LLI
-    #50 $display("LUI"); OpCode = 5'b00100; //LUI
+	//Column 4
+    #50 $display("AND");  OpCode = 5'b10000; //AND
+    #50 $display("OR");   OpCode = 5'b10001; //OR
+    #50 $display("XOR");  OpCode = 5'b10011; //XOR
+    #50 $display("NOT");  OpCode = 5'b10010; //NOT
+    #50 $display("NAND"); OpCode = 5'b10110; //NAND
+    #50 $display("NOR");  OpCode = 5'b10111; //NOR
+    #50 $display("LLI");  OpCode = 5'b10101; //LLI
+    #50 $display("LUI");  OpCode = 5'b10100; //LUI
 
 	//Basic Flag Tests
 
