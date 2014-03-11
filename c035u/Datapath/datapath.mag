@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394566734
+timestamp 1394569919
 << metal1 >>
 rect 481 21074 16460 21084
 rect 16474 21074 23884 21084
@@ -332,7 +332,7 @@ rect 24813 84 25013 92
 rect 24827 70 25013 84
 rect 24813 0 25013 70
 use slice17 slice17_0
-timestamp 1394566734
+timestamp 1394569919
 transform 1 0 837 0 1 18908
 box 0 0 24176 1795
 use leftbuf_slice leftbuf_slice_0
