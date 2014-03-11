@@ -1,6 +1,9 @@
 magic
 tech c035u
-timestamp 1394529261
+timestamp 1394548889
+<< checkpaint >>
+rect 9587 -1157 19637 2924
+rect 9587 -1300 19627 -1157
 << nwell >>
 rect -2865 941 -9 1339
 rect 10503 941 10887 1339
@@ -173,55 +176,55 @@ rect 1071 530 1083 540
 rect 1215 530 1227 540
 rect 1071 518 1227 530
 rect 18711 0 18911 540
-use leftbuf  leftbuf_1
+use leftbuf leftbuf_1
 timestamp 1386242881
 transform 1 0 -4329 0 1 540
 box 0 0 1464 799
-use mux2  mux2_5
+use mux2 mux2_5
 timestamp 1386235218
 transform 1 0 -9 0 1 540
 box 0 0 192 799
-use mux2  mux2_4
+use mux2 mux2_4
 timestamp 1386235218
 transform 1 0 183 0 1 540
 box 0 0 192 799
-use mux2  mux2_3
+use mux2 mux2_3
 timestamp 1386235218
 transform 1 0 375 0 1 540
 box 0 0 192 799
-use tiehigh  tiehigh_2
+use tiehigh tiehigh_2
 timestamp 1386086759
 transform 1 0 567 0 1 540
 box 0 0 48 799
-use mux2  mux2_2
+use mux2 mux2_2
 timestamp 1386235218
 transform 1 0 615 0 1 540
 box 0 0 192 799
-use tiehigh  tiehigh_1
+use tiehigh tiehigh_1
 timestamp 1386086759
 transform 1 0 807 0 1 540
 box 0 0 48 799
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
 transform 1 0 855 0 1 540
 box 0 0 192 799
-use tiehigh  tiehigh_0
+use tiehigh tiehigh_0
 timestamp 1386086759
 transform 1 0 1047 0 1 540
 box 0 0 48 799
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
 transform 1 0 1095 0 1 540
 box 0 0 192 799
-use regBlock_decoder  regBlock_decoder_0
+use regBlock_decoder regBlock_decoder_0
 timestamp 1394493274
 transform 1 0 1287 0 1 0
 box 0 0 9216 1618
-use ALUDecoder  ALUDecoder_0
-timestamp 1394493540
+use ALUDecoder ALUDecoder_0
+timestamp 1394146776
 transform 1 0 10887 0 1 143
-box 0 -143 7440 1481
-use rightend  rightend_0
+box 0 0 7450 1481
+use rightend rightend_0
 timestamp 1386235834
 transform 1 0 18591 0 1 540
 box 0 0 320 799
