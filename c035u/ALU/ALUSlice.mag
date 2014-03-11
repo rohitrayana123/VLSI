@@ -1,6 +1,10 @@
 magic
 tech c035u
+<<<<<<< HEAD
 timestamp 1394540006
+=======
+timestamp 1394490761
+>>>>>>> a916b422e49b7afe2508cc4c2442cee3a899dadc
 << metal1 >>
 rect 4693 1025 6455 1035
 rect 4237 1003 5999 1013
@@ -106,7 +110,6 @@ rect 2965 51 3287 61
 rect 3301 51 7247 61
 rect 7261 51 7296 61
 rect 7488 51 7511 61
-rect 7669 51 7704 61
 rect 3661 29 3671 39
 rect 3709 29 3719 39
 rect 3757 29 3767 39
@@ -298,7 +301,6 @@ rect 2951 49 2965 63
 rect 3287 49 3301 63
 rect 7247 49 7261 63
 rect 7511 49 7525 63
-rect 7655 49 7669 63
 rect 3647 27 3661 41
 rect 3671 27 3685 41
 rect 3695 27 3709 41
@@ -625,8 +627,13 @@ rect 7176 0 7188 66
 rect 7248 63 7260 66
 rect 7512 63 7524 66
 rect 7584 0 7596 66
+<<<<<<< HEAD
 rect 7656 63 7668 66
 use tielow tielow_0
+=======
+rect 7656 0 7668 66
+use tielow  tielow_0
+>>>>>>> a916b422e49b7afe2508cc4c2442cee3a899dadc
 timestamp 1386086605
 transform 1 0 0 0 1 66
 box 0 0 48 799
@@ -940,7 +947,6 @@ rlabel metal2 6576 0 6588 0 1 Sh2A_R
 rlabel metal2 6888 0 6900 0 1 Sh1_R_Out
 rlabel metal2 6888 1042 6900 1042 5 Sh1_R_In
 rlabel metal2 7584 1042 7596 1042 5 ALUEnable
-rlabel metal1 7704 51 7704 61 7 ALU_Out
 rlabel metal2 7584 0 7596 0 1 ALUEnable
 rlabel metal2 6072 0 6084 0 1 Sh4Y_L
 rlabel metal2 6072 1042 6084 1042 5 Sh4Z_R
@@ -974,6 +980,7 @@ rlabel metal2 3840 0 3852 0 1 Sh8E_L
 rlabel metal2 3888 0 3900 0 1 Sh8F_L
 rlabel metal2 3936 0 3948 0 1 Sh8G_L
 rlabel metal2 7512 1042 7524 1042 5 AluOut
+<<<<<<< HEAD
 rlabel metal2 3696 1042 3708 1042 5 Sh8A_L
 rlabel metal2 3792 1042 3804 1042 5 Sh8C_L
 rlabel metal2 3840 1042 3852 1042 5 Sh8D_L
@@ -984,4 +991,7 @@ rlabel metal2 3984 1042 3996 1042 5 Sh8G_L
 rlabel metal2 3648 1042 3660 1042 5 Sh8Z_L
 rlabel metal1 7494 54 7494 54 1 LLI_Out
 rlabel metal1 7291 56 7291 56 1 LLI_In
+=======
+rlabel metal2 7656 0 7668 0 1 SysBus
+>>>>>>> a916b422e49b7afe2508cc4c2442cee3a899dadc
 << end >>
