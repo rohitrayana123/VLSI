@@ -223,31 +223,31 @@ rect 19920 0 19932 111
 rect 20328 0 20340 111
 rect 20400 107 20412 111
 rect 20568 0 20768 177
-use Pc_slice  Pc_slice_0
+use Pc_slice Pc_slice_0
 timestamp 1394475379
 transform 1 0 0 0 1 111
 box 0 0 2952 1042
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
 transform 1 0 2952 0 1 177
 box 0 0 192 799
-use regBlock_slice  regBlock_slice_0
+use regBlock_slice regBlock_slice_0
 timestamp 1394475337
 transform 1 0 3144 0 1 111
 box 0 0 9216 1042
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
 transform 1 0 12360 0 1 177
 box 0 0 192 799
-use mux2  mux2_2
+use mux2 mux2_2
 timestamp 1386235218
 transform 1 0 12552 0 1 177
 box 0 0 192 799
-use ALUSlice  ALUSlice_0
+use ALUSlice ALUSlice_0
 timestamp 1394490761
 transform 1 0 12744 0 1 111
 box 0 0 7704 1042
-use rightend  rightend_0
+use rightend rightend_0
 timestamp 1386235834
 transform 1 0 20448 0 1 177
 box 0 0 320 799
