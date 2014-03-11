@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394564526
+timestamp 1394565367
 << metal1 >>
 rect 1573 1159 3023 1169
 rect 3037 1159 20040 1169
@@ -373,8 +373,6 @@ rlabel metal2 16632 0 16644 0 1 Sh8F_L
 rlabel metal2 16680 0 16692 0 1 Sh8G_L
 rlabel metal2 13416 1176 13428 1176 5 CIn_Slice
 rlabel metal2 16296 1176 16308 1176 5 ShL
-rlabel metal2 16392 1176 16404 1176 5 Sh8A_L
-rlabel metal2 16488 1176 16500 1176 5 Sh8C_L
 rlabel metal2 13872 1176 13884 1176 5 FAOut
 rlabel metal2 13728 1176 13740 1176 5 nZ
 rlabel metal2 13080 1176 13092 1176 5 SUB
@@ -389,8 +387,6 @@ rlabel metal2 13440 1176 13452 1176 5 COut
 rlabel metal2 13512 1176 13524 1176 5 Sum
 rlabel metal2 13248 1176 13260 1176 5 CIn
 rlabel metal2 12816 1176 12828 1176 5 ZeroA
-rlabel metal2 16536 1176 16548 1176 5 Sh8D_L
-rlabel metal2 16440 1176 16452 1176 5 Sh8B_L
 rlabel metal2 18504 1176 18516 1176 5 Sh8H_R
 rlabel metal2 18456 1176 18468 1176 5 Sh8G_R
 rlabel metal2 18408 1176 18420 1176 5 Sh8F_R
@@ -419,11 +415,15 @@ rlabel metal2 18216 1176 18228 1176 5 Sh8B_R
 rlabel metal2 18264 1176 18276 1176 5 Sh8C_R
 rlabel metal2 18096 1176 18108 1176 5 Sh8
 rlabel metal2 17928 1176 17940 1176 5 Sh1_L_Out
-rlabel metal2 16632 1176 16644 1176 5 Sh8F_L
-rlabel metal2 16584 1176 16596 1176 5 Sh8E_L
-rlabel metal2 16680 1176 16692 1176 5 Sh8G_L
-rlabel metal2 16728 1176 16740 1176 5 Sh8H_L
 rlabel metal2 16080 1176 16092 1176 5 A
 rlabel metal1 20040 1159 20040 1169 7 AluOut
 rlabel metal1 20040 95 20040 105 7 SysBus
+rlabel metal2 16440 1176 16452 1176 5 Sh8A_L
+rlabel metal2 16536 1176 16548 1176 5 Sh8C_L
+rlabel metal2 16584 1176 16596 1176 5 Sh8D_L
+rlabel metal2 16488 1176 16500 1176 5 Sh8B_L
+rlabel metal2 16680 1176 16692 1176 5 Sh8F_L
+rlabel metal2 16632 1176 16644 1176 5 Sh8E_L
+rlabel metal2 16728 1176 16740 1176 5 Sh8G_L
+rlabel metal2 16392 1176 16404 1176 5 Sh8Z_L
 << end >>
