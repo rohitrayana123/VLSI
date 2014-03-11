@@ -4,7 +4,7 @@
 module ALUDecoder(
 	output AND ,
 	output C ,
-	output CIn_slice ,
+	output CIn_Slice ,
 	output FAOut ,
 	output LLI ,
 	output N ,
