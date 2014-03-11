@@ -1,0 +1,26 @@
+magic
+tech c035u
+timestamp 1394560081
+<< metal1 >>
+rect 0 51 23 61
+rect 181 51 216 61
+<< m2contact >>
+rect 23 49 37 63
+rect 167 49 181 63
+<< metal2 >>
+rect 24 865 36 1042
+rect 96 865 108 1042
+rect 24 63 36 66
+rect 96 0 108 66
+rect 168 63 180 66
+use trisbuf trisbuf_8
+timestamp 1386237216
+transform 1 0 0 0 1 66
+box 0 0 216 799
+<< labels >>
+rlabel metal2 96 0 108 0 1 ALUEnable
+rlabel metal1 216 51 216 61 7 ALU_Out
+rlabel metal2 96 1042 108 1042 5 ALUEnable
+rlabel metal1 0 51 0 61 3 ALUOut
+rlabel metal2 24 1042 36 1042 5 ALUOut
+<< end >>
