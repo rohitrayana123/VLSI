@@ -15,6 +15,8 @@ wire Sh1, Sh2, Sh4, Sh8, ShL, ShR, ShInBit, ShB, ShOut;			//Shifting Control Out
 logic ASign;								//Shifting Control Inputs
 wire LLI;								//LLI Control Output
 
+logic ENABLECHECKS;							//Testbench Variable
+
 ALUDecoder d(
 	.AND ( AND ),
 	.C ( C ),
@@ -49,186 +51,150 @@ ALUDecoder d(
 	.OpCode ( OpCode )
 	);
 
-// stimulus information follows
+//Assertions to ensure only the intended set of control signals are active for each OpCode
 always @(OpCode)
 begin
-if (OpCode == 5'b0????)
-	Faout
-if (OpCode == 5'b?1?10)
-	faout
-if (OpCode == 5'b?1010)
-	sub
-if (OpCode == 5'b0?111)
-	sub
-if (OpCode == 5'b011??)
-	sub
-if (OpCode == 5'b010?1)
-	sub
-if (OpCode == 5'b1?10?)
-	shout
-if (OpCode == 5'b111?1)
-	shout
-if (OpCode == 5'b1100?)
-	shout
-if (OpCode == 5'b1?100)
-	shr
-if (OpCode == 5'b1110?)
-	shr
-if (OpCode == 5'b0?10?)
-	usec
-if (OpCode == 5'b111?1)
-	sh1, sh2, sh4, sh8
-if (OpCode == 5'b1110?)
-	sh1, sh2, sh4. sh8
-if (OpCode == 5'b10100)
-	sh8
-if (OpCode == 5'b11010)
-	zeroa
-if (OpCode == 5'b10000)
-	and
-if (OpCode == 5'b10001)
-	or
-if (OpCode == 5'b10011)
-	xor
-if (OpCode == 5'b10010)
-	not
-if (OpCode == 5'b10110)
-	nand
-if (OpCode == 5'b10111)
-	nor
-if (OpCode == 5'b11111)
-	shl
-if (OpCode == 5'b11100)
-	shinsign
-if (OpCode == 5'b10100)
-	shb
-if (OpCode == 5'b10101)
-	lli
+if (ENABLECHECKS == 1);
+begin
+	if ((OpCode == 5'b0????)|(OpCode == 5'b?1?10))
+		assert(FAOut == 1);
+	else
+		assert(FAOut == 0);
+	if ((OpCode == 5'b?1010)|(OpCode == 5'b0?111)|(OpCode == 5'b011??)|(OpCode == 5'b010?1))
+		assert(SUB == 1);
+	else
+		assert(SUB == 0);
+	if ((OpCode == 5'b1?10?)|(OpCode == 5'b111?1)|(OpCode == 5'b1100?))
+		assert(ShOut == 1);
+	else
+		assert(ShOut == 0);
+	if ((OpCode == 5'b1?100)|(OpCode == 5'b1110?))
+		assert(ShR == 1);
+	else
+		assert(ShR == 0);
+	if (OpCode == 5'b0?10?)
+		assert(CIn_Slice == (Cin^SUB));//Check!!
+	else
+		assert(CIn_Slice == SUB);
+	if ((OpCode == 5'b111?1)|(OpCode == 5'b1110?))
+	begin
+		assert(Sh1 == imm4[0]);
+		assert(Sh2 == imm4[1]);
+		assert(Sh4 == imm4[2]);
+	end
+	else
+	begin
+		assert(Sh1 == 0);
+		assert(Sh2 == 0);
+		assert(Sh4 == 0);
+	end
+	if ((OpCode == 5'b111?1)|(OpCode == 5'b1110?))
+		assert(Sh8 == imm4[4]);
+	else if (OpCode == 5'b10100)
+		assert(Sh8 == 1'b1);
+	else
+		assert(Sh8 == 0);
+	if (OpCode == 5'b11010)
+		assert(ZeroA == 1);
+	else
+		assert(ZeroA == 0);
+	if (OpCode == 5'b10000)
+		assert(AND == 1);
+	else
+		assert(AND == 0);
+	if (OpCode == 5'b10001)
+		assert(OR == 1);
+	else
+		assert(OR == 0);
+	if (OpCode == 5'b10011)
+		assert(XOR == 1);
+	else
+		assert(XOR == 0);
+	if (OpCode == 5'b10010)
+		assert(NOT == 1);
+	else
+		assert(NOT == 0);
+	if (OpCode == 5'b10110)
+		assert(NAND == 1);
+	else
+		assert(NAND == 0);
+	if (OpCode == 5'b10111)
+		assert(NOR == 1);
+	else
+		assert(NOR == 0);
+	if (OpCode == 5'b11111)
+		assert(ShL == 1);
+	else
+		assert(ShL == 0);
+	if (OpCode == 5'b11100)
+		assert(ShInBit == 1);
+	else
+		assert(ShInBit == 0);
+	if (OpCode == 5'b10100)
+		assert(ShB == 1);
+	else
+		assert(ShB == 0);
+	if (OpCode == 5'b10101)
+		assert(LLI == 1);
+	else
+		assert(LLI == 0);
+end
 end
 
 initial
   begin
-    OpCode = 5'b11000; //Default to NOP
     imm4 = 0; Cin = 0; COut = 0; nZ = 0; LastCIn = 0; ASign = 0;
+    OpCode = 5'b11000; //Default to NOP
+    #10 ENABLECHECKS = 1;
 
-    #50 OpCode = 5'b00000; //LDW
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	FAOut, CIn_Slice, AND, OR, XOR, NOT, NAND, NOR, SUB, ZeroA, Sum, Sh1, Sh2, Sh4, Sh8, ShL, ShR, ShInBit, ShB, ShOut, LLI
-	assert(FAOut == 1);
-    #50 OpCode = 5'b00001; //POP
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	assert(FAOut == 1);
-    #50 OpCode = 5'b00011; //ADDIB
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	assert(FAOut == 1);
-    #50 OpCode = 5'b00010; //ADD
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	assert(FAOut == 1);
-    #50 OpCode = 5'b00110; //ADDI
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	assert(FAOut == 1);
-    #50 OpCode = 5'b00111; //CMP
-    #50 $display("FAOut = %5b, CIn_Slice = %b, SUB = %b", FAOut, CIn_Slice, SUB); 
-	assert(FAOut == 1);
-        assert(SUB == 1);
-    #50 OpCode = 5'b00101; //ADCI
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	assert(FAOut == 1);
-        //UseC
-    #50 OpCode = 5'b00100; //ADC
-    #50 $display("FAOut = %5b, CIn_Slice = %b", FAOut, CIn_Slice); 
-	assert(FAOut == 1);
-        //UseC
+	//Basic Adding Tests
+    #50 $display("LDW"); OpCode = 5'b00000; //LDW
+    #50 $display("POP"); OpCode = 5'b00001; //POP
+    #50 $display("ADDIB"); OpCode = 5'b00011; //ADDIB
+    #50 $display("ADD"); OpCode = 5'b00010; //ADD
+    #50 $display("ADDI"); OpCode = 5'b00110; //ADDI
+    #50 $display("CMP"); OpCode = 5'b00111; //CMP
+    #50 $display("ADCI"); OpCode = 5'b00101; //ADCI
+    #50 $display("ADC"); OpCode = 5'b00100; //ADC
 
-    #50 OpCode = 5'b00100; //STW
-    #50 assert(FAOut == 1);
-    #50 OpCode = 5'b00100; //PUSH
-    #50 assert(FAOut == 1);
-        assert(SUB == 1);
-    #50 OpCode = 5'b00100; //SUBIB
-    #50 assert(FAOut == 1);
-        assert(SUB == 1);
-    #50 OpCode = 5'b00100; //SUB
-    #50 assert(FAOut == 1);
-        assert(SUB == 1);
-    #50 OpCode = 5'b00100; //SUBI
-    #50 assert(FAOut == 1);
-        assert(SUB == 1);
-    #50 OpCode = 5'b00100; //CMPI
-    #50 assert(FAOut == 1);
-	assert(SUB == 1);
-    #50 OpCode = 5'b00100; //SUCI
-	assert(SUB == 1);
-	assert(SUB == 1);
-	//UseC
-    #50 assert(FAOut == 1);
-    #50 OpCode = 5'b00100; //SUC
-    #50 assert(FAOut == 1);
-	assert(SUB == 1);
-	//UseC
+	//Basic Subtraction Tests
+    #50 $display("STW"); OpCode = 5'b00100; //STW
+    #50 $display("PUSH"); OpCode = 5'b00100; //PUSH
+    #50 $display("SUBIB"); OpCode = 5'b00100; //SUBIB
+    #50 $display("SUB"); OpCode = 5'b00100; //SUB
+    #50 $display("SUBI"); OpCode = 5'b00100; //SUBI
+    #50 $display("CMPI"); OpCode = 5'b00100; //CMPI
+    #50 $display("SUCI"); OpCode = 5'b00100; //SUCI
+    #50 $display("SUC"); OpCode = 5'b00100; //SUC
+	//Carry in Tests
 
-    #50 OpCode = 5'b00100; //NOP
-    #50 assert(ShOut == 1);
-    #50 OpCode = 5'b00100; //NEG
-    #50 assert(FAOut == 1);
-	assert(SUB == 1);
-	assert(ZeroA == 1);
-    #50 OpCode = 5'b00100; //'D'
-    #50 assert(FAOut == 1);
-    #50 OpCode = 5'b00100; //LSL
-    #50 assert(ShOut == 1);
-	assert(ShL == 1);
-	assert(Sh8 == imm4[3]);
-	assert(Sh4 == imm4[1]);
-	assert(Sh2 == imm4[2]);
-	assert(Sh1 == imm4[0]);
-	assert(ShiftInBit == 0);
-	//inner signal N= = 1
-    #50 OpCode = 5'b00100; //LSR
-    #50 assert(ShOut == 1);
-	assert(ShR == 1);
-	assert(Sh8 == imm4[3]);
-	assert(Sh4 == imm4[1]);
-	assert(Sh2 == imm4[2]);
-	assert(Sh1 == imm4[0]);
-	assert(ShiftInBit == 0);
-	//inner signal N == 1
-    #50 OpCode = 5'b00100; //ASR
-    #50 assert(ShOut == 1);
-	assert(ShR == 1);
-	assert(Sh8 == imm4[3]);
-	assert(Sh4 == imm4[1]);
-	assert(Sh2 == imm4[2]);
-	assert(Sh1 == imm4[0]);
-	assert(ShiftInBit == ASign);
-	//inner signal N == 1
+	//Basic Shifting Tests
+    #50 $display("NOP"); OpCode = 5'b00100; //NOP
+    #50 $display("NEG"); OpCode = 5'b00100; //NEG
+    #50 $display("'D'"); OpCode = 5'b00100; //'D'
+    #50 $display("LSL"); OpCode = 5'b00100; //LSL
+    #50 $display("LSR"); OpCode = 5'b00100; //LSR
+    #50 $display("ASR"); OpCode = 5'b00100; //ASR
+	//Shifting Amount Tests
 
-    #50 OpCode = 5'b00100; //AND
-    #50 assert(AND == 1);
-    #50 OpCode = 5'b00100; //OR
-    #50 assert(OR == 1);
-    #50 OpCode = 5'b00100; //XOR
-    #50 assert(XOR == 1);
-    #50 OpCode = 5'b00100; //NOT
-    #50 assert(NOT == 1);
-    #50 OpCode = 5'b00100; //NAND
-    #50 assert(NAND == 1);
-    #50 OpCode = 5'b00100; //NOR
-    #50 assert(NOR == 1);
-    #50 OpCode = 5'b00100; //LLI
-    #50 assert(ShOut == 1);
-	assert(LLI == 1);
-    #50 OpCode = 5'b00100; //LUI
-    #50 assert(ShOut == 1);
-	assert(ShR = 1);
-	assert(ShB == 1);
-	assert(Sh8 == 1);
-	//inner signal N == 0
+	//Shifting Bit In Tests
+
+	//Basic Logic Tests
+    #50 $display("AND"); OpCode = 5'b00100; //AND
+    #50 $display("OR"); OpCode = 5'b00100; //OR
+    #50 $display("XOR"); OpCode = 5'b00100; //XOR
+    #50 $display("NOT"); OpCode = 5'b00100; //NOT
+    #50 $display("NAND"); OpCode = 5'b00100; //NAND
+    #50 $display("NOR"); OpCode = 5'b00100; //NOR
+
+	//Basic Loading Tests
+    #50 $display("LLI"); OpCode = 5'b00100; //LLI
+    #50 $display("LUI"); OpCode = 5'b00100; //LUI
+
+	//Basic Flag Tests
+
+    #50 $finish;
   end
-
-// probe information follows
-
-
 
 //SIMVISION SCRIPT:ALUDecoder.tcl
 
