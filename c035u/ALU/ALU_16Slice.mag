@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394476654
+timestamp 1394559787
 << metal1 >>
 rect 6911 16721 6945 16731
 rect 6959 16721 6993 16731
@@ -258,7 +258,7 @@ rect 8290 16713 8302 16785
 rect 8362 16713 8374 16719
 rect 8650 16713 8662 16785
 rect 8818 16713 8830 16785
-rect 9058 16712 9070 16785
+rect 9058 16713 9070 16785
 rect 9298 452 9498 16785
 rect 1498 36 1510 41
 rect 1978 14 1990 41
@@ -283,14 +283,18 @@ use leftbuf leftbuf_15
 timestamp 1386242881
 transform 1 0 10 0 1 15737
 box 0 0 1464 799
+use ALUSlice ALUSlice_15
+timestamp 1394559342
+transform 1 0 1474 0 1 15671
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_7
 timestamp 1393855556
 transform 1 0 8770 0 1 15671
 box 0 0 192 1042
-use ALUSlice ALUSlice_15
-timestamp 1394472218
-transform 1 0 1474 0 1 15671
-box 0 0 7704 1042
+use ALUTri ALUTri_15
+timestamp 1394559405
+transform 1 0 8962 0 1 15671
+box 0 0 216 1042
 use rightend rightend_15
 timestamp 1386235834
 transform 1 0 9178 0 1 15737
@@ -299,14 +303,18 @@ use leftbuf leftbuf_14
 timestamp 1386242881
 transform 1 0 10 0 1 14695
 box 0 0 1464 799
+use ALUSlice ALUSlice_14
+timestamp 1394559342
+transform 1 0 1474 0 1 14629
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_6
 timestamp 1393855556
 transform 1 0 8770 0 1 14629
 box 0 0 192 1042
-use ALUSlice ALUSlice_14
-timestamp 1394472218
-transform 1 0 1474 0 1 14629
-box 0 0 7704 1042
+use ALUTri ALUTri_14
+timestamp 1394559405
+transform 1 0 8962 0 1 14629
+box 0 0 216 1042
 use rightend rightend_14
 timestamp 1386235834
 transform 1 0 9178 0 1 14695
@@ -315,14 +323,18 @@ use leftbuf leftbuf_13
 timestamp 1386242881
 transform 1 0 10 0 1 13653
 box 0 0 1464 799
+use ALUSlice ALUSlice_13
+timestamp 1394559342
+transform 1 0 1474 0 1 13587
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_5
 timestamp 1393855556
 transform 1 0 8770 0 1 13587
 box 0 0 192 1042
-use ALUSlice ALUSlice_13
-timestamp 1394472218
-transform 1 0 1474 0 1 13587
-box 0 0 7704 1042
+use ALUTri ALUTri_13
+timestamp 1394559405
+transform 1 0 8962 0 1 13587
+box 0 0 216 1042
 use rightend rightend_13
 timestamp 1386235834
 transform 1 0 9178 0 1 13653
@@ -331,14 +343,18 @@ use leftbuf leftbuf_12
 timestamp 1386242881
 transform 1 0 10 0 1 12611
 box 0 0 1464 799
+use ALUSlice ALUSlice_12
+timestamp 1394559342
+transform 1 0 1474 0 1 12545
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_4
 timestamp 1393855556
 transform 1 0 8770 0 1 12545
 box 0 0 192 1042
-use ALUSlice ALUSlice_12
-timestamp 1394472218
-transform 1 0 1474 0 1 12545
-box 0 0 7704 1042
+use ALUTri ALUTri_12
+timestamp 1394559405
+transform 1 0 8962 0 1 12545
+box 0 0 216 1042
 use rightend rightend_12
 timestamp 1386235834
 transform 1 0 9178 0 1 12611
@@ -347,14 +363,18 @@ use leftbuf leftbuf_11
 timestamp 1386242881
 transform 1 0 10 0 1 11569
 box 0 0 1464 799
+use ALUSlice ALUSlice_11
+timestamp 1394559342
+transform 1 0 1474 0 1 11503
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_3
 timestamp 1393855556
 transform 1 0 8770 0 1 11503
 box 0 0 192 1042
-use ALUSlice ALUSlice_11
-timestamp 1394472218
-transform 1 0 1474 0 1 11503
-box 0 0 7704 1042
+use ALUTri ALUTri_11
+timestamp 1394559405
+transform 1 0 8962 0 1 11503
+box 0 0 216 1042
 use rightend rightend_11
 timestamp 1386235834
 transform 1 0 9178 0 1 11569
@@ -363,14 +383,18 @@ use leftbuf leftbuf_10
 timestamp 1386242881
 transform 1 0 10 0 1 10527
 box 0 0 1464 799
+use ALUSlice ALUSlice_10
+timestamp 1394559342
+transform 1 0 1474 0 1 10461
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_2
 timestamp 1393855556
 transform 1 0 8770 0 1 10461
 box 0 0 192 1042
-use ALUSlice ALUSlice_10
-timestamp 1394472218
-transform 1 0 1474 0 1 10461
-box 0 0 7704 1042
+use ALUTri ALUTri_10
+timestamp 1394559405
+transform 1 0 8962 0 1 10461
+box 0 0 216 1042
 use rightend rightend_10
 timestamp 1386235834
 transform 1 0 9178 0 1 10527
@@ -379,14 +403,18 @@ use leftbuf leftbuf_9
 timestamp 1386242881
 transform 1 0 10 0 1 9485
 box 0 0 1464 799
+use ALUSlice ALUSlice_9
+timestamp 1394559342
+transform 1 0 1474 0 1 9419
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_1
 timestamp 1393855556
 transform 1 0 8770 0 1 9419
 box 0 0 192 1042
-use ALUSlice ALUSlice_9
-timestamp 1394472218
-transform 1 0 1474 0 1 9419
-box 0 0 7704 1042
+use ALUTri ALUTri_9
+timestamp 1394559405
+transform 1 0 8962 0 1 9419
+box 0 0 216 1042
 use rightend rightend_9
 timestamp 1386235834
 transform 1 0 9178 0 1 9485
@@ -395,14 +423,18 @@ use leftbuf leftbuf_8
 timestamp 1386242881
 transform 1 0 10 0 1 8443
 box 0 0 1464 799
+use ALUSlice ALUSlice_8
+timestamp 1394559342
+transform 1 0 1474 0 1 8377
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_0
 timestamp 1393855556
 transform 1 0 8770 0 1 8377
 box 0 0 192 1042
-use ALUSlice ALUSlice_8
-timestamp 1394472218
-transform 1 0 1474 0 1 8377
-box 0 0 7704 1042
+use ALUTri ALUTri_8
+timestamp 1394559405
+transform 1 0 8962 0 1 8377
+box 0 0 216 1042
 use rightend rightend_8
 timestamp 1386235834
 transform 1 0 9178 0 1 8443
@@ -411,14 +443,18 @@ use leftbuf leftbuf_7
 timestamp 1386242881
 transform 1 0 10 0 1 7401
 box 0 0 1464 799
+use ALUSlice ALUSlice_7
+timestamp 1394559342
+transform 1 0 1474 0 1 7335
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_3
 timestamp 1394447900
 transform 1 0 8770 0 1 7335
 box 0 0 192 1042
-use ALUSlice ALUSlice_7
-timestamp 1394472218
-transform 1 0 1474 0 1 7335
-box 0 0 7704 1042
+use ALUTri ALUTri_7
+timestamp 1394559405
+transform 1 0 8962 0 1 7335
+box 0 0 216 1042
 use rightend rightend_7
 timestamp 1386235834
 transform 1 0 9178 0 1 7401
@@ -427,14 +463,18 @@ use leftbuf leftbuf_6
 timestamp 1386242881
 transform 1 0 10 0 1 6359
 box 0 0 1464 799
+use ALUSlice ALUSlice_6
+timestamp 1394559342
+transform 1 0 1474 0 1 6293
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_7
 timestamp 1394447900
 transform 1 0 8770 0 1 6293
 box 0 0 192 1042
-use ALUSlice ALUSlice_6
-timestamp 1394472218
-transform 1 0 1474 0 1 6293
-box 0 0 7704 1042
+use ALUTri ALUTri_6
+timestamp 1394559405
+transform 1 0 8962 0 1 6293
+box 0 0 216 1042
 use rightend rightend_6
 timestamp 1386235834
 transform 1 0 9178 0 1 6359
@@ -443,14 +483,18 @@ use leftbuf leftbuf_5
 timestamp 1386242881
 transform 1 0 10 0 1 5317
 box 0 0 1464 799
+use ALUSlice ALUSlice_5
+timestamp 1394559342
+transform 1 0 1474 0 1 5251
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_6
 timestamp 1394447900
 transform 1 0 8770 0 1 5251
 box 0 0 192 1042
-use ALUSlice ALUSlice_5
-timestamp 1394472218
-transform 1 0 1474 0 1 5251
-box 0 0 7704 1042
+use ALUTri ALUTri_5
+timestamp 1394559405
+transform 1 0 8962 0 1 5251
+box 0 0 216 1042
 use rightend rightend_5
 timestamp 1386235834
 transform 1 0 9178 0 1 5317
@@ -459,14 +503,18 @@ use leftbuf leftbuf_4
 timestamp 1386242881
 transform 1 0 10 0 1 4275
 box 0 0 1464 799
+use ALUSlice ALUSlice_4
+timestamp 1394559342
+transform 1 0 1474 0 1 4209
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_5
 timestamp 1394447900
 transform 1 0 8770 0 1 4209
 box 0 0 192 1042
-use ALUSlice ALUSlice_4
-timestamp 1394472218
-transform 1 0 1474 0 1 4209
-box 0 0 7704 1042
+use ALUTri ALUTri_4
+timestamp 1394559405
+transform 1 0 8962 0 1 4209
+box 0 0 216 1042
 use rightend rightend_4
 timestamp 1386235834
 transform 1 0 9178 0 1 4275
@@ -475,14 +523,18 @@ use leftbuf leftbuf_3
 timestamp 1386242881
 transform 1 0 10 0 1 3233
 box 0 0 1464 799
+use ALUSlice ALUSlice_3
+timestamp 1394559342
+transform 1 0 1474 0 1 3167
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_4
 timestamp 1394447900
 transform 1 0 8770 0 1 3167
 box 0 0 192 1042
-use ALUSlice ALUSlice_3
-timestamp 1394472218
-transform 1 0 1474 0 1 3167
-box 0 0 7704 1042
+use ALUTri ALUTri_3
+timestamp 1394559405
+transform 1 0 8962 0 1 3167
+box 0 0 216 1042
 use rightend rightend_3
 timestamp 1386235834
 transform 1 0 9178 0 1 3233
@@ -491,14 +543,18 @@ use leftbuf leftbuf_2
 timestamp 1386242881
 transform 1 0 10 0 1 2191
 box 0 0 1464 799
+use ALUSlice ALUSlice_2
+timestamp 1394559342
+transform 1 0 1474 0 1 2125
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_2
 timestamp 1394447900
 transform 1 0 8770 0 1 2125
 box 0 0 192 1042
-use ALUSlice ALUSlice_2
-timestamp 1394472218
-transform 1 0 1474 0 1 2125
-box 0 0 7704 1042
+use ALUTri ALUTri_2
+timestamp 1394559405
+transform 1 0 8962 0 1 2125
+box 0 0 216 1042
 use rightend rightend_2
 timestamp 1386235834
 transform 1 0 9178 0 1 2191
@@ -507,14 +563,18 @@ use leftbuf leftbuf_1
 timestamp 1386242881
 transform 1 0 10 0 1 1149
 box 0 0 1464 799
+use ALUSlice ALUSlice_1
+timestamp 1394559342
+transform 1 0 1474 0 1 1083
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_1
 timestamp 1394447900
 transform 1 0 8770 0 1 1083
 box 0 0 192 1042
-use ALUSlice ALUSlice_1
-timestamp 1394472218
-transform 1 0 1474 0 1 1083
-box 0 0 7704 1042
+use ALUTri ALUTri_1
+timestamp 1394559405
+transform 1 0 8962 0 1 1083
+box 0 0 216 1042
 use rightend rightend_1
 timestamp 1386235834
 transform 1 0 9178 0 1 1149
@@ -523,14 +583,18 @@ use leftbuf leftbuf_0
 timestamp 1386242881
 transform 1 0 10 0 1 107
 box 0 0 1464 799
+use ALUSlice ALUSlice_0
+timestamp 1394559342
+transform 1 0 1474 0 1 41
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_0
 timestamp 1394447900
 transform 1 0 8770 0 1 41
 box 0 0 192 1042
-use ALUSlice ALUSlice_0
-timestamp 1394472218
-transform 1 0 1474 0 1 41
-box 0 0 7704 1042
+use ALUTri ALUTri_0
+timestamp 1394559405
+transform 1 0 8962 0 1 41
+box 0 0 216 1042
 use rightend rightend_0
 timestamp 1386235834
 transform 1 0 9178 0 1 107

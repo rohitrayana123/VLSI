@@ -19,7 +19,7 @@ module cpu_core(
 timeunit 1ns; timeprecision 100ps;
 
 opcodes::alu_functions_t  AluOp;  
-wire [1:0]  Op1Sel;  
+wire        Op1Sel;  
 wire        Op2Sel;  
 wire        AluEn;  
 wire        LrEn;  
@@ -75,12 +75,22 @@ control control (
    .nReset     (nReset     )
 );
 
+`ifdef crosssim
+wire [15:0] Ir;
+assign Opcode = Ir[15:8];
+`endif
 datapath datapath ( 
    .SysBus     (Data_out    ),   // Output
+`ifndef crosssim
    .Opcode     (Opcode     ),
+`else
+   .Ir	  	(Ir	),
+`endif
    .Flags      (Flags      ),  
    .DataIn     (Data_in     ),
+`ifndef crosssim
    .AluOp      (AluOp      ),   // Inputs 
+`endif
    .PcSel      (PcSel      ),
    .Op1Sel     (Op1Sel     ),
    .Op2Sel     (Op2Sel     ),
@@ -98,7 +108,9 @@ datapath datapath (
    .Rs1Sel     (Rs1Sel     ),
    .RwSel		(RwSel),
    .CFlag      (CFlag      ),
+`ifndef crosssim
    .AluWe      (AluWe      ),
+`endif
    .Clock      (Clock      ),
    .nReset     (nReset     )
 );
