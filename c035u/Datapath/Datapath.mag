@@ -1,10 +1,6 @@
 magic
 tech c035u
-timestamp 1394532707
-<< checkpaint >>
-rect 1865 1392 4477 1393
-rect 1073 0 4477 1392
-rect 1865 -1302 4477 0
+timestamp 1394532911
 << metal1 >>
 rect 0 17893 832 17903
 rect 0 17827 832 17837
