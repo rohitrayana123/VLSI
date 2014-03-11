@@ -1,8 +1,6 @@
 magic
 tech c035u
-timestamp 1394479763
-<< checkpaint >>
-rect 6212 -435 8824 2342
+timestamp 1394540006
 << metal1 >>
 rect 4693 1025 6455 1035
 rect 4237 1003 5999 1013
@@ -90,6 +88,13 @@ rect 5917 870 6287 880
 rect 6374 870 6647 880
 rect 6733 870 6959 880
 rect 7045 870 7103 880
+rect 7296 848 7488 858
+rect 7296 825 7488 835
+rect 7296 787 7488 812
+rect 7296 142 7488 167
+rect 7296 119 7488 129
+rect 7296 96 7488 106
+rect 7296 73 7488 83
 rect 133 51 215 61
 rect 949 44 983 54
 rect 1213 51 1535 61
@@ -621,247 +626,247 @@ rect 7248 63 7260 66
 rect 7512 63 7524 66
 rect 7584 0 7596 66
 rect 7656 63 7668 66
-use tielow  tielow_0
+use tielow tielow_0
 timestamp 1386086605
 transform 1 0 0 0 1 66
 box 0 0 48 799
-use inv  inv_1
+use inv inv_1
 timestamp 1386238110
 transform 1 0 48 0 1 66
 box 0 0 120 799
-use and2  and2_0
+use and2 and2_0
 timestamp 1386234845
 transform 1 0 168 0 1 66
 box 0 0 120 799
-use xor2  xor2_0
+use xor2 xor2_0
 timestamp 1386237344
 transform 1 0 288 0 1 66
 box 0 0 192 799
-use rowcrosser  rowcrosser_0
+use rowcrosser rowcrosser_0
 timestamp 1386086759
 transform 1 0 480 0 1 66
 box 0 0 48 799
-use fulladder  fulladder_0
+use fulladder fulladder_0
 timestamp 1386234928
 transform 1 0 528 0 1 66
 box 0 0 360 799
-use or2  or2_0
+use or2 or2_0
 timestamp 1386235472
 transform 1 0 888 0 1 66
 box 0 0 144 799
-use trisbuf  trisbuf_0
+use trisbuf trisbuf_0
 timestamp 1386237216
 transform 1 0 1032 0 1 66
 box 0 0 216 799
-use and2  and2_1
+use and2 and2_1
 timestamp 1386234845
 transform 1 0 1248 0 1 66
 box 0 0 120 799
-use trisbuf  trisbuf_1
+use trisbuf trisbuf_1
 timestamp 1386237216
 transform 1 0 1368 0 1 66
 box 0 0 216 799
-use or2  or2_1
+use or2 or2_1
 timestamp 1386235472
 transform 1 0 1584 0 1 66
 box 0 0 144 799
-use trisbuf  trisbuf_2
+use trisbuf trisbuf_2
 timestamp 1386237216
 transform 1 0 1728 0 1 66
 box 0 0 216 799
-use xor2  xor2_1
+use xor2 xor2_1
 timestamp 1386237344
 transform 1 0 1944 0 1 66
 box 0 0 192 799
-use trisbuf  trisbuf_3
+use trisbuf trisbuf_3
 timestamp 1386237216
 transform 1 0 2136 0 1 66
 box 0 0 216 799
-use inv  inv_0
+use inv inv_0
 timestamp 1386238110
 transform 1 0 2352 0 1 66
 box 0 0 120 799
-use trisbuf  trisbuf_4
+use trisbuf trisbuf_4
 timestamp 1386237216
 transform 1 0 2472 0 1 66
 box 0 0 216 799
-use nand2  nand2_0
+use nand2 nand2_0
 timestamp 1386234792
 transform 1 0 2688 0 1 66
 box 0 0 96 799
-use trisbuf  trisbuf_5
+use trisbuf trisbuf_5
 timestamp 1386237216
 transform 1 0 2784 0 1 66
 box 0 0 216 799
-use nor2  nor2_0
+use nor2 nor2_0
 timestamp 1386235306
 transform 1 0 3000 0 1 66
 box 0 0 120 799
-use trisbuf  trisbuf_6
+use trisbuf trisbuf_6
 timestamp 1386237216
 transform 1 0 3120 0 1 66
 box 0 0 216 799
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
 transform 1 0 3336 0 1 66
 box 0 0 192 799
-use and2  and2_2
+use and2 and2_2
 timestamp 1386234845
 transform 1 0 3528 0 1 66
 box 0 0 120 799
-use rowcrosser  rowcrosser_1
+use rowcrosser rowcrosser_1
 timestamp 1386086759
 transform 1 0 3648 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_2
+use rowcrosser rowcrosser_2
 timestamp 1386086759
 transform 1 0 3696 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_3
+use rowcrosser rowcrosser_3
 timestamp 1386086759
 transform 1 0 3744 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_14
+use rowcrosser rowcrosser_14
 timestamp 1386086759
 transform 1 0 3792 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_16
+use rowcrosser rowcrosser_16
 timestamp 1386086759
 transform 1 0 3840 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_17
+use rowcrosser rowcrosser_17
 timestamp 1386086759
 transform 1 0 3888 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_18
+use rowcrosser rowcrosser_18
 timestamp 1386086759
 transform 1 0 3936 0 1 66
 box 0 0 48 799
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
 transform 1 0 3984 0 1 66
 box 0 0 192 799
-use and2  and2_3
+use and2 and2_3
 timestamp 1386234845
 transform 1 0 4176 0 1 66
 box 0 0 120 799
-use rowcrosser  rowcrosser_13
+use rowcrosser rowcrosser_13
 timestamp 1386086759
 transform 1 0 4296 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_7
+use rowcrosser rowcrosser_7
 timestamp 1386086759
 transform 1 0 4344 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_10
+use rowcrosser rowcrosser_10
 timestamp 1386086759
 transform 1 0 4392 0 1 66
 box 0 0 48 799
-use mux2  mux2_4
+use mux2 mux2_4
 timestamp 1386235218
 transform 1 0 4440 0 1 66
 box 0 0 192 799
-use and2  and2_4
+use and2 and2_4
 timestamp 1386234845
 transform 1 0 4632 0 1 66
 box 0 0 120 799
-use rowcrosser  rowcrosser_9
+use rowcrosser rowcrosser_9
 timestamp 1386086759
 transform 1 0 4752 0 1 66
 box 0 0 48 799
-use mux2  mux2_3
+use mux2 mux2_3
 timestamp 1386235218
 transform 1 0 4800 0 1 66
 box 0 0 192 799
-use and2  and2_5
+use and2 and2_5
 timestamp 1386234845
 transform 1 0 4992 0 1 66
 box 0 0 120 799
-use mux2  mux2_5
+use mux2 mux2_5
 timestamp 1386235218
 transform 1 0 5112 0 1 66
 box 0 0 192 799
-use and2  and2_6
+use and2 and2_6
 timestamp 1386234845
 transform 1 0 5304 0 1 66
 box 0 0 120 799
-use rowcrosser  rowcrosser_4
+use rowcrosser rowcrosser_4
 timestamp 1386086759
 transform 1 0 5424 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_5
+use rowcrosser rowcrosser_5
 timestamp 1386086759
 transform 1 0 5472 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_6
+use rowcrosser rowcrosser_6
 timestamp 1386086759
 transform 1 0 5520 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_19
+use rowcrosser rowcrosser_19
 timestamp 1386086759
 transform 1 0 5568 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_20
+use rowcrosser rowcrosser_20
 timestamp 1386086759
 transform 1 0 5616 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_21
+use rowcrosser rowcrosser_21
 timestamp 1386086759
 transform 1 0 5664 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_22
+use rowcrosser rowcrosser_22
 timestamp 1386086759
 transform 1 0 5712 0 1 66
 box 0 0 48 799
-use mux2  mux2_2
+use mux2 mux2_2
 timestamp 1386235218
 transform 1 0 5760 0 1 66
 box 0 0 192 799
-use and2  and2_7
+use and2 and2_7
 timestamp 1386234845
 transform 1 0 5952 0 1 66
 box 0 0 120 799
-use rowcrosser  rowcrosser_8
+use rowcrosser rowcrosser_8
 timestamp 1386086759
 transform 1 0 6072 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_11
+use rowcrosser rowcrosser_11
 timestamp 1386086759
 transform 1 0 6120 0 1 66
 box 0 0 48 799
-use rowcrosser  rowcrosser_12
+use rowcrosser rowcrosser_12
 timestamp 1386086759
 transform 1 0 6168 0 1 66
 box 0 0 48 799
-use mux2  mux2_6
+use mux2 mux2_6
 timestamp 1386235218
 transform 1 0 6216 0 1 66
 box 0 0 192 799
-use and2  and2_8
+use and2 and2_8
 timestamp 1386234845
 transform 1 0 6408 0 1 66
 box 0 0 120 799
-use rowcrosser  rowcrosser_15
+use rowcrosser rowcrosser_15
 timestamp 1386086759
 transform 1 0 6528 0 1 66
 box 0 0 48 799
-use mux2  mux2_7
+use mux2 mux2_7
 timestamp 1386235218
 transform 1 0 6576 0 1 66
 box 0 0 192 799
-use and2  and2_9
+use and2 and2_9
 timestamp 1386234845
 transform 1 0 6768 0 1 66
 box 0 0 120 799
-use mux2  mux2_8
+use mux2 mux2_8
 timestamp 1386235218
 transform 1 0 6888 0 1 66
 box 0 0 192 799
-use trisbuf  trisbuf_7
+use trisbuf trisbuf_7
 timestamp 1386237216
 transform 1 0 7080 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_8
+use trisbuf trisbuf_8
 timestamp 1386237216
 transform 1 0 7488 0 1 66
 box 0 0 216 799
@@ -881,8 +886,6 @@ rlabel metal2 1464 0 1476 0 1 AND
 rlabel metal2 504 0 516 0 1 CIn
 rlabel metal2 1128 0 1140 0 1 FAOut
 rlabel metal2 3552 1042 3564 1042 5 ShL
-rlabel metal2 3648 1042 3660 1042 5 Sh8A_L
-rlabel metal2 3744 1042 3756 1042 5 Sh8C_L
 rlabel metal2 1128 1042 1140 1042 5 FAOut
 rlabel metal2 984 1042 996 1042 5 nZ
 rlabel metal2 336 1042 348 1042 5 SUB
@@ -905,9 +908,7 @@ rlabel metal1 0 892 0 902 3 B
 rlabel metal1 0 870 0 880 3 A
 rlabel metal2 3696 0 3708 0 1 Sh8B_L
 rlabel metal2 3744 0 3756 0 1 Sh8C_L
-rlabel metal2 3792 1042 3804 1042 5 Sh8D_L
 rlabel metal2 3648 0 3660 0 1 Sh8A_L
-rlabel metal2 3696 1042 3708 1042 5 Sh8B_L
 rlabel metal2 5760 1042 5772 1042 5 Sh8H_R
 rlabel metal2 5712 1042 5724 1042 5 Sh8G_R
 rlabel metal2 5664 1042 5676 1042 5 Sh8F_R
@@ -941,9 +942,6 @@ rlabel metal2 6888 1042 6900 1042 5 Sh1_R_In
 rlabel metal2 7584 1042 7596 1042 5 ALUEnable
 rlabel metal1 7704 51 7704 61 7 ALU_Out
 rlabel metal2 7584 0 7596 0 1 ALUEnable
-rlabel metal1 7296 51 7296 61 1 LLI_In
-rlabel metal1 7296 892 7296 902 1 B
-rlabel metal1 7488 51 7488 61 1 LLI_Out
 rlabel metal2 6072 0 6084 0 1 Sh4Y_L
 rlabel metal2 6072 1042 6084 1042 5 Sh4Z_R
 rlabel metal2 3984 0 3996 0 1 Sh8H_L
@@ -971,13 +969,19 @@ rlabel metal2 5472 0 5484 0 1 Sh8A_R
 rlabel metal2 5424 0 5436 0 1 Sh8Z_R
 rlabel metal2 5184 0 5196 0 1 Sh1_L_In
 rlabel metal2 5184 1042 5196 1042 5 Sh1_L_Out
-rlabel metal2 3888 1042 3900 1042 5 Sh8F_L
-rlabel metal2 3840 1042 3852 1042 5 Sh8E_L
-rlabel metal2 3936 1042 3948 1042 5 Sh8G_L
-rlabel metal2 3984 1042 3996 1042 5 Sh8H_L
 rlabel metal2 3792 0 3804 0 1 Sh8D_L
 rlabel metal2 3840 0 3852 0 1 Sh8E_L
 rlabel metal2 3888 0 3900 0 1 Sh8F_L
 rlabel metal2 3936 0 3948 0 1 Sh8G_L
 rlabel metal2 7512 1042 7524 1042 5 AluOut
+rlabel metal2 3696 1042 3708 1042 5 Sh8A_L
+rlabel metal2 3792 1042 3804 1042 5 Sh8C_L
+rlabel metal2 3840 1042 3852 1042 5 Sh8D_L
+rlabel metal2 3744 1042 3756 1042 5 Sh8B_L
+rlabel metal2 3936 1042 3948 1042 5 Sh8F_L
+rlabel metal2 3888 1042 3900 1042 5 Sh8E_L
+rlabel metal2 3984 1042 3996 1042 5 Sh8G_L
+rlabel metal2 3648 1042 3660 1042 5 Sh8Z_L
+rlabel metal1 7494 54 7494 54 1 LLI_Out
+rlabel metal1 7291 56 7291 56 1 LLI_In
 << end >>
