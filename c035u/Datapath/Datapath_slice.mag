@@ -1,8 +1,6 @@
 magic
 tech c035u
-timestamp 1394548889
-<< checkpaint >>
-rect 11444 -1189 21748 2453
+timestamp 1394550277
 << metal1 >>
 rect 1573 1159 3023 1169
 rect 3037 1159 20255 1169
@@ -246,7 +244,7 @@ timestamp 1386235218
 transform 1 0 12552 0 1 177
 box 0 0 192 799
 use ALUSlice ALUSlice_0
-timestamp 1394479763
+timestamp 1394550270
 transform 1 0 12744 0 1 111
 box 0 0 7704 1042
 use rightend rightend_0
