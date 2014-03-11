@@ -1,0 +1,363 @@
+magic
+tech c035u
+timestamp 1394315736
+<< pwell >>
+rect 0 16432 54 16457
+rect 0 15353 54 15378
+rect 0 14274 54 14299
+rect 0 13195 54 13220
+rect 0 12116 54 12141
+rect 0 11037 54 11062
+rect 0 9958 54 9983
+rect 0 8879 54 8904
+rect 0 7800 54 7825
+rect 0 6721 54 6746
+rect 0 5642 54 5667
+rect 0 4563 54 4588
+rect 0 3484 54 3509
+rect 0 2405 54 2430
+rect 0 1326 54 1351
+rect 0 247 54 272
+<< metal1 >>
+rect 0 17138 54 17148
+rect 0 17115 54 17125
+rect 0 17077 54 17102
+rect 0 16432 54 16457
+rect 0 16409 54 16419
+rect 0 16386 54 16396
+rect 0 16363 54 16373
+rect 0 16340 54 16350
+rect 0 16280 54 16290
+rect 1062 16258 1091 16268
+rect 0 16059 54 16069
+rect 0 16036 54 16046
+rect 0 15998 54 16023
+rect 0 15353 54 15378
+rect 0 15330 54 15340
+rect 0 15307 54 15317
+rect 0 15284 54 15294
+rect 0 15261 54 15271
+rect 0 15201 54 15211
+rect 1062 15179 1091 15189
+rect 0 14980 54 14990
+rect 0 14957 54 14967
+rect 0 14919 54 14944
+rect 0 14274 54 14299
+rect 0 14251 54 14261
+rect 0 14228 54 14238
+rect 0 14205 54 14215
+rect 0 14182 54 14192
+rect 0 14122 54 14132
+rect 1062 14100 1091 14110
+rect 0 13901 54 13911
+rect 0 13878 54 13888
+rect 0 13840 54 13865
+rect 0 13195 54 13220
+rect 0 13172 54 13182
+rect 0 13149 54 13159
+rect 0 13126 54 13136
+rect 0 13103 54 13113
+rect 0 13043 54 13053
+rect 1062 13021 1091 13031
+rect 0 12822 54 12832
+rect 0 12799 54 12809
+rect 0 12761 54 12786
+rect 0 12116 54 12141
+rect 0 12093 54 12103
+rect 0 12070 54 12080
+rect 0 12047 54 12057
+rect 0 12024 54 12034
+rect 0 11964 54 11974
+rect 1062 11942 1091 11952
+rect 0 11743 54 11753
+rect 0 11720 54 11730
+rect 0 11682 54 11707
+rect 0 11037 54 11062
+rect 0 11014 54 11024
+rect 0 10991 54 11001
+rect 0 10968 54 10978
+rect 0 10945 54 10955
+rect 0 10885 54 10895
+rect 1062 10863 1091 10873
+rect 0 10664 54 10674
+rect 0 10641 54 10651
+rect 0 10603 54 10628
+rect 0 9958 54 9983
+rect 0 9935 54 9945
+rect 0 9912 54 9922
+rect 0 9889 54 9899
+rect 0 9866 54 9876
+rect 0 9806 54 9816
+rect 1062 9784 1091 9794
+rect 0 9585 54 9595
+rect 0 9562 54 9572
+rect 0 9524 54 9549
+rect 0 8879 54 8904
+rect 0 8856 54 8866
+rect 0 8833 54 8843
+rect 0 8810 54 8820
+rect 0 8787 54 8797
+rect 0 8727 54 8737
+rect 1062 8705 1091 8715
+rect 0 8506 54 8516
+rect 0 8483 54 8493
+rect 0 8445 54 8470
+rect 0 7800 54 7825
+rect 0 7777 54 7787
+rect 0 7754 54 7764
+rect 0 7731 54 7741
+rect 0 7708 54 7718
+rect 0 7648 54 7658
+rect 1062 7626 1091 7636
+rect 0 7427 54 7437
+rect 0 7404 54 7414
+rect 0 7366 54 7391
+rect 0 6721 54 6746
+rect 0 6698 54 6708
+rect 0 6675 54 6685
+rect 0 6652 54 6662
+rect 0 6629 54 6639
+rect 0 6569 54 6579
+rect 1062 6547 1091 6557
+rect 0 6348 54 6358
+rect 0 6325 54 6335
+rect 0 6287 54 6312
+rect 0 5642 54 5667
+rect 0 5619 54 5629
+rect 0 5596 54 5606
+rect 0 5573 54 5583
+rect 0 5550 54 5560
+rect 0 5490 54 5500
+rect 1062 5468 1091 5478
+rect 0 5269 54 5279
+rect 0 5246 54 5256
+rect 0 5208 54 5233
+rect 0 4563 54 4588
+rect 0 4540 54 4550
+rect 0 4517 54 4527
+rect 0 4494 54 4504
+rect 0 4471 54 4481
+rect 0 4411 54 4421
+rect 1062 4389 1091 4399
+rect 0 4190 54 4200
+rect 0 4167 54 4177
+rect 0 4129 54 4154
+rect 0 3484 54 3509
+rect 0 3461 54 3471
+rect 0 3438 54 3448
+rect 0 3415 54 3425
+rect 0 3392 54 3402
+rect 0 3332 54 3342
+rect 1062 3310 1091 3320
+rect 0 3111 54 3121
+rect 0 3088 54 3098
+rect 0 3050 54 3075
+rect 0 2405 54 2430
+rect 0 2382 54 2392
+rect 0 2359 54 2369
+rect 0 2336 54 2346
+rect 0 2313 54 2323
+rect 0 2253 54 2263
+rect 1062 2231 1091 2241
+rect 0 2032 54 2042
+rect 0 2009 54 2019
+rect 0 1971 54 1996
+rect 0 1326 54 1351
+rect 0 1303 54 1313
+rect 0 1280 54 1290
+rect 0 1257 54 1267
+rect 0 1234 54 1244
+rect 0 1174 54 1184
+rect 1062 1152 1091 1162
+rect 0 953 54 963
+rect 0 930 54 940
+rect 0 892 54 917
+rect 0 247 54 272
+rect 0 224 54 234
+rect 0 201 54 211
+rect 0 178 54 188
+rect 0 155 54 165
+rect 0 95 54 105
+rect 1062 73 1091 83
+<< metal2 >>
+rect 126 17264 138 17296
+rect 918 17264 930 17296
+use IrAA IrAA_0
+array 0 0 1008 0 7 1079
+timestamp 1394309515
+transform 1 0 54 0 1 8632
+box 0 0 1008 1079
+use IrBA IrBA_0
+array 0 0 1008 0 2 1079
+timestamp 1394314839
+transform 1 0 54 0 1 5395
+box 0 0 1008 1079
+use IrBB IrBB_0
+array 0 0 1008 0 4 1079
+timestamp 1394314922
+transform 1 0 54 0 1 0
+box 0 0 1008 1079
+<< labels >>
+rlabel metal1 0 95 0 105 3 SysBus[0]
+rlabel metal1 0 1174 0 1184 3 SysBus[1]
+rlabel metal1 0 2253 0 2263 3 SysBus[2]
+rlabel metal1 0 3332 0 3342 3 SysBus[3]
+rlabel metal1 0 4411 0 4421 3 SysBus[4]
+rlabel metal1 0 5490 0 5500 3 SysBus[5]
+rlabel metal1 0 6569 0 6579 3 SysBus[6]
+rlabel metal1 0 7648 0 7658 3 SysBus[7]
+rlabel metal1 0 8727 0 8737 3 SysBus[8]
+rlabel metal1 0 9806 0 9816 3 SysBus[9]
+rlabel metal1 0 10885 0 10895 3 SysBus[10]
+rlabel metal1 0 11964 0 11974 3 SysBus[11]
+rlabel metal1 0 13043 0 13053 3 SysBus[12]
+rlabel metal1 0 14122 0 14132 3 SysBus[13]
+rlabel metal1 0 15201 0 15211 3 SysBus[14]
+rlabel metal1 0 16280 0 16290 3 SysBus[15]
+rlabel metal1 0 155 0 165 3 Ir[0]
+rlabel metal1 0 1234 0 1244 3 Ir[1]
+rlabel metal1 0 2313 0 2323 3 Ir[2]
+rlabel metal1 0 3392 0 3402 3 Ir[3]
+rlabel metal1 0 4471 0 4481 3 Ir[4]
+rlabel metal1 0 5550 0 5560 3 Ir[5]
+rlabel metal1 0 6629 0 6639 3 Ir[6]
+rlabel metal1 0 7708 0 7718 3 Ir[7]
+rlabel metal1 0 8787 0 8797 3 Ir[8]
+rlabel metal1 0 9866 0 9876 3 Ir[9]
+rlabel metal1 0 10945 0 10955 3 Ir[10]
+rlabel metal1 0 12024 0 12034 3 Ir[11]
+rlabel metal1 0 13103 0 13113 3 Ir[12]
+rlabel metal1 0 14182 0 14192 3 Ir[13]
+rlabel metal1 0 15261 0 15271 3 Ir[14]
+rlabel metal1 0 16340 0 16350 3 Ir[15]
+rlabel metal1 0 178 0 188 3 nReset
+rlabel metal1 0 1257 0 1267 3 nReset
+rlabel metal1 0 2336 0 2346 3 nReset
+rlabel metal1 0 3415 0 3425 3 nReset
+rlabel metal1 0 4494 0 4504 3 nReset
+rlabel metal1 0 5573 0 5583 3 nReset
+rlabel metal1 0 6652 0 6662 3 nReset
+rlabel metal1 0 7731 0 7741 3 nReset
+rlabel metal1 0 8810 0 8820 3 nReset
+rlabel metal1 0 9889 0 9899 3 nReset
+rlabel metal1 0 10968 0 10978 3 nReset
+rlabel metal1 0 12047 0 12057 3 nReset
+rlabel metal1 0 13126 0 13136 3 nReset
+rlabel metal1 0 14205 0 14215 3 nReset
+rlabel metal1 0 15284 0 15294 3 nReset
+rlabel metal1 0 16363 0 16373 3 nReset
+rlabel metal1 0 201 0 211 3 Test
+rlabel metal1 0 1280 0 1290 3 Test
+rlabel metal1 0 2359 0 2369 3 Test
+rlabel metal1 0 3438 0 3448 3 Test
+rlabel metal1 0 4517 0 4527 3 Test
+rlabel metal1 0 5596 0 5606 3 Test
+rlabel metal1 0 6675 0 6685 3 Test
+rlabel metal1 0 7754 0 7764 3 Test
+rlabel metal1 0 8833 0 8843 3 Test
+rlabel metal1 0 9912 0 9922 3 Test
+rlabel metal1 0 10991 0 11001 3 Test
+rlabel metal1 0 12070 0 12080 3 Test
+rlabel metal1 0 13149 0 13159 3 Test
+rlabel metal1 0 14228 0 14238 3 Test
+rlabel metal1 0 15307 0 15317 3 Test
+rlabel metal1 0 16386 0 16396 3 Test
+rlabel metal1 0 224 0 234 3 Clock
+rlabel metal1 0 1303 0 1313 3 Clock
+rlabel metal1 0 2382 0 2392 3 Clock
+rlabel metal1 0 3461 0 3471 3 Clock
+rlabel metal1 0 4540 0 4550 3 Clock
+rlabel metal1 0 5619 0 5629 3 Clock
+rlabel metal1 0 6698 0 6708 3 Clock
+rlabel metal1 0 7777 0 7787 3 Clock
+rlabel metal1 0 8856 0 8866 3 Clock
+rlabel metal1 0 9935 0 9945 3 Clock
+rlabel metal1 0 11014 0 11024 3 Clock
+rlabel metal1 0 12093 0 12103 3 Clock
+rlabel metal1 0 13172 0 13182 3 Clock
+rlabel metal1 0 14251 0 14261 3 Clock
+rlabel metal1 0 15330 0 15340 3 Clock
+rlabel metal1 0 16409 0 16419 3 Clock
+rlabel metal1 0 247 0 272 3 GND!
+rlabel metal1 0 1326 0 1351 3 GND!
+rlabel metal1 0 2405 0 2430 3 GND!
+rlabel metal1 0 3484 0 3509 3 GND!
+rlabel metal1 0 4563 0 4588 3 GND!
+rlabel metal1 0 5642 0 5667 3 GND!
+rlabel metal1 0 6721 0 6746 3 GND!
+rlabel metal1 0 7800 0 7825 3 GND!
+rlabel metal1 0 8879 0 8904 3 GND!
+rlabel metal1 0 9958 0 9983 3 GND!
+rlabel metal1 0 11037 0 11062 3 GND!
+rlabel metal1 0 12116 0 12141 3 GND!
+rlabel metal1 0 13195 0 13220 3 GND!
+rlabel metal1 0 14274 0 14299 3 GND!
+rlabel metal1 0 15353 0 15378 3 GND!
+rlabel metal1 0 16432 0 16457 3 GND!
+rlabel metal1 0 892 0 917 3 Vdd!
+rlabel metal1 0 1971 0 1996 3 Vdd!
+rlabel metal1 0 3050 0 3075 3 Vdd!
+rlabel metal1 0 4129 0 4154 3 Vdd!
+rlabel metal1 0 5208 0 5233 3 Vdd!
+rlabel metal1 0 6287 0 6312 3 Vdd!
+rlabel metal1 0 7366 0 7391 3 Vdd!
+rlabel metal1 0 8445 0 8470 3 Vdd!
+rlabel metal1 0 9524 0 9549 3 Vdd!
+rlabel metal1 0 10603 0 10628 3 Vdd!
+rlabel metal1 0 11682 0 11707 3 Vdd!
+rlabel metal1 0 12761 0 12786 3 Vdd!
+rlabel metal1 0 13840 0 13865 3 Vdd!
+rlabel metal1 0 14919 0 14944 3 Vdd!
+rlabel metal1 0 15998 0 16023 3 Vdd!
+rlabel metal1 0 17077 0 17102 3 Vdd!
+rlabel metal1 0 930 0 940 3 SDI
+rlabel metal1 0 2009 0 2019 3 SDI
+rlabel metal1 0 3088 0 3098 3 SDI
+rlabel metal1 0 4167 0 4177 3 SDI
+rlabel metal1 0 5246 0 5256 3 SDI
+rlabel metal1 0 6325 0 6335 3 SDI
+rlabel metal1 0 7404 0 7414 3 SDI
+rlabel metal1 0 8483 0 8493 3 SDI
+rlabel metal1 0 9562 0 9572 3 SDI
+rlabel metal1 0 10641 0 10651 3 SDI
+rlabel metal1 0 11720 0 11730 3 SDI
+rlabel metal1 0 12799 0 12809 3 SDI
+rlabel metal1 0 13878 0 13888 3 SDI
+rlabel metal1 0 14957 0 14967 3 SDI
+rlabel metal1 0 16036 0 16046 3 SDI
+rlabel metal1 0 17115 0 17125 3 SDI
+rlabel metal1 0 953 0 963 3 ScanReturn
+rlabel metal1 0 2032 0 2042 3 ScanReturn
+rlabel metal1 0 3111 0 3121 3 ScanReturn
+rlabel metal1 0 4190 0 4200 3 ScanReturn
+rlabel metal1 0 5269 0 5279 3 ScanReturn
+rlabel metal1 0 6348 0 6358 3 ScanReturn
+rlabel metal1 0 7427 0 7437 3 ScanReturn
+rlabel metal1 0 8506 0 8516 3 ScanReturn
+rlabel metal1 0 9585 0 9595 3 ScanReturn
+rlabel metal1 0 10664 0 10674 3 ScanReturn
+rlabel metal1 0 11743 0 11753 3 ScanReturn
+rlabel metal1 0 12822 0 12832 3 ScanReturn
+rlabel metal1 0 13901 0 13911 3 ScanReturn
+rlabel metal1 0 14980 0 14990 3 ScanReturn
+rlabel metal1 0 16059 0 16069 3 ScanReturn
+rlabel metal1 0 17138 0 17148 3 ScanReturn
+rlabel metal1 1091 73 1091 83 7 Imm[0]
+rlabel metal1 1091 1152 1091 1162 7 Imm[1]
+rlabel metal1 1091 2231 1091 2241 7 Imm[2]
+rlabel metal1 1091 3310 1091 3320 7 Imm[3]
+rlabel metal1 1091 4389 1091 4399 7 Imm[4]
+rlabel metal1 1091 5468 1091 5478 7 Imm[5]
+rlabel metal1 1091 6547 1091 6557 7 Imm[6]
+rlabel metal1 1091 7626 1091 7636 7 Imm[7]
+rlabel metal1 1091 8705 1091 8715 7 Imm[8]
+rlabel metal1 1091 9784 1091 9794 7 Imm[9]
+rlabel metal1 1091 10863 1091 10873 7 Imm[10]
+rlabel metal1 1091 11942 1091 11952 7 Imm[11]
+rlabel metal1 1091 13021 1091 13031 7 Imm[12]
+rlabel metal1 1091 14100 1091 14110 7 Imm[13]
+rlabel metal1 1091 15179 1091 15189 7 Imm[14]
+rlabel metal1 1091 16258 1091 16268 7 Imm[15]
+rlabel metal2 126 17296 138 17296 5 IrWe
+rlabel metal2 918 17296 930 17296 5 ImmSel
+<< end >>

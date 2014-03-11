@@ -33,13 +33,14 @@ typedef
 
 
 //Program Counter Selction Codes
-typedef enum logic [1:0] 	{PcLr, PcSysbus, PcAluOut, Pc1 } 	pc_select_t;
+typedef enum logic [1:0] 	{PcLr = 2'b11, PcSysbus = 2'b10, PcAluOut = 2'b01, Pc1 = 2'b00 } 	pc_select_t;
 typedef enum logic [1:0] 	{Op1Pc, Op1Rd1, Op1Sp } 			Op1_select_t;
 typedef enum logic 			{Op2Rd2=1'b1, Op2Imm=1'b0} 				Op2_select_t;
 typedef enum logic 			{ImmShort=1'b1, ImmLong=1'b0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1'b1, WdAlu=1'b0} 					Wd_select_t;
 typedef enum logic  [1:0]	{Rs1Rd=1, Rs1Ra=0,Seven=2} 					Rs1_select_t;
 typedef enum logic			{LrPc=1'b1, LrSys=1'b0}					Lr_select_t;		
+typedef enum logic  [1:0]	{RwSeven=1,RwRa=0,RwRd = 2}		Rw_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 

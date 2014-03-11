@@ -1,8 +1,7 @@
 magic
 tech c035u
-timestamp 1394117868
+timestamp 1394120018
 << metal1 >>
-rect 0 920 71 930
 rect 85 920 191 930
 rect 205 920 431 930
 rect 445 920 767 930
@@ -10,7 +9,6 @@ rect 781 920 1007 930
 rect 1021 920 1127 930
 rect 1141 920 1343 930
 rect 1357 920 1679 930
-rect 0 898 47 908
 rect 61 898 167 908
 rect 181 898 551 908
 rect 565 898 671 908
@@ -18,8 +16,6 @@ rect 685 898 887 908
 rect 901 898 1223 908
 rect 1237 898 1319 908
 rect 1333 898 1559 908
-rect 1573 898 1693 908
-rect 0 875 23 885
 rect 37 875 311 885
 rect 325 875 407 885
 rect 421 875 647 885
@@ -27,7 +23,6 @@ rect 661 875 863 885
 rect 877 875 1103 885
 rect 1117 875 1439 885
 rect 1453 875 1535 885
-rect 1549 875 1693 885
 << m2contact >>
 rect 71 918 85 932
 rect 191 918 205 932
@@ -54,6 +49,9 @@ rect 1103 873 1117 887
 rect 1439 873 1453 887
 rect 1535 873 1549 887
 << metal2 >>
+rect 24 887 36 954
+rect 48 910 60 954
+rect 72 932 84 954
 rect 24 844 36 873
 rect 48 844 60 896
 rect 72 844 84 918
@@ -154,9 +152,6 @@ timestamp 1386234845
 transform 1 0 1632 0 1 45
 box 0 0 120 799
 << labels >>
-rlabel metal1 0 920 0 930 4 In[2]
-rlabel metal1 0 898 0 908 3 In[1]
-rlabel metal1 0 875 0 885 3 In[0]
 rlabel metal2 1728 0 1740 0 1 Out[7]
 rlabel metal2 1488 0 1500 0 1 Out[6]
 rlabel metal2 1272 0 1284 0 1 Out[5]
@@ -165,4 +160,7 @@ rlabel metal2 816 0 828 0 1 Out[3]
 rlabel metal2 600 0 612 0 1 Out[2]
 rlabel metal2 360 0 372 0 1 Out[1]
 rlabel metal2 120 0 132 0 1 Out[0]
+rlabel metal2 24 954 36 954 5 In[0]
+rlabel metal2 48 954 60 954 5 In[1]
+rlabel metal2 72 954 84 954 5 In[2]
 << end >>

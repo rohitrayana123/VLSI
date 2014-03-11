@@ -22,6 +22,7 @@ module control(
    output logic                     CFlag,
    output opcodes::Lr_select_t      LrSel,
    output opcodes::Rs1_select_t     Rs1Sel,
+   output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
@@ -87,7 +88,7 @@ always_ff@(posedge Clock or negedge nReset) begin
          	case(stateSub)
             	cycle0: case(Opcode)
             				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                			LDW, STW: 	stateSub <= #20 cycle1;
+                			LDW, STW,PUSH,POP: 	stateSub <= #20 cycle1;
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
@@ -126,7 +127,8 @@ always_comb begin
    	ALE      = 0;
 		PcSel = Pc1;
 	StatusRegWe= 0;
-   	case(state)
+   RwSel = RwRd;
+   case(state)
       	fetch : 
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
@@ -410,17 +412,51 @@ always_comb begin
 								end	
 							endcase
 						end	
+						PUSH:begin
+							AluEn = 1;
+							ImmSel = ImmShort;
+                           	Rs1Sel = Seven;
+							RwSel = RwSeven;
+							Op1Sel = Op1Rd1;
+							AluOp = FnSUB;	
+                           	AluWe = 1;
+							RegWe = 1;
+							WdSel = WdAlu;
+
+						end	
+						POP:begin
+							AluEn = 1;
+							ImmSel = ImmShort;
+                           	Rs1Sel = Seven;
+							Op1Sel = Op1Rd1;
+							AluOp = FnA;	
+                           	AluWe = 1;		
+						end	
             		endcase
          		end
          		cycle1:begin 
-					ALE = 1;
-               		nWE = 1;
-               		nOE = 1; 
-					ImmSel = ImmShort;
-					AluOp = FnADD;
-					Op1Sel = Op1Rd1;
-                	AluEn = 1; 
-         		end
+					case(Opcode)
+						LDW,STW:begin
+							ALE = 1;
+               				nWE = 1;
+               				nOE = 1; 
+							ImmSel = ImmShort;
+							AluOp = FnADD;
+							Op1Sel = Op1Rd1;
+                			AluEn = 1; 
+         				end
+						PUSH,POP:begin
+							ALE = 1;
+               				nWE = 1;
+               				nOE = 1; 
+							ImmSel = ImmShort;
+							AluOp = FnADD;
+							Op1Sel = Op1Rd1;
+							Rs1Sel = Seven;
+                			AluEn = 1;	
+						end	
+					endcase
+				end
          		cycle2: begin
             		case(Opcode)
                			LDW:begin
@@ -443,6 +479,28 @@ always_comb begin
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
 						end
+						PUSH:begin
+							nME = 0;
+							Op1Sel = Op1Rd1;
+							AluOp = FnA;		// Nothing done to op1
+                        	Rs1Sel = Rs1Ra;
+							nOE = 1;
+                        	nWE = 1;
+                     		AluWe = 1;			// Pass right through on next clock
+                        	AluEn = 1;
+
+						end
+						POP:begin
+							nME = 0;
+                        	Op1Sel = Op1Rd1;
+							AluOp = FnA;		// Nothing done to op1
+                        	Rs1Sel = Seven;
+							MemEn = 1;
+                        	nWE = 1;
+                     		//AluWe = 1;			// Pass right through on next clock
+                        	AluEn = 1;
+						end
+
             		endcase
          		end
          		cycle3: begin
@@ -457,23 +515,78 @@ always_comb begin
 							nME = 0;
                         	AluEn = 1;			// Hold data on sysbus
                         	nOE = 1;               
-                     	end   
+                     	end  
+						PUSH:begin
+							nME = 0;	
+							nOE = 1;	
+							//LrEn = 1;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrEn = 1;
+							end else begin
+								AluEn = 1;
+								AluWe = 1;
+								Rs1Sel = Rs1Ra;
+								AluOp = FnA;
+							end
+						end
+						POP:begin
+							nME = 0;
+							MemEn = 1;
+							ENB = 1;
+							nWE = 1;
+							WdSel = WdAlu;
+							ImmSel = ImmShort;
+							Op2Sel = Op2Imm;
+							RegWe = 1;
+							Rs1Sel = Seven;
+							WdSel = WdAlu;
+							RwSel = RwSeven;
+							AluOp = FnADD;
+						end
             		endcase  
          		end
          		cycle4: begin
 					PcWe = 1;
                     PcSel = Pc1;		// Done, move on
    					nME = 1;
-					if(Opcode == LDW) begin
-						nWE = 1;
-						MemEn = 1;
-						WdSel = WdSys;
-						RegWe = 1;
-					end
-					if(Opcode == STW) begin
-						nOE = 1;
-						AluEn = 1;
-					end
+					case(Opcode)
+						LDW: begin
+							nWE = 1;
+							MemEn = 1;
+							WdSel = WdSys;
+							RwSel = RwRd;
+							RegWe = 1;
+							WdSel = WdSys;
+						end
+						STW: begin
+							nOE = 1;
+							AluEn = 1;
+						end
+						PUSH:begin
+							nOE = 1;
+							//LrEn = 1;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrEn = 1;
+							end else begin
+								AluEn = 1;
+								Rs1Sel = Rs1Ra;
+								AluOp = FnA;
+							end
+						end
+						POP:begin
+							nWE = 1;
+							MemEn = 1;
+							if(OpcodeCondIn[2]) begin	// 1 = LR
+								LrWe = 1;
+							end else begin
+								RegWe = 1;
+								Rs1Sel = Rs1Rd;
+								RwSel = RwRa;
+								AluOp = FnADD;
+								WdSel = WdSys;
+							end
+						end
+					endcase
          		end
          	endcase
       	end

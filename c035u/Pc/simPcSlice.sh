@@ -1,0 +1,1 @@
+ncverilog -sv +gui +ncaccess+r +libext+.sv -y /home/hl13g10/VLSI/Design/Implementation/magic/c035u/Pc +incdir+/home/hl13g10/VLSI/Design/Implementation/magic/c035u/Pc +define+magic /home/hl13g10/VLSI/Design/Implementation/verilog/behavioural/opcodes.svh Pc_slice_stim.sv +tcl+Pc_slice.tcl
