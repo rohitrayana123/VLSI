@@ -1,0 +1,45 @@
+magic
+tech c035u
+timestamp 1394564932
+<< metal1 >>
+rect 0 1159 599 1169
+rect 0 162 23 172
+rect 0 95 887 105
+<< m2contact >>
+rect 599 1159 613 1173
+rect 23 160 37 174
+rect 887 93 901 107
+<< metal2 >>
+rect 72 976 84 1176
+rect 600 988 612 1159
+rect 600 976 756 988
+rect 816 976 828 1176
+rect 1056 976 1256 1176
+rect 24 174 36 177
+rect 72 0 84 177
+rect 816 0 828 177
+rect 888 107 900 177
+rect 1056 0 1256 177
+use scanreg scanreg_0
+timestamp 1386241447
+transform 1 0 0 0 1 177
+box 0 0 720 799
+use trisbuf trisbuf_0
+timestamp 1386237216
+transform 1 0 720 0 1 177
+box 0 0 216 799
+use rightend rightend_0
+timestamp 1386235834
+transform 1 0 936 0 1 177
+box 0 0 320 799
+<< labels >>
+rlabel metal2 1056 0 1256 0 1 GND!
+rlabel metal2 1056 1176 1256 1176 5 GND!
+rlabel metal2 816 1176 828 1176 5 AluEn
+rlabel metal2 816 0 828 0 1 ALUEnable
+rlabel metal2 72 0 84 0 1 AluWe
+rlabel metal2 72 1176 84 1176 5 AluWe
+rlabel metal1 0 162 0 172 3 ALU
+rlabel metal1 0 95 0 105 3 SysBus
+rlabel metal1 0 1159 0 1169 3 AluOut
+<< end >>
