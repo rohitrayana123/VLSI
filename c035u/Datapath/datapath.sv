@@ -76,6 +76,14 @@ wire [15:0] AluOut;
 //	\Datapath_end_0[0]/AluOut };
 wire [15:0] reg0;
 assign reg0 = {
+\Datapath_slice_0[15]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[14]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[13]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[12]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[11]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[10]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[9]/regBlock_slice_0/Reg0 ,
+\Datapath_slice_0[8]/regBlock_slice_0/Reg0 ,
 \Datapath_slice_0[7]/regBlock_slice_0/Reg0 ,
 \Datapath_slice_0[6]/regBlock_slice_0/Reg0 ,
 \Datapath_slice_0[5]/regBlock_slice_0/Reg0 ,
@@ -86,6 +94,14 @@ assign reg0 = {
 \Datapath_slice_0[0]/regBlock_slice_0/Reg0 };
 wire [15:0] reg1;
 assign reg1 = {
+\Datapath_slice_0[15]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[14]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[13]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[12]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[11]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[10]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[9]/regBlock_slice_0/Reg1 ,
+\Datapath_slice_0[8]/regBlock_slice_0/Reg1 ,
 \Datapath_slice_0[7]/regBlock_slice_0/Reg1 ,
 \Datapath_slice_0[6]/regBlock_slice_0/Reg1 ,
 \Datapath_slice_0[5]/regBlock_slice_0/Reg1 ,
@@ -96,6 +112,14 @@ assign reg1 = {
 \Datapath_slice_0[0]/regBlock_slice_0/Reg1 };
 wire [15:0] reg2;
 assign reg2 = {
+\Datapath_slice_0[15]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[14]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[13]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[12]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[11]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[10]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[9]/regBlock_slice_0/Reg2 ,
+\Datapath_slice_0[8]/regBlock_slice_0/Reg2 ,
 \Datapath_slice_0[7]/regBlock_slice_0/Reg2 ,
 \Datapath_slice_0[6]/regBlock_slice_0/Reg2 ,
 \Datapath_slice_0[5]/regBlock_slice_0/Reg2 ,
@@ -106,6 +130,14 @@ assign reg2 = {
 \Datapath_slice_0[0]/regBlock_slice_0/Reg2 };
 wire [15:0] reg3;
 assign reg3 = {
+\Datapath_slice_0[15]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[14]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[13]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[12]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[11]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[10]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[9]/regBlock_slice_0/Reg3 ,
+\Datapath_slice_0[8]/regBlock_slice_0/Reg3 ,
 \Datapath_slice_0[7]/regBlock_slice_0/Reg3 ,
 \Datapath_slice_0[6]/regBlock_slice_0/Reg3 ,
 \Datapath_slice_0[5]/regBlock_slice_0/Reg3 ,
@@ -116,6 +148,14 @@ assign reg3 = {
 \Datapath_slice_0[0]/regBlock_slice_0/Reg3 };
 wire [15:0] reg4;
 assign reg4 = {
+\Datapath_slice_0[15]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[14]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[13]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[12]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[11]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[10]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[9]/regBlock_slice_0/Reg4 ,
+\Datapath_slice_0[8]/regBlock_slice_0/Reg4 ,
 \Datapath_slice_0[7]/regBlock_slice_0/Reg4 ,
 \Datapath_slice_0[6]/regBlock_slice_0/Reg4 ,
 \Datapath_slice_0[5]/regBlock_slice_0/Reg4 ,
@@ -160,6 +200,25 @@ assign reg6 = {
 \Datapath_slice_0[2]/regBlock_slice_0/Reg6 ,
 \Datapath_slice_0[1]/regBlock_slice_0/Reg6 ,
 \Datapath_slice_0[0]/regBlock_slice_0/Reg6 };
+
+wire [15:0] Rd2;
+assign Rd2 = {
+\Datapath_slice_0[15]/Rd2 ,
+\Datapath_slice_0[14]/Rd2 ,
+\Datapath_slice_0[13]/Rd2 ,
+\Datapath_slice_0[12]/Rd2 ,
+\Datapath_slice_0[11]/Rd2 ,
+\Datapath_slice_0[10]/Rd2 ,
+\Datapath_slice_0[9]/Rd2 ,
+\Datapath_slice_0[8]/Rd2 ,
+\Datapath_slice_0[7]/Rd2 ,
+\Datapath_slice_0[6]/Rd2 ,
+\Datapath_slice_0[5]/Rd2 ,
+\Datapath_slice_0[4]/Rd2 ,
+\Datapath_slice_0[3]/Rd2 ,
+\Datapath_slice_0[2]/Rd2 ,
+\Datapath_slice_0[1]/Rd2 ,
+\Datapath_slice_0[0]/Rd2 };
 
 wire [15:0] Rd1;
 assign Rd1 = {
