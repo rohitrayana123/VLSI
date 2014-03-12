@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394620980
+timestamp 1394647486
 << metal1 >>
 rect 37 894 1175 904
 rect 1189 894 2327 904
@@ -47,7 +47,7 @@ rect 3479 893 3493 907
 rect 4631 893 4645 907
 rect 5783 893 5797 907
 rect 6934 892 6949 906
-rect 8087 893 8102 908
+rect 8087 892 8101 906
 rect 599 870 614 884
 rect 743 869 757 883
 rect 959 868 973 882
@@ -139,7 +139,7 @@ rect 7656 865 7668 868
 rect 7728 865 7740 1042
 rect 7872 865 7884 868
 rect 7944 865 7956 1042
-rect 8088 865 8100 893
+rect 8088 865 8100 892
 rect 8136 865 8148 1042
 rect 8664 865 8676 869
 rect 8808 865 8820 868
@@ -188,7 +188,7 @@ rect 8952 0 8964 47
 rect 9096 0 9108 66
 rect 9168 40 9180 66
 rect 9168 0 9180 25
-use scanreg scanreg_1
+use scanreg scanreg_0
 timestamp 1386241447
 transform 1 0 0 0 1 66
 box 0 0 720 799
@@ -200,7 +200,7 @@ use trisbuf trisbuf_1
 timestamp 1386237216
 transform 1 0 936 0 1 66
 box 0 0 216 799
-use scanreg scanreg_2
+use scanreg scanreg_1
 timestamp 1386241447
 transform 1 0 1152 0 1 66
 box 0 0 720 799
@@ -212,7 +212,7 @@ use trisbuf trisbuf_3
 timestamp 1386237216
 transform 1 0 2088 0 1 66
 box 0 0 216 799
-use scanreg scanreg_3
+use scanreg scanreg_2
 timestamp 1386241447
 transform 1 0 2304 0 1 66
 box 0 0 720 799
@@ -224,7 +224,7 @@ use trisbuf trisbuf_5
 timestamp 1386237216
 transform 1 0 3240 0 1 66
 box 0 0 216 799
-use scanreg scanreg_4
+use scanreg scanreg_3
 timestamp 1386241447
 transform 1 0 3456 0 1 66
 box 0 0 720 799
@@ -236,7 +236,7 @@ use trisbuf trisbuf_7
 timestamp 1386237216
 transform 1 0 4392 0 1 66
 box 0 0 216 799
-use scanreg scanreg_5
+use scanreg scanreg_4
 timestamp 1386241447
 transform 1 0 4608 0 1 66
 box 0 0 720 799
@@ -248,7 +248,7 @@ use trisbuf trisbuf_9
 timestamp 1386237216
 transform 1 0 5544 0 1 66
 box 0 0 216 799
-use scanreg scanreg_6
+use scanreg scanreg_5
 timestamp 1386241447
 transform 1 0 5760 0 1 66
 box 0 0 720 799
@@ -260,7 +260,7 @@ use trisbuf trisbuf_11
 timestamp 1386237216
 transform 1 0 6696 0 1 66
 box 0 0 216 799
-use scanreg scanreg_7
+use scanreg scanreg_6
 timestamp 1386241447
 transform 1 0 6912 0 1 66
 box 0 0 720 799
@@ -272,7 +272,7 @@ use trisbuf trisbuf_13
 timestamp 1386237216
 transform 1 0 7848 0 1 66
 box 0 0 216 799
-use scanreg scanreg_8
+use scanreg scanreg_7
 timestamp 1386241447
 transform 1 0 8064 0 1 66
 box 0 0 720 799
@@ -343,5 +343,5 @@ rlabel metal1 4349 873 4349 873 1 Reg3
 rlabel metal1 5402 874 5402 874 1 Reg4
 rlabel metal1 6613 873 6613 873 1 Reg5
 rlabel metal1 7783 875 7783 875 1 Reg6
-rlabel metal1 8977 876 8977 876 1 Reg7
+rlabel metal1 8970 877 8970 877 1 Reg7Out
 << end >>

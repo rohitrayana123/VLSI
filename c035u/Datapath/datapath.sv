@@ -201,6 +201,8 @@ assign reg6 = {
 \Datapath_slice_0[1]/regBlock_slice_0/Reg6 ,
 \Datapath_slice_0[0]/regBlock_slice_0/Reg6 };
 
+
+
 wire [15:0] Rd2;
 assign Rd2 = {
 \Datapath_slice_0[15]/Rd2 ,
