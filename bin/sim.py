@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Fri 07 Mar 2014 22:17:02 GMT by hl13g10 on hart.ecs.soton.ac.uk +>
+# <+Last Edited: Wed 05 Mar 2014 12:54:31 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -51,7 +51,6 @@ def RunSim(options):
 	if options.magic:
 		cmd.append(magic)
 		cmd.append("+incdir+%s" % magic)
-		cmd.append("+define+magic")
 	else:
 		cmd.append(behave)
 		cmd.append("+incdir+%s" % behave)
@@ -92,8 +91,6 @@ def RunSim(options):
 		cmdmag = ["bash", "magicsim" ]
 		call(cmdmag)
 		print(cmdmag)
-		cmdext = ["ext2svmod", options.module]
-		call(cmdext)
 	if options.debug == False:
 		call(cmd)
 	pass

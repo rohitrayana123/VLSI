@@ -22,6 +22,8 @@ typedef
 			FnLSR,
 			FnASR,
 			FnLUI,
+			FnINC,
+			FnDEC,
 			FnLLI
 }
   alu_functions_t;
@@ -33,14 +35,15 @@ typedef
 
 
 //Program Counter Selction Codes
-typedef enum logic [1:0] 	{PcLr = 2'b11, PcSysbus = 2'b10, PcAluOut = 2'b01, Pc1 = 2'b00 } 	pc_select_t;
-typedef enum logic  		{Op1Pc = 1'b1, Op1Rd1 = 1'b0 } 			Op1_select_t;
+typedef enum logic [2:0] 	{PcLr = 3'b011, PcSysbus = 3'b010, PcAluOut = 3'b001, Pc1 = 3'b000, PcInt = 3'b111 } 	pc_select_t;
+typedef enum logic  	{Op1Pc = 1'b1, Op1Rd1=1'b0 } 			Op1_select_t;
 typedef enum logic 			{Op2Rd2=1'b1, Op2Imm=1'b0} 				Op2_select_t;
 typedef enum logic 			{ImmShort=1'b1, ImmLong=1'b0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1'b1, WdAlu=1'b0} 					Wd_select_t;
 typedef enum logic  [1:0]	{Rs1Rd=1, Rs1Ra=0,Seven=2} 					Rs1_select_t;
 typedef enum logic			{LrPc=1'b1, LrSys=1'b0}					Lr_select_t;		
 typedef enum logic  [1:0]	{RwSeven=2,RwRa=0,RwRd = 1}		Rw_select_t;
+typedef enum logic 			{FlagAlu=1,FlagSys = 0}	Flag_select_t;
 typedef enum logic [2:0] 	{	
 				BR  = 3'b000, 
 				BNE = 3'b110, 
@@ -84,6 +87,7 @@ STW    	= 5'b01000,
 LUI    	= 5'b10100, 
 LLI	  	= 5'b10101, 
 BRANCH 	= 5'b11110,
+INTERRUPT = 5'b11001,
 PUSH	= 5'b01001,
 POP		= 5'b00001
 } Opcode_t;
