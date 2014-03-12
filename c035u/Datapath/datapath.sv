@@ -57,14 +57,14 @@ assign AluOut = {	\Datapath_end_0[7]/AluOut ,
 			\Datapath_end_0[2]/AluOut ,
 			\Datapath_end_0[1]/AluOut ,
 			\Datapath_end_0[0]/AluOut };
-wire [15:0] Op1;
-assign Op1 = {	\Datapath_slice_0[7]/Op1 ,
-		\Datapath_slice_0[6]/Op1 ,
-		\Datapath_slice_0[5]/Op1 ,
-		\Datapath_slice_0[4]/Op1 ,
-		\Datapath_slice_0[3]/Op1 ,
-		\Datapath_slice_0[2]/Op1 ,
-		\Datapath_slice_0[1]/Op1 ,
-		\Datapath_slice_0[0]/Op1 };
+//wire [15:0] Op1;
+//assign Op1 = {	\Datapath_slice_0[7]/Op1 ,
+//		\Datapath_slice_0[6]/Op1 ,
+//		\Datapath_slice_0[5]/Op1 ,
+//		\Datapath_slice_0[4]/Op1 ,
+//		\Datapath_slice_0[3]/Op1 ,
+//		\Datapath_slice_0[2]/Op1 ,
+//		\Datapath_slice_0[1]/Op1 ,
+//		\Datapath_slice_0[0]/Op1 };
 
 endmodule
