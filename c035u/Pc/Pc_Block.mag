@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394564637
+timestamp 1394568869
 << metal1 >>
 rect 0 16478 35 16488
 rect 2987 16478 3040 16488
@@ -236,67 +236,8 @@ rect 1907 16672 1919 16872
 rect 2123 16672 2135 16872
 rect 2867 16672 2879 16872
 rect 2939 16672 2951 16872
-use Pc_slice.mag Pc_slice.mag_15
-timestamp 1394563293
-transform 1 0 35 0 1 15630
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_14
-timestamp 1394563293
-transform 1 0 35 0 1 14588
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_13
-timestamp 1394563293
-transform 1 0 35 0 1 13546
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_12
-timestamp 1394563293
-transform 1 0 35 0 1 12504
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_11
-timestamp 1394563293
-transform 1 0 35 0 1 11462
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_10
-timestamp 1394563293
-transform 1 0 35 0 1 10420
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_9
-timestamp 1394563293
-transform 1 0 35 0 1 9378
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_8
-timestamp 1394563293
-transform 1 0 35 0 1 8336
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_7
-timestamp 1394563293
-transform 1 0 35 0 1 7294
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_6
-timestamp 1394563293
-transform 1 0 35 0 1 6252
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_5
-timestamp 1394563293
-transform 1 0 35 0 1 5210
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_4
-timestamp 1394563293
-transform 1 0 35 0 1 4168
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_3
-timestamp 1394563293
-transform 1 0 35 0 1 3126
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_2
-timestamp 1394563293
-transform 1 0 35 0 1 2084
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_1
-timestamp 1394563293
-transform 1 0 35 0 1 1042
-box 0 0 2952 1042
-use Pc_slice.mag Pc_slice.mag_0
+use Pc_slice Pc_slice_0
+array 0 0 2952 0 15 1042
 timestamp 1394563293
 transform 1 0 35 0 1 0
 box 0 0 2952 1042
