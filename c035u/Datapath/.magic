@@ -3,3 +3,4 @@ addpath ../IR
 addpath ../Pc
 addpath ../ALU
 addpath ../regBlock
+addpath ../AluSynth/place_route

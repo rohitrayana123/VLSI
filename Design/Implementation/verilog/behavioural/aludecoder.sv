@@ -2,10 +2,10 @@
 module aludecoder(
   output logic V, C, N, Z,
   output logic ZeroA, SUB, CIn_slice, FAOut, AND, OR, XOR, NOT, NAND, NOR, ShB, ShL, ShR, Sh8, Sh4, Sh2, Sh1, ShInBit, ShOut, LLI, OutEn_slice,
-  input logic [4:0] OpCode,
-  input logic [3:0] imm4,
-  input logic CIn, OutEn,
-  input logic LastCIn, COut, N_slice, nZ, ASign,
+  input wire [4:0] OpCode,
+  input wire [3:0] imm4,
+  input wire CIn, OutEn,
+  input wire LastCIn, COut, N_slice, nZ, ASign
   );
 
 timeunit 1ns; timeprecision 100ps;
@@ -22,8 +22,10 @@ assign CIn_slice = (SUB ^ (UseC & CIn));
 
 always_comb
 begin
-	ZeroA = 0; SUB = 0; CIn_slice = 0; FAOut = 0; ANd = 0; OR = 0; XOR = 0; NOT = 0; NAND = 0; NOR = 0; ShB = 0; ShL = 0; ShR = 0; Sh8 = 0; Sh4 = 0; Sh2 = 0; Sh1 = 0;  
-	ShInBit = 0; ShOut = 0; LLI = 0; OutEn = 0;
+	UseC = 0;ZeroA = 0; SUB = 0; 
+	//CIn_slice = 0; 
+	FAOut = 0; AND = 0; OR = 0; XOR = 0; NOT = 0; NAND = 0; NOR = 0; ShB = 0; ShL = 0; ShR = 0; Sh8 = 0; Sh4 = 0; Sh2 = 0; Sh1 = 0;  
+	ShInBit = 0; ShOut = 0; LLI = 0; //OutEn = 0;
 	case (OpCode)
 		5'b00000: FAOut = 1;
 		5'b00001: FAOut = 1;
