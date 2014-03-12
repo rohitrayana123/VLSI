@@ -24,6 +24,9 @@ module control(
    output opcodes::Rs1_select_t     Rs1Sel,
    output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
+   output logic[3:0]			StatusReg,
+   output logic 		StatusOut,
+   output opcodes::Flag_select_t	FlagSel,
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
 `ifndef nowait
@@ -31,6 +34,9 @@ module control(
 `endif
    input  wire                      Clock,
    input  wire                      nReset
+`ifndef nointerrupt
+,   input  wire 			nIRQ
+`endif	
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -41,17 +47,43 @@ Opcode_t Opcode;
 Branch_t BranchCode;
 
 //Flags register
-logic [3:0] StatusReg;
 logic StatusRegWe;
+
 
 // Type casting
 assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); 
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
 assign CFlag = StatusReg[`FLAGS_C];
 
+`ifndef nointerrupt
+//double buffer the IRQ signal
+logic IRQ1, IRQ2, IntReq, IntClear, IntEnable, IntDisable, IntStatus, InISR;
+always_ff @ (posedge Clock or negedge nReset) begin
+	if(!nReset) begin
+		IRQ1 <= #20 0;
+		IRQ2 <= #20 0;
+		IntReq <= #20 0;
+		IntStatus <= #20 0;
+		end
+	else begin
+		IRQ1 <= #20 ~nIRQ;
+		IRQ2 <= #20 IRQ1;
+		IntReq <= #20 (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2) | (IntReq & ~IntClear);
+		if(IntEnable)
+			IntStatus <= #20 1;
+		if(IntDisable)
+			IntStatus <= #20 0;
+	end
+end
+//assign IntReq = (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2); //first - if we're not in an
+//interupt and we get a request. Second, if request is satisfied and we get a
+//new one, we want to go back in - allows nestedd
+`endif
+
 enum {
    fetch,
-   execute
+   execute,
+   interrupt
 }  state;
 enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 	cycle0,
@@ -67,14 +99,24 @@ always_ff@(posedge Clock or negedge nReset) begin
       	StatusReg <= #20 0;
 	  	state <= #20 fetch;
       	stateSub <= #20 cycle0;
+		InISR <= #20 0;
 	end else begin 
 		// Status update
       	if (StatusRegWe)
 			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
+		// Interrupt
+		if(state == interrupt)
+			case(stateSub)
+				cycle0: begin stateSub <= #20 cycle1; InISR <= #20 1; end
+				cycle1: stateSub <= #20 cycle2;
+				cycle2: stateSub <= #20 cycle3;
+				cycle3: stateSub <= #20 cycle4;
+				cycle4: begin stateSub <= #20 cycle0; state <= #20 fetch;  end
+			endcase
 	  	// Fetch  
       	if(state == fetch)
          	case(stateSub)
-            	cycle0: stateSub <= #20 cycle1;
+            	cycle0: stateSub <= #20 cycle1;	
             	cycle1: stateSub <= #20 cycle2;
             	cycle2: if(nWait)
 							stateSub <= #20 cycle3;
@@ -82,22 +124,39 @@ always_ff@(posedge Clock or negedge nReset) begin
 							state <= #20 execute;
          					stateSub <= #20 cycle0;
 						end
-		 	endcase
+			endcase
     	// Execute     
       	if(state == execute) 
          	case(stateSub)
             	cycle0: case(Opcode)
-            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: 	state <= #20 fetch;	// Single cycle ops
-                			LDW, STW,PUSH,POP: 	stateSub <= #20 cycle1;
+            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, 
+							LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
+								if (IntReq) 
+									state <= #20 interrupt; //got an interrupt
+								else 
+									state <= #20 fetch;	// Single cycle ops
+							end
+                			LDW, STW,PUSH,POP: 	
+								stateSub <= #20 cycle1;
+							INTERRUPT: begin
+								if ( BranchCode == 0 | BranchCode == 3 | BranchCode == 4)
+									stateSub <= #20 cycle1; //if a return from interrupt
+								else
+									state <= #20 fetch; //else single cycle
+								end//INTERRUPT
                   		endcase
             	cycle1:	stateSub <= #20 cycle2;	
             	cycle2: stateSub <= #20 cycle3;  		
 				cycle3: if(nWait)						// Data setup, stay in place
 							stateSub <= #20 cycle4;	
-				default:begin
-                    		state <= #20 fetch;
-                  			stateSub <= #20 cycle0;
-						end
+        		default:begin
+					stateSub <= #20 cycle0; //always go to cycle 0
+					if(IntReq)
+						state<= #20 interrupt;
+					else
+	                    state <= #20 fetch;	
+					if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
+				end
          	endcase
    	end
 end
@@ -125,10 +184,15 @@ always_comb begin
    	nME      = 1;
    	ENB      = 0;
    	ALE      = 0;
-		PcSel = Pc1;
+	PcSel = Pc1;
+	RwSel = RwRd;	
 	StatusRegWe= 0;
-   RwSel = RwRd;
-   case(state)
+	IntClear = 0;
+	IntEnable = 0;
+	IntDisable = 0;
+	StatusOut = 0;
+	FlagSel = FlagAlu;
+	case(state)
       	fetch : 
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
@@ -386,10 +450,10 @@ always_comb begin
 									AluEn = 1;
 									if(	(BranchCode == BR) 	|| 
 										(BranchCode == BWL)	||
-										(BranchCode == BNE 	&& 	(StatusReg[`FLAGS_Z] && BranchCode == BNE)	)		||
-										(BranchCode == BE 	&& 	(~StatusReg[`FLAGS_Z] && BranchCode == BE)	)		||
-										(BranchCode == BLT	&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
-										(BranchCode == BGE	&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
+										((BranchCode == BNE) 	&&   (StatusReg[`FLAGS_Z] == 0))		||
+										((BranchCode == BE 	) && 	(StatusReg[`FLAGS_Z] == 1)	) ||
+										((BranchCode == BLT	)&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
+										((BranchCode == BGE	)&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
 										PcSel = PcAluOut;
 										if(BranchCode == BWL) begin	// Branch with link
 											LrWe = 1;
@@ -411,52 +475,96 @@ always_comb begin
 									PcWe = 1;
 								end	
 							endcase
-						end	
+						end
 						PUSH:begin
 							AluEn = 1;
 							ImmSel = ImmShort;
-                           	Rs1Sel = Seven;
+	            			Rs1Sel = Seven;
 							RwSel = RwSeven;
 							Op1Sel = Op1Rd1;
-							AluOp = FnSUB;	
-                           	AluWe = 1;
+							AluOp = FnSUB;
+							AluWe = 1;
 							RegWe = 1;
 							WdSel = WdAlu;
-
-						end	
+						end
 						POP:begin
 							AluEn = 1;
 							ImmSel = ImmShort;
-                           	Rs1Sel = Seven;
+							Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
-							AluOp = FnA;	
-                           	AluWe = 1;		
-						end	
-            		endcase
-         		end
-         		cycle1:begin 
+							AluOp = FnA;
+							AluWe = 1;
+						end 
+						INTERRUPT: begin
+							case(BranchCode)
+								0,4: begin //RETI and LDF
+									Rs1Sel = Seven; //chose SP
+   									AluEn = 1;
+									Op1Sel = Op1Rd1;
+									AluOp = FnA;	
+	            		            AluWe = 1;	
+								end //0 
+								1: begin
+									PcWe = 1;
+									PcSel = Pc1;
+									PcEn = 1; 
+									IntEnable = 1;
+								end //1
+								2: begin
+									PcWe = 1;
+									PcSel = Pc1;
+									PcEn = 1; 
+									IntDisable = 1;
+								end //2
+								3: begin // STF
+									Rs1Sel = Seven; //chose SP
+   									AluEn = 1;
+									Op1Sel = Op1Rd1;
+									AluOp = FnDEC;	
+	            		            AluWe = 1;
+									RegWe = 1;
+									WdSel = WdAlu;
+									RwSel = RwSeven;
+								end
+							endcase
+						end //INTERRUPT
+            		endcase //opcode
+         		end //cycle0
+         		cycle1:begin
 					case(Opcode)
 						LDW,STW:begin
 							ALE = 1;
-               				nWE = 1;
-               				nOE = 1; 
+	                		nWE = 1;
+					        nOE = 1;
 							ImmSel = ImmShort;
 							AluOp = FnADD;
 							Op1Sel = Op1Rd1;
-                			AluEn = 1; 
-         				end
+							AluEn = 1;
+						end
 						PUSH,POP:begin
 							ALE = 1;
-               				nWE = 1;
-               				nOE = 1; 
+							nWE = 1;
+							nOE = 1;
 							ImmSel = ImmShort;
 							AluOp = FnADD;
 							Op1Sel = Op1Rd1;
 							Rs1Sel = Seven;
-                			AluEn = 1;	
-						end	
+							AluEn = 1;
+						end
+						INTERRUPT:begin
+							ALE = 1;
+							nWE = 1;
+							nOE = 1;
+							if(BranchCode == 3 )
+								AluOp = FnDEC;
+							else
+								AluOp = FnINC;
+							Op1Sel = Op1Rd1;
+							Rs1Sel = Seven;
+							AluEn = 1;
+						end
 					endcase
-				end
+         		end
          		cycle2: begin
             		case(Opcode)
                			LDW:begin
@@ -465,42 +573,51 @@ always_comb begin
 							AluOp = FnA;		// Nothing done to op1
                         	Rs1Sel = Rs1Rd;
 							MemEn = 1;
-                        	nWE = 1;
-                     		AluWe = 1;			// Pass right through on next clock
-                        	AluEn = 1;
+							nOE = 1;
+							nWE = 1;
+        	               	AluWe = 1;			// Pass right through on next clock
+                	       	AluEn = 1;
 						end
 						STW:begin			// Get the data out of the reg
                         	nME = 0;
 							Op1Sel = Op1Rd1;
 							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Rs1Rd;
+		                    Rs1Sel = Rs1Rd;
 							nOE = 1;
-                        	nWE = 1;
+	                	    nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
                         	AluEn = 1;
-						end
+							end
 						PUSH:begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
-							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Rs1Ra;
+							AluOp = FnA; // Nothing done to op1
+						    Rs1Sel = Rs1Ra;
 							nOE = 1;
-                        	nWE = 1;
-                     		AluWe = 1;			// Pass right through on next clock
-                        	AluEn = 1;
-
+							nWE = 1;
+							AluWe = 1; // Pass right through on next clock
+							AluEn = 1;
 						end
 						POP:begin
-							nME = 0;
-                        	Op1Sel = Op1Rd1;
-							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Seven;
+						 	nME = 0;
+						  	Op1Sel = Op1Rd1;
+						  	AluOp = FnA; // Nothing done to op1
+							Rs1Sel = Seven;
 							MemEn = 1;
-                        	nWE = 1;
-                     		//AluWe = 1;			// Pass right through on next clock
-                        	AluEn = 1;
+							nWE = 1;
+							//AluWe = 1; // Pass right through on next clock
+							AluEn = 1;
 						end
-
+						INTERRUPT: begin
+							nME = 0;
+							Op1Sel = Op1Rd1;
+							Rs1Sel = Seven;
+							AluOp = FnA;
+							MemEn = 1;
+							nWE = 1;
+							AluWe = 1;
+							AluEn = 1;
+						end
             		endcase
          		end
          		cycle3: begin
@@ -543,29 +660,43 @@ always_comb begin
 							RwSel = RwSeven;
 							AluOp = FnADD;
 						end
+						INTERRUPT: begin
+							case(BranchCode)
+								0,4:begin
+									nME = 0;
+									MemEn = 1;
+									ENB = 1;
+									nWE = 1;
+								end
+								3:begin
+									StatusOut = 1;
+									nME = 0;
+									nOE = 1;
+								end
+							endcase
+						end
             		endcase  
          		end
          		cycle4: begin
-					PcWe = 1;
-                    PcSel = Pc1;		// Done, move on
-   					nME = 1;
-					case(Opcode)
-						LDW: begin
-							nWE = 1;
-							MemEn = 1;
-							WdSel = WdSys;
-							RwSel = RwRd;
-							RegWe = 1;
-							WdSel = WdSys;
-						end
-						STW: begin
-							nOE = 1;
-							AluEn = 1;
-						end
-						PUSH:begin
-							nOE = 1;
-							//LrEn = 1;
-							if(OpcodeCondIn[2]) begin	// 1 = LR
+         			PcWe = 1;
+					PcSel = Pc1; // Done, move on
+	  				nME = 1;
+	  				case(Opcode)
+	  					LDW: begin
+	  						nWE = 1;
+	  						MemEn = 1;
+	  						WdSel = WdSys;
+	  						RwSel = RwRd;
+	  						RegWe = 1;
+	  						WdSel = WdSys;
+	  					end
+	  					STW: begin
+	  						nOE = 1;
+	  						AluEn = 1;
+	  					end
+	  					PUSH:begin
+	  						nOE = 1;
+							if(OpcodeCondIn[2]) begin // 1 = LR
 								LrEn = 1;
 							end else begin
 								AluEn = 1;
@@ -576,7 +707,7 @@ always_comb begin
 						POP:begin
 							nWE = 1;
 							MemEn = 1;
-							if(OpcodeCondIn[2]) begin	// 1 = LR
+							if(OpcodeCondIn[2]) begin // 1 = LR
 								LrWe = 1;
 							end else begin
 								RegWe = 1;
@@ -586,10 +717,84 @@ always_comb begin
 								WdSel = WdSys;
 							end
 						end
+						INTERRUPT:begin
+							case(BranchCode)
+								0: begin
+									nWE = 1;
+									PcWe = 1;
+									PcSel = PcSysbus;
+									MemEn = 1;
+									nME = 1;
+									Rs1Sel = Seven;
+									AluOp = FnINC;
+									WdSel = WdAlu;
+									RwSel = RwSeven;
+									RegWe = 1;
+								end
+								3: begin
+									nOE = 1;
+									StatusOut = 1;
+								end
+								4:	begin
+									Rs1Sel = Seven;
+									MemEn = 1;
+									nWE = 1;	
+									AluOp = FnINC;
+									WdSel = WdAlu;
+									RwSel = RwSeven;
+									RegWe = 1;
+									FlagSel = FlagSys;
+									StatusRegWe = 1;
+								end
+							endcase
+						end
 					endcase
-         		end
+				
+				
+				end
          	endcase
       	end
+	interrupt:
+		case(stateSub)
+			cycle0:begin
+				Rs1Sel = Seven;//choose sp
+				AluOp = FnDEC; //pass it through
+				Op1Sel = Op1Rd1;
+				RegWe = 1;
+				RwSel = RwSeven;
+				WdSel = WdAlu;
+				AluWe = 1;
+				AluEn = 1;
+			end
+			cycle1:begin
+	            nWE = 1;
+				nOE = 1;
+				AluOp = FnDEC;
+				Op1Sel = Op1Rd1;
+				Rs1Sel = Seven;
+				AluEn = 1;
+				ALE = 1;
+			end
+			cycle2: begin
+				nME = 0;
+				AluOp = FnDEC; // Nothing done to op1
+				nOE = 1;
+				nWE = 1;
+				AluEn = 1;
+			end
+			cycle3: begin
+				nME = 0;
+				PcEn = 1; // Hold data on sysbus
+				nOE = 1;
+			end
+			cycle4: begin
+				nOE = 1;
+				PcEn = 1;
+				IntClear = 1;
+				PcSel = PcInt;
+				PcWe = 1;
+			end
+		endcase
 	endcase
 end
 endmodule

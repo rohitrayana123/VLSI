@@ -16,8 +16,17 @@ logic [n-1:0] regs [reg_count-1:0];
 
 always_ff@(posedge Clock or negedge nReset) 
 begin
-	if (!nReset)
-		regs = '{reg_count{'{n{0}}}};
+	if (!nReset) begin
+		regs[0] = 0;
+		regs[1] = 1;
+		regs[2] = 2;
+		regs[3] = 3;
+		regs[4] = 4;
+		regs[5] = 5;
+		regs[6] = 6;
+		regs[7] = 16'h07FF;
+	end
+		//regs = '{reg_count-1{'{n{0}}}};
 	else
 		if(We)  regs[Rw] <= WData;    
 end
