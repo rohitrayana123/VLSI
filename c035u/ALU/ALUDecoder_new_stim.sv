@@ -132,7 +132,7 @@ begin
 			assert(ShOut == 1); 
 	else
 		assert(ShOut == 0);
-	if ((A&bitC&nD&nE)|(A&B&bitC&nD))
+	if (A&B&bitC&nD)
 		assert(ShR == 1);
 	else
 		assert(ShR == 0);
@@ -186,7 +186,7 @@ begin
 		assert(NOR == 1);
 	else
 		assert(NOR == 0);
-	if (OpCode == 5'b11111)
+	if ((A&B&bitC&D&E)|(A&nB&bitC&nD&nE))
 		assert(ShL == 1);
 	else
 		assert(ShL == 0);
@@ -266,6 +266,15 @@ initial
 
 	//Shifting Amount Tests
     #50 $display("Switch to LSL"); OpCode = 5'b11111;
+    #50 $display("imm4 = 1"); imm4 = 4'd1;
+    #50 $display("imm4 = 2"); imm4 = 4'd2;
+    #50 $display("imm4 = 3"); imm4 = 4'd3;
+    #50 $display("imm4 = 4"); imm4 = 4'd4;
+    #50 $display("imm4 = 5"); imm4 = 4'd5;
+    #50 $display("imm4 = 8"); imm4 = 4'd8;
+    #50 $display("imm4 = 9"); imm4 = 4'd9;
+    #50 $display("imm4 = 15"); imm4 = 4'd15;
+    #50 $display("Switch to LSR"); OpCode = 5'b11101;
     #50 $display("imm4 = 1"); imm4 = 4'd1;
     #50 $display("imm4 = 2"); imm4 = 4'd2;
     #50 $display("imm4 = 3"); imm4 = 4'd3;

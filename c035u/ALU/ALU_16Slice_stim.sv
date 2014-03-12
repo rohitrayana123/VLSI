@@ -151,12 +151,16 @@ initial
     #50 $display("%b ARS15_1(B) = %b", B, ALUOut); assert(ALUOut == 16'b1111111111111111);
     #50 ShSignIn = 0;
     #50 $display("%b RS15(B) = %b", B, ALUOut); assert(ALUOut == 16'b0000000000000001);
+    #50 Sh8 = 1; Sh4 = 0; Sh2 = 0; Sh1 = 0;
+    #50 $display("%b RS8(B) = %b", B, ALUOut); assert(ALUOut == (B>>8));
+    #50 B = 8; Sh8 = 1; Sh4 = 0; Sh2 = 0; Sh1 = 0; ShL = 1; ShR = 0; 
+    #50 $display("LUI: %b, %b -> %b", A, B, ALUOut); assert(ALUOut == {B[7:0], 8'b0});
 
     //LLI Testing
     #50 ShOut = 1; LLI = 1; Sh1 = 0; Sh2 = 0; Sh4 = 0; Sh8 = 0; ShL = 0; ShR = 0; ShB = 0; 
-    #50 $display("%b, %b -> %b", A, B, ALUOut); assert(ALUOut == {A[15:8],B[7:0]});
+    #50 $display("LLI: %b, %b -> %b", A, B, ALUOut); assert(ALUOut == {A[15:8],B[7:0]});
     #50 B = 67;
-    #50 $display("%b, %b -> %b", A, B, ALUOut); assert(ALUOut == {A[15:8],B[7:0]});
+    #50 $display("LLI: %b, %b -> %b", A, B, ALUOut); assert(ALUOut == {A[15:8],B[7:0]});
 
     #50 $finish;
 
