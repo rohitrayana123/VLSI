@@ -1,26 +1,32 @@
 magic
 tech c035u
-timestamp 1394549582
-<< error_s >>
-rect 4391 2089 4405 2094
-use ALUDecoder ALUDecoder_0
-timestamp 1394549470
+timestamp 1394639565
+use ALUDecoder_new ALUDecoder_new_0
+timestamp 1394639519
 transform 1 0 0 0 1 2084
-box 0 0 7602 1459
+box 0 0 7654 1239
+use ALUSlice ALUSlice_1
+timestamp 1394559926
+transform 1 0 0 0 1 1042
+box 0 0 7296 1042
 use LLIcell_U LLIcell_U_0
-timestamp 1393855556
+timestamp 1394560148
 transform 1 0 7296 0 1 1042
 box 0 0 192 1042
-use ALUSlice ALUSlice_1
-timestamp 1394549555
-transform 1 0 0 0 1 1042
-box 0 0 7704 1042
+use ALUTri ALUTri_1
+timestamp 1394560081
+transform 1 0 7488 0 1 1042
+box 0 0 216 1042
+use ALUSlice ALUSlice_0
+timestamp 1394559926
+transform 1 0 0 0 1 0
+box 0 0 7296 1042
 use LLIcell_L LLIcell_L_0
 timestamp 1394447900
 transform 1 0 7296 0 1 0
 box 0 0 192 1042
-use ALUSlice ALUSlice_0
-timestamp 1394549555
-transform 1 0 0 0 1 0
-box 0 0 7704 1042
+use ALUTri ALUTri_0
+timestamp 1394560081
+transform 1 0 7488 0 1 0
+box 0 0 216 1042
 << end >>
