@@ -203,24 +203,25 @@ assign reg6 = {
 \Datapath_slice_0[0]/regBlock_slice_0/Reg6 };
 
 wire [15:0] nreg7;
-assign reg7 = {
-\Datapath_slice_0[15]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[14]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[13]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[12]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[11]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[10]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[9]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[8]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[7]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[6]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[5]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[4]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[3]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[2]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[1]/regBlock_slice_0/nReg7 ,
-\Datapath_slice_0[0]/regBlock_slice_0/nReg7 };
-
+assign nreg7 = {
+\Datapath_slice_0[15]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[14]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[13]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[12]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[11]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[10]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[9]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[8]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[7]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[6]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[5]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[4]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[3]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[2]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[1]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[0]/regBlock_slice_0/scanreg_7/nQ };
+wire [15:0] reg7;
+assign reg7 = ~nreg7;
 wire [15:0] Rd2;
 assign Rd2 = {
 \Datapath_slice_0[15]/Rd2 ,

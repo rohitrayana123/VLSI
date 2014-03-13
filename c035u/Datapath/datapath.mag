@@ -1,8 +1,6 @@
 magic
 tech c035u
-timestamp 1394707056
-<< checkpaint >>
-rect 13985 0 16597 20032
+timestamp 1394708291
 << metal1 >>
 rect 481 22062 16292 22072
 rect 16306 22062 23764 22072
@@ -361,7 +359,7 @@ transform 1 0 2517 0 1 204
 box 0 -112 1008 1064
 use Datapath_slice Datapath_slice_0
 array 0 0 12364 0 15 1176
-timestamp 1394707056
+timestamp 1394708291
 transform 1 0 3525 0 1 92
 box 0 0 20040 1176
 use LLIcell_U LLIcell_U_0
