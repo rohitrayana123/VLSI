@@ -15,7 +15,8 @@ wire [15:0] Data;
 wire [15:0] Address;
 
 wire ALE, nME, nOE, RnW;
-tri1 nIRQ, nWait;
+//tri1 
+logic nIRQ, nWait;
 
 cpu cpu ( 
    .Data    (Data), 
@@ -92,11 +93,12 @@ always @(posedge Clock) begin
 end
 
 initial begin
-   //`ifdef switch_value
-   //   switches = `switch_value;
-   //`else
-   //   switches = 1;
-   //`endif
+   `ifdef switch_value
+      switches = `switch_value;
+   `else
+      
+	switches = 8;
+   `endif
    Test = 0;
    SDI = 0;
 end
@@ -105,74 +107,51 @@ end
    `include "monitor.sv"
 `endif
 
+//initial begin
+//	
+//// int 1
+//	switches = 8;
+//	nIRQ = 1;
+//	#400000 nIRQ = 0;
+//	#500   nIRQ = 1;
+//	
+//// int 2
+//	#100000000
+//	switches = 7;
+//	#40000 nIRQ = 0;
+//	#500 nIRQ = 1;
+//	#1000
+//	switches = 6;
+//	#40000 nIRQ = 0;
+//	#500 nIRQ = 1;
+//
+//// int 4
+//	#100000000
+//	switches = 5;
+//	#40000 nIRQ = 0;
+//	#500 nIRQ = 1;
+//
+//// int 5
+//	#100000000
+//	switches = 4;
+//	#40000 nIRQ = 0;
+//	#500 nIRQ = 1;
+//
+//
+//// int 6
+//	#100000000
+//	switches = 3;
+//	#40000 nIRQ = 0;
+//	#500 nIRQ = 1;
+//
+//
+//
+//
+//end
 
 // If this stops sim then probably looped
 initial begin
-	nIRQ = 1;
-#584000
-	switches = 7;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#584000
-	switches = 6;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#584000
-	switches = 5
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#584000
-	switches = 4;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#584000
-	switches = 7;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#584000
-	switches = 5;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#10502000
-	switches = 3;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#14000000
-	switches = 2;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-#14000000
-	switches = 1;
-	nIRQ = 0;
-	@(posedge Clock);
-	@(negedge Clock);
-	nIRQ = 1;
-
-
-
-
-
-
-
-
-
-
+	#100000000000
 	$stop;
 	$finish;
 end

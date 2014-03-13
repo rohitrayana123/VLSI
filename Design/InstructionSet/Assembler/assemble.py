@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Simple assembly program, takes assembly input file and outputs flat binary line with one line per instruction
 #Input syntax rules:	':' or ';' for commenting
 #			'.' must start label names
@@ -10,6 +11,11 @@
 #			Checking of immediate value sizes
 #			NO input args checking
 #			Instruction-less lines allowed (empty line or comments)
+#Version: 1 (CMPI addition onwards)
+#	  2 (Changed to final ISA, added special case I's and error checking
+#         3 (Ajr changes - Hex output added, bug fix)
+#	  4 (Added SP symbol)
+
 
 import os
 import re
@@ -39,7 +45,9 @@ def ConvertToBin(x, length):
 
 #Conversion functions
 def OpType(value):	#Determine instruction format type
-	if value in ("PUSH", "POP"):
+	if value in ("ENAI", "DISI", "RETI","STF","LDF"):
+		return "F"
+	elif value in ("PUSH", "POP"):
 		return "E"
 	elif value in ("JMP"):
 		return "D1"
@@ -120,61 +128,63 @@ def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
 		sys.exit()
 
 def OpNum(value):	#Determine specific binary value for instruction
+	if value == "F":
+		return "11001"
 	if value == "C":
 		return "00000"
-	if value == "D1":
+	elif value == "D1":
 		return "11110"
-	if value == "D2":
+	elif value == "D2":
 		return "11110"
-	if value == "E":
+	elif value == "E":
 		return "00001"
-	if value == "ADD":
+	elif value == "ADD":
 		return "00010"
-	if value == "ADDI":
+	elif value == "ADDI":
 		return "00110"
-	if value == "ADDIB":
+	elif value == "ADDIB":
 		return "00011"
-	if value == "ADC":
+	elif value == "ADC":
 		return "00100"
-	if value == "ADCI":
+	elif value == "ADCI":
 		return "00101"
-	if value == "NEG":
+	elif value == "NEG":
 		return "11010"
-	if value == "SUB":
+	elif value == "SUB":
 		return "01010"
-	if value == "SUBI":
+	elif value == "SUBI":
 		return "01110"
-	if value == "SUBIB":
+	elif value == "SUBIB":
 		return "01011"
-	if value == "SUC":
+	elif value == "SUC":
 		return "01100"
-	if value == "SUCI":
+	elif value == "SUCI":
 		return "01101"
-	if value == "CMP":
+	elif value == "CMP":
 		return "00111"
-	if value == "CMPI":
+	elif value == "CMPI":
 		return "01111"
-	if value == "AND":
+	elif value == "AND":
 		return "10000"
-	if value == "OR":
+	elif value == "OR":
 		return "10001"
-	if value == "XOR":
+	elif value == "XOR":
 		return "10011"
-	if value == "NOT":
+	elif value == "NOT":
 		return "10010"
-	if value == "NAND":
+	elif value == "NAND":
 		return "10110"
-	if value == "NOR":
+	elif value == "NOR":
 		return "10111"
-	if value == "LSL":
+	elif value == "LSL":
 		return "11111"
-	if value == "LSR":
+	elif value == "LSR":
 		return "11101"
-	if value == "ASR":
+	elif value == "ASR":
 		return "11100"
-	if value == "LUI":
+	elif value == "LUI":
 		return "10100"
-	if value == "LLI":
+	elif value == "LLI":
 		return "10101"
 	else:
 		print 'ERROR5: Unrecognised Mneumonic'
@@ -190,7 +200,7 @@ elif sys.argv[1] in ("help", "-h"):
         print "               3 (Ajr changes - Hex output added, bug fix)"
 	print "               4 (Added SP symbol)"
 	print "               5 (NOP support added, help added) UNTESTED"
-	print "               TODO 6 (Interrupt support) - will add myself, please be patient as im out tonight"
+	print "               6 (Interrupt support added [ENAI, DISI, RETI]. New sub-encoding type F |11001|Cond[3]|Ra[3]|xxxxx|.) UNTESTED"
 	print "      Current is most recent iteration"
 	print "Input Syntax: ./assemble filename"
 	print "Commenting uses : or ;"
@@ -291,7 +301,18 @@ print '--------Converting to machine code-----------\n'
 print 'Converting::',
 for i, line in enumerate(SEGMLINES):
 	print line[0],
-	if OpType(line[0]) == 'E':				#Stack operations
+	if OpType(line[0]) == 'F':				#Interrupt operations
+		if line[0] == 'ENAI':
+			MC.append(OpNum('F') + '001' + '00000000')
+		elif line[0] == 'DISI':
+			MC.append(OpNum('F') + '010' + '00000000')
+		elif line[0] == 'RETI':
+			MC.append(OpNum('F') + '000' + '11100000')#Always reads location pointed to by SP
+		elif line[0] == 'STF':
+			MC.append(OpNum('F') + '011' + '00000000')
+		elif line[0] == 'LDF':
+			MC.append(OpNum('F') + '100' + '00000000')
+	elif OpType(line[0]) == 'E':				#Stack operations
 		temp = '0'
 		if line[0] == 'PUSH':
 			temp += '1'
@@ -336,7 +357,7 @@ for i, line in enumerate(SEGMLINES):
 			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
 		elif (line[0] == 'NOT'):#NOT
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
-		elif (line[0] == 'NOP'):#NOP
+		elif (line[0] == 'NOP'):
 			MC.append(OpNum(line[0]) + '00000000000')
 		else:
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')

@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394475337
+timestamp 1394620980
 << metal1 >>
 rect 37 894 1175 904
 rect 1189 894 2327 904
@@ -188,99 +188,99 @@ rect 8952 0 8964 47
 rect 9096 0 9108 66
 rect 9168 40 9180 66
 rect 9168 0 9180 25
-use scanreg  scanreg_1
+use scanreg scanreg_1
 timestamp 1386241447
 transform 1 0 0 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_0
+use trisbuf trisbuf_0
 timestamp 1386237216
 transform 1 0 720 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_1
+use trisbuf trisbuf_1
 timestamp 1386237216
 transform 1 0 936 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_2
+use scanreg scanreg_2
 timestamp 1386241447
 transform 1 0 1152 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_2
+use trisbuf trisbuf_2
 timestamp 1386237216
 transform 1 0 1872 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_3
+use trisbuf trisbuf_3
 timestamp 1386237216
 transform 1 0 2088 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_3
+use scanreg scanreg_3
 timestamp 1386241447
 transform 1 0 2304 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_4
+use trisbuf trisbuf_4
 timestamp 1386237216
 transform 1 0 3024 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_5
+use trisbuf trisbuf_5
 timestamp 1386237216
 transform 1 0 3240 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_4
+use scanreg scanreg_4
 timestamp 1386241447
 transform 1 0 3456 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_6
+use trisbuf trisbuf_6
 timestamp 1386237216
 transform 1 0 4176 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_7
+use trisbuf trisbuf_7
 timestamp 1386237216
 transform 1 0 4392 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_5
+use scanreg scanreg_5
 timestamp 1386241447
 transform 1 0 4608 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_8
+use trisbuf trisbuf_8
 timestamp 1386237216
 transform 1 0 5328 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_9
+use trisbuf trisbuf_9
 timestamp 1386237216
 transform 1 0 5544 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_6
+use scanreg scanreg_6
 timestamp 1386241447
 transform 1 0 5760 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_10
+use trisbuf trisbuf_10
 timestamp 1386237216
 transform 1 0 6480 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_11
+use trisbuf trisbuf_11
 timestamp 1386237216
 transform 1 0 6696 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_7
+use scanreg scanreg_7
 timestamp 1386241447
 transform 1 0 6912 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_12
+use trisbuf trisbuf_12
 timestamp 1386237216
 transform 1 0 7632 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_13
+use trisbuf trisbuf_13
 timestamp 1386237216
 transform 1 0 7848 0 1 66
 box 0 0 216 799
-use scanreg  scanreg_8
+use scanreg scanreg_8
 timestamp 1386241447
 transform 1 0 8064 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_14
+use trisbuf trisbuf_14
 timestamp 1386237216
 transform 1 0 8784 0 1 66
 box 0 0 216 799
-use trisbuf  trisbuf_15
+use trisbuf trisbuf_15
 timestamp 1386237216
 transform 1 0 9000 0 1 66
 box 0 0 216 799
@@ -336,4 +336,12 @@ rlabel metal2 9096 1042 9108 1042 5 Rs2[7]
 rlabel metal2 8136 1042 8148 1042 5 Rw[7]
 rlabel metal2 72 1042 84 1042 5 Rw[0]
 rlabel metal2 24 1042 36 1042 5 WData
+rlabel metal1 692 873 692 873 1 Reg0
+rlabel metal1 1814 875 1814 875 1 Reg1
+rlabel metal1 3107 876 3107 876 1 Reg2
+rlabel metal1 4349 873 4349 873 1 Reg3
+rlabel metal1 5402 874 5402 874 1 Reg4
+rlabel metal1 6613 873 6613 873 1 Reg5
+rlabel metal1 7783 875 7783 875 1 Reg6
+rlabel metal1 8977 876 8977 876 1 Reg7
 << end >>

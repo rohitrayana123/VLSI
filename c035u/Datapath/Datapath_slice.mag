@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394565367
+timestamp 1394620980
 << metal1 >>
 rect 1573 1159 3023 1169
 rect 3037 1159 20040 1169
@@ -225,7 +225,7 @@ timestamp 1386235218
 transform 1 0 2952 0 1 177
 box 0 0 192 799
 use regBlock_slice regBlock_slice_0
-timestamp 1394475337
+timestamp 1394620980
 transform 1 0 3144 0 1 111
 box 0 0 9216 1042
 use mux2 mux2_1
@@ -401,7 +401,6 @@ rlabel metal2 19320 1176 19332 1176 5 Sh2B_R
 rlabel metal2 19920 1176 19932 1176 5 ShOut
 rlabel metal2 19200 1176 19212 1176 5 Sh2
 rlabel metal2 19560 1176 19572 1176 5 Sh1
-rlabel metal2 19632 1176 19644 1176 5 Sh1_R_In
 rlabel metal2 18816 1176 18828 1176 5 Sh4Z_R
 rlabel metal2 17040 1176 17052 1176 5 Sh4Z_L
 rlabel metal2 17088 1176 17100 1176 5 Sh4A_L
@@ -426,4 +425,7 @@ rlabel metal2 16680 1176 16692 1176 5 Sh8F_L
 rlabel metal2 16632 1176 16644 1176 5 Sh8E_L
 rlabel metal2 16728 1176 16740 1176 5 Sh8G_L
 rlabel metal2 16392 1176 16404 1176 5 Sh8Z_L
+rlabel metal2 19632 1176 19644 1176 5 Sh1_R_in
+rlabel metal1 12643 983 12643 983 1 Op1
+rlabel metal1 12721 1008 12721 1008 1 Op2
 << end >>

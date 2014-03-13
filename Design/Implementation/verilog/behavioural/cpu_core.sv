@@ -7,7 +7,9 @@ module cpu_core(
   output wire           ENB, 
   output wire           SDO,
   input  wire  [15:0]   Data_in,
+`ifndef nointerrupt
   input  wire           nIRQ, 
+`endif
   input  wire           nWait,
   input  wire           Test, 
   input  wire           SDI, 
@@ -19,26 +21,30 @@ module cpu_core(
 timeunit 1ns; timeprecision 100ps;
 
 opcodes::alu_functions_t  AluOp;  
-wire        Op1Sel;  
+wire         Op1Sel;  
 wire        Op2Sel;  
 wire        AluEn;  
 wire        LrEn;  
 wire        LrWe; 
 wire        LrSel;
 wire        PcWe;  
-wire [1:0]  PcSel;  
+wire [2:0]  PcSel;  
 wire        PcEn;  
 wire        IrWe;
 wire        WdSel;  
 wire        ImmSel;  
 wire        RegWe; 
 wire        MemEn;
-wire [1:0]       Rs1Sel;
+wire [1:0]  Rs1Sel;
 wire        CFlag;
 wire [3:0]  Flags;
 wire [7:0]  Opcode;  
 wire        AluWe;
 wire[1:0]	RwSel;
+wire [15:0]	SysBus;
+wire [3:0]	FlagsOut;
+wire FlagListen;
+wire FlagSel;
 assign SDO = SDI; // No sim 
 
 control control ( 
@@ -64,15 +70,21 @@ control control (
    .ALE        (ALE        ),
    .Rs1Sel     (Rs1Sel     ),
    .RwSel		(RwSel),
+   .FlagSel		(FlagSel),
+   .StatusReg	(FlagsOut),
+   .StatusOut	(FlagListen),
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
    .OpcodeCondIn(Opcode     ),    // Inputs
-`ifndef nowait
+	`ifndef nowait
   	.nWait		(nWait),
 `endif
    .AluWe      (AluWe      ),
    .Clock      (Clock      ),
    .nReset     (nReset     )
+`ifndef nointerrupt 
+,   .nIRQ	(nIRQ	)
+`endif
 );
 
 `ifdef crosssim
@@ -108,13 +120,16 @@ datapath datapath (
    .Rs1Sel     (Rs1Sel     ),
    .RwSel		(RwSel),
    .CFlag      (CFlag      ),
-`ifndef crosssim
    .AluWe      (AluWe      ),
+`ifndef crosssim
+   .FlagSel		(FlagSel),
+   .FlagsIn		(FlagsOut),
+   .FlagListen	(FlagListen),
 `endif
    .Clock      (Clock      ),
 `ifdef crosssim
    .Test       (1'b0       ),
-//   .SDI	       (1'b0       ),
+   .SDI		(1'b0      ),
 `endif
    .nReset     (nReset     )
 );
