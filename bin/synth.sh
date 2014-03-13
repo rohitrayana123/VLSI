@@ -4,6 +4,7 @@
 # <+Last Edited: Thu 20 Feb 2014 00:14:11 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 
 echo sythesise script
+cd ~/VLSI/Design/Implementation/verilog
 rm rc*
 module=$1
 if [ -f behavioural/${module}.sv ]; then 
@@ -27,7 +28,7 @@ if [ ! -d place_route ]; then
 fi
 cd place_route/
 
-vlog2net -T c035u -clocks  ../gate_level/${module}.sv ../../../magic/c035u/cell_lib
+vlog2net -T c035u -clocks  ../gate_level/${module}.sv ../../../../c035u/cell_lib
 
 echo ":b h 10000" > magicroute.tcl
 echo ":route" >> magicroute.tcl 
@@ -35,7 +36,12 @@ echo ":save" >> magicroute.tcl
 echo ":quit" >> magicroute.tcl
 
 magic ${module}_PLACED -d null < magicroute.tcl
-rm magicroute.tcl
-vlog2net -T c035u -post ../gate_level/${module}.sv ../../../magic/c035u/cell_lib
+#rm magicroute.tcl
+vlog2net -T c035u -post ../gate_level/${module}.sv ../../../../c035u/cell_lib
+
+echo Put in c035u folder
+pwd
+cp control_ROUTED.mag ~/VLSI/c035u/Control/.
+
 exit 0
 
