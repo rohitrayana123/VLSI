@@ -1,4 +1,4 @@
-// stimulus file Pc_slice_stim.sv for Pc_slice
+// stimulus file Pc_Block_stim.sv for Pc_Block
 // created by ext2svmod 5.5
 
 module Pc_Block_stim;
@@ -6,8 +6,7 @@ module Pc_Block_stim;
 timeunit 1ns;
 timeprecision 10ps;
 
-
-logic ALU ;
+logic [15:0] ALU ;
 logic Clock ;
 logic LrEn ;
 logic LrSel ;
@@ -15,19 +14,21 @@ logic LrWe ;
 logic nReset ;
 logic PcEn ;
 logic PcIncCin ;
-logic PcSel ;
+logic [1:0] PcSel ;
 logic PcWe ;
 logic Test ;
-logic DR_SysBus ;
+logic [15:0] DR_SysBus ;
 
 wire Pc ;
 wire PcIncCout ;
-wire SysBus ;
+wire Scan ;
+wire [15:0] SysBus ;
 
 Pc_Block instance1(
 	.SysBus ( SysBus ),
 	.Pc ( Pc ),
 	.PcIncCout ( PcIncCout ),
+	.Scan ( Scan ),
 	.ALU ( ALU ),
 	.Clock ( Clock ),
 	.LrEn ( LrEn ),
@@ -46,7 +47,6 @@ Pc_Block instance1(
 
 assign SysBus = DR_SysBus ;
 
-
 // stimulus information follows
 
 always
@@ -60,16 +60,13 @@ always
          Clock = 0;
   end
 
-int errors;
-
 initial
   begin
-    errors = 0;
     ALU = 0;
     LrEn = 0;
     LrSel = 0;
     LrWe = 0;
-    nReset = 1;
+    nReset = 0;
     PcEn = 0;
     PcIncCin = 0;
     PcSel = 0;
@@ -77,63 +74,35 @@ initial
     Test = 0;
     DR_SysBus = 'bz;
 
-	//Reset 
+   //Reset 
 	#100 nReset = 0;
-	#200 nReset = 1;
-	
-	//Pc Inc
-	PcEn = 1;
-	#1000 assert(SysBus == 0) else begin errors++; $display("PcEn Error");
-end	
-	
-	PcIncCin = 1; 
-	PcWe = 1;
-#1000	
+	#150 nReset=1;
 
-	//Pc from Sysbus
-	PcEn = 0;
-	DR_SysBus = 1;
-	#1000 PcWe = 0;
-	DR_SysBus = 'bz; 
-	PcEn = 1;
-	#1000 assert(SysBus == 1) else begin errors++;
-end
-	
-	
-	ALU = 0;
-	PcWe = 1;
-	#1000 assert(SysBus == 0) else begin errors++;  
-end	
-	ALU = 1;
-	#1000 assert(SysBus == 1) else begin errors++; 
-end	
-	ALU = 0;
+#1000 
+DR_SysBus= 16'd34;
+LrEn=1;
+      LrWe=1;
+      LrSel=0;
+      PcIncCin = 1;
 
-	#1000 PcWe = 0;
-	PcEn = 0;
-	
-	//Lr Load from sysbus
-	
-	DR_SysBus = 1;
-	LrWe = 1;
-	#1000 DR_SysBus = 'bz;
-	LrEn = 1;
-	assert(SysBus == 1) else begin errors++; 
-end
-	PcIncCin = 0;
-	
-	#1000 assert(0 == SysBus) else begin errors++; 
-end
-	
-	PcIncCin = 1;
-	#1000 assert(1 == SysBus) else begin errors++; 
-end
-	
+
+#1000
+ 
+ALU= 10;
+PcWe=1;
+PcSel=0;
+PcEn=1;	
+PcIncCin = 0;
+
+#1000
+
+LrEn=0;
+PcIncCin = 1;
+
+#1000 LrSel=1;
+        
+
     #1000
-	if(errors == 0)
-		$display("Simulation PASSED");
-	else
-		$display("Simulation FAILED");
           $stop;
           $finish;
   end
@@ -155,10 +124,11 @@ initial
     ,"%b", Test ,
     ,"%b", Pc ,
     ,"%b", PcIncCout ,
-    ,"%b", SysBus
+    ,"%b", Scan ,
+    ,"%b", SysBus ,
     );
 
 
-//SIMVISION SCRIPT:Pc_slice.tcl
+//SIMVISION SCRIPT:Pc_Block.tcl
 
 endmodule
