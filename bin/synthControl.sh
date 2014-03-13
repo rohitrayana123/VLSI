@@ -5,7 +5,8 @@
 
 echo sythesise script
 cd ~/VLSI/Design/Implementation/verilog
-rm rc*
+rm -rf gate_level place_route rc* 
+
 module="control"
 if [ -f behavioural/${module}.sv ]; then 
 	echo Synthesising $module
@@ -14,6 +15,9 @@ else
 	exit 1
 fi
 #Run the sythesis tool
+if [ ! -d gate_level ]; then
+	mkdir gate_level
+fi
 rc_custom -batch -pkg behavioural/opcodes.svh behavioural/${module}.sv gate_level/${module}.sv
 #check the log for errors
 cat rc.log | grep Error
@@ -27,8 +31,10 @@ if [ ! -d place_route ]; then
 	mkdir place_route
 fi
 cd place_route/
+cp ~/VLSI/c035u/Control/control_IO.cfg .
 
 vlog2net -T c035u -clocks  ../gate_level/${module}.sv ../../../../c035u/cell_lib
+
 
 echo ":b h 10000" > magicroute.tcl
 echo ":route" >> magicroute.tcl 
