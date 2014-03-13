@@ -40,7 +40,7 @@ typedef enum logic  	{Op1Pc = 1'b1, Op1Rd1=1'b0 } 			Op1_select_t;
 typedef enum logic 			{Op2Rd2=1'b1, Op2Imm=1'b0} 				Op2_select_t;
 typedef enum logic 			{ImmShort=1'b1, ImmLong=1'b0} 			Imm_select_t;
 typedef enum logic 			{WdSys=1'b1, WdAlu=1'b0} 					Wd_select_t;
-typedef enum logic  [1:0]	{Rs1Rd=1, Rs1Ra=0,Seven=2} 					Rs1_select_t;
+typedef enum logic  [1:0]	{Rs1Rd=0, Rs1Ra=1,Seven=2} 					Rs1_select_t;
 typedef enum logic			{LrPc=1'b1, LrSys=1'b0}					Lr_select_t;		
 typedef enum logic  [1:0]	{RwSeven=2,RwRa=0,RwRd = 1}		Rw_select_t;
 typedef enum logic 			{FlagAlu=1,FlagSys = 0}	Flag_select_t;

@@ -70,7 +70,7 @@ always_comb begin : OpMux                 // Control ALU data input
    case(Op1Sel)                           // 3 input mux
       	Op1Rd1   :  Op1 = Rd1;
 	Op1Pc    :  Op1 = Pc;
-	Op1Sp    :  Op1 = Sp;	
+	//Op1Sp    :  Op1 = Sp;	
 	default  :  Op1 = Rd1;
    endcase
 //   case(Op2Sel)                           // 3 input mux
