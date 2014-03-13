@@ -581,8 +581,9 @@ always_comb begin
 						STW:begin			// Get the data out of the reg
                         	nME = 0;
 							Op1Sel = Op1Rd1;
-							AluOp = FnA;		// Nothing done to op1
-		                    Rs1Sel = Rs1Rd;
+							AluOp = FnADD;		// Nothing done to op1
+		                    Op2Sel = Op2zero;
+							Rs1Sel = Rs1Rd;
 							nOE = 1;
 	                	    nWE = 1;
                      		AluWe = 1;			// Pass right through on next clock
@@ -591,8 +592,9 @@ always_comb begin
 						PUSH:begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
-							AluOp = FnA; // Nothing done to op1
-						    Rs1Sel = Rs1Ra;
+							AluOp = FnADD; // Nothing done to op1
+						    Op2Sel = Op2zero;
+							Rs1Sel = Rs1Ra;
 							nOE = 1;
 							nWE = 1;
 							AluWe = 1; // Pass right through on next clock
@@ -632,7 +634,9 @@ always_comb begin
 							nME = 0;
                         	AluEn = 1;			// Hold data on sysbus
                         	nOE = 1;               
-                     	end  
+                     		AluOp = FnADD;
+							Op2Sel = Op2zero;
+						end  
 						PUSH:begin
 							nME = 0;	
 							nOE = 1;	
@@ -643,7 +647,8 @@ always_comb begin
 								AluEn = 1;
 								AluWe = 1;
 								Rs1Sel = Rs1Ra;
-								AluOp = FnA;
+								AluOp = FnADD;
+								Op2Sel = Op2zero;
 							end
 						end
 						POP:begin
@@ -693,6 +698,8 @@ always_comb begin
 	  					STW: begin
 	  						nOE = 1;
 	  						AluEn = 1;
+							AluOp = FnADD;
+							Op2Sel = Op2zero;
 	  					end
 	  					PUSH:begin
 	  						nOE = 1;
@@ -701,7 +708,8 @@ always_comb begin
 							end else begin
 								AluEn = 1;
 								Rs1Sel = Rs1Ra;
-								AluOp = FnA;
+								AluOp = FnADD;
+								Op2Sel = Op2zero;
 							end
 						end
 						POP:begin

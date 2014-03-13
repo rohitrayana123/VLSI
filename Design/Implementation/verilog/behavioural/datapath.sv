@@ -34,12 +34,20 @@ assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 assign SysBus = (FlagListen) ? {12'h000 , FlagsIn} : {16{1'bz}};
 assign Flags = (FlagSel == FlagAlu) ? AluFlags : SysBus[3:0];
 assign WData = (WdSys == WdSel) ? SysBus : AluRes; // 2 input mux
-assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
+//assign Op2 = (Op2Rd2 == Op2Sel) ? Rd2 : Extended;
 assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
 //assign Rs1In = (Rs1Rd == Rs1Sel) ? Ir[10:8] : Ir[7:5];
 assign PcInc = Pc + 1;
 
 //Multiplexers
+always_comb begin
+	case(Op2Sel)
+		Op2Rd2: Op2 = Rd2;
+		Op2Imm: Op2 = Extended;
+		Op2zero: Op2 =16'h0000;
+	endcase
+end
+
 always_comb begin
 	case(RwSel)
 		RwSeven: Rw = 3'b111;
