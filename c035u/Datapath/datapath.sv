@@ -34,46 +34,47 @@ module datapath(
 timeunit 1ns;
 timeprecision 10ps;
 
+wire [0:0] Aluout ;
 
 // include netlist information from datapath.vnet
 
 `include "datapath.vnet"
 
 wire [15:0] Pc;
-assign Pc = {	\Datapath_slice_0[15]/Pc ,
-		\Datapath_slice_0[14]/Pc ,
-		\Datapath_slice_0[13]/Pc ,
-		\Datapath_slice_0[12]/Pc ,
-		\Datapath_slice_0[11]/Pc ,
-		\Datapath_slice_0[10]/Pc ,
-		\Datapath_slice_0[9]/Pc ,
-		\Datapath_slice_0[8]/Pc ,
-		\Datapath_slice_0[7]/Pc ,
-		\Datapath_slice_0[6]/Pc ,
-		\Datapath_slice_0[5]/Pc ,
-		\Datapath_slice_0[4]/Pc ,
-		\Datapath_slice_0[3]/Pc ,
-		\Datapath_slice_0[2]/Pc ,
-		\Datapath_slice_0[1]/Pc ,
-		\Datapath_slice_0[0]/Pc };
+assign Pc = { \Datapath_slice_0[15]/Pc ,
+\Datapath_slice_0[14]/Pc ,
+\Datapath_slice_0[13]/Pc ,
+\Datapath_slice_0[12]/Pc ,
+\Datapath_slice_0[11]/Pc ,
+\Datapath_slice_0[10]/Pc ,
+\Datapath_slice_0[9]/Pc ,
+\Datapath_slice_0[8]/Pc ,
+\Datapath_slice_0[7]/Pc ,
+\Datapath_slice_0[6]/Pc ,
+\Datapath_slice_0[5]/Pc ,
+\Datapath_slice_0[4]/Pc ,
+\Datapath_slice_0[3]/Pc ,
+\Datapath_slice_0[2]/Pc ,
+\Datapath_slice_0[1]/Pc ,
+\Datapath_slice_0[0]/Pc };
 wire [15:0] AluOut;
 //assign AluOut = {
-//	\Datapath_end_0[15]/AluOut ,
-//	\Datapath_end_0[14]/AluOut ,
-//	\Datapath_end_0[13]/AluOut ,
-//	\Datapath_end_0[12]/AluOut ,
-//	\Datapath_end_0[11]/AluOut ,
-//	\Datapath_end_0[10]/AluOut ,
-//	\Datapath_end_0[9]/AluOut ,
-//	\Datapath_end_0[8]/AluOut ,
-//	\Datapath_end_0[7]/AluOut ,
-//	\Datapath_end_0[6]/AluOut ,
-//	\Datapath_end_0[5]/AluOut ,
-//	\Datapath_end_0[4]/AluOut ,
-//	\Datapath_end_0[3]/AluOut ,
-//	\Datapath_end_0[2]/AluOut ,
-//	\Datapath_end_0[1]/AluOut ,
-//	\Datapath_end_0[0]/AluOut };
+// \Datapath_end_0[15]/AluOut ,
+// \Datapath_end_0[14]/AluOut ,
+// \Datapath_end_0[13]/AluOut ,
+// \Datapath_end_0[12]/AluOut ,
+// \Datapath_end_0[11]/AluOut ,
+// \Datapath_end_0[10]/AluOut ,
+// \Datapath_end_0[9]/AluOut ,
+// \Datapath_end_0[8]/AluOut ,
+// \Datapath_end_0[7]/AluOut ,
+// \Datapath_end_0[6]/AluOut ,
+// \Datapath_end_0[5]/AluOut ,
+// \Datapath_end_0[4]/AluOut ,
+// \Datapath_end_0[3]/AluOut ,
+// \Datapath_end_0[2]/AluOut ,
+// \Datapath_end_0[1]/AluOut ,
+// \Datapath_end_0[0]/AluOut };
 wire [15:0] reg0;
 assign reg0 = {
 \Datapath_slice_0[15]/regBlock_slice_0/Reg0 ,
@@ -201,6 +202,45 @@ assign reg6 = {
 \Datapath_slice_0[1]/regBlock_slice_0/Reg6 ,
 \Datapath_slice_0[0]/regBlock_slice_0/Reg6 };
 
+wire [15:0] nreg7;
+assign nreg7 = {
+\Datapath_slice_0[15]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[14]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[13]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[12]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[11]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[10]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[9]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[8]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[7]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[6]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[5]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[4]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[3]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[2]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[1]/regBlock_slice_0/scanreg_7/nQ ,
+\Datapath_slice_0[0]/regBlock_slice_0/scanreg_7/nQ };
+wire [15:0] reg7;
+assign reg7 = ~nreg7;
+
+wire [2:0] Rs1;
+assign Rs1 = {
+\slice17_0/Rs10 ,
+\slice17_0/Rs11 ,
+\slice17_0/Rs12 };
+wire [2:0] Rs2;
+assign Rs2 = {
+Ir[4] ,
+Ir[3] ,
+Ir[2] };
+wire [2:0] Rw;
+assign Rw = {
+\slice17_0/Rw0 ,
+\slice17_0/Rw1 ,
+\slice17_0/Rw2 };
+
+
+
 wire [15:0] Rd2;
 assign Rd2 = {
 \Datapath_slice_0[15]/Rd2 ,
@@ -257,25 +297,14 @@ assign ImmProbe = {
 \IrBB_0[2]/Imm ,
 \IrBB_0[1]/Imm ,
 \IrBB_0[0]/Imm };
-//wire [15:0] reg7;
-//assign reg7 = {
-//\Datapath_slice_0[7]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[6]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[5]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[4]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[3]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[2]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[1]/regBlock_slice_0/Reg7 ,
-//\Datapath_slice_0[0]/regBlock_slice_0/Reg7 };
 
 //wire [15:0] Op1;
-//assign Op1 = {	\Datapath_slice_0[7]/Op1 ,
-//		\Datapath_slice_0[6]/Op1 ,
-//		\Datapath_slice_0[5]/Op1 ,
-//		\Datapath_slice_0[4]/Op1 ,
-//		\Datapath_slice_0[3]/Op1 ,
-//		\Datapath_slice_0[2]/Op1 ,
-//		\Datapath_slice_0[1]/Op1 ,
-//		\Datapath_slice_0[0]/Op1 };
+//assign Op1 = { \Datapath_slice_0[7]/Op1 ,
+// \Datapath_slice_0[6]/Op1 ,
+// \Datapath_slice_0[5]/Op1 ,
+// \Datapath_slice_0[4]/Op1 ,
+// \Datapath_slice_0[3]/Op1 ,
+// \Datapa
+
 
 endmodule

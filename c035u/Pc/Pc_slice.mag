@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394475379
+timestamp 1394563293
 << metal1 >>
 rect 1261 915 1751 925
 rect 1789 915 1943 925
@@ -58,6 +58,7 @@ rect 2629 868 2772 880
 rect 2616 865 2628 868
 rect 2760 865 2772 868
 rect 2832 865 2844 1042
+rect 2904 865 2916 1042
 rect 72 56 84 66
 rect 72 44 228 56
 rect 216 0 228 44
@@ -77,39 +78,39 @@ rect 2616 0 2628 66
 rect 2832 0 2844 66
 rect 2904 56 2916 66
 rect 2904 0 2916 42
-use halfadder  halfadder_0
+use halfadder halfadder_0
 timestamp 1386235204
 transform 1 0 0 0 1 66
 box 0 0 312 799
-use mux2  mux2_2
+use mux2 mux2_2
 timestamp 1386235218
 transform 1 0 312 0 1 66
 box 0 0 192 799
-use scanreg  scanreg_0
+use scanreg scanreg_0
 timestamp 1386241447
 transform 1 0 504 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_0
+use trisbuf trisbuf_0
 timestamp 1386237216
 transform 1 0 1224 0 1 66
 box 0 0 216 799
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
 transform 1 0 1440 0 1 66
 box 0 0 192 799
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
 transform 1 0 1632 0 1 66
 box 0 0 192 799
-use mux2  mux2_3
+use mux2 mux2_3
 timestamp 1386235218
 transform 1 0 1824 0 1 66
 box 0 0 192 799
-use scanreg  scanreg_1
+use scanreg scanreg_1
 timestamp 1386241447
 transform 1 0 2016 0 1 66
 box 0 0 720 799
-use trisbuf  trisbuf_1
+use trisbuf trisbuf_1
 timestamp 1386237216
 transform 1 0 2736 0 1 66
 box 0 0 216 799
@@ -135,4 +136,5 @@ rlabel metal2 2616 0 2628 0 1 Pc
 rlabel metal2 2832 0 2844 0 1 PcEn
 rlabel metal2 1872 0 1884 0 1 PcSel[1]
 rlabel metal2 2904 0 2916 0 1 SysBus
+rlabel metal2 2904 1042 2916 1042 5 SysBus
 << end >>
