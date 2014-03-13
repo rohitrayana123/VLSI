@@ -222,6 +222,25 @@ assign nreg7 = {
 \Datapath_slice_0[0]/regBlock_slice_0/scanreg_7/nQ };
 wire [15:0] reg7;
 assign reg7 = ~nreg7;
+
+wire [2:0] Rs1;
+assign Rs1 = {
+\slice17_0/Rs10 ,
+\slice17_0/Rs11 ,
+\slice17_0/Rs12 };
+wire [2:0] Rs2;
+assign Rs2 = {
+Ir[4] ,
+Ir[3] ,
+Ir[2] };
+wire [2:0] Rw;
+assign Rw = {
+\slice17_0/Rw0 ,
+\slice17_0/Rw1 ,
+\slice17_0/Rw2 };
+
+
+
 wire [15:0] Rd2;
 assign Rd2 = {
 \Datapath_slice_0[15]/Rd2 ,

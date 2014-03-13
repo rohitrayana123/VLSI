@@ -1,8 +1,6 @@
 magic
 tech c035u
-timestamp 1394707056
-<< checkpaint >>
-rect 10460 -324 13072 2300
+timestamp 1394708291
 << metal1 >>
 rect 1573 1159 3023 1169
 rect 3037 1159 20040 1169
@@ -227,7 +225,7 @@ timestamp 1386235218
 transform 1 0 2952 0 1 177
 box 0 0 192 799
 use regBlock_slice regBlock_slice_0
-timestamp 1394707056
+timestamp 1394708291
 transform 1 0 3144 0 1 111
 box 0 0 9216 1042
 use mux2 mux2_1
