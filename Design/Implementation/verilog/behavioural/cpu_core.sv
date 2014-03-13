@@ -22,7 +22,7 @@ timeunit 1ns; timeprecision 100ps;
 
 opcodes::alu_functions_t  AluOp;  
 wire         Op1Sel;  
-wire        Op2Sel;  
+wire [1:0]       Op2Sel;  
 wire        AluEn;  
 wire        LrEn;  
 wire        LrWe; 
