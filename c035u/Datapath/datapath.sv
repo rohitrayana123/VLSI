@@ -19,7 +19,7 @@ module datapath(
 	input MemEn ,
 	input nReset ,
 	input Op1Sel ,
-	input Op2Sel ,
+	input [1:0] Op2Sel ,
 	input PcEn ,
 	input [1:0] PcSel ,
 	input PcWe ,
