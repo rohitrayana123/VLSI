@@ -6,7 +6,7 @@
 echo sythesise script
 cd ~/VLSI/Design/Implementation/verilog
 rm rc*
-module=$1
+module="control"
 if [ -f behavioural/${module}.sv ]; then 
 	echo Synthesising $module
 else
@@ -38,5 +38,10 @@ echo ":quit" >> magicroute.tcl
 magic ${module}_PLACED -d null < magicroute.tcl
 #rm magicroute.tcl
 vlog2net -T c035u -post ../gate_level/${module}.sv ../../../../c035u/cell_lib
+
+echo Put in c035u folder
+pwd
+cp control_ROUTED.mag ~/VLSI/c035u/Control/.
+
 exit 0
 
