@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Wed 05 Mar 2014 12:54:31 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Thu 13 Mar 2014 19:32:35 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -21,9 +21,12 @@ def RunSim(options):
 	print "Running sim..."
 	home = os.path.expanduser("~/VLSI")
 	behave = os.path.join(home, "Design/Implementation/verilog/behavioural")
+	mixed = os.path.join(home, "Design/Implementation/verilog/mixed")
+	system = os.path.join(home, "Design/Implementation/verilog/system")
 	stim = os.path.join(home, "Design/Implementation/verification")
 	programs = os.path.join(home, "Design/Implementation/programs")
 	magic = os.path.join(home, "Design/Implementation/magic/c035u/%s" % options.module)
+	datapathmag = os.path.join(home, "Design/Implementation/magic/c035u/Datapath/")
 	#@todo Check files exist
 
 	#piece together the command
@@ -51,9 +54,17 @@ def RunSim(options):
 	if options.magic:
 		cmd.append(magic)
 		cmd.append("+incdir+%s" % magic)
+	elif options.mixed:
+		cmd.append(mixed)
+		cmd.append("+incdir+%s" % mixed)
+		cmd.append("+define+crosssim")
 	else:
 		cmd.append(behave)
 		cmd.append("+incdir+%s" % behave)
+	
+	cmd.append("-y")
+	cmd.append(system)
+	cmd.append("+incdir+%s" % system)
 	# opcodes comes before stim file
 	cmd.append(behave+"/opcodes.svh")
 	#top level stim file
@@ -62,7 +73,7 @@ def RunSim(options):
 		cmd.append(os.path.join(stim, options.module+"_stim.sv"))
 	else: #running a system program
 		#cmd.append("-v")
-		cmd.append(os.path.join(stim, "prog_stim.sv"))
+		cmd.append(os.path.join(system, "system.sv"))
 		programfile, fileExtension = os.path.splitext(options.program)
 		if os.path.exists(os.path.join(programs, programfile+".asm")): #found us some assembler - compile it!
 			print("Invoking compiler...")
@@ -81,16 +92,24 @@ def RunSim(options):
 	#print the command
 	print " ".join(cmd)
 	#run the command
-	if options.magic: #need to run the extraction
-		magicrc = open("magicext", 'w')
-		magicrc.write(":extract\n:quit\n")
-		magicrc.close()
-		magicsim = open("magicsim", 'w')
-		magicsim.write("magic -d null %s < magicext\n" % options.module)
-		magicsim.close()
-		cmdmag = ["bash", "magicsim" ]
-		call(cmdmag)
-		print(cmdmag)
+#	if options.magic or options.mixed: #need to run the extraction
+#
+#		cwd = os.getcwd()
+#		if options.magic:
+#			magicsim.write("magic -d null %s < magicext\n" % options.module)
+#		if options.mixed:
+#			magicrc = open("magicext", 'w')
+#			magicrc.write(":extract\n:quit\n")
+#			magicrc.close()
+#			magicsim = open("magicsim", 'w')
+#			os.chdir(datapathmag)
+#			magicsim.write("magic -d null datapath < magicext\n")
+#			magicsim.write("ext2svmod datapath")
+#		magicsim.close()
+#		cmdmag = ["bash", "magicsim" ]
+#		call(cmdmag)
+#		os.chdir(cwd)
+#		print(cmdmag)
 	if options.debug == False:
 		call(cmd)
 	pass
@@ -111,6 +130,9 @@ if "__main__" == __name__:
 
 	parser.add_option("-M", "--magic", dest="magic", action="store_true", default=False,
                   help="runs the simulation using the magic layout.")
+	
+	parser.add_option("-c", "--mixed", dest="mixed", action="store_true", default=False,
+                  help="runs the cross simulation.")
 
 	parser.add_option("-p", "--prog", dest="program",
                   help="program to run (hex file) should not be defined if module is")

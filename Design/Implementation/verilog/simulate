@@ -1,0 +1,200 @@
+#! /bin/sh
+
+# This versions includes -modelsim option which runs a modelsim batch simulation
+#   this picks up otherwise undetected problems with variables (logic/reg) being
+#   used where wires should have been used
+
+SYS=system
+LIB=example
+SIM_OPT=
+LIB_OPT=
+SIM_TIME=
+MAX_LEDS=
+DATA_FILE=
+SVPROG=
+TIMESCALE=
+
+simcommand="ncverilog -sv +gui +ncaccess+r"
+vsim_options=""
+simtype=NC_GUI
+
+while
+  case $1 in
+    -*) true ;;
+    *) false ;;
+  esac
+do
+  option="$1"
+  shift
+  if [ "${option}" = "-no_graphics" ] 
+  then
+    # ignore -no_graphics option for modelsim
+    if [ "${simtype}" = "NC_GUI" ]
+    then
+      simcommand="ncverilog -sv"
+      simtype=NC
+    fi
+  elif [ "${option}" = "-modelsim" ] 
+  then
+    simcommand="vlog -sv"
+    vsim_options="-R -do vsim.cmd -c"
+    simtype=MODELSIM
+  elif [ "${option}" = "-q" ]
+  then
+    SIM_OPT="$SIM_OPT -q"
+  elif [ "${option}" = "-gate" ] # switch level simulation of fcde cells
+  then
+    LIB_OPT="${LIB_OPT} -y /opt/cad/bim/fcdeCells/verilog/behavioural"
+    TIMESCALE="+nctimescale+1ns/10ps"
+  elif [ "${option}" = "-gate_structural" ] # switch level simulation of fcde cells
+  then
+    LIB_OPT="${LIB_OPT} -y /opt/cad/bim/fcdeCells/verilog/structural"
+    TIMESCALE="+nctimescale+1ns/10ps"
+  elif [ "${option}" = "-lib" ] 
+  then
+    if [ ! -f "$1" ]
+    then
+      echo "No verilog library file provided: $1"
+      exit
+    fi
+    LIB_OPT="${LIB_OPT} -v $1"
+    shift
+  else
+    echo "unknown option for simulate: ${option}"
+    exit
+  fi
+done
+
+if [ -d "$1" ]
+then
+   LIB=$1
+   shift
+fi
+
+if [ -f "$1" ]
+then
+   PROG=$1
+   if [ `basename ${PROG} .hex` != `basename ${PROG}` ]
+   then
+     echo Found hex program file ${PROG}
+     HEXPROG="${PROG}"
+   elif [ `basename ${PROG} .sv` != `basename ${PROG}` ]
+   then
+     echo Found verilog program file ${PROG}
+     SVPROG="${PROG}"
+     HEXPROG=`dirname ${PROG}`/`basename ${PROG} .sv`.hex
+     echo $HEXPROG
+   elif [ `basename ${PROG} .txt` != `basename ${PROG}` ]
+   then
+     echo Found assembler text program file ${PROG}
+     
+     HEXPROG=`dirname ${PROG}`/`basename ${PROG} .txt`_txt.hex
+
+     # This will identify a hex address and up to 4 4-digit hex data values
+     # ( caveat - ADDA may be either a mnemonic or a 4-digit hex value
+     #   hopefully this will not change the behaviour of the system )
+     #
+     # strip leading spaces
+     # add trailing space
+     # replace any whitespace with a single space
+     # delete lines which don't start with an address
+     # delete the leading @ to avoid processing the same line twice
+     # convert A-F to lower case
+     sed \
+       -e 's/^[ 	]*//' \
+       -e 's/$/ /' \
+       -e 's/[ 	][ 	]*/ /g' \
+       -e '/^@[0-9A-Fa-f]/!s/^.*$//' \
+       -e 's/^@//' \
+       -e 's/A/a/g' -e 's/B/b/g' -e 's/C/c/g' -e 's/D/d/g' -e 's/E/e/g' -e 's/F/f/g' \
+       -e 's/^\([0-9a-f][0-9a-f]* [0-9a-f]\{4\} [0-9a-f]\{4\} [0-9a-f]\{4\} [0-9a-f]\{4\}\) .*/@\1/' \
+       -e 's/^\([0-9a-f][0-9a-f]* [0-9a-f]\{4\} [0-9a-f]\{4\} [0-9a-f]\{4\}\) .*/@\1/' \
+       -e 's/^\([0-9a-f][0-9a-f]* [0-9a-f]\{4\} [0-9a-f]\{4\}\) .*/@\1/' \
+       -e 's/^\([0-9a-f][0-9a-f]* [0-9a-f]\{4\}\) .*/@\1/' \
+       -e 's/^\([0-9a-f][0-9a-f]*\) .*/@\1/' \
+       ${PROG} > $HEXPROG
+
+     echo $HEXPROG
+   else
+     echo Unknown program file format ${PROG}
+     echo Expecting .hex or .sv or .txt file
+     exit
+   fi 
+   shift
+elif [ -f ${LIB}/prog.hex ]
+then
+   HEXPROG=${LIB}/prog.hex
+else
+   HEXPROG=${SYS}/prog.hex
+fi
+
+PROGRAM="${SVPROG} +define+prog_file=\"${HEXPROG}\""
+
+if [ -f "$1" ]
+then
+   DATA=$1
+   if [ `basename ${DATA} .hex` != `basename ${DATA}` ]
+   then
+     echo Found hex serial data file ${DATA}
+     
+     DATA_FILE="+define+data_file=\"${DATA}\""
+
+     shift
+   fi 
+fi
+
+no_more_numbers=false
+while [ $# != 0 ] && [ "$no_more_numbers" = "false" ]
+do
+   case $1 in
+      0*L | 1*L | 2*L | 3*L | 4*L | 5*L | 6*L | 7*L | 8*L | 9*L )
+         echo Setting maximum number of LED writes
+         MAX_LEDS=+define+max_led_writes=`echo $1 | sed -e 's/L$//'`
+         shift
+         ;;
+      0* | 1* | 2* | 3* | 4* | 5* | 6* | 7* | 8* | 9* )
+         echo Setting simulation time
+         SIM_TIME="+define+sim_time=${1}us"
+         shift
+         ;;
+      *)
+         no_more_numbers=true
+         ;;
+   esac
+done
+
+if [ "$simtype" = "NC" ] || [ "$simtype" = "NC_GUI" ]
+then
+  rm -rf INCA_libs
+elif [ "$simtype" = "MODELSIM" ]
+then
+  PATH=/opt/cad/soft/mentor/modeltech/bin:${PATH}
+
+  /bin/rm -rf work
+  vlib work
+
+  /bin/rm -f vsim.cmd
+  echo "run -all" >> vsim.cmd
+  echo "exit" >> vsim.cmd
+
+fi
+
+if [ "$simtype" = "NC_GUI" ]
+then
+  rm -f .simvisionrc
+  if [ -f ${LIB}/system.tcl ]
+  then
+     simcommand="${simcommand} +tcl+${LIB}/system.tcl"
+  fi
+fi
+
+echo ${simcommand} $SIM_OPT -y $LIB -y $SYS $LIB_OPT \
++libext+.sv +incdir+$LIB $LIB/opcodes.svh $SYS/system.sv ${PROGRAM} ${DATA_FILE} \
+$SIM_TIME $MAX_LEDS $TIMESCALE $* ${vsim_options}
+
+export LIB
+export SYS
+
+${simcommand} $SIM_OPT -y $LIB -y $SYS $LIB_OPT \
++libext+.sv +incdir+$LIB $LIB/opcodes.svh $SYS/system.sv ${PROGRAM} ${DATA_FILE} \
+$SIM_TIME $MAX_LEDS $TIMESCALE $* ${vsim_options}
