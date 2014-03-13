@@ -90,6 +90,7 @@ end
 	PcWe = 1;
 	#1000 assert(SysBus == 1) else begin errors++; $display("PcInc Error");
 end	
+PcIncCin = 0;
 	#1000 assert(SysBus == 0) else begin errors++; $display("PcInc Error");
 end	
 
