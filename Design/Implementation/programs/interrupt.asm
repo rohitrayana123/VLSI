@@ -15,7 +15,7 @@
 		ADDIB R0,#0
 		ADDIB R0,#0
 .isr  	DISI
-		STF				; Keep flags
+		;STF				; Keep flags
 		PUSH R0			; Save only this for now
 		LUI R0,#160
 		LLI R0,#0
@@ -65,7 +65,8 @@
 		POP R2
 		POP R1
 		POP R0
-		LDF
+		;LDF
+		;ADDIB R7,#1
 		RETI
 		
 

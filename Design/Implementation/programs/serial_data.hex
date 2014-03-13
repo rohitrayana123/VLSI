@@ -1,49 +1,18 @@
-5000
-5124
-5248
-536c
-5490
-55b4
-56d8
-57fc
-a707
-f00c
-e2
-1e3
-5248
-1900
-f604
-1240
-5901
-f7fe
-42e1
-f200
-f000
-afff
-a008
-a800
-100
-a200
-aaff
-8328
-43e0
-5f01
-100
-e928
-41e0
-5f01
-a0aa
-a8aa
-40e0
-5f01
-f3e4
-1f01
-e0
-1f01
-1e0
-1f01
-2e0
-a108
-a901
-4020
-f0e4
+// Hex file to specify serial data input
+//
+// each line consists of two hex numbers
+// the first specifies the cycle number
+// the second specifies the data value
+
+// this is a dummy version containing no data
+
+// uncomment the following lines for a simple serial data stream
+//
+	248			7
+	48F			6
+	6D6			5
+	91D			4
+	B64			7
+	DAB			5
+	36B1		3
+	6D61		2
