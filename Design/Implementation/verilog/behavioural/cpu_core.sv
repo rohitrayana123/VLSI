@@ -45,8 +45,9 @@ wire [15:0]	SysBus;
 wire [3:0]	FlagsOut;
 wire FlagListen;
 wire FlagSel;
+`ifndef crosssim
 assign SDO = SDI; // No sim 
-
+`endif
 control control ( 
    .AluOp      (AluOp      ),    // Ouputs  
    .Op2Sel     (Op2Sel     ), 
@@ -89,6 +90,7 @@ control control (
 
 `ifdef crosssim
 wire [15:0] Ir;
+//wire SDO;
 assign Opcode = Ir[15:8];
 `endif
 datapath datapath ( 
@@ -129,7 +131,8 @@ datapath datapath (
    .Clock      (Clock      ),
 `ifdef crosssim
    .Test       (1'b0       ),
-   .SDI		(1'b0      ),
+   .SDI		(SDI      ),
+	.SDO (SDO),
 `endif
    .nReset     (nReset     )
 );
