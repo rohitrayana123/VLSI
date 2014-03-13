@@ -21,7 +21,7 @@ module datapath(
 	input Op1Sel ,
 	input [1:0] Op2Sel ,
 	input PcEn ,
-	input [1:0] PcSel ,
+	input [2:0] PcSel ,
 	input PcWe ,
 	input RegWe ,
 	input [1:0] Rs1Sel ,
