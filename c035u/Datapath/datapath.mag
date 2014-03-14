@@ -1,10 +1,10 @@
 magic
 tech c035u
-timestamp 1394802642
-<< error_s >>
-rect 13700 21313 13714 21314
-rect 13322 21294 13340 21295
-rect 13508 21291 13522 21292
+timestamp 1394833348
+<< checkpaint >>
+rect 11921 22313 18638 22806
+rect 5561 19679 18638 22313
+rect 5561 18095 17377 19679
 << metal1 >>
 rect 433 22062 13243 22072
 rect 13257 22062 23764 22072
@@ -421,110 +421,110 @@ rect 25005 0 25017 92
 rect 25245 84 25445 92
 rect 25259 70 25445 84
 rect 25245 0 25445 70
-use slice17 slice17_0
-timestamp 1394802642
+use slice17  slice17_0
+timestamp 1394833348
 transform 1 0 837 0 1 18908
 box -48 0 24608 2783
-use leftbuf_slice leftbuf_slice_0
+use leftbuf_slice  leftbuf_slice_0
 array 0 0 1685 0 15 1176
 timestamp 1394551156
 transform 1 0 784 0 1 98
 box 0 -6 1685 1170
-use IrAA IrAA_0
+use IrAA  IrAA_0
 array 0 0 1008 0 7 1176
 timestamp 1394489502
 transform 1 0 2469 0 1 9611
 box 0 -111 1008 1065
-use tielow tielow_0
+use tielow  tielow_0
 timestamp 1386086605
 transform 1 0 3477 0 1 17909
 box 0 0 48 799
-use tielow tielow_1
+use tielow  tielow_1
 timestamp 1386086605
 transform 1 0 3477 0 1 16733
 box 0 0 48 799
-use tielow tielow_2
+use tielow  tielow_2
 timestamp 1386086605
 transform 1 0 3477 0 1 15557
 box 0 0 48 799
-use tielow tielow_3
+use tielow  tielow_3
 timestamp 1386086605
 transform 1 0 3477 0 1 14381
 box 0 0 48 799
-use tielow tielow_4
+use tielow  tielow_4
 timestamp 1386086605
 transform 1 0 3477 0 1 13205
 box 0 0 48 799
-use tielow tielow_5
+use tielow  tielow_5
 timestamp 1386086605
 transform 1 0 3477 0 1 12029
 box 0 0 48 799
-use tielow tielow_6
+use tielow  tielow_6
 timestamp 1386086605
 transform 1 0 3477 0 1 10853
 box 0 0 48 799
-use tielow tielow_7
+use tielow  tielow_7
 timestamp 1386086605
 transform 1 0 3477 0 1 9677
 box 0 0 48 799
-use IrBA IrBA_0
+use IrBA  IrBA_0
 array 0 0 1008 0 2 1176
 timestamp 1394489502
 transform 1 0 2469 0 1 6083
 box 0 -111 1008 1065
-use tielow tielow_8
+use tielow  tielow_8
 timestamp 1386086605
 transform 1 0 3477 0 1 8501
 box 0 0 48 799
-use tielow tielow_9
+use tielow  tielow_9
 timestamp 1386086605
 transform 1 0 3477 0 1 7325
 box 0 0 48 799
-use tielow tielow_10
+use tielow  tielow_10
 timestamp 1386086605
 transform 1 0 3477 0 1 6149
 box 0 0 48 799
-use IrBB IrBB_0
+use IrBB  IrBB_0
 array 0 0 1008 0 4 1176
 timestamp 1394489502
 transform 1 0 2469 0 1 204
 box 0 -112 1008 1064
-use tiehigh tiehigh_0
+use tiehigh  tiehigh_0
 timestamp 1386086759
 transform 1 0 3477 0 1 4973
 box 0 0 48 799
-use tielow tielow_12
+use tielow  tielow_12
 timestamp 1386086605
 transform 1 0 3477 0 1 3797
 box 0 0 48 799
-use tielow tielow_13
+use tielow  tielow_13
 timestamp 1386086605
 transform 1 0 3477 0 1 2621
 box 0 0 48 799
-use tielow tielow_14
+use tielow  tielow_14
 timestamp 1386086605
 transform 1 0 3477 0 1 1445
 box 0 0 48 799
-use tielow tielow_15
+use tielow  tielow_15
 timestamp 1386086605
 transform 1 0 3477 0 1 269
 box 0 0 48 799
-use Datapath_slice Datapath_slice_0
+use Datapath_slice  Datapath_slice_0
 array 0 0 12364 0 15 1176
 timestamp 1394725603
 transform 1 0 3525 0 1 92
 box 0 0 20472 1176
-use LLIcell_U LLIcell_U_0
+use LLIcell_U  LLIcell_U_0
 array 0 0 6 0 7 1176
 timestamp 1394560148
 transform 1 0 23997 0 1 9611
 box 0 0 192 1042
-use LLIcell_L LLIcell_L_0
+use LLIcell_L  LLIcell_L_0
 array 0 0 1 0 7 1176
 timestamp 1394447900
 transform 1 0 23997 0 1 203
 box 0 0 192 1042
-use Datapath_end Datapath_end_0
+use Datapath_end  Datapath_end_0
 array 0 0 1256 0 15 1176
 timestamp 1394720841
 transform 1 0 24189 0 1 92
