@@ -479,7 +479,7 @@ always_comb begin
 						PUSH:begin
 							AluEn = 1;
 							ImmSel = ImmShort;
-	            			Rs1Sel = Seven;
+	            					Rs1Sel = Seven;
 							RwSel = RwSeven;
 							Op1Sel = Op1Rd1;
 							AluOp = FnSUB;
@@ -744,7 +744,7 @@ always_comb begin
 									AluOp = FnINC;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
-									//RegWe = 1;
+									RegWe = 1;
 								end
 								3: begin
 									nOE = 1;
@@ -773,20 +773,20 @@ always_comb begin
 		case(stateSub)
 			cycle0:begin
 				Rs1Sel = Seven;//choose sp
-				AluOp = FnADD; //pass it through
+				AluOp = FnDEC; //pass it through
 				Op1Sel = Op1Rd1;
 				Op2Sel = Op2zero;
-				//RegWe = 1;
-				//RwSel = RwSeven;
-				//WdSel = WdAlu;
+				RegWe = 1;
+				RwSel = RwSeven;
+				WdSel = WdAlu;
 				AluWe = 1;
 				AluEn = 1;
 			end
 			cycle1:begin
 			        nWE = 1;
 				nOE = 1;
-				//AluOp = FnDEC;
-				AluOp = FnADD;
+				AluOp = FnDEC;
+				//AluOp = FnADD;
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
 				Rs1Sel = Seven;
