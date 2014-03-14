@@ -773,18 +773,21 @@ always_comb begin
 		case(stateSub)
 			cycle0:begin
 				Rs1Sel = Seven;//choose sp
-				AluOp = FnDEC; //pass it through
+				AluOp = FnADD; //pass it through
 				Op1Sel = Op1Rd1;
-				RegWe = 1;
-				RwSel = RwSeven;
-				WdSel = WdAlu;
+				Op2Sel = Op2zero;
+				//RegWe = 1;
+				//RwSel = RwSeven;
+				//WdSel = WdAlu;
 				AluWe = 1;
 				AluEn = 1;
 			end
 			cycle1:begin
-	            nWE = 1;
+			        nWE = 1;
 				nOE = 1;
-				AluOp = FnDEC;
+				//AluOp = FnDEC;
+				AluOp = FnADD;
+				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
 				Rs1Sel = Seven;
 				AluEn = 1;
@@ -792,7 +795,9 @@ always_comb begin
 			end
 			cycle2: begin
 				nME = 0;
-				AluOp = FnDEC; // Nothing done to op1
+				AluOp = FnADD; // Nothing done to op1
+				Op2Sel = Op2zero;
+				Op1Sel = Op1Rd1;
 				nOE = 1;
 				nWE = 1;
 				AluEn = 1;

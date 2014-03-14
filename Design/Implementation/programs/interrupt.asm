@@ -66,7 +66,6 @@
 		POP R1
 		POP R0
 		;LDF
-		;ADDIB R7,#1
 		RETI
 		
 
@@ -134,8 +133,8 @@
 .multi  PUSH R2
 		PUSH R3
 		PUSH R4
-		LDW R3,[SP,#3]
-		LDW R2,[SP,#4]                                                                                                  
+		LDW R2,[SP,#3]
+		LDW R3,[SP,#4]                                                                                                  
 		SUB R4,R4,R4                                                                                                    
 	    ADDIB R3,#0                                                                                                     
 		BE .end                                                                                                       
@@ -147,4 +146,3 @@
 		POP R3
 		POP R2
 		RET
-
