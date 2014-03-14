@@ -96,24 +96,24 @@ enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states
 	if(!nReset) begin
-      	StatusReg <= #20 0;
+ 	     	StatusReg <= #20 0;
 	  	state <= #20 fetch;
-      	stateSub <= #20 cycle0;
+      		stateSub <= #20 cycle0;
 		InISR <= #20 0;
 	end else begin 
-		// Status update
+	// Status update
       	if (StatusRegWe)
 			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
-		// Interrupt
-		if(state == interrupt)
-			case(stateSub)
-				cycle0: begin stateSub <= #20 cycle1; InISR <= #20 1; end
-				cycle1: stateSub <= #20 cycle2;
-				cycle2: stateSub <= #20 cycle3;
-				cycle3: stateSub <= #20 cycle4;
-				cycle4: begin stateSub <= #20 cycle0; state <= #20 fetch;  end
-			endcase
-	  	// Fetch  
+	// Interrupt
+	if(state == interrupt)
+		case(stateSub)
+			cycle0: begin stateSub <= #20 cycle1; InISR <= #20 1; end
+			cycle1: stateSub <= #20 cycle2;
+			cycle2: stateSub <= #20 cycle3;
+			cycle3: stateSub <= #20 cycle4;
+			cycle4: begin stateSub <= #20 cycle0; state <= #20 fetch;  end
+		endcase
+  	// Fetch  
       	if(state == fetch)
          	case(stateSub)
             	cycle0: stateSub <= #20 cycle1;	
@@ -154,7 +154,7 @@ always_ff@(posedge Clock or negedge nReset) begin
 					if(IntReq)
 						state<= #20 interrupt;
 					else
-	                    state <= #20 fetch;	
+						state <= #20 fetch;	
 					if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
 				end
          	endcase
@@ -163,7 +163,7 @@ end
 
 always_comb begin
    	// Default outputs   
-   	AluOp    = FnA;
+   	AluOp    = FnADD;
    	AluWe    = 0;
    	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
@@ -492,7 +492,8 @@ always_comb begin
 							ImmSel = ImmShort;
 							Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
-							AluOp = FnA;
+							Op2Sel = Op2zero;
+							AluOp = FnADD;
 							AluWe = 1;
 						end 
 						INTERRUPT: begin
@@ -501,8 +502,10 @@ always_comb begin
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
-									AluOp = FnA;	
-	            		            AluWe = 1;	
+									Op2Sel = Op2zero;
+									ImmSel = ImmShort;
+									AluOp = FnADD;	
+	          				 			AluWe = 1;	
 								end //0 
 								1: begin
 									PcWe = 1;
@@ -555,11 +558,12 @@ always_comb begin
 							ALE = 1;
 							nWE = 1;
 							nOE = 1;
-							if(BranchCode == 3 )
-								AluOp = FnDEC;
-							else
-								AluOp = FnINC;
+//							if(BranchCode == 3 )
+//								AluOp = FnDEC;
+//							else
+//								AluOp = FnINC;
 							Op1Sel = Op1Rd1;
+							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
 							AluEn = 1;
 						end
@@ -568,27 +572,28 @@ always_comb begin
          		cycle2: begin
             		case(Opcode)
                			LDW:begin
-							nME = 0;
-                        	Op1Sel = Op1Rd1;
-							AluOp = FnA;		// Nothing done to op1
-                        	Rs1Sel = Rs1Rd;
-							MemEn = 1;
-							nOE = 1;
-							nWE = 1;
-        	               	AluWe = 1;			// Pass right through on next clock
-                	       	AluEn = 1;
-						end
-						STW:begin			// Get the data out of the reg
-                        	nME = 0;
-							Op1Sel = Op1Rd1;
-							AluOp = FnADD;		// Nothing done to op1
-		                    Op2Sel = Op2zero;
-							Rs1Sel = Rs1Rd;
-							nOE = 1;
-	                	    nWE = 1;
-                     		AluWe = 1;			// Pass right through on next clock
-                        	AluEn = 1;
-							end
+					nME = 0;
+                        		Op1Sel = Op1Rd1;
+					AluOp = FnADD;		// Nothing done to op1
+					Op2Sel = Op2zero;
+			             	Rs1Sel = Rs1Rd;
+					MemEn = 1;
+					nOE = 1;
+					nWE = 1;
+        	               		AluWe = 1;			// Pass right through on next clock
+	                	       	AluEn = 1;
+				end
+				STW:begin			// Get the data out of the reg
+        	                	nME = 0;
+					Op1Sel = Op1Rd1;
+					AluOp = FnADD;		// Nothing done to op1
+			                Op2Sel = Op2zero;
+					Rs1Sel = Rs1Rd;
+					nOE = 1;
+	                		nWE = 1;
+	                     		AluWe = 1;			// Pass right through on next clock
+        	                	AluEn = 1;
+				end
 						PUSH:begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
@@ -603,7 +608,8 @@ always_comb begin
 						POP:begin
 						 	nME = 0;
 						  	Op1Sel = Op1Rd1;
-						  	AluOp = FnA; // Nothing done to op1
+						  	AluOp = FnADD; // Nothing done to op1
+							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
 							MemEn = 1;
 							nWE = 1;
@@ -613,11 +619,12 @@ always_comb begin
 						INTERRUPT: begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
+							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
-							AluOp = FnA;
+							AluOp = FnADD;
 							MemEn = 1;
 							nWE = 1;
-							AluWe = 1;
+							//AluWe = 1;
 							AluEn = 1;
 						end
             		endcase
@@ -737,7 +744,7 @@ always_comb begin
 									AluOp = FnINC;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
-									RegWe = 1;
+									//RegWe = 1;
 								end
 								3: begin
 									nOE = 1;
