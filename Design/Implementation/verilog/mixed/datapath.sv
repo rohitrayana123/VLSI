@@ -1,6 +1,6 @@
 // structural model of datapath extracted from datapath.mag
 // created by ext2svmod 5.5
-
+// Written by Henry Lovett hl13g10
 module datapath(
 	output [3:0] Flags ,
 	output [15:0] Ir ,
