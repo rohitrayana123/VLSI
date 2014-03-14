@@ -33,6 +33,13 @@ typedef
 `define FLAGS_V  2
 `define FLAGS_N  3
 
+//Interrupt Sub codes
+`define INT_RETI	0
+`define INT_ENAI	1
+`define INT_DISI	2
+`define INT_LDF		3
+`define INT_STF		4
+
 
 //Program Counter Selction Codes
 typedef enum logic [2:0] 	{PcLr = 3'b011, PcSysbus = 3'b010, PcAluOut = 3'b001, Pc1 = 3'b000, PcInt = 3'b111 } 	pc_select_t;
