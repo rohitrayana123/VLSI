@@ -35,7 +35,7 @@ wire        WdSel;
 wire        ImmSel;  
 wire        RegWe; 
 wire        MemEn;
-wire [1:0]  Rs1Sel;
+wire [1:0]  Rs1Sel, AluOR;
 wire        CFlag;
 wire [3:0]  Flags;
 wire [7:0]  Opcode;  
@@ -71,16 +71,18 @@ control control (
    .ALE        (ALE        ),
    .Rs1Sel     (Rs1Sel     ),
    .RwSel		(RwSel),
-   .FlagSel		(FlagSel),
-   .StatusReg	(FlagsOut),
-   .StatusOut	(FlagListen),
+//   .FlagSel		(FlagSel),
+//   .StatusReg	(FlagsOut),
+//   .StatusOut	(FlagListen),
    .CFlag      (CFlag      ),
    .Flags      (Flags      ),
    .OpcodeCondIn(Opcode     ),    // Inputs
 	`ifndef nowait
   	.nWait		(nWait),
-`endif
+`endif 
+   .SysBus     (Data_out   ),
    .AluWe      (AluWe      ),
+   .AluOR	(AluOR     ),
    .Clock      (Clock      ),
    .nReset     (nReset     )
 `ifndef nointerrupt 
@@ -123,10 +125,11 @@ datapath datapath (
    .RwSel		(RwSel),
    .CFlag      (CFlag      ),
    .AluWe      (AluWe      ),
+   .AluOR	(AluOR	),
 `ifndef crosssim
-   .FlagSel		(FlagSel),
-   .FlagsIn		(FlagsOut),
-   .FlagListen	(FlagListen),
+//   .FlagSel		(FlagSel),
+//   .FlagsIn		(FlagsOut),
+//   .FlagListen	(FlagListen),
 `endif
    .Clock      (Clock      ),
 `ifdef crosssim

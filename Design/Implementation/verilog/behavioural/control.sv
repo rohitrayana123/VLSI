@@ -24,11 +24,11 @@ module control(
    output opcodes::Rs1_select_t     Rs1Sel,
    output opcodes::Rw_select_t		RwSel,
    output logic                     AluWe, 
-   output logic[3:0]			StatusReg,
-   output logic 		StatusOut,
-   output opcodes::Flag_select_t	FlagSel,
+//   output logic[3:0]			StatusReg,
+   output logic [1:0]		AluOR,
    input  wire    [7:0]             OpcodeCondIn,
    input  wire    [3:0]             Flags,
+   inout [15:0] SysBus,
 `ifndef nowait
   	input wire						nWait,
 `endif
@@ -48,8 +48,13 @@ Branch_t BranchCode;
 
 //Flags register
 logic StatusRegWe;
+logic StatusOut;
+logic [3:0] StatusReg;
+Flag_select_t	FlagSel;
+logic [3:0] StatusRegIn;
 
-
+assign SysBus = StatusOut ? {12'b0, StatusReg } : 'bz;
+assign StatusRegIn = (FlagSel == FlagAlu) ? Flags : SysBus[3:0];
 // Type casting
 assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); 
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
@@ -103,7 +108,7 @@ always_ff@(posedge Clock or negedge nReset) begin
 	end else begin 
 	// Status update
       	if (StatusRegWe)
-			StatusReg <= #20 Flags;		// AJR - Put this in here, shoudl be ok right?
+			StatusReg <= #20 StatusRegIn;		// AJR - Put this in here, shoudl be ok right?
 	// Interrupt
 	if(state == interrupt)
 		case(stateSub)
@@ -192,6 +197,7 @@ always_comb begin
 	IntDisable = 0;
 	StatusOut = 0;
 	FlagSel = FlagAlu;
+	AluOR = 0;
 	case(state)
       	fetch : 
          	case(stateSub)
@@ -504,7 +510,7 @@ always_comb begin
 									Op1Sel = Op1Rd1;
 									Op2Sel = Op2zero;
 									ImmSel = ImmShort;
-									AluOp = FnADD;	
+									AluOp = FnADD;
 	          				 			AluWe = 1;	
 								end //0 
 								1: begin
@@ -524,7 +530,8 @@ always_comb begin
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
 									AluOp = FnDEC;	
-	            		            AluWe = 1;
+									AluOR  = 2'b11;
+						      		        AluWe = 1;
 									RegWe = 1;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
@@ -741,7 +748,9 @@ always_comb begin
 									MemEn = 1;
 									nME = 1;
 									Rs1Sel = Seven;
+									Op2Sel = Op2zero;
 									AluOp = FnINC;
+									AluOR = 2'b10;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
 									RegWe = 1;
@@ -755,6 +764,8 @@ always_comb begin
 									MemEn = 1;
 									nWE = 1;	
 									AluOp = FnINC;
+									Op2Sel = Op2zero;
+									AluOR = 2'b10;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
 									RegWe = 1;
@@ -774,6 +785,7 @@ always_comb begin
 			cycle0:begin
 				Rs1Sel = Seven;//choose sp
 				AluOp = FnDEC; //pass it through
+				AluOR = 2'b11;
 				Op1Sel = Op1Rd1;
 				Op2Sel = Op2zero;
 				RegWe = 1;
@@ -786,6 +798,7 @@ always_comb begin
 			        nWE = 1;
 				nOE = 1;
 				AluOp = FnDEC;
+				AluOR = 2'b11;
 				//AluOp = FnADD;
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;

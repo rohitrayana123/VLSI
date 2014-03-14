@@ -10,12 +10,12 @@
 		STW R1,[R0,#1]	; Store 0x001 @ 0xA001
 		LLI R3,#18		; main line -1 in .main
 		ENAI
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
 		BR .main
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
 .isr  	DISI
-		;STF				; Keep flags
+		STF				; Keep flags
 		PUSH R0			; Save only this for now
 		LUI R0,#160
 		LLI R0,#0
@@ -65,7 +65,7 @@
 		POP R2
 		POP R1
 		POP R0
-		;LDF
+		LDF
 		RETI
 		
 
@@ -130,18 +130,31 @@
 
 
 ; Multiply routine
-.multi  PUSH R2
-		PUSH R3
-		PUSH R4
-		LDW R2,[SP,#3]
-		LDW R3,[SP,#4]                                                                                                  
+.multi  	PUSH R2 ; R2 is M
+		PUSH R3 ; R3 is Q
+		PUSH R4 ;R4 Is ACC
+		PUSH R5 ; R5 is counter                                                                                                       
+		PUSH R6 ; R6 is 1
+		PUSH R1 ; R1 is temp
+		LDW R2,[SP,#6]
+		LDW R3,[SP,#7]                                                                                                  
 		SUB R4,R4,R4                                                                                                    
-	    ADDIB R3,#0                                                                                                     
-		BE .end                                                                                                       
-.loop   ADD R4,R4,R2                                                                                                            
-		SUBIB R3,#1                                                                                                     
-	 	BNE .loop                                                                                                        
-.end    STW R4,[SP,#3]                                                                                                          
+		LUI R5,#0 
+		LLI R5,#16 ; load 16 into R5
+		LUI R6,#0
+		LLI R6,#1 ;load 1 into R6
+.multloop	AND R1,R2,R6 ; and
+		CMPI R1,#0
+		BE .shift
+		ADD R4,R4,R3
+.shift		LSL R3,R3,#1
+		LSR R2,R2,#1
+		SUBIB R5,#1
+		BNE .multloop
+.end    STW R4,[SP,#6]                                                                                                    
+		POP R1
+		POP R6
+		POP R5
 	 	POP R4
 		POP R3
 		POP R2

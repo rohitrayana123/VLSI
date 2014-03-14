@@ -28,6 +28,7 @@ module datapath(
 	input [1:0] RwSel ,
 	input SDI ,
 	input Test ,
+	input [1:0] AluOR,
 	input WdSel 
 	);
 
