@@ -1,6 +1,26 @@
 magic
 tech c035u
-timestamp 1394755051
+timestamp 1394841445
+<< nwell >>
+rect 7104 665 7560 1063
+rect 7608 1058 7656 1063
+rect 7607 1010 7656 1058
+rect 7608 665 7656 1010
+<< pwell >>
+rect 7104 264 7560 665
+rect 7608 264 7656 665
+<< pohmic >>
+rect 7104 340 7110 350
+rect 7554 340 7560 350
+rect 7608 340 7656 350
+<< nohmic >>
+rect 7104 1000 7110 1010
+rect 7554 1000 7560 1010
+rect 7607 1000 7656 1010
+<< psubstratetap >>
+rect 7110 340 7554 356
+<< nsubstratetap >>
+rect 7110 994 7554 1010
 << metal1 >>
 rect 2005 1222 2159 1232
 rect 2845 1222 2975 1232
@@ -29,7 +49,7 @@ rect 4981 1178 5015 1188
 rect 5653 1178 5687 1188
 rect 5893 1178 5927 1188
 rect 6109 1179 6143 1189
-rect 6709 1178 7151 1188
+rect 6709 1178 7055 1188
 rect 517 1156 1871 1166
 rect 1885 1156 1967 1166
 rect 1981 1156 2735 1166
@@ -58,7 +78,7 @@ rect 5749 1134 6047 1144
 rect 6061 1134 6239 1144
 rect 6253 1134 6359 1144
 rect 6373 1134 6479 1144
-rect 6829 1134 7127 1144
+rect 6829 1134 7031 1144
 rect 277 1112 1847 1122
 rect 1861 1112 4007 1122
 rect 4021 1112 4127 1122
@@ -88,28 +108,25 @@ rect 5413 1068 5543 1078
 rect 5557 1068 6599 1078
 rect 6613 1068 6743 1078
 rect 6757 1068 6863 1078
-rect 6973 1068 7103 1078
-rect 6984 1046 7080 1056
-rect 7200 1046 7560 1056
-rect 7608 1046 7654 1056
-rect 6984 1023 7080 1033
-rect 7200 1023 7560 1033
-rect 7608 1023 7654 1033
-rect 6984 985 7080 1010
-rect 7200 985 7560 1010
-rect 7608 985 7654 1010
-rect 6984 340 7080 365
-rect 7200 340 7560 365
-rect 7608 340 7654 365
-rect 6984 317 7080 327
-rect 7200 317 7560 327
-rect 7608 317 7654 327
-rect 6984 294 7080 304
-rect 7200 294 7560 304
-rect 7608 294 7654 304
-rect 6984 271 7080 281
-rect 7200 271 7560 281
-rect 7608 271 7654 281
+rect 6973 1068 7007 1078
+rect 7104 1046 7560 1056
+rect 7608 1046 7656 1056
+rect 7104 1023 7560 1033
+rect 7608 1023 7656 1033
+rect 7104 994 7110 1010
+rect 7554 994 7560 1010
+rect 7104 985 7560 994
+rect 7608 985 7656 1010
+rect 7104 356 7560 365
+rect 7104 340 7110 356
+rect 7554 340 7560 356
+rect 7608 340 7656 365
+rect 7104 317 7560 327
+rect 7608 317 7656 327
+rect 7104 294 7560 304
+rect 7608 294 7656 304
+rect 7104 271 7560 281
+rect 7608 271 7656 281
 rect 85 249 1823 259
 rect 1837 249 2327 259
 rect 2341 249 5159 259
@@ -225,7 +242,7 @@ rect 5927 1176 5941 1190
 rect 6095 1176 6109 1190
 rect 6143 1176 6157 1190
 rect 6695 1176 6709 1190
-rect 7151 1176 7165 1190
+rect 7055 1176 7069 1190
 rect 503 1154 517 1168
 rect 1871 1154 1885 1168
 rect 1967 1154 1981 1168
@@ -261,7 +278,7 @@ rect 6239 1132 6253 1146
 rect 6359 1132 6373 1146
 rect 6479 1132 6493 1146
 rect 6815 1132 6829 1146
-rect 7127 1132 7141 1146
+rect 7031 1132 7045 1146
 rect 263 1110 277 1124
 rect 1847 1110 1861 1124
 rect 4007 1110 4021 1124
@@ -295,7 +312,7 @@ rect 6599 1066 6613 1080
 rect 6743 1066 6757 1080
 rect 6863 1066 6877 1080
 rect 6959 1066 6973 1080
-rect 7103 1066 7117 1080
+rect 7007 1066 7021 1080
 rect 71 247 85 261
 rect 1823 247 1837 261
 rect 2327 247 2341 261
@@ -530,9 +547,9 @@ rect 6888 1063 6900 1088
 rect 6912 1063 6924 1110
 rect 6936 1063 6948 1154
 rect 6960 1063 6972 1066
-rect 7104 1063 7116 1066
-rect 7128 1063 7140 1132
-rect 7152 1063 7164 1176
+rect 7008 1063 7020 1066
+rect 7032 1063 7044 1132
+rect 7056 1063 7068 1176
 rect 7584 1063 7596 1239
 rect 72 261 84 264
 rect 192 239 204 264
@@ -629,237 +646,239 @@ rect 6552 151 6564 264
 rect 6648 195 6660 264
 rect 6672 217 6684 264
 rect 6792 195 6804 264
+rect 7080 256 7092 264
+rect 7080 244 7188 256
 rect 6000 0 6012 71
 rect 6456 0 6468 67
 rect 6816 0 6828 137
-rect 7176 0 7188 264
+rect 7176 0 7188 244
 rect 7344 0 7356 93
 rect 7584 0 7596 264
-use inv inv_0
+use inv  inv_0
 timestamp 1386238110
 transform 1 0 0 0 1 264
 box 0 0 120 799
-use inv inv_1
+use inv  inv_1
 timestamp 1386238110
 transform 1 0 120 0 1 264
 box 0 0 120 799
-use inv inv_2
+use inv  inv_2
 timestamp 1386238110
 transform 1 0 240 0 1 264
 box 0 0 120 799
-use inv inv_3
+use inv  inv_3
 timestamp 1386238110
 transform 1 0 360 0 1 264
 box 0 0 120 799
-use inv inv_4
+use inv  inv_4
 timestamp 1386238110
 transform 1 0 480 0 1 264
 box 0 0 120 799
-use and2 and2_4
+use and2  and2_4
 timestamp 1386234845
 transform 1 0 600 0 1 264
 box 0 0 120 799
-use xor2 xor2_3
+use xor2  xor2_3
 timestamp 1386237344
 transform 1 0 720 0 1 264
 box 0 0 192 799
-use xor2 xor2_4
+use xor2  xor2_4
 timestamp 1386237344
 transform 1 0 912 0 1 264
 box 0 0 192 799
-use xor2 xor2_5
+use xor2  xor2_5
 timestamp 1386237344
 transform 1 0 1104 0 1 264
 box 0 0 192 799
-use rowcrosser rowcrosser_1
+use rowcrosser  rowcrosser_1
 timestamp 1386086759
 transform 1 0 1296 0 1 264
 box 0 0 48 799
-use inv inv_6
+use inv  inv_6
 timestamp 1386238110
 transform 1 0 1344 0 1 264
 box 0 0 120 799
-use nand3 nand3_3
+use nand3  nand3_3
 timestamp 1386234893
 transform 1 0 1464 0 1 264
 box 0 0 120 799
-use nand2 nand2_2
+use nand2  nand2_2
 timestamp 1386234792
 transform 1 0 1584 0 1 264
 box 0 0 96 799
-use nand3 nand3_0
+use nand3  nand3_0
 timestamp 1386234893
 transform 1 0 1680 0 1 264
 box 0 0 120 799
-use nand3 nand3_1
+use nand3  nand3_1
 timestamp 1386234893
 transform 1 0 1800 0 1 264
 box 0 0 120 799
-use nand2 nand2_0
+use nand2  nand2_0
 timestamp 1386234792
 transform 1 0 1920 0 1 264
 box 0 0 96 799
-use nand2 nand2_1
+use nand2  nand2_1
 timestamp 1386234792
 transform 1 0 2016 0 1 264
 box 0 0 96 799
-use nand2 nand2_16
+use nand2  nand2_16
 timestamp 1386234792
 transform 1 0 2112 0 1 264
 box 0 0 96 799
-use nand2 nand2_17
+use nand2  nand2_17
 timestamp 1386234792
 transform 1 0 2208 0 1 264
 box 0 0 96 799
-use nand3 nand3_2
+use nand3  nand3_2
 timestamp 1386234893
 transform 1 0 2304 0 1 264
 box 0 0 120 799
-use nand2 nand2_18
+use nand2  nand2_18
 timestamp 1386234792
 transform 1 0 2424 0 1 264
 box 0 0 96 799
-use nor3 nor3_0
+use nor3  nor3_0
 timestamp 1386235396
 transform 1 0 2520 0 1 264
 box 0 0 144 799
-use nor3 nor3_6
+use nor3  nor3_6
 timestamp 1386235396
 transform 1 0 2664 0 1 264
 box 0 0 144 799
-use nor3 nor3_7
+use nor3  nor3_7
 timestamp 1386235396
 transform 1 0 2808 0 1 264
 box 0 0 144 799
-use nor3 nor3_8
+use nor3  nor3_8
 timestamp 1386235396
 transform 1 0 2952 0 1 264
 box 0 0 144 799
-use nor3 nor3_9
+use nor3  nor3_9
 timestamp 1386235396
 transform 1 0 3096 0 1 264
 box 0 0 144 799
-use nor3 nor3_10
+use nor3  nor3_10
 timestamp 1386235396
 transform 1 0 3240 0 1 264
 box 0 0 144 799
-use nor3 nor3_11
+use nor3  nor3_11
 timestamp 1386235396
 transform 1 0 3384 0 1 264
 box 0 0 144 799
-use nor3 nor3_12
+use nor3  nor3_12
 timestamp 1386235396
 transform 1 0 3528 0 1 264
 box 0 0 144 799
-use nor3 nor3_13
+use nor3  nor3_13
 timestamp 1386235396
 transform 1 0 3672 0 1 264
 box 0 0 144 799
-use nand3 nand3_4
+use nand3  nand3_4
 timestamp 1386234893
 transform 1 0 3816 0 1 264
 box 0 0 120 799
-use nand3 nand3_5
+use nand3  nand3_5
 timestamp 1386234893
 transform 1 0 3936 0 1 264
 box 0 0 120 799
-use nand3 nand3_6
+use nand3  nand3_6
 timestamp 1386234893
 transform 1 0 4056 0 1 264
 box 0 0 120 799
-use nand3 nand3_7
+use nand3  nand3_7
 timestamp 1386234893
 transform 1 0 4176 0 1 264
 box 0 0 120 799
-use nor2 nor2_0
+use nor2  nor2_0
 timestamp 1386235306
 transform 1 0 4296 0 1 264
 box 0 0 120 799
-use nor3 nor3_15
+use nor3  nor3_15
 timestamp 1386235396
 transform 1 0 4416 0 1 264
 box 0 0 144 799
-use nor3 nor3_16
+use nor3  nor3_16
 timestamp 1386235396
 transform 1 0 4560 0 1 264
 box 0 0 144 799
-use nor3 nor3_2
+use nor3  nor3_2
 timestamp 1386235396
 transform 1 0 4704 0 1 264
 box 0 0 144 799
-use nor3 nor3_3
+use nor3  nor3_3
 timestamp 1386235396
 transform 1 0 4848 0 1 264
 box 0 0 144 799
-use nor2 nor2_1
+use nor2  nor2_1
 timestamp 1386235306
 transform 1 0 4992 0 1 264
 box 0 0 120 799
-use nor3 nor3_4
+use nor3  nor3_4
 timestamp 1386235396
 transform 1 0 5112 0 1 264
 box 0 0 144 799
-use and2 and2_3
+use and2  and2_3
 timestamp 1386234845
 transform 1 0 5256 0 1 264
 box 0 0 120 799
-use nand4 nand4_2
+use nand4  nand4_2
 timestamp 1386234936
 transform 1 0 5376 0 1 264
 box 0 0 144 799
-use nand4 nand4_3
+use nand4  nand4_3
 timestamp 1386234936
 transform 1 0 5520 0 1 264
 box 0 0 144 799
-use nand2 nand2_4
+use nand2  nand2_4
 timestamp 1386234792
 transform 1 0 5664 0 1 264
 box 0 0 96 799
-use nor3 nor3_1
+use nor3  nor3_1
 timestamp 1386235396
 transform 1 0 5760 0 1 264
 box 0 0 144 799
-use nand3 nand3_9
+use nand3  nand3_9
 timestamp 1386234893
 transform 1 0 5904 0 1 264
 box 0 0 120 799
-use nand2 nand2_5
+use nand2  nand2_5
 timestamp 1386234792
 transform 1 0 6024 0 1 264
 box 0 0 96 799
-use nand2 nand2_6
+use nand2  nand2_6
 timestamp 1386234792
 transform 1 0 6120 0 1 264
 box 0 0 96 799
-use and2 and2_0
+use and2  and2_0
 timestamp 1386234845
 transform 1 0 6216 0 1 264
 box 0 0 120 799
-use and2 and2_1
+use and2  and2_1
 timestamp 1386234845
 transform 1 0 6336 0 1 264
 box 0 0 120 799
-use and2 and2_2
+use and2  and2_2
 timestamp 1386234845
 transform 1 0 6456 0 1 264
 box 0 0 120 799
-use nand4 nand4_4
+use nand4  nand4_4
 timestamp 1386234936
 transform 1 0 6576 0 1 264
 box 0 0 144 799
-use nand3 nand3_10
+use nand3  nand3_10
 timestamp 1386234893
 transform 1 0 6720 0 1 264
 box 0 0 120 799
-use nand4 nand4_5
+use nand4  nand4_5
 timestamp 1386234936
 transform 1 0 6840 0 1 264
 box 0 0 144 799
-use nand3 nand3_11
+use nand3  nand3_11
 timestamp 1386234893
-transform 1 0 7080 0 1 264
+transform 1 0 6984 0 1 264
 box 0 0 120 799
-use rowcrosser rowcrosser_0
+use rowcrosser  rowcrosser_0
 timestamp 1386086759
 transform 1 0 7560 0 1 264
 box 0 0 48 799
@@ -882,14 +901,7 @@ rlabel m2contact 3917 1183 3917 1183 1 ABnC
 rlabel m2contact 4277 1225 4277 1225 1 AnBnC
 rlabel m2contact 4156 1203 4156 1203 1 AnBC
 rlabel m2contact 4037 1180 4037 1180 1 ABC
-rlabel metal1 7654 294 7654 304 7 Test
-rlabel metal1 7654 271 7654 281 7 nReset
-rlabel metal1 7654 317 7654 327 7 Clock
-rlabel metal1 7654 1046 7654 1056 1 ScanReturn
-rlabel metal1 7654 1023 7654 1033 1 Scan
 rlabel metal1 5250 143 5250 143 1 ShSign
-rlabel metal1 7654 340 7654 365 7 GND!
-rlabel metal1 7654 985 7654 1010 7 Vdd!
 rlabel metal1 336 211 336 211 1 nC
 rlabel metal1 104 253 104 253 1 nA
 rlabel metal1 210 231 210 231 1 nB
@@ -923,4 +935,11 @@ rlabel metal2 7584 1239 7596 1239 5 OutEn
 rlabel metal2 7584 0 7596 0 1 OutEn
 rlabel metal2 7176 0 7188 0 1 ShOut
 rlabel metal2 7344 0 7356 0 1 LLI
+rlabel metal1 7656 294 7656 304 7 Test
+rlabel metal1 7656 271 7656 281 7 nReset
+rlabel metal1 7656 317 7656 327 7 Clock
+rlabel metal1 7656 1046 7656 1056 1 ScanReturn
+rlabel metal1 7656 1023 7656 1033 1 Scan
+rlabel metal1 7656 340 7656 365 7 GND!
+rlabel metal1 7656 985 7656 1010 7 Vdd!
 << end >>
