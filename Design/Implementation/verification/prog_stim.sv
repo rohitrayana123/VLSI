@@ -68,28 +68,14 @@ end
 // Only on rising clock edges
 always @(posedge Clock) begin
    ClockCount = ClockCount + 1;
-   $display("\n\n\n");
-   $display("SIM TIME   =%d\nClockCount =%d\n",
-      $time,
-      ClockCount
+   $display("\n\n");
+   $display("SIM TIME 	= %d\nClock Cycles 	= %d\nSwitches 	= %d\nLEDs		= %d",
+      	$time,
+      	ClockCount,
+		switches,
+		LEDs
    );
-   $display("SysBus=%x\n",
-       cpu.CPU_core.datapath.SysBus
-   );
-   $display("Opcode=%b\n",
-      cpu.CPU_core.control.Opcode
-   );
-   $display(
-      "General Purpose Registers\n0=%x\n1=%x\n2=%x\n3=%x\n4=%x\n5=%x\n6=%x\n7=%x\n",
-      cpu.CPU_core.datapath.regBlock.regs[0],
-      cpu.CPU_core.datapath.regBlock.regs[1],
-      cpu.CPU_core.datapath.regBlock.regs[2],
-      cpu.CPU_core.datapath.regBlock.regs[3],
-      cpu.CPU_core.datapath.regBlock.regs[4],
-      cpu.CPU_core.datapath.regBlock.regs[5],
-      cpu.CPU_core.datapath.regBlock.regs[6],
-      cpu.CPU_core.datapath.regBlock.regs[7]
-   );
+   
 end
 
 initial begin
@@ -107,53 +93,10 @@ end
    `include "monitor.sv"
 `endif
 
-//initial begin
-//	
-//// int 1
-//	switches = 8;
-//	nIRQ = 1;
-//	#400000 nIRQ = 0;
-//	#500   nIRQ = 1;
-//	
-//// int 2
-//	#100000000
-//	switches = 7;
-//	#40000 nIRQ = 0;
-//	#500 nIRQ = 1;
-//	#1000
-//	switches = 6;
-//	#40000 nIRQ = 0;
-//	#500 nIRQ = 1;
-//
-//// int 4
-//	#100000000
-//	switches = 5;
-//	#40000 nIRQ = 0;
-//	#500 nIRQ = 1;
-//
-//// int 5
-//	#100000000
-//	switches = 4;
-//	#40000 nIRQ = 0;
-//	#500 nIRQ = 1;
-//
-//
-//// int 6
-//	#100000000
-//	switches = 3;
-//	#40000 nIRQ = 0;
-//	#500 nIRQ = 1;
-//
-//
-//
-//
-//end
-
-// If this stops sim then probably looped
-initial begin
-	#100000000000
+// Controled stops
+always begin
+	#10000000
 	$stop;
-	$finish;
 end
 
 initial begin
