@@ -1,131 +1,131 @@
-@a707			LUI SP, #7		; Setup SP
-@afd1			LLI SP, #209	; Comes down from 2000
-@a008			LUI R0, #8		; Address in R0
-@a800           LLI R0, #0
-@0000           LDW R0,[R0,#0]	; Read switches into R0
-@a100           LUI R1, #0		
-@a9ff           LLI R1, #255	; 0x00FF in R1
-@8104           AND R1,R0,R1	; Lower byte of switches in R1
-@e808           LSR R0,R0,#8	; Upper byte of switches in R0
-@4801			PUSH R0
-@4821           PUSH R1
-@f307           BWL .multi		; Run Subroutine
-@0821           POP R1
-@0801           POP R0	
-@a408           LUI R4, #8
-@ac01           LLI R4, #1		; Address of LEDS
-@4180           STW R1,[R4,#0]	; Result on LEDS
-@f000	.end 	BR .end
-@4841	.multi  PUSH R2 		; R2 is M
-@4861   		PUSH R3 		; R3 is Q
-@4881   		PUSH R4 		; R4 Is ACC
-@48c1   		PUSH R6 		; R6 is 1
-@4821   		PUSH R1 		; R1 is temp
-@02e5   		LDW R2,[SP,#5]
-@03e6   		LDW R3,[SP,#6]                              
-@5490   		SUB R4,R4,R4                                
-@a600   		LUI R6,#0
-@ae01   		LLI R6,#1 		; load 1 into R6 for compare
-@8158			AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh1
-@148c   		ADD R4,R4,R3
-@fb61   .sh1	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1  
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh2
-@148c   		ADD R4,R4,R3
-@fb61   .sh2	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh3
-@148c   		ADD R4,R4,R3
-@fb61   .sh3	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh4
-@148c   		ADD R4,R4,R3
-@fb61   .sh4	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh5
-@148c   		ADD R4,R4,R3
-@fb61   .sh5	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh6
-@148c   		ADD R4,R4,R3
-@fb61   .sh6	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh7
-@148c   		ADD R4,R4,R3
-@fb61   .sh7	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh8
-@148c   		ADD R4,R4,R3
-@fb61   .sh8	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh9
-@148c   		ADD R4,R4,R3
-@fb61   .sh9	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh10
-@148c   		ADD R4,R4,R3
-@fb61   .sh10	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh11
-@148c   		ADD R4,R4,R3
-@fb61   .sh11	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh12
-@148c   		ADD R4,R4,R3
-@fb61   .sh12	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh13
-@148c   		ADD R4,R4,R3
-@fb61   .sh13	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh14
-@148c   		ADD R4,R4,R3
-@fb61   .sh14	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh15
-@148c   		ADD R4,R4,R3
-@fb61   .sh15	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@8158   		AND R1,R2,R6 
-@7820   		CMPI R1,#0
-@f702   		BE .sh16
-@148c   		ADD R4,R4,R3
-@fb61   .sh16	LSL R3,R3,#1
-@ea41   		LSR R2,R2,#1
-@44e5   		STW R4,[SP,#5]
-@0821			POP R1
-@08c1           POP R6
-@0881           POP R4
-@0861           POP R3
-@0841           POP R2
-@f200			RET
+@0000		a707	//				LUI SP, #7		; Setup SP
+@0001		afd1	//				LLI SP, #209	; Comes down from 2000
+@0002		a008	//				LUI R0, #8		; Address in R0
+@0003		a800	//	           LLI R0, #0
+@0004		0000	//	           LDW R0,[R0,#0]	; Read switches into R0
+@0005		a100	//	           LUI R1, #0		
+@0006		a9ff	//	           LLI R1, #255	; 0x00FF in R1
+@0007		8104	//	           AND R1,R0,R1	; Lower byte of switches in R1
+@0008		e808	//	           LSR R0,R0,#8	; Upper byte of switches in R0
+@0009		4801	//				PUSH R0
+@000a		4821	//	           PUSH R1
+@000b		f307	//	           BWL .multi		; Run Subroutine
+@000c		0821	//	           POP R1
+@000d		0801	//	           POP R0	
+@000e		a408	//	           LUI R4, #8
+@000f		ac01	//	           LLI R4, #1		; Address of LEDS
+@0010		4180	//	           STW R1,[R4,#0]	; Result on LEDS
+@0011		f000	//		.end 	BR .end
+@0012		4841	//		.multi  PUSH R2 		; R2 is M
+@0013		4861	//	   		PUSH R3 		; R3 is Q
+@0014		4881	//	   		PUSH R4 		; R4 Is ACC
+@0015		48c1	//	   		PUSH R6 		; R6 is 1
+@0016		4821	//	   		PUSH R1 		; R1 is temp
+@0017		02e5	//	   		LDW R2,[SP,#5]
+@0018		03e6	//	   		LDW R3,[SP,#6]                              
+@0019		5490	//	   		SUB R4,R4,R4                                
+@001a		a600	//	   		LUI R6,#0
+@001b		ae01	//	   		LLI R6,#1 		; load 1 into R6 for compare
+@001c		8158	//				AND R1,R2,R6 
+@001d		7820	//	   		CMPI R1,#0
+@001e		f702	//	   		BE .sh1
+@001f		148c	//	   		ADD R4,R4,R3
+@0020		fb61	//	   .sh1	LSL R3,R3,#1
+@0021		ea41	//	   		LSR R2,R2,#1  
+@0022		8158	//	   		AND R1,R2,R6 
+@0023		7820	//	   		CMPI R1,#0
+@0024		f702	//	   		BE .sh2
+@0025		148c	//	   		ADD R4,R4,R3
+@0026		fb61	//	   .sh2	LSL R3,R3,#1
+@0027		ea41	//	   		LSR R2,R2,#1
+@0028		8158	//	   		AND R1,R2,R6 
+@0029		7820	//	   		CMPI R1,#0
+@002a		f702	//	   		BE .sh3
+@002b		148c	//	   		ADD R4,R4,R3
+@002c		fb61	//	   .sh3	LSL R3,R3,#1
+@002d		ea41	//	   		LSR R2,R2,#1
+@002e		8158	//	   		AND R1,R2,R6 
+@002f		7820	//	   		CMPI R1,#0
+@0030		f702	//	   		BE .sh4
+@0031		148c	//	   		ADD R4,R4,R3
+@0032		fb61	//	   .sh4	LSL R3,R3,#1
+@0033		ea41	//	   		LSR R2,R2,#1
+@0034		8158	//	   		AND R1,R2,R6 
+@0035		7820	//	   		CMPI R1,#0
+@0036		f702	//	   		BE .sh5
+@0037		148c	//	   		ADD R4,R4,R3
+@0038		fb61	//	   .sh5	LSL R3,R3,#1
+@0039		ea41	//	   		LSR R2,R2,#1
+@003a		8158	//	   		AND R1,R2,R6 
+@003b		7820	//	   		CMPI R1,#0
+@003c		f702	//	   		BE .sh6
+@003d		148c	//	   		ADD R4,R4,R3
+@003e		fb61	//	   .sh6	LSL R3,R3,#1
+@003f		ea41	//	   		LSR R2,R2,#1
+@0040		8158	//	   		AND R1,R2,R6 
+@0041		7820	//	   		CMPI R1,#0
+@0042		f702	//	   		BE .sh7
+@0043		148c	//	   		ADD R4,R4,R3
+@0044		fb61	//	   .sh7	LSL R3,R3,#1
+@0045		ea41	//	   		LSR R2,R2,#1
+@0046		8158	//	   		AND R1,R2,R6 
+@0047		7820	//	   		CMPI R1,#0
+@0048		f702	//	   		BE .sh8
+@0049		148c	//	   		ADD R4,R4,R3
+@004a		fb61	//	   .sh8	LSL R3,R3,#1
+@004b		ea41	//	   		LSR R2,R2,#1
+@004c		8158	//	   		AND R1,R2,R6 
+@004d		7820	//	   		CMPI R1,#0
+@004e		f702	//	   		BE .sh9
+@004f		148c	//	   		ADD R4,R4,R3
+@0050		fb61	//	   .sh9	LSL R3,R3,#1
+@0051		ea41	//	   		LSR R2,R2,#1
+@0052		8158	//	   		AND R1,R2,R6 
+@0053		7820	//	   		CMPI R1,#0
+@0054		f702	//	   		BE .sh10
+@0055		148c	//	   		ADD R4,R4,R3
+@0056		fb61	//	   .sh10	LSL R3,R3,#1
+@0057		ea41	//	   		LSR R2,R2,#1
+@0058		8158	//	   		AND R1,R2,R6 
+@0059		7820	//	   		CMPI R1,#0
+@005a		f702	//	   		BE .sh11
+@005b		148c	//	   		ADD R4,R4,R3
+@005c		fb61	//	   .sh11	LSL R3,R3,#1
+@005d		ea41	//	   		LSR R2,R2,#1
+@005e		8158	//	   		AND R1,R2,R6 
+@005f		7820	//	   		CMPI R1,#0
+@0060		f702	//	   		BE .sh12
+@0061		148c	//	   		ADD R4,R4,R3
+@0062		fb61	//	   .sh12	LSL R3,R3,#1
+@0063		ea41	//	   		LSR R2,R2,#1
+@0064		8158	//	   		AND R1,R2,R6 
+@0065		7820	//	   		CMPI R1,#0
+@0066		f702	//	   		BE .sh13
+@0067		148c	//	   		ADD R4,R4,R3
+@0068		fb61	//	   .sh13	LSL R3,R3,#1
+@0069		ea41	//	   		LSR R2,R2,#1
+@006a		8158	//	   		AND R1,R2,R6 
+@006b		7820	//	   		CMPI R1,#0
+@006c		f702	//	   		BE .sh14
+@006d		148c	//	   		ADD R4,R4,R3
+@006e		fb61	//	   .sh14	LSL R3,R3,#1
+@006f		ea41	//	   		LSR R2,R2,#1
+@0070		8158	//	   		AND R1,R2,R6 
+@0071		7820	//	   		CMPI R1,#0
+@0072		f702	//	   		BE .sh15
+@0073		148c	//	   		ADD R4,R4,R3
+@0074		fb61	//	   .sh15	LSL R3,R3,#1
+@0075		ea41	//	   		LSR R2,R2,#1
+@0076		8158	//	   		AND R1,R2,R6 
+@0077		7820	//	   		CMPI R1,#0
+@0078		f702	//	   		BE .sh16
+@0079		148c	//	   		ADD R4,R4,R3
+@007a		fb61	//	   .sh16	LSL R3,R3,#1
+@007b		ea41	//	   		LSR R2,R2,#1
+@007c		44e5	//	   		STW R4,[SP,#5]
+@007d		0821	//				POP R1
+@007e		08c1	//	           POP R6
+@007f		0881	//	           POP R4
+@0080		0861	//	           POP R3
+@0081		0841	//	           POP R2
+@0082		f200	//				RET 
