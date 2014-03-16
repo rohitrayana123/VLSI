@@ -61,7 +61,7 @@ def RunSim(options):
 	else:
 		cmd.append(behave)
 		cmd.append("+incdir+%s" % behave)
-	
+
 	cmd.append("-y")
 	cmd.append(system)
 	cmd.append("+incdir+%s" % system)
@@ -82,7 +82,7 @@ def RunSim(options):
 			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
 
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
-
+		cmd.append('+define+data_file=\\\"%s\\\"' % os.path.join(programs,"serial_data.hex"))	# Only use if enabled by program
 	# Hard code for bim
 	cmd.append('+define+switch_value=2569')
 
@@ -130,7 +130,7 @@ if "__main__" == __name__:
 
 	parser.add_option("-M", "--magic", dest="magic", action="store_true", default=False,
                   help="runs the simulation using the magic layout.")
-	
+
 	parser.add_option("-c", "--mixed", dest="mixed", action="store_true", default=False,
                   help="runs the cross simulation.")
 
