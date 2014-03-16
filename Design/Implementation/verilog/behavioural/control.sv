@@ -43,6 +43,12 @@ timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
 
+`define FLAGS_Z  0
+`define FLAGS_C  1
+`define FLAGS_V  2
+`define FLAGS_N  3
+
+
 Opcode_t Opcode;
 Branch_t BranchCode;
 
@@ -673,7 +679,8 @@ always_comb begin
 							WdSel = WdAlu;
 							ImmSel = ImmShort;
 							Op2Sel = Op2Imm;
-							RegWe = 1;
+							if(nWait)
+								RegWe = 1;		// Can get caught up
 							Rs1Sel = Seven;
 							WdSel = WdAlu;
 							RwSel = RwSeven;
