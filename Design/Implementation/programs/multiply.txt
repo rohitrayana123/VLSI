@@ -1,45 +1,131 @@
-						; Sys Init		
-@0000	a707			LUI R7, #7		; Setup SP
-@0001	afff			LLI R7, #255
-		
-						; Read data		
-@0002	a008			LUI R0, #8		; Address in R0
-@0003	a800			LLI R0, #0
-@0004	0000			LDW R0,[R0,#0]	; Read switches into R0
-@0005	a100			LUI R1, #0		
-@0006	a9ff			LLI R1, #255	; 0x00FF in R1
-@0007	8104			AND R1,R0,R1	; Lower byte of switches in R1	
-@0008	e808			LSR R0,R1,#8	; Upper byte of switches in R0	
-
-						; Call subroutine 
-@0009	40e0			STW R0,[R7,#0]	; Param 1 = R1, Upper	
-@000a	5f01			SUBIB R8,#1
-@000b	41e0			STW R1,[R7,#0]	; Param 2 = R2, Lower
-@000c	5f01			SUBIB R7,#1
-@000d	42e0			STW R2,[R7,#0]	; Placeholder = 0
-@000e	5f01			SUBIB R7,#1		; Created stack frame	
-@000f	f30b			BWL .multi		; Run Subroutine
-@0010	1f01			ADDIB R7,#1		; Restore regist
-@0011	02e0        	LDW R2,[R7,#0]	; Result in R2
-@0012	1f01        	ADDIB R7,#1	
-@0013	01e0        	LDW R1,[R7,#0]	; Restore R1	
-@0014	1f01        	ADDIB R7,#1
-@0015	00e0        	LDW R0,[R7,#0]	; Restire R0	
-@0016	a408        	LUI R4, #8
-@0017	ac01        	LLI R4, #1		; Address of LEDS
-@0018	4280        	STW R2,[R4,#0]	; Result on LEDS
-
-						; Finish loop
-@0019	f000	.end 	BR .end			; Finshed loop
-
-						; Multiply loop
-@001a	00e2	.multi	LDW R0,[R7,#2]	; Op1 in R0
-@001b	01e3            LDW R1,[R7,#3]	; Op2 in R1
-@001c	5248            SUB R2,R2,R2	; Zero in R2
-@001d	1900            ADDIB R1,#0		; Check Op2 is not zero
-@001e	f604            BNE .done
-@001f	1240  	.loop	ADD R2,R2,R0	; Add Op1
-@0020	5901            SUBIB R1,#1		; Dec Op2
-@0021	f7fe            BE .loop
-@0022	42e1  	.done	STW R2,[R7,#1]	; Store result in the place holder
-@0023	f200			RET
+@a707			LUI SP, #7		; Setup SP
+@afd1			LLI SP, #209	; Comes down from 2000
+@a008			LUI R0, #8		; Address in R0
+@a800           LLI R0, #0
+@0000           LDW R0,[R0,#0]	; Read switches into R0
+@a100           LUI R1, #0		
+@a9ff           LLI R1, #255	; 0x00FF in R1
+@8104           AND R1,R0,R1	; Lower byte of switches in R1
+@e808           LSR R0,R0,#8	; Upper byte of switches in R0
+@4801			PUSH R0
+@4821           PUSH R1
+@f307           BWL .multi		; Run Subroutine
+@0821           POP R1
+@0801           POP R0	
+@a408           LUI R4, #8
+@ac01           LLI R4, #1		; Address of LEDS
+@4180           STW R1,[R4,#0]	; Result on LEDS
+@f000	.end 	BR .end
+@4841	.multi  PUSH R2 		; R2 is M
+@4861   		PUSH R3 		; R3 is Q
+@4881   		PUSH R4 		; R4 Is ACC
+@48c1   		PUSH R6 		; R6 is 1
+@4821   		PUSH R1 		; R1 is temp
+@02e5   		LDW R2,[SP,#5]
+@03e6   		LDW R3,[SP,#6]                              
+@5490   		SUB R4,R4,R4                                
+@a600   		LUI R6,#0
+@ae01   		LLI R6,#1 		; load 1 into R6 for compare
+@8158			AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh1
+@148c   		ADD R4,R4,R3
+@fb61   .sh1	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1  
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh2
+@148c   		ADD R4,R4,R3
+@fb61   .sh2	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh3
+@148c   		ADD R4,R4,R3
+@fb61   .sh3	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh4
+@148c   		ADD R4,R4,R3
+@fb61   .sh4	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh5
+@148c   		ADD R4,R4,R3
+@fb61   .sh5	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh6
+@148c   		ADD R4,R4,R3
+@fb61   .sh6	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh7
+@148c   		ADD R4,R4,R3
+@fb61   .sh7	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh8
+@148c   		ADD R4,R4,R3
+@fb61   .sh8	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh9
+@148c   		ADD R4,R4,R3
+@fb61   .sh9	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh10
+@148c   		ADD R4,R4,R3
+@fb61   .sh10	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh11
+@148c   		ADD R4,R4,R3
+@fb61   .sh11	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh12
+@148c   		ADD R4,R4,R3
+@fb61   .sh12	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh13
+@148c   		ADD R4,R4,R3
+@fb61   .sh13	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh14
+@148c   		ADD R4,R4,R3
+@fb61   .sh14	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh15
+@148c   		ADD R4,R4,R3
+@fb61   .sh15	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@8158   		AND R1,R2,R6 
+@7820   		CMPI R1,#0
+@f702   		BE .sh16
+@148c   		ADD R4,R4,R3
+@fb61   .sh16	LSL R3,R3,#1
+@ea41   		LSR R2,R2,#1
+@44e5   		STW R4,[SP,#5]
+@0821			POP R1
+@08c1           POP R6
+@0881           POP R4
+@0861           POP R3
+@0841           POP R2
+@f200			RET
