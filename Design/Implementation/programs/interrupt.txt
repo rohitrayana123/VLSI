@@ -1,0 +1,226 @@
+@0000	ca00	//				DISI			; Reset is off anyway                                                                             	
+@0001   a707	//      		LUI R7, #7		; Setup SP
+@0002   afff	//      		LLI R7, #255
+@0003   a001	//      		LUI	R0,	#1		; R0 is read ptr	0x0100
+@0004   3102	//      		ADDI R1,R0,#2	; 0x0102
+@0005   4100	//      		STW R1,[R0,#0]	; Read ptr set to   0x0102			
+@0006   4101	//      		STW R1,[R0,#1]	; Write ptr set to 	0x0102
+@0007   a0a0	//      		LUI R0,#160		; Address of Serial control reg
+@0008   a901	//      		LLI R1,#01		; Data to enable ints
+@0009   4101	//      		STW R1,[R0,#1]	; Store 0x001 @ 0xA001
+@000a   ab12	//      		LLI R3,#18		; main line -1 in .main
+@000b   c900	//      		ENAI
+@000c   1800	//      		ADDIB R0,#0
+@000d   1800	//      		ADDIB R0,#0
+@000e   1800	//      		ADDIB R0,#0
+@000f   f02b	//      		BR .main
+@0010   ca00	//      .isr  	DISI
+@0011   cb00	//      		STF				; Keep flags
+@0012   4801	//      		PUSH R0			; Save only this for now
+@0013   a0a0	//      		LUI R0,#160
+@0014   a800	//      		LLI R0,#0
+@0015   0000	//      		LDW R0,[R0,#0]	; R1 contains read serial data
+@0016   c900	//      		ENAI
+@0017   4821	//      		PUSH R1
+@0018   4841	//      		PUSH R2
+@0019   4861	//      		PUSH R3
+@001a   4881	//      		PUSH R4
+@001b   a101	//      		LUI R1,#1
+@001c   a900	//      		LLI R1,#0
+@001d   0220	//      		LDW R2,[R1,#0]	; R2 contains read ptr
+@001e   3321	//      		ADDI R3,R1,#1
+@001f   0460	//      		LDW R4,[R3,#0]	; R4 contain the write ptr
+@0020   5a01	//      		SUBIB R2,#1		; Get out if W == R - 1
+@0021   3888	//      		CMP R4,R2
+@0022   f711	//      		BE .isrOut
+@0023   1a01	//      		ADDIB R2,#1
+@0024   a101	//      		LUI R1,#1
+@0025   a902	//      		LLI R1,#2
+@0026   3844	//      		CMP R2,R1
+@0027   f604	//      		BNE .write	
+@0028   1903	//      		ADDIB R1,#3
+@0029   3884	//      		CMP R4,R1
+@002a   f709	//      		BE .isrOut
+@002b   4080	//      .write	STW R0,[R4,#0]	; Write to buffer
+@002c   1c01	//      		ADDIB R4,#1
+@002d   a101	//      		LUI R1,#1
+@002e   a906	//      		LLI R1,#6
+@002f   3830	//      		CMP R1,R4
+@0030   f602	//      		BNE .wrapW
+@0031   5c04	//      		SUBIB R4,#4
+@0032   4460	//      .wrapW	STW R4,[R3,#0]	; Inc write ptr
+@0033   0881	//      .isrOut	POP R4
+@0034   0861	//      		POP R3
+@0035   0841	//      		POP R2
+@0036   0821	//      		POP R1
+@0037   0801	//      		POP R0
+@0038   cc00	//      		LDF
+@0039   c8e0	//      		RETI
+@003a   a001	//      .main	LUI R0, #1		; Read ptr address in R0
+@003b   a800	//      		LLI R0, #0	
+@003c   0200	//      		LDW R2,[R0,#0]	; Read ptr in R2
+@003d   0301	//      		LDW R3,[R0,#1]	; Write ptr in R3
+@003e   384c	//      		CMP R2,R3		 
+@003f   f7fb	//      		BE .main		; Jump back if the same
+@0040   0340	//      		LDW R3,[R2,#0] 	; Load data out of buffer	
+@0041   1a01	//      		ADDIB R2,#1		; Inc read ptr
+@0042   5000	//      		SUB R0,R0,R0
+@0043   a001	//      		LUI R0,#1
+@0044   a806	//      		LLI R0,#6
+@0045   5008	//      		SUB R0,R0,R2
+@0046   f602	//      		BNE .wrapR
+@0047   5a04	//      		SUBIB R2,#4
+@0048   a001	//      .wrapR	LUI R0, #1		; Read ptr address in R0
+@0049   a800	//      		LLI R0, #0	
+@004a   4200	//      		STW R2,[R0,#0]	; Store new read pointer
+@004b   5490	//      		SUB R4,R4,R4
+@004c   ac0f	//      		LLI R4,#15
+@004d   838c	//      		AND R3,R4,R3
+@004e   7868	//      		CMPI R3,#8
+@004f   f703	//      		BE .do
+@0050   ac07	//      		LLI R4,#7
+@0051   8370	//      		AND R3,R3,R4	
+@0052   4861	//      .do 	PUSH R3
+@0053   f306	//      		BWL .fact
+@0054   0861	//      		POP R3
+@0055   a408	//      		LUI R4,#8	
+@0056   ac01	//      		LLI R4,#1		; Address of LEDs
+@0057   4380	//      		STW R3,[R4,#0]	; Put factorial on LEDs	
+@0058   f0e2	//      		BR .main       	; look again	
+@0059   4801	//      .fact   PUSH R0
+@005a   4821	//      		PUSH R1
+@005b   4c01	//      		PUSH LR
+@005c   01e3	//      		LDW R1,[SP,#3]  ; Get para	
+@005d   1900	//      		ADDIB R1,#0
+@005e   f70d	//      		BE .retOne             ; 0! = 1
+@005f   7021	//      		SUBI R0,R1,#1
+@0060   4801	//      		PUSH R0                 ; Pass para
+@0061   f3f8	//      		BWL .fact               ; The output from fact to multi remains on the stack
+@0062   4821	//      		PUSH R1                 ; Pass para
+@0063   f30e	//      		BWL .multi
+@0064   0821	//      		POP R1                  ; Get res
+@0065   1f01	//      		ADDIB SP,#1             ; POP
+@0066   41e3	//      		STW R1,[SP,#3]
+@0067   0c01	//      		POP LR
+@0068   0821	//      		POP R1
+@0069   0801	//      		POP R0
+@006a   f200	//      		RET
+@006b   1901	//      .retOne ADDIB R1,#1             ; Trade off code size to avoid jump checking
+@006c   41e3	//      		STW R1,[SP,#3]                                                                                                  
+@006d   0c01	//      		POP LR                                                                                                          
+@006e   0821	//      		POP R1                                                                                                          
+@006f   0801	//      		POP R0                                                                                                          
+@0070   f200	//      		RET
+@0071   4841	//      .multi  PUSH R2 		; R2 is M
+@0072   4861	//      		PUSH R3 		; R3 is Q
+@0073   4881	//      		PUSH R4 		; R4 Is ACC
+@0074   48c1	//      		PUSH R6 		; R6 is 1
+@0075   4821	//      		PUSH R1 		; R1 is temp
+@0076   02e5	//      		LDW R2,[SP,#5]
+@0077   03e6	//      		LDW R3,[SP,#6]                                                                                                  
+@0078   5490	//      		SUB R4,R4,R4                                                                                                    
+@0079   a600	//      		LUI R6,#0
+@007a   ae01	//      		LLI R6,#1 		; load 1 into R6 for compare
+@007b   8158	//      		AND R1,R2,R6 
+@007c   7820	//      		CMPI R1,#0
+@007d   f702	//      		BE .sh1
+@007e   148c	//      		ADD R4,R4,R3
+@007f   fb61	//      .sh1	LSL R3,R3,#1
+@0080 	ea41	//      		LSR R2,R2,#1
+@0081	8158	//      		AND R1,R2,R6 
+@0082 	7820	//      		CMPI R1,#0
+@0083   f702	//      		BE .sh2
+@0084   148c	//      		ADD R4,R4,R3
+@0085   fb61	//      .sh2	LSL R3,R3,#1
+@0086   ea41	//      		LSR R2,R2,#1
+@0087   8158	//      		AND R1,R2,R6 
+@0088   7820	//      		CMPI R1,#0
+@0089   f702	//      		BE .sh3
+@008a   148c	//      		ADD R4,R4,R3
+@008b   fb61	//      .sh3	LSL R3,R3,#1
+@008c   ea41	//      		LSR R2,R2,#1
+@008d   8158	//      		AND R1,R2,R6 
+@008e   7820	//      		CMPI R1,#0
+@008f   f702	//      		BE .sh4
+@0090   148c	//      		ADD R4,R4,R3
+@0091   fb61	//      .sh4	LSL R3,R3,#1
+@0092   ea41	//      		LSR R2,R2,#1
+@0093   8158	//      		AND R1,R2,R6 
+@0094   7820	//      		CMPI R1,#0
+@0095   f702	//      		BE .sh5
+@0096   148c	//      		ADD R4,R4,R3
+@0097   fb61	//      .sh5	LSL R3,R3,#1
+@0098   ea41	//      		LSR R2,R2,#1
+@0099   8158	//      		AND R1,R2,R6 
+@009a   7820	//      		CMPI R1,#0
+@009b   f702	//      		BE .sh6
+@009c   148c	//      		ADD R4,R4,R3
+@009d   fb61	//      .sh6	LSL R3,R3,#1
+@009e   ea41	//      		LSR R2,R2,#1
+@009f   8158	//      		AND R1,R2,R6 
+@00a0   7820	//      		CMPI R1,#0
+@00a1   f702	//      		BE .sh7
+@00a2   148c	//      		ADD R4,R4,R3
+@00a3   fb61	//      .sh7	LSL R3,R3,#1
+@00a4   ea41	//      		LSR R2,R2,#1
+@00a5   8158	//      		AND R1,R2,R6 
+@00a6   7820	//      		CMPI R1,#0
+@00a7   f702	//      		BE .sh8
+@00a8   148c	//      		ADD R4,R4,R3
+@00a9   fb61	//      .sh8	LSL R3,R3,#1
+@00aa   ea41	//      		LSR R2,R2,#1
+@00ab   8158	//      		AND R1,R2,R6 
+@00ac   7820	//      		CMPI R1,#0
+@00ad   f702	//      		BE .sh9
+@00ae   148c	//      		ADD R4,R4,R3
+@00af   fb61	//      .sh9	LSL R3,R3,#1
+@00b0   ea41	//      		LSR R2,R2,#1
+@00b1   8158	//      		AND R1,R2,R6 
+@00b2   7820	//      		CMPI R1,#0
+@00b3   f702	//      		BE .sh10
+@00b4   148c	//      		ADD R4,R4,R3
+@00b5   fb61	//      .sh10	LSL R3,R3,#1
+@00b6   ea41	//      		LSR R2,R2,#1
+@00b7   8158	//      		AND R1,R2,R6 
+@00b8   7820	//      		CMPI R1,#0
+@00b9   f702	//      		BE .sh11
+@00ba   148c	//      		ADD R4,R4,R3
+@00bb   fb61	//      .sh11	LSL R3,R3,#1
+@00bc   ea41	//      		LSR R2,R2,#1
+@00bd   8158	//      		AND R1,R2,R6 
+@00be   7820	//      		CMPI R1,#0
+@00bf   f702	//      		BE .sh12
+@00c0  	148c	//      		ADD R4,R4,R3
+@00c1  	fb61	//      .sh12	LSL R3,R3,#1
+@00c2  	ea41	//      		LSR R2,R2,#1
+@00c3  	8158	//      		AND R1,R2,R6 
+@00c4  	7820	//      		CMPI R1,#0
+@00c5  	f702	//      		BE .sh13
+@00c6  	148c	//      		ADD R4,R4,R3
+@00c7  	fb61	//      .sh13	LSL R3,R3,#1
+@00c8  	ea41	//      		LSR R2,R2,#1
+@00c9  	8158	//      		AND R1,R2,R6 
+@00ca  	7820	//      		CMPI R1,#0
+@00cb  	f702	//      		BE .sh14
+@00cc  	148c	//      		ADD R4,R4,R3
+@00cd  	fb61	//      .sh14	LSL R3,R3,#1
+@00ce  	ea41	//      		LSR R2,R2,#1
+@00cf  	8158	//      		AND R1,R2,R6 
+@00d0   7820	//      		CMPI R1,#0
+@00d1   f702	//      		BE .sh15
+@00d2   148c	//      		ADD R4,R4,R3
+@00d3   fb61	//      .sh15	LSL R3,R3,#1
+@00d4   ea41	//      		LSR R2,R2,#1
+@00d5   8158	//      		AND R1,R2,R6 
+@00d6   7820	//      		CMPI R1,#0
+@00d7   f702	//      		BE .sh16
+@00d8   148c	//      		ADD R4,R4,R3
+@00d9   fb61	//      .sh16	LSL R3,R3,#1
+@00da   ea41	//      		LSR R2,R2,#1
+@00db   44e5	//      		STW R4,[SP,#5]                                                                                                    
+@00dc   0821	//      		POP R1
+@00dd   08c1	//      		POP R6
+@00de   0881	//      	 	POP R4
+@00df   0861	//      		POP R3
+@00e0   0841	//      		POP R2
+@00e1   f200	//	    RET
