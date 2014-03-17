@@ -1,12 +1,13 @@
 // Written by hl13g10 
 module alu(
-  output logic [3:0]             Flags, 
-  output logic [15:0]            Result,
-  input        [15:0]            Op1,
-  input        [15:0]            Op2,
-  input opcodes::alu_functions_t AluOp,
-  input wire CarryIn
-  );
+  	output 	logic 	[3:0]             	Flags, 
+  	output 	logic 	[15:0]            	Result,
+  	input      		[15:0]            	Op1,
+  	input        	[15:0]            	Op2,
+  	input	opcodes::AluOR_select_t		AluOR,	
+  	input 	opcodes::alu_functions_t 	AluOp,
+  	input 	wire CarryIn
+);
 
 timeunit 1ns; timeprecision 100ps;
 
@@ -20,29 +21,33 @@ assign Flags[`FLAGS_C] = Carry;
 assign Flags[`FLAGS_V] = (~Op1[15] & ~Op2[15] & Result[15]) | ( Op1[15] & Op2[15] & ~Result[15]);
 always_comb
 begin
-   	Carry = 0; //default case
-   	case (AluOp)
-      	FnA		: Result = Op1;
-      	FnB		: Result = Op2;	
-		FnDEC	: Result = Op1 - 1;
-		FnINC	: Result = Op1 + 1;
-		FnADD	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
-    	FnADC   : {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
-		FnSUB	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
-		FnSUC	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
-    	FnAND	: Result = Op1 & Op2;
-    	FnOR	: Result = Op1 | Op2;
-    	FnNOT	: Result = ~Op1;
-		FnXOR	: Result = Op1 ^ Op2;
-		FnNAND 	: Result = ~ ( Op1 & Op2 ); 
-		FnNOR	: Result = ~ ( Op1 | Op2 );
-      	FnLSL	: Result = Op1 << Op2;
-      	FnLSR	: Result = Op1 >> Op2;
-       	FnASR	: Result = Op1 >>> Op2;
-		FnNEG	: Result = ~Op1 + 1;
-      	FnLUI	: Result = {Op2[7:0],8'h00};
-		FnLLI	: Result = {Op1[15:8],Op2[7:0]};
-		default : Result = 16'hxxxx;	// AJR - Help fault find?
-   	endcase
+   	Carry = 0; 		//default case
+   	case (AluOR)	// Override for interrupts
+		nOR:	case (AluOp)
+      				FnA		: Result = Op1;
+      				FnB		: Result = Op2;	
+					FnDEC	: Result = Op1 - 1;
+					FnINC	: Result = Op1 + 1;
+					FnADD	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
+    				FnADC   : {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
+					FnSUB	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
+					FnSUC	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
+    				FnAND	: Result = Op1 & Op2;
+    				FnOR	: Result = Op1 | Op2;
+    				FnNOT	: Result = ~Op1;
+					FnXOR	: Result = Op1 ^ Op2;
+					FnNAND 	: Result = ~ ( Op1 & Op2 ); 
+					FnNOR	: Result = ~ ( Op1 | Op2 );
+      				FnLSL	: Result = Op1 << Op2;
+      				FnLSR	: Result = Op1 >> Op2;
+       				FnASR	: Result = Op1 >>> Op2;
+					FnNEG	: Result = ~Op1 + 1;
+      				FnLUI	: Result = {Op2[7:0],8'h00};
+					FnLLI	: Result = {Op1[15:8],Op2[7:0]};
+					default : Result = 16'hxxxx;	// AJR - Help fault find?
+   				endcase
+		addOR:	{Carry, Result} = {1'b0,Op1} + {1'b0,Op2}; 
+		subOR:	{Carry, Result} = {1'b0,Op1} - {1'b0,Op2}; 
+	endcase
 end
 endmodule

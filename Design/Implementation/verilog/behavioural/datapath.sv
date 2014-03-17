@@ -1,34 +1,47 @@
 // Written by hl13g10
 module datapath(
-  output wire  [15:0]   SysBus,
-  output wire  [7:0]    Opcode,
-  output logic [3:0]    Flags,
-  input  wire  [15:0]   DataIn,
-  input  opcodes::alu_functions_t AluOp,
-  input  opcodes::pc_select_t    PcSel,
-  input  opcodes::Op1_select_t    Op1Sel,
-  input  opcodes::Op2_select_t	Op2Sel,
-  input  opcodes::Imm_select_t ImmSel,
-  input  opcodes::Wd_select_t WdSel,
-  input  opcodes::Rs1_select_t Rs1Sel,
-  input  opcodes::Lr_select_t LrSel,
-  input  opcodes::Rw_select_t RwSel,
-//  input  opcodes::Flag_select_t FlagSel,
-  input  wire           AluEn, LrEn, LrWe, PcWe, PcEn, IrWe, RegWe, MemEn, Clock, nReset, CFlag, AluWe,
-  input wire [1:0] AluOR
-);
+  	output 	logic 	[3:0]   		Flags,
+	output 	logic  	[15:0] 			Ir,
+  	inout 	wire 	[15:0]			SysBus,
+	input	wire					AluEn,
+	input 	wire					AluWe,
+	input 	wire					CFlag ,
+	input 	wire					Clock ,
+	input 	wire	[15:0] 			DataIn,
+	input 	opcodes::Imm_select_t	ImmSel,
+	input 	wire					IrWe,
+	input 	wire					LrEn,
+	input 	opcodes::Lr_select_t	LrSel,
+	input 	wire					LrWe,
+	input 	wire					MemEn,
+	input 	wire					nReset,
+	input 	opcodes::Op1_select_t	Op1Sel,
+	input	opcodes::Op2_select_t	Op2Sel, 
+	input 	wire					PcEn,
+	input 	opcodes::pc_select_t    PcSel,
+	input 	wire					PcWe,
+	input 	wire					RegWe,
+	input 	opcodes::Rs1_select_t	Rs1Sel,
+	input 	opcodes::Rw_select_t	RwSel,		
+	input 	opcodes::AluOR_select_t AluOR,	
+	input 	opcodes::Wd_select_t	WdSel 
+ );
 
 import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
+Opcode_t OpCode;
+assign OpCode = Opcode_t'(Ir[15:11]); 
+
+opcodes::alu_functions_t AluOp;
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
-logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, Ir, LrIn;
+logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, LrIn;
 logic [2:0] Rs1In,Rw;
 wire [3:0] AluFlags;
 
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
-assign Opcode = {Ir[15:8]};
+//assign Opcode = {Ir[15:8]};
 assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
 //assign SysBus = (FlagListen) ? {12'h000 , FlagsIn} : {16{1'bz}};
 //assign Flags = (FlagSel == FlagAlu) ? AluFlags : SysBus[3:0];
@@ -100,12 +113,17 @@ regBlock regBlock(      // Register block instance
    .nReset  (nReset  ),
    .We      (RegWe   )
 );
+aluDecode d(	
+	.AluOp	(AluOp	),
+	.OpCode	(OpCode	)
+);
 alu a(                // Combo ALU only
-   .Flags   (AluFlags  ), 
+   .Flags   (AluFlags), 
    .Result  (AluRes  ),
    .Op1     (Op1     ),
    .Op2     (Op2     ),
    .CarryIn (CFlag   ),
+   .AluOR	(AluOR	 ),
    .AluOp   (AluOp   )
 );
 

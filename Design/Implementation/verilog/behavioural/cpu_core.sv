@@ -7,15 +7,13 @@ module cpu_core(
   output wire           ENB, 
   output wire           SDO,
   input  wire  [15:0]   Data_in,
-`ifndef nointerrupt
   input  wire           nIRQ, 
-`endif
   input  wire           nWait,
   input  wire           Test, 
   input  wire           SDI, 
   input  wire           Clock, 
   input  wire           nReset,
-  output wire 		RnW
+  output wire 			RnW
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -43,101 +41,80 @@ wire        AluWe;
 wire[1:0]	RwSel;
 wire [15:0]	SysBus;
 wire [3:0]	FlagsOut;
+wire [15:0]	Ir;
 wire FlagListen;
 wire FlagSel;
+assign Opcode = Ir[15:8];
+assign Data_out = SysBus;
 `ifndef crosssim
-assign SDO = SDI; // No sim 
+	assign SDO = SDI; // No sim 
 `endif
 control control ( 
-   .AluOp      (AluOp      ),    // Ouputs  
-   .Op2Sel     (Op2Sel     ), 
-   .Op1Sel     (Op1Sel     ),
-   .AluEn      (AluEn      ),
-   .LrEn       (LrEn       ),
-   .LrWe       (LrWe       ),
-   .LrSel      (LrSel      ),
-   .PcWe       (PcWe       ), 
-   .PcEn       (PcEn       ),
-   .IrWe       (IrWe       ),
-   .WdSel      (WdSel      ),
-   .ImmSel     (ImmSel     ),
-   .RegWe      (RegWe      ),
-   .PcSel      (PcSel      ),
-   .MemEn      (MemEn      ),
-   .nWE        (RnW        ),//HSL: RnW - Read not Write - the signal to memory
-   .nOE        (nOE        ),
-   .nME        (nME        ),
-   .ENB        (ENB        ),
-   .ALE        (ALE        ),
-   .Rs1Sel     (Rs1Sel     ),
-   .RwSel		(RwSel),
-//   .FlagSel		(FlagSel),
-//   .StatusReg	(FlagsOut),
-//   .StatusOut	(FlagListen),
-   .CFlag      (CFlag      ),
-   .Flags      (Flags      ),
-   .OpcodeCondIn(Opcode     ),    // Inputs
-	`ifndef nowait
-  	.nWait		(nWait),
-`endif 
-   .SysBus     (Data_out   ),
-   .AluWe      (AluWe      ),
-   .AluOR	(AluOR     ),
-   .Clock      (Clock      ),
-   .nReset     (nReset     )
-`ifndef nointerrupt 
-,   .nIRQ	(nIRQ	)
-`endif
+   	.AluOp      (AluOp      ),    // Ouputs  
+   	.Op2Sel     (Op2Sel     ), 
+   	.Op1Sel     (Op1Sel     ),
+   	.AluEn      (AluEn      ),
+   	.LrEn       (LrEn       ),
+   	.LrWe       (LrWe       ),
+   	.LrSel      (LrSel      ),
+   	.PcWe       (PcWe       ), 
+   	.PcEn       (PcEn       ),
+   	.IrWe       (IrWe       ),
+   	.WdSel      (WdSel      ),
+   	.ImmSel     (ImmSel     ),
+   	.RegWe      (RegWe      ),
+   	.PcSel      (PcSel      ),
+   	.MemEn      (MemEn      ),
+   	.nWE        (RnW        ),//HSL: RnW - Read not Write - the signal to memory
+   	.nOE        (nOE        ),
+   	.nME        (nME        ),
+   	.ENB        (ENB        ),
+   	.ALE        (ALE        ),
+   	.Rs1Sel     (Rs1Sel     ),
+   	.RwSel		(RwSel		),
+   	.CFlag      (CFlag      ),
+   	.Flags      (Flags      ),
+   	.OpcodeCondIn(Opcode    ),    // Inputs
+  	.nWait		(nWait		), 
+   	.SysBus     (SysBus   ),
+   	.AluWe      (AluWe      ),
+   	.AluOR		(AluOR     	),
+   	.Clock      (Clock      ),
+   	.nReset     (nReset     ),
+	.nIRQ		(nIRQ		)
 );
 
-`ifdef crosssim
-wire [15:0] Ir;
-//wire SDO;
-assign Opcode = Ir[15:8];
-`endif
 datapath datapath ( 
-   .SysBus     (Data_out    ),   // Output
-`ifndef crosssim
-   .Opcode     (Opcode     ),
-`else
-   .Ir	  	(Ir	),
-`endif
-   .Flags      (Flags      ),  
-   .DataIn     (Data_in     ),
-`ifndef crosssim
-   .AluOp      (AluOp      ),   // Inputs 
-`endif
-   .PcSel      (PcSel      ),
-   .Op1Sel     (Op1Sel     ),
-   .Op2Sel     (Op2Sel     ),
-   .AluEn      (AluEn      ),
-   .LrEn       (LrEn       ),
-   .LrWe       (LrWe       ),
-   .LrSel      (LrSel      ),
-   .PcWe       (PcWe       ),
-   .PcEn       (PcEn       ),
-   .IrWe       (IrWe       ),
-   .WdSel      (WdSel      ),
-   .ImmSel     (ImmSel     ),
-   .RegWe      (RegWe      ),
-   .MemEn      (MemEn      ),
-   .Rs1Sel     (Rs1Sel     ),
-   .RwSel		(RwSel),
-   .CFlag      (CFlag      ),
-   .AluWe      (AluWe      ),
-   .AluOR	(AluOR	),
-`ifndef crosssim
-//   .FlagSel		(FlagSel),
-//   .FlagsIn		(FlagsOut),
-//   .FlagListen	(FlagListen),
-`endif
-   .Clock      (Clock      ),
+   .SysBus     	(SysBus   ),   // Output
+   .Ir	  		(Ir			),
+   .Flags      	(Flags      ),  
+   .DataIn     	(Data_in    ),
+   .PcSel      	(PcSel      ),
+   .Op1Sel     	(Op1Sel     ),
+   .Op2Sel     	(Op2Sel     ),
+   .AluEn      	(AluEn      ),
+   .LrEn       	(LrEn       ),
+   .LrWe       	(LrWe       ),
+   .LrSel      	(LrSel      ),
+   .PcWe       	(PcWe       ),
+   .PcEn       	(PcEn       ),
+   .IrWe       	(IrWe       ),
+   .WdSel      	(WdSel      ),
+   .ImmSel     	(ImmSel     ),
+   .RegWe      	(RegWe      ),
+   .MemEn      	(MemEn      ),
+   .Rs1Sel     	(Rs1Sel     ),
+   .RwSel		(RwSel		),
+   .CFlag      	(CFlag      ),
+   .AluWe      	(AluWe      ),
+   .AluOR		(AluOR		),
 `ifdef crosssim
-   .Test       (1'b0       ),
-   .SDI		(SDI      ),
-	.SDO (SDO),
+   	.Test       (1'b0       ),
+   	.SDI		(SDI      	),
+	.SDO 		(SDO		),
 `endif
-   .nReset     (nReset     )
+   	.Clock      (Clock      ),
+   	.nReset     (nReset     )
 );
 
 
