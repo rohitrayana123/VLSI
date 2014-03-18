@@ -23,10 +23,10 @@ begin
    	Carry = 0; 		//default case
 	case(OpCode)
 		ADD,ADDI,ADDIB,BRANCH,INTERRUPT,POP, LDW,STW: {Carry,Result} = {1'b0, Op1} + {1'b0, Op2};
-		ADC,ADCI: {Carry,Result} = {1'b0, Op1} + {1'b0, Op2}; 
+		ADC,ADCI: {Carry,Result} = {1'b0, Op1} + {1'b0, Op2} + CarryIn; 
 		NEG: Result = ~Op1 + 1;
 		SUB, SUBI,SUBIB,CMP,CMPI,PUSH: {Carry,Result} = {1'b0, Op1} - {1'b0, Op2};
-		SUC, SUCI:	{Carry,Result} = {1'b0, Op1} + {1'b0, Op2} ;
+		SUC, SUCI: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (CarryIn);
 		AND:Result = Op1 & Op2; 
 		OR: Result = Op1 | Op2;		
 		XOR:Result = Op1 ^ Op2;    		
