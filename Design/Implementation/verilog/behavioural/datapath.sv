@@ -31,6 +31,7 @@ import opcodes::*;
 timeunit 1ns; timeprecision 100ps;
 
 Opcode_t OpCode;
+Opcode_t AluOpCode;
 assign OpCode = Opcode_t'(Ir[15:11]); 
 
 opcodes::alu_functions_t AluOp;
@@ -38,6 +39,7 @@ wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, LrIn;
 logic [2:0] Rs1In,Rw;
 wire [3:0] AluFlags;
+
 
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
@@ -53,6 +55,14 @@ assign LrIn = (LrPc == LrSel) ? PcInc : SysBus;
 assign PcInc = Pc + 1;
 
 //Multiplexers
+always_comb begin
+	case(AluOR)
+		nOR   : AluOpCode = OpCode;
+		addOR : AluOpCode = ADCI;
+		subOR : AluOpCode = SUCI;
+	endcase
+end
+
 always_comb begin
 	case(Op2Sel)
 		Op2Rd2: Op2 = Rd2;
@@ -124,7 +134,7 @@ alu a(                // Combo ALU only
    .Op2     (Op2     ),
    .CarryIn (CFlag   ),
    .AluOR	(AluOR	 ),
-   .AluOp   (AluOp   )
+   .AluOp   (AluOpOR )
 );
 
 //Registers
