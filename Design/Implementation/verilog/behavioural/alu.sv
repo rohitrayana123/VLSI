@@ -4,8 +4,7 @@ module alu(
   	output 	logic 	[15:0]            	Result,
   	input      		[15:0]            	Op1,
   	input        	[15:0]            	Op2,
-  	input	opcodes::AluOR_select_t		AluOR,	
-  	input 	opcodes::alu_functions_t 	AluOp,
+	input opcodes::Opcode_t OpCode,
   	input 	wire CarryIn
 );
 
@@ -22,32 +21,23 @@ assign Flags[`FLAGS_V] = (~Op1[15] & ~Op2[15] & Result[15]) | ( Op1[15] & Op2[15
 always_comb
 begin
    	Carry = 0; 		//default case
-   	case (AluOR)	// Override for interrupts
-		nOR:	case (AluOp)
-      				FnA		: Result = Op1;
-      				FnB		: Result = Op2;	
-					FnDEC	: Result = Op1 - 1;
-					FnINC	: Result = Op1 + 1;
-					FnADD	: {Carry, Result} = {1'b0,Op1} + {1'b0,Op2};
-    				FnADC   : {Carry, Result} = {1'b0,Op1} + {1'b0,Op2} + CarryIn; 
-					FnSUB	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2};
-					FnSUC	: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (~CarryIn);
-    				FnAND	: Result = Op1 & Op2;
-    				FnOR	: Result = Op1 | Op2;
-    				FnNOT	: Result = ~Op1;
-					FnXOR	: Result = Op1 ^ Op2;
-					FnNAND 	: Result = ~ ( Op1 & Op2 ); 
-					FnNOR	: Result = ~ ( Op1 | Op2 );
-      				FnLSL	: Result = Op1 << Op2;
-      				FnLSR	: Result = Op1 >> Op2;
-       				FnASR	: Result = Op1 >>> Op2;
-					FnNEG	: Result = ~Op1 + 1;
-      				FnLUI	: Result = {Op2[7:0],8'h00};
-					FnLLI	: Result = {Op1[15:8],Op2[7:0]};
-					default : Result = 16'hxxxx;	// AJR - Help fault find?
-   				endcase
-		addOR:	{Carry, Result} = {1'b0,Op1} + {1'b0,Op2}; 
-		subOR:	{Carry, Result} = {1'b0,Op1} - {1'b0,Op2}; 
+	case(OpCode)
+		ADD,ADDI,ADDIB,BRANCH,INTERRUPT,POP, LDW,SDW: {Carry,Result} = {0'b0, Op1} + {0'b0, Op2};
+		ADC,ADCI: {Carry,Result} = {0'b0, Op1} + {0'b0, Op2}; 
+		NEG: Result = ~Op1 + 1;
+		SUB, SUBI,SUBIB,CMP,CMPI,PUSH: {Carry,Result} = {0'b0, Op1} - {0'b0, Op2};
+		SUC, SUCI:	{Carry,Result} = {0'b0, Op1} + {0'b0, Op2} ;
+		AND:Result = Op1 & Op2; 
+		OR: Result = Op1 | Op2;		
+		XOR:Result = Op1 ^ Op2;    		
+		NOT:Result = ~Op1;   		
+		NAND: Result = ~(Op1 & Op2);   		
+		NOR:Result = ~(Op1 | Op2);  		
+		LSL:Result = Op1 << Op2;   		
+		LSR:Result = Op1 >> Op2;   		
+		ASR:Result = Op1 >>> Op2;   		
+		LUI:Result = {Op2[7:0], Op1[7:0]};   		
+		LLI:Result = {Op1[15:8], Op2[7:0]};
 	endcase
 end
 endmodule
