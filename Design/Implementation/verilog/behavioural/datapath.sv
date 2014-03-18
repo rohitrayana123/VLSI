@@ -38,6 +38,7 @@ opcodes::alu_functions_t AluOp;
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, LrIn;
 logic [2:0] Rs1In,Rw;
+logic AluCFlag;
 wire [3:0] AluFlags;
 
 
@@ -56,10 +57,17 @@ assign PcInc = Pc + 1;
 
 //Multiplexers
 always_comb begin
+	AluOpCode = OpCode;
+	AluCFlag = CFlag;
 	case(AluOR)
-		nOR   : AluOpCode = OpCode;
-		addOR : AluOpCode = ADCI;
-		subOR : AluOpCode = SUCI;
+		addOR : begin
+					AluOpCode = ADCI;
+					AluCFlag = 1;
+				end
+		subOR : begin
+					AluOpCode = SUCI;
+					AluCFlag = 1;
+				end
 	endcase
 end
 
@@ -132,7 +140,7 @@ alu a(                // Combo ALU only
    .Result  (AluRes  ),
    .Op1     (Op1     ),
    .Op2     (Op2     ),
-   .CarryIn (CFlag   ),
+   .CarryIn (AluCFlag   ),
    .OpCode   (AluOpCode)
 );
 
