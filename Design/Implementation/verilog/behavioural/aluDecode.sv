@@ -11,12 +11,12 @@ import opcodes::*;
 // This is a reduction mapping
 always_comb begin
 	case (OpCode)
-		ADD			: AluOp = FnADD;
+		ADD		: AluOp = FnADD;
 		ADDI		: AluOp = FnADD;
 		ADDIB		: AluOp = FnADD;
-		ADC			: AluOp = FnADC; 
+		ADC		: AluOp = FnADC; 
 		ADCI		: AluOp = FnADC;
-        NEG  		: AluOp = FnNEG;
+ 	        NEG  		: AluOp = FnNEG;
 		SUB    		: AluOp = FnSUB;
 		SUBI   		: AluOp = FnSUB;
 		SUBIB  		: AluOp = FnSUB; 
@@ -25,7 +25,7 @@ always_comb begin
 		CMP    		: AluOp = FnSUB;
 		CMPI   		: AluOp = FnSUB;
 		AND    		: AluOp = FnAND;
-        OR     		: AluOp = FnOR;
+	        OR     		: AluOp = FnOR;
 		XOR    		: AluOp = FnXOR;
 		NOT    		: AluOp = FnNOR;
 		NAND   		: AluOp = FnNAND;
@@ -34,13 +34,13 @@ always_comb begin
 		LSR    		: AluOp = FnLSR;
 		ASR    		: AluOp = FnASR;
 		LDW   		: AluOp = FnADD;
-        STW    		: AluOp = FnADD;
+        	STW    		: AluOp = FnADD;
 		LUI    		: AluOp = FnLUI;
-		LLI	  		: AluOp = FnLLI;
+		LLI  		: AluOp = FnLLI;
 		BRANCH 		: AluOp = FnADD;
 		INTERRUPT	: AluOp = FnADD;
 		PUSH		: AluOp = FnSUB;
-		POP			: AluOp = FnADD;
+		POP		: AluOp = FnADD;
 	endcase
 end
 endmodule
