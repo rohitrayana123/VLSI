@@ -133,8 +133,7 @@ alu a(                // Combo ALU only
    .Op1     (Op1     ),
    .Op2     (Op2     ),
    .CarryIn (CFlag   ),
-   .AluOR	(AluOR	 ),
-   .AluOp   (AluOpOR )
+   .OpCode   (AluOpCode)
 );
 
 //Registers
