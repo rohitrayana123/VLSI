@@ -3,30 +3,30 @@ package opcodes;
 
 // Define ALU Function Codes:
 //
-typedef 
-  enum logic [4:0] { 	
-	  		FnA, 
-			FnB, 
-			FnADD, 
-			FnADC, 
-			FnSUB, 
-			FnSUC,
-			FnNEG,
-			FnAND, 
-			FnOR,
-			FnXOR,
-			FnNOT,
-			FnNAND,
-			FnNOR, 
-			FnLSL, 
-			FnLSR,
-			FnASR,
-			FnLUI,
-			FnINC,
-			FnDEC,
-			FnLLI
-}
-  alu_functions_t;
+//typedef 
+//  enum logic [4:0] { 	
+//	  		FnA, 
+//			FnB, 
+//			FnADD, 
+//			FnADC, 
+//			FnSUB, 
+//			FnSUC,
+//			FnNEG,
+//			FnAND, 
+//			FnOR,
+//			FnXOR,
+//			FnNOT,
+//			FnNAND,
+//			FnNOR, 
+//			FnLSL, 
+//			FnLSR,
+//			FnASR,
+//			FnLUI,
+//			FnINC,
+//			FnDEC,
+//			FnLLI
+//}
+//  alu_functions_t;
 //Location of flags in the array
 `define FLAGS_Z  0
 `define FLAGS_C  1

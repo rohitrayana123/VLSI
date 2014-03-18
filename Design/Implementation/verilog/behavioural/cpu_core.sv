@@ -18,7 +18,7 @@ module cpu_core(
 
 timeunit 1ns; timeprecision 100ps;
 
-opcodes::alu_functions_t  AluOp;  
+//opcodes::alu_functions_t  AluOp;  
 wire         Op1Sel;  
 wire [1:0]       Op2Sel;  
 wire        AluEn;  
@@ -104,10 +104,10 @@ datapath datapath (
    .RegWe      	(RegWe      ),
    .MemEn      	(MemEn      ),
    .Rs1Sel     	(Rs1Sel     ),
-   .RwSel		(RwSel		),
+   .RwSel	(RwSel      ),
    .CFlag      	(CFlag      ),
    .AluWe      	(AluWe      ),
-   .AluOR		(AluOR		),
+   .AluOR	(AluOR	    ),
 `ifdef crosssim
    	.Test       (1'b0       ),
    	.SDI		(SDI      	),
