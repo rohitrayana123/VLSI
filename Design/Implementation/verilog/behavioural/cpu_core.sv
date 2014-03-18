@@ -50,7 +50,7 @@ assign Data_out = SysBus;
 	assign SDO = SDI; // No sim 
 `endif
 control control ( 
-   	.AluOp      (AluOp      ),    // Ouputs  
+//   	.AluOp      (AluOp      ),    // Ouputs  
    	.Op2Sel     (Op2Sel     ), 
    	.Op1Sel     (Op1Sel     ),
    	.AluEn      (AluEn      ),

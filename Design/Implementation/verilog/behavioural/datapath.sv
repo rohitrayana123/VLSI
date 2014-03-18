@@ -34,7 +34,7 @@ Opcode_t OpCode;
 Opcode_t AluOpCode;
 assign OpCode = Opcode_t'(Ir[15:11]); 
 
-opcodes::alu_functions_t AluOp;
+//opcodes::alu_functions_t AluOp;
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, LrIn;
 logic [2:0] Rs1In,Rw;
@@ -130,10 +130,6 @@ regBlock regBlock(      // Register block instance
    .Clock   (Clock   ),
    .nReset  (nReset  ),
    .We      (RegWe   )
-);
-aluDecode d(	
-	.AluOp	(AluOp	),
-	.OpCode	(OpCode	)
 );
 alu a(                // Combo ALU only
    .Flags   (AluFlags), 

@@ -1,6 +1,6 @@
 // Written by ajr2g10
 module control(
-   output opcodes::alu_functions_t  AluOp, 
+//   output opcodes::alu_functions_t  //AluOp, 
    output opcodes::Op1_select_t     Op1Sel, 
    output opcodes::Op2_select_t     Op2Sel, 
    output logic                     AluEn,
@@ -174,7 +174,7 @@ end
 
 always_comb begin
    	// Default outputs   
-   	AluOp    = FnADD;
+//   	//AluOp    = FnADD;
    	AluWe    = 0;
    	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
@@ -218,7 +218,7 @@ always_comb begin
                		case(Opcode)
                   		ADD:begin
 		            		PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnADD;
+                           	//AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -228,7 +228,7 @@ always_comb begin
                         end
                   		ADDI:begin
 		                	PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnADD;
+                           	//AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	RegWe = 1;
@@ -238,7 +238,7 @@ always_comb begin
                         end
                   		ADDIB:begin
         		        	PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnADD;
+                           	//AluOp = FnADD;
                            	Op1Sel = Op1Rd1;
                            	Rs1Sel = Rs1Rd;
                            	RegWe = 1;
@@ -248,7 +248,7 @@ always_comb begin
                         end
                   		ADC:begin
 		                	PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnADC;
+                           	//AluOp = FnADC;
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -257,7 +257,7 @@ always_comb begin
                     	end
                   		ADCI:begin
 		                	PcEn = 1;   		// output the PC to SysBu
-                           	AluOp = FnADC;
+                           	//AluOp = FnADC;
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -266,7 +266,7 @@ always_comb begin
                     	end
                   		SUB:begin
    		            		PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnSUB;
+                           	//AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -276,7 +276,7 @@ always_comb begin
                         end
                   		NEG:begin
    		            		PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnNEG;
+                           	//AluOp = FnNEG;
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -285,7 +285,7 @@ always_comb begin
                         end
                   		SUBI:begin
    		                	PcEn = 1;   		// output the PC to SysBus
-                           	AluOp = FnSUB;
+                           	//AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	RegWe = 1;
@@ -295,7 +295,7 @@ always_comb begin
                         end
                   		SUBIB:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnSUB;
+                           	//AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
                            	Rs1Sel = Rs1Rd;
                            	RegWe = 1;
@@ -305,7 +305,7 @@ always_comb begin
                         end
                   		SUC:begin
 		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnADC;
+                           	//AluOp = FnADC;
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -314,7 +314,7 @@ always_comb begin
                     	end
                   		SUCI:begin
    		                	PcEn = 1;   // output the PC to SysBu
-                           	AluOp = FnADC;
+                           	//AluOp = FnADC;
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -323,7 +323,7 @@ always_comb begin
                     	end
                   		CMP:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnSUB;
+                           	//AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	PcWe = 1;
@@ -332,7 +332,7 @@ always_comb begin
 						end
                   		CMPI:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnSUB;
+                           	//AluOp = FnSUB;
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	PcWe = 1;
@@ -341,7 +341,7 @@ always_comb begin
                         end
                   		AND:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnAND;
+                           	//AluOp = FnAND;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -351,7 +351,7 @@ always_comb begin
                         end
                   		OR:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnOR;
+                           	//AluOp = FnOR;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -361,7 +361,7 @@ always_comb begin
                         end
                   		XOR:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnXOR;
+                           	//AluOp = FnXOR;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -371,7 +371,7 @@ always_comb begin
                         end
                   		NOR:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnNOR;
+                           	//AluOp = FnNOR;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -381,7 +381,7 @@ always_comb begin
                         end
                   		NAND:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnNAND;
+                           	//AluOp = FnNAND;
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -391,7 +391,7 @@ always_comb begin
                         end
                   		NOT:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnNOT;
+                           	//AluOp = FnNOT;
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -400,7 +400,7 @@ always_comb begin
                         end
                   		LSL:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnLSL;
+                           	//AluOp = FnLSL;
 							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;Op2Sel = Op2Imm;
                            	RegWe = 1;
@@ -410,7 +410,7 @@ always_comb begin
                         end
                   		LSR:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnLSR;
+                           	//AluOp = FnLSR;
                            	Op1Sel = Op1Rd1;
 							ImmSel = ImmShort;
 							Op2Sel = Op2Imm;
@@ -421,7 +421,7 @@ always_comb begin
                         end
                   		ASR:begin
    		                	PcEn = 1;   // output the PC to SysBus
-                           	AluOp = FnASR;
+                           	//AluOp = FnASR;
                            	Op1Sel = Op1Rd1;
 							ImmSel = ImmShort;
 							Op2Sel = Op2Imm;
@@ -434,7 +434,7 @@ always_comb begin
    							AluEn = 1;
 							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
-							AluOp = FnADD;	
+							//AluOp = FnADD;	
                            	AluWe = 1;
                     	end
 						LUI,LLI:begin
@@ -447,16 +447,16 @@ always_comb begin
 							PcSel = Pc1;
 							Rs1Sel = Rs1Rd;	
 							AluEn = 1;
-							if(Opcode == LUI)
-								AluOp = FnLUI;
-							else
-								AluOp = FnLLI;
+							//if(Opcode == LUI)
+								//AluOp = FnLUI;
+							//else
+								//AluOp = FnLLI;
 						end
 						BRANCH:begin
 							case(BranchCode)	
 								BR,BNE,BE,BLT,BGE,BWL:begin		// Conditional branching
 									PcWe = 1;
-									AluOp = FnADD;
+									//AluOp = FnADD;
 									ImmSel = ImmLong;
 									Op1Sel = Op1Pc;
 									AluEn = 1;
@@ -480,7 +480,7 @@ always_comb begin
 									PcSel = PcSysbus;	
 								end
 								JMP:begin
-									AluOp = FnADD;
+									//AluOp = FnADD;
 									ImmSel = ImmShort;
                            			Op1Sel = Op1Rd1;
 									PcSel = PcAluOut;
@@ -494,7 +494,7 @@ always_comb begin
 	            					Rs1Sel = Seven;
 							RwSel = RwSeven;
 							Op1Sel = Op1Rd1;
-							AluOp = FnSUB;
+							//AluOp = FnSUB;
 							AluWe = 1;
 							RegWe = 1;
 							WdSel = WdAlu;
@@ -505,7 +505,7 @@ always_comb begin
 							Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
-							AluOp = FnADD;
+							//AluOp = FnADD;
 							AluWe = 1;
 						end 
 						INTERRUPT: begin
@@ -516,7 +516,7 @@ always_comb begin
 									Op1Sel = Op1Rd1;
 									Op2Sel = Op2zero;
 									ImmSel = ImmShort;
-									AluOp = FnADD;
+									//AluOp = FnADD;
 	          				 			AluWe = 1;	
 								end //0 
 								1: begin
@@ -535,7 +535,7 @@ always_comb begin
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
-									AluOp = FnDEC;	
+									//AluOp = FnDEC;	
 									AluOR  = 2'b11;
 						      		        AluWe = 1;
 									RegWe = 1;
@@ -553,7 +553,7 @@ always_comb begin
 	                		nWE = 1;
 					        nOE = 1;
 							ImmSel = ImmShort;
-							AluOp = FnADD;
+							//AluOp = FnADD;
 							Op1Sel = Op1Rd1;
 							AluEn = 1;
 						end
@@ -562,7 +562,7 @@ always_comb begin
 							nWE = 1;
 							nOE = 1;
 							ImmSel = ImmShort;
-							AluOp = FnADD;
+							//AluOp = FnADD;
 							Op1Sel = Op1Rd1;
 							Rs1Sel = Seven;
 							AluEn = 1;
@@ -572,9 +572,9 @@ always_comb begin
 							nWE = 1;
 							nOE = 1;
 //							if(BranchCode == 3 )
-//								AluOp = FnDEC;
+//								//AluOp = FnDEC;
 //							else
-//								AluOp = FnINC;
+//								//AluOp = FnINC;
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
@@ -587,7 +587,7 @@ always_comb begin
                			LDW:begin
 					nME = 0;
                         		Op1Sel = Op1Rd1;
-					AluOp = FnADD;		// Nothing done to op1
+					//AluOp = FnADD;		// Nothing done to op1
 					Op2Sel = Op2zero;
 			             	Rs1Sel = Rs1Rd;
 					MemEn = 1;
@@ -599,7 +599,7 @@ always_comb begin
 				STW:begin			// Get the data out of the reg
         	                	nME = 0;
 					Op1Sel = Op1Rd1;
-					AluOp = FnADD;		// Nothing done to op1
+					//AluOp = FnADD;		// Nothing done to op1
 			                Op2Sel = Op2zero;
 					Rs1Sel = Rs1Rd;
 					nOE = 1;
@@ -610,7 +610,7 @@ always_comb begin
 						PUSH:begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
-							AluOp = FnADD; // Nothing done to op1
+							//AluOp = FnADD; // Nothing done to op1
 						    Op2Sel = Op2zero;
 							Rs1Sel = Rs1Ra;
 							nOE = 1;
@@ -621,7 +621,7 @@ always_comb begin
 						POP:begin
 						 	nME = 0;
 						  	Op1Sel = Op1Rd1;
-						  	AluOp = FnADD; // Nothing done to op1
+						  	//AluOp = FnADD; // Nothing done to op1
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
 							MemEn = 1;
@@ -634,7 +634,7 @@ always_comb begin
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
-							AluOp = FnADD;
+							//AluOp = FnADD;
 							MemEn = 1;
 							nWE = 1;
 							//AluWe = 1;
@@ -654,7 +654,7 @@ always_comb begin
 							nME = 0;
                         	AluEn = 1;			// Hold data on sysbus
                         	nOE = 1;               
-                     		AluOp = FnADD;
+                     		//AluOp = FnADD;
 							Op2Sel = Op2zero;
 						end  
 						PUSH:begin
@@ -667,7 +667,7 @@ always_comb begin
 								AluEn = 1;
 								AluWe = 1;
 								Rs1Sel = Rs1Ra;
-								AluOp = FnADD;
+								//AluOp = FnADD;
 								Op2Sel = Op2zero;
 							end
 						end
@@ -684,7 +684,7 @@ always_comb begin
 							Rs1Sel = Seven;
 							WdSel = WdAlu;
 							RwSel = RwSeven;
-							AluOp = FnADD;
+							//AluOp = FnADD;
 						end
 						INTERRUPT: begin
 							case(BranchCode)
@@ -719,7 +719,7 @@ always_comb begin
 	  					STW: begin
 	  						nOE = 1;
 	  						AluEn = 1;
-							AluOp = FnADD;
+							//AluOp = FnADD;
 							Op2Sel = Op2zero;
 	  					end
 	  					PUSH:begin
@@ -729,7 +729,7 @@ always_comb begin
 							end else begin
 								AluEn = 1;
 								Rs1Sel = Rs1Ra;
-								AluOp = FnADD;
+								//AluOp = FnADD;
 								Op2Sel = Op2zero;
 							end
 						end
@@ -742,7 +742,7 @@ always_comb begin
 								RegWe = 1;
 								Rs1Sel = Rs1Rd;
 								RwSel = RwRa;
-								AluOp = FnADD;
+								//AluOp = FnADD;
 								WdSel = WdSys;
 							end
 						end
@@ -756,7 +756,7 @@ always_comb begin
 									nME = 1;
 									Rs1Sel = Seven;
 									Op2Sel = Op2zero;
-									AluOp = FnINC;
+									//AluOp = FnINC;
 									AluOR = 2'b10;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
@@ -770,7 +770,7 @@ always_comb begin
 									Rs1Sel = Seven;
 									MemEn = 1;
 									nWE = 1;	
-									AluOp = FnINC;
+									//AluOp = FnINC;
 									Op2Sel = Op2zero;
 									AluOR = 2'b10;
 									WdSel = WdAlu;
@@ -791,7 +791,7 @@ always_comb begin
 		case(stateSub)
 			cycle0:begin
 				Rs1Sel = Seven;//choose sp
-				AluOp = FnDEC; //pass it through
+				//AluOp = FnDEC; //pass it through
 				AluOR = 2'b11;
 				Op1Sel = Op1Rd1;
 				Op2Sel = Op2zero;
@@ -804,9 +804,9 @@ always_comb begin
 			cycle1:begin
 			        nWE = 1;
 				nOE = 1;
-				AluOp = FnDEC;
+				//AluOp = FnDEC;
 				AluOR = 2'b11;
-				//AluOp = FnADD;
+				////AluOp = FnADD;
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
 				Rs1Sel = Seven;
@@ -815,7 +815,7 @@ always_comb begin
 			end
 			cycle2: begin
 				nME = 0;
-				AluOp = FnADD; // Nothing done to op1
+				//AluOp = FnADD; // Nothing done to op1
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
 				nOE = 1;
