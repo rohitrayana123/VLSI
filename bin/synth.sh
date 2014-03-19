@@ -42,9 +42,10 @@ vlog2net -T c035u -post ../gate_level/${module}.sv ../../../../c035u/cell_lib
 
 # put timescale in netlisti
 cd ~/VLSI/Design/Implementation/verilog/gate_level
-head -n -2 ${module}.sv > temp.txt		# replace last 2 lines
-mv temp.txt ${module}.sv 
-echo 'timeunit 10ns; timeprecision 100ps;' >> ${module}.sv
-echo 'endmodule' >> ${module}.sv
+echo 'timeunit 10ns; timeprecision 100ps;' > temp1.txt
+cat temp1.txt ${module}.sv > temp2.txt
+rm temp1.txt
+rm ${module}.sv
+mv temp2.txt ${module}.sv
 exit 0
 
