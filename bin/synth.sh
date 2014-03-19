@@ -38,5 +38,9 @@ echo ":quit" >> magicroute.tcl
 magic ${module}_PLACED -d null < magicroute.tcl
 #rm magicroute.tcl
 vlog2net -T c035u -post ../gate_level/${module}.sv ../../../../c035u/cell_lib
+
+ put timescale in netlisti
+cd ~/VLSI/Design/Implementation/verilog/gate_level
+echo 'timeunit 10ns; timeprecision 100ps' >> ${module}.sv
 exit 0
 
