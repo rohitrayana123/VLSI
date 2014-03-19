@@ -1,49 +1,43 @@
 // Written by ajr2g10
 module control(
-//   output opcodes::alu_functions_t  //AluOp, 
-   output opcodes::Op1_select_t     Op1Sel, 
-   output opcodes::Op2_select_t     Op2Sel, 
-   output logic                     AluEn,
-   output logic                     LrEn,
-   output logic                     LrWe,
-   output logic                     PcWe,
-   output logic                     PcEn,
-   output logic                     IrWe,
-   output opcodes::Wd_select_t      WdSel,
-   output opcodes::Imm_select_t		ImmSel,
-   output logic                     RegWe,
-   output opcodes::pc_select_t      PcSel,
-   output logic                     MemEn,   // Pad control 
-   output logic                     nWE,     // To memory map
-   output logic                     nOE,
-   output logic                     nME,
-   output logic                     ENB,
-   output logic                     ALE,
-   output logic                     CFlag,
-   output opcodes::Lr_select_t      LrSel,
-   output opcodes::Rs1_select_t     Rs1Sel,
-   output opcodes::Rw_select_t		RwSel,
-   output logic                     AluWe, 
-//   output logic[3:0]			StatusReg,
-   output logic [1:0]		AluOR,
-   input  wire    [7:0]             OpcodeCondIn,
-   input  wire    [3:0]             Flags,
-   inout [15:0] SysBus,
-`ifndef nowait
-  	input wire						nWait,
-`endif
-   input  wire                      Clock,
-   input  wire                      nReset
-`ifndef nointerrupt
-,   input  wire 			nIRQ
-`endif	
+   	output 	logic                     	ALE,
+	output 	logic                     	AluEn,
+	output 	logic                     	AluWe, 
+   	output 	opcodes::AluOR_select_t		AluOR,
+   	output 	logic                     	CFlag,
+	output 	logic                     	ENB,
+	output 	opcodes::Imm_select_t		ImmSel,
+	output 	logic                     	IrWe,
+	output 	logic                     	LrEn,
+   	output 	opcodes::Lr_select_t      	LrSel,
+	output 	logic                     	LrWe,
+   	output 	logic                     	MemEn,   
+   	output 	logic                     	nME,     
+   	output 	logic                     	nOE,
+   	output 	logic                     	nWE,	
+	output 	opcodes::Op1_select_t     	Op1Sel, 
+   	output 	opcodes::Op2_select_t     	Op2Sel, 		
+   	output 	logic                     	PcEn,
+	output 	opcodes::pc_select_t      	PcSel,	
+   	output 	logic                     	PcWe,
+	output 	logic                     	RegWe,
+    output 	opcodes::Rs1_select_t     	Rs1Sel,
+   	output 	opcodes::Rw_select_t		RwSel,
+	output 	opcodes::Wd_select_t      	WdSel,
+   	inout	wire 	[15:0] 				SysBus,
+	input  	wire                      	Clock,
+	input  	wire    [3:0]             	Flags,
+	input  	wire 						nIRQ,
+  	input  	wire                      	nReset,
+	input 	wire						nWait,
+	input  	wire    [7:0]             	OpcodeCondIn   	
 );
 
 timeunit 1ns; timeprecision 100ps;
 
 import opcodes::*;
 
-`define FLAGS_Z  0
+`define FLAGS_Z  0 		// TODO: Synthesis tool doesn't like these in opcodes.svh
 `define FLAGS_C  1
 `define FLAGS_V  2
 `define FLAGS_N  3
@@ -61,12 +55,12 @@ logic [3:0] StatusRegIn;
 
 assign SysBus = StatusOut ? {12'b0, StatusReg } : 'bz;
 assign StatusRegIn = (FlagSel == FlagAlu) ? Flags : SysBus[3:0];
+
 // Type casting
 assign Opcode = Opcode_t'(OpcodeCondIn[7:3]); 
 assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
 assign CFlag = StatusReg[`FLAGS_C];
 
-`ifndef nointerrupt
 //double buffer the IRQ signal
 logic IRQ1, IRQ2, IntReq, IntClear, IntEnable, IntDisable, IntStatus, InISR;
 always_ff @ (posedge Clock or negedge nReset) begin
@@ -89,14 +83,13 @@ end
 //assign IntReq = (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2); //first - if we're not in an
 //interupt and we get a request. Second, if request is satisfied and we get a
 //new one, we want to go back in - allows nestedd
-`endif
 
 enum {
    fetch,
    execute,
    interrupt
 }  state;
-enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
+enum { 	
 	cycle0,
    	cycle1,
    	cycle2,
@@ -107,14 +100,14 @@ enum { 			// AJR - Save them d-types, 5 used states = 3 unused states
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states
 	if(!nReset) begin
- 	     	StatusReg <= #20 0;
+ 	    StatusReg <= #20 0;
 	  	state <= #20 fetch;
-      		stateSub <= #20 cycle0;
+      	stateSub <= #20 cycle0;
 		InISR <= #20 0;
 	end else begin 
 	// Status update
       	if (StatusRegWe)
-			StatusReg <= #20 StatusRegIn;		// AJR - Put this in here, shoudl be ok right?
+			StatusReg <= #20 StatusRegIn;
 	// Interrupt
 	if(state == interrupt)
 		case(stateSub)
@@ -125,56 +118,55 @@ always_ff@(posedge Clock or negedge nReset) begin
 			cycle4: begin stateSub <= #20 cycle0; state <= #20 fetch;  end
 		endcase
   	// Fetch  
-      	if(state == fetch)
-         	case(stateSub)
-            	cycle0: stateSub <= #20 cycle1;	
-            	cycle1: stateSub <= #20 cycle2;
-            	cycle2: if(nWait)
-							stateSub <= #20 cycle3;
-            	default:begin							// Should never get in cycle4 in fetch 
-							state <= #20 execute;
-         					stateSub <= #20 cycle0;
+    if(state == fetch)
+     	case(stateSub)
+        	cycle0: stateSub <= #20 cycle1;	
+        	cycle1: stateSub <= #20 cycle2;
+        	cycle2: if(nWait)
+						stateSub <= #20 cycle3;		// !!!!!  Watch out for repeated operations in this state
+        	default:begin							// Should never get in cycle4 in fetch 
+						state <= #20 execute;
+     					stateSub <= #20 cycle0;
+					end
+		endcase
+    // Execute     
+    if(state == execute) 
+     	case(stateSub)
+        	cycle0: case(Opcode)
+        				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, 
+						LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
+							if (IntReq) 
+								state <= #20 interrupt; //got an interrupt
+							else 
+								state <= #20 fetch;	// Single cycle ops
 						end
-			endcase
-    	// Execute     
-      	if(state == execute) 
-         	case(stateSub)
-            	cycle0: case(Opcode)
-            				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, 
-							LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
-								if (IntReq) 
-									state <= #20 interrupt; //got an interrupt
-								else 
-									state <= #20 fetch;	// Single cycle ops
-							end
-                			LDW, STW,PUSH,POP: 	
-								stateSub <= #20 cycle1;
-							INTERRUPT: begin
-								if ( BranchCode == 0 | BranchCode == 3 | BranchCode == 4)
-									stateSub <= #20 cycle1; //if a return from interrupt
-								else
-									state <= #20 fetch; //else single cycle
-								end//INTERRUPT
-                  		endcase
-            	cycle1:	stateSub <= #20 cycle2;	
-            	cycle2: stateSub <= #20 cycle3;  		
-				cycle3: if(nWait)						// Data setup, stay in place
-							stateSub <= #20 cycle4;	
-        		default:begin
-					stateSub <= #20 cycle0; //always go to cycle 0
-					if(IntReq)
-						state<= #20 interrupt;
-					else
-						state <= #20 fetch;	
-					if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
-				end
-         	endcase
+            			LDW, STW,PUSH,POP: 	
+							stateSub <= #20 cycle1;
+						INTERRUPT: begin
+							if ( BranchCode == 0 | BranchCode == 3 | BranchCode == 4)
+								stateSub <= #20 cycle1; //if a return from interrupt
+							else
+								state <= #20 fetch; //else single cycle
+							end//INTERRUPT
+              		endcase
+        	cycle1:	stateSub <= #20 cycle2;	
+        	cycle2: stateSub <= #20 cycle3;  		
+			cycle3: if(nWait)						// Data setup, stay in place
+						stateSub <= #20 cycle4;	
+    		default:begin
+				stateSub <= #20 cycle0; //always go to cycle 0
+				if(IntReq)
+					state<= #20 interrupt;
+				else
+					state <= #20 fetch;	
+				if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
+			end
+     	endcase
    	end
 end
 
 always_comb begin
    	// Default outputs   
-//   	//AluOp    = FnADD;
    	AluWe    = 0;
    	Op2Sel   = Op2Imm; 
    	Op1Sel   = Op1Rd1; 
@@ -203,7 +195,7 @@ always_comb begin
 	IntDisable = 0;
 	StatusOut = 0;
 	FlagSel = FlagAlu;
-	AluOR = 0;
+	AluOR = nOR;
 	case(state)
       	fetch : 
          	case(stateSub)
@@ -214,22 +206,20 @@ always_comb begin
          	endcase
       	execute: begin
          	case(stateSub)
-            	cycle0: begin    					// Single cycle ops
-               		case(Opcode)
-                  		ADD:begin
-		            		PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnADD;
-                           	Op1Sel = Op1Rd1;
+            	cycle0: begin    					
+					case(Opcode)
+                  		ADD:begin				
+		            		PcEn = 1;   		
+							Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
                            	PcWe = 1;
                            	PcSel = Pc1;
 							StatusRegWe = 1;
                         end
-                  		ADDI:begin
-		                	PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnADD;
-                           	Op1Sel = Op1Rd1;
+                  		ADDI:begin				
+		                	PcEn = 1;   		
+							Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -237,8 +227,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		ADDIB:begin
-        		        	PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnADD;
+        		        	PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
                            	Rs1Sel = Rs1Rd;
                            	RegWe = 1;
@@ -247,8 +236,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		ADC:begin
-		                	PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnADC;
+		                	PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -256,8 +244,7 @@ always_comb begin
                            	PcSel = Pc1;
                     	end
                   		ADCI:begin
-		                	PcEn = 1;   		// output the PC to SysBu
-                           	//AluOp = FnADC;
+		                	PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -265,8 +252,7 @@ always_comb begin
                            	PcSel = Pc1;
                     	end
                   		SUB:begin
-   		            		PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnSUB;
+   		            		PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -275,8 +261,7 @@ always_comb begin
 							StatusRegWe = 1;
                         end
                   		NEG:begin
-   		            		PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnNEG;
+   		            		PcEn = 1;   
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -284,8 +269,7 @@ always_comb begin
 							StatusRegWe = 1;
                         end
                   		SUBI:begin
-   		                	PcEn = 1;   		// output the PC to SysBus
-                           	//AluOp = FnSUB;
+   		                	PcEn = 1;   
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	RegWe = 1;
@@ -294,8 +278,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		SUBIB:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnSUB;
+   		                	PcEn = 1; 
                            	Op1Sel = Op1Rd1;
                            	Rs1Sel = Rs1Rd;
                            	RegWe = 1;
@@ -304,8 +287,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		SUC:begin
-		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnADC;
+		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -313,8 +295,7 @@ always_comb begin
                            	PcSel = Pc1;
                     	end
                   		SUCI:begin
-   		                	PcEn = 1;   // output the PC to SysBu
-                           	//AluOp = FnADC;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -322,8 +303,7 @@ always_comb begin
                            	PcSel = Pc1;
                     	end
                   		CMP:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnSUB;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	PcWe = 1;
@@ -331,8 +311,7 @@ always_comb begin
                            	PcSel = Pc1;
 						end
                   		CMPI:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnSUB;
+   		                	PcEn = 1; 
                            	Op1Sel = Op1Rd1;
                            	ImmSel = ImmShort;
                            	PcWe = 1;
@@ -340,8 +319,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		AND:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnAND;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -350,8 +328,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		OR:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnOR;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -360,8 +337,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		XOR:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnXOR;
+   		                	PcEn = 1;   
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -370,8 +346,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		NOR:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnNOR;
+   		                	PcEn = 1;   
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -380,8 +355,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		NAND:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnNAND;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -390,8 +364,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		NOT:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnNOT;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
                            	RegWe = 1;
                            	PcWe = 1;
@@ -399,8 +372,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		LSL:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnLSL;
+   		                	PcEn = 1;  
 							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;Op2Sel = Op2Imm;
                            	RegWe = 1;
@@ -409,8 +381,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		LSR:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnLSR;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
 							ImmSel = ImmShort;
 							Op2Sel = Op2Imm;
@@ -420,8 +391,7 @@ always_comb begin
                            	PcSel = Pc1;
                         end
                   		ASR:begin
-   		                	PcEn = 1;   // output the PC to SysBus
-                           	//AluOp = FnASR;
+   		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
 							ImmSel = ImmShort;
 							Op2Sel = Op2Imm;
@@ -434,8 +404,7 @@ always_comb begin
    							AluEn = 1;
 							ImmSel = ImmShort;
                            	Op1Sel = Op1Rd1;
-							//AluOp = FnADD;	
-                           	AluWe = 1;
+	                        AluWe = 1;
                     	end
 						LUI,LLI:begin
 							ImmSel = ImmLong;
@@ -447,25 +416,20 @@ always_comb begin
 							PcSel = Pc1;
 							Rs1Sel = Rs1Rd;	
 							AluEn = 1;
-							//if(Opcode == LUI)
-								//AluOp = FnLUI;
-							//else
-								//AluOp = FnLLI;
 						end
 						BRANCH:begin
 							case(BranchCode)	
 								BR,BNE,BE,BLT,BGE,BWL:begin		// Conditional branching
 									PcWe = 1;
-									//AluOp = FnADD;
 									ImmSel = ImmLong;
 									Op1Sel = Op1Pc;
 									AluEn = 1;
-									if(	(BranchCode == BR) 	|| 
-										(BranchCode == BWL)	||
-										((BranchCode == BNE) 	&&   (StatusReg[`FLAGS_Z] == 0))		||
-										((BranchCode == BE 	) && 	(StatusReg[`FLAGS_Z] == 1)	) ||
-										((BranchCode == BLT	)&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
-										((BranchCode == BGE	)&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) || (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
+									if(	(BranchCode == BR	) 	|| 
+										(BranchCode == BWL	)	||
+										((BranchCode == BNE	) 	&& 	(StatusReg[`FLAGS_Z] == 0))		||
+										((BranchCode == BE 	) 	&& 	(StatusReg[`FLAGS_Z] == 1)	) 	||
+										((BranchCode == BLT	)	&&  ((StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])	|| (~StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]))	)	||
+										((BranchCode == BGE	)	&&  ((StatusReg[`FLAGS_N] && StatusReg[`FLAGS_V]) 	|| (~StatusReg[`FLAGS_N] && ~StatusReg[`FLAGS_V])))	) begin 
 										PcSel = PcAluOut;
 										if(BranchCode == BWL) begin	// Branch with link
 											LrWe = 1;
@@ -480,7 +444,6 @@ always_comb begin
 									PcSel = PcSysbus;	
 								end
 								JMP:begin
-									//AluOp = FnADD;
 									ImmSel = ImmShort;
                            			Op1Sel = Op1Rd1;
 									PcSel = PcAluOut;
@@ -491,10 +454,9 @@ always_comb begin
 						PUSH:begin
 							AluEn = 1;
 							ImmSel = ImmShort;
-	            					Rs1Sel = Seven;
+	            			Rs1Sel = Seven;
 							RwSel = RwSeven;
 							Op1Sel = Op1Rd1;
-							//AluOp = FnSUB;
 							AluWe = 1;
 							RegWe = 1;
 							WdSel = WdAlu;
@@ -505,39 +467,40 @@ always_comb begin
 							Rs1Sel = Seven;
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
-							//AluOp = FnADD;
 							AluWe = 1;
 						end 
 						INTERRUPT: begin
 							case(BranchCode)
-								0,4: begin //RETI and LDF
+								// 0,4
+								BR,BNE: begin //RETI and LDF
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
 									Op2Sel = Op2zero;
 									ImmSel = ImmShort;
-									//AluOp = FnADD;
-	          				 			AluWe = 1;	
+									AluWe = 1;	
 								end //0 
-								1: begin
+								// 1
+								JMP: begin
 									PcWe = 1;
 									PcSel = Pc1;
 									PcEn = 1; 
 									IntEnable = 1;
 								end //1
-								2: begin
+								// 2
+								RET: begin
 									PcWe = 1;
 									PcSel = Pc1;
 									PcEn = 1; 
 									IntDisable = 1;
 								end //2
-								3: begin // STF
+								// 3
+								BWL: begin // STF
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
-									//AluOp = FnDEC;	
-									AluOR  = 2'b11;
-						      		        AluWe = 1;
+									AluOR  = subOR;
+						      		AluWe = 1;
 									RegWe = 1;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
@@ -562,7 +525,6 @@ always_comb begin
 							nWE = 1;
 							nOE = 1;
 							ImmSel = ImmShort;
-							//AluOp = FnADD;
 							Op1Sel = Op1Rd1;
 							Rs1Sel = Seven;
 							AluEn = 1;
@@ -571,10 +533,6 @@ always_comb begin
 							ALE = 1;
 							nWE = 1;
 							nOE = 1;
-//							if(BranchCode == 3 )
-//								//AluOp = FnDEC;
-//							else
-//								//AluOp = FnINC;
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
@@ -585,32 +543,29 @@ always_comb begin
          		cycle2: begin
             		case(Opcode)
                			LDW:begin
-					nME = 0;
-                        		Op1Sel = Op1Rd1;
-					//AluOp = FnADD;		// Nothing done to op1
-					Op2Sel = Op2zero;
+							nME = 0;
+                        	Op1Sel = Op1Rd1;
+							Op2Sel = Op2zero;
 			             	Rs1Sel = Rs1Rd;
-					MemEn = 1;
-					nOE = 1;
-					nWE = 1;
-        	               		AluWe = 1;			// Pass right through on next clock
-	                	       	AluEn = 1;
-				end
-				STW:begin			// Get the data out of the reg
-        	                	nME = 0;
-					Op1Sel = Op1Rd1;
-					//AluOp = FnADD;		// Nothing done to op1
-			                Op2Sel = Op2zero;
-					Rs1Sel = Rs1Rd;
-					nOE = 1;
+							MemEn = 1;
+							nOE = 1;
+							nWE = 1;
+        	               	AluWe = 1;			// Pass right through on next clock
+	                	    AluEn = 1;
+						end
+					STW:begin					// Get the data out of the reg
+        	                nME = 0;
+							Op1Sel = Op1Rd1;
+							Op2Sel = Op2zero;
+							Rs1Sel = Rs1Rd;
+							nOE = 1;
 	                		nWE = 1;
-	                     		AluWe = 1;			// Pass right through on next clock
-        	                	AluEn = 1;
-				end
-						PUSH:begin
+	                     	AluWe = 1;			// Pass right through on next clock
+        	                AluEn = 1;
+						end
+					PUSH:begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
-							//AluOp = FnADD; // Nothing done to op1
 						    Op2Sel = Op2zero;
 							Rs1Sel = Rs1Ra;
 							nOE = 1;
@@ -621,12 +576,10 @@ always_comb begin
 						POP:begin
 						 	nME = 0;
 						  	Op1Sel = Op1Rd1;
-						  	//AluOp = FnADD; // Nothing done to op1
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
 							MemEn = 1;
 							nWE = 1;
-							//AluWe = 1; // Pass right through on next clock
 							AluEn = 1;
 						end
 						INTERRUPT: begin
@@ -634,10 +587,8 @@ always_comb begin
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
-							//AluOp = FnADD;
 							MemEn = 1;
 							nWE = 1;
-							//AluWe = 1;
 							AluEn = 1;
 						end
             		endcase
@@ -654,20 +605,17 @@ always_comb begin
 							nME = 0;
                         	AluEn = 1;			// Hold data on sysbus
                         	nOE = 1;               
-                     		//AluOp = FnADD;
-							Op2Sel = Op2zero;
+                     		Op2Sel = Op2zero;
 						end  
 						PUSH:begin
 							nME = 0;	
 							nOE = 1;	
-							//LrEn = 1;
 							if(OpcodeCondIn[2]) begin	// 1 = LR
 								LrEn = 1;
 							end else begin
 								AluEn = 1;
 								AluWe = 1;
 								Rs1Sel = Rs1Ra;
-								//AluOp = FnADD;
 								Op2Sel = Op2zero;
 							end
 						end
@@ -679,12 +627,10 @@ always_comb begin
 							WdSel = WdAlu;
 							ImmSel = ImmShort;
 							Op2Sel = Op2Imm;
-							if(nWait)
-								RegWe = 1;		// Can get caught up
+							RegWe = nWait;		// Can get caught up
 							Rs1Sel = Seven;
 							WdSel = WdAlu;
 							RwSel = RwSeven;
-							//AluOp = FnADD;
 						end
 						INTERRUPT: begin
 							case(BranchCode)
@@ -719,7 +665,6 @@ always_comb begin
 	  					STW: begin
 	  						nOE = 1;
 	  						AluEn = 1;
-							//AluOp = FnADD;
 							Op2Sel = Op2zero;
 	  					end
 	  					PUSH:begin
@@ -729,20 +674,18 @@ always_comb begin
 							end else begin
 								AluEn = 1;
 								Rs1Sel = Rs1Ra;
-								//AluOp = FnADD;
 								Op2Sel = Op2zero;
 							end
 						end
 						POP:begin
 							nWE = 1;
-							MemEn = 1;
+							MemEn = 1;	
 							if(OpcodeCondIn[2]) begin // 1 = LR
 								LrWe = 1;
 							end else begin
 								RegWe = 1;
 								Rs1Sel = Rs1Rd;
 								RwSel = RwRa;
-								//AluOp = FnADD;
 								WdSel = WdSys;
 							end
 						end
@@ -756,8 +699,7 @@ always_comb begin
 									nME = 1;
 									Rs1Sel = Seven;
 									Op2Sel = Op2zero;
-									//AluOp = FnINC;
-									AluOR = 2'b10;
+									AluOR = addOR;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
 									RegWe = 1;
@@ -770,9 +712,8 @@ always_comb begin
 									Rs1Sel = Seven;
 									MemEn = 1;
 									nWE = 1;	
-									//AluOp = FnINC;
 									Op2Sel = Op2zero;
-									AluOR = 2'b10;
+									AluOR = addOR;
 									WdSel = WdAlu;
 									RwSel = RwSeven;
 									RegWe = 1;
@@ -791,8 +732,7 @@ always_comb begin
 		case(stateSub)
 			cycle0:begin
 				Rs1Sel = Seven;//choose sp
-				//AluOp = FnDEC; //pass it through
-				AluOR = 2'b11;
+				AluOR = subOR;
 				Op1Sel = Op1Rd1;
 				Op2Sel = Op2zero;
 				RegWe = 1;
@@ -802,11 +742,9 @@ always_comb begin
 				AluEn = 1;
 			end
 			cycle1:begin
-			        nWE = 1;
+			    nWE = 1;
 				nOE = 1;
-				//AluOp = FnDEC;
-				AluOR = 2'b11;
-				////AluOp = FnADD;
+				AluOR = subOR;
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
 				Rs1Sel = Seven;
@@ -815,7 +753,6 @@ always_comb begin
 			end
 			cycle2: begin
 				nME = 0;
-				//AluOp = FnADD; // Nothing done to op1
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
 				nOE = 1;
