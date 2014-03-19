@@ -27,6 +27,8 @@ def RunSim(options):
 	programs = os.path.join(home, "Design/Implementation/programs")
 	magic = os.path.join(home, "Design/Implementation/magic/c035u/%s" % options.module)
 	datapathmag = os.path.join(home, "Design/Implementation/magic/c035u/Datapath/")
+	fcdecells = os.path.join(home,"Design/Implementation/verilog")
+	gate = os.path.join(home,"Design/Implementation/verilog/gate_level")
 	#@todo Check files exist
 
 	#piece together the command
@@ -58,9 +60,15 @@ def RunSim(options):
 		cmd.append(mixed)
 		cmd.append("+incdir+%s" % mixed)
 		cmd.append("+define+crosssim")
+	elif options.gate:
+		cmd.append(behave)
+		cmd.append("%s/control.sv" % gate)
+		cmd.append("+incdir+%s" % behave)
 	else:
 		cmd.append(behave)
 		cmd.append("+incdir+%s" % behave)
+
+
 
 	cmd.append("-y")
 	cmd.append(system)
@@ -79,6 +87,7 @@ def RunSim(options):
 			asmb = os.path.join(programs, "all")
 			print asmb
 			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
+
 	else: #running a system program
 		#cmd.append("-v")
 		cmd.append(os.path.join(system, "system.sv"))
@@ -145,6 +154,8 @@ if "__main__" == __name__:
 	parser.add_option("-p", "--prog", dest="program",
                   help="program to run (hex file) should not be defined if module is")
 
+	parser.add_option("-G","--gate",  dest="gate", action="store_true", default=False,
+				help="Run a gate level sim.")
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
