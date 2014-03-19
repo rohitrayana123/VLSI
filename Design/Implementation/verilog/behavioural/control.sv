@@ -53,7 +53,8 @@ logic [3:0] StatusReg;
 Flag_select_t	FlagSel;
 logic [3:0] StatusRegIn;
 
-assign SysBus = StatusOut ? {12'b0, StatusReg } : 'bz;
+// AJR - vlog2edf doesn like zeros?
+assign SysBus[3:0] = StatusOut ? StatusReg  : 'bz;
 assign StatusRegIn = (FlagSel == FlagAlu) ? Flags : SysBus[3:0];
 
 // Type casting
