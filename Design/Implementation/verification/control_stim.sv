@@ -110,55 +110,56 @@ initial begin
 			OpcodeCondIn = 0;
 	#5470  	nReset 	= 1; 
    
-	i = -1;
-	while(1) begin
-      	// Test fetch phase
-      	@(posedge Clock) begin	// Cycle0 
-			i = i + 1;
-			if(	(control.state != fetch)	||
-			 	(control.stateSub != cycle0)
-				) fail;
-		end
-       	@(posedge Clock) begin	// Cycle1 
-			if(	(control.state != fetch)	||
-			 	(control.stateSub != cycle1)
-				) fail;
-		end
-        @(posedge Clock) begin	// Cycle2 
-			if(	(control.state != fetch)	||
-			 	(control.stateSub != cycle2)
-				) fail;
-		end
-     	@(posedge Clock) begin	// Cycle3 		
-			if(	(control.state != fetch)	||
-			 	(control.stateSub != cycle3)
-				) fail;
-			// Opcode is now present
-      		OpcodeCondIn = Data_stored[i][15:8];
-		end
-        
-		// Test Execute phase
-		case(Opcode)
-			ADD:begin
-				@(posedge Clock);
-			end
-			//LDW:begin
-      		//	@(posedge Clock);
-			//	@(posedge Clock);
-			//	@(posedge Clock);
-			//	@(posedge Clock);
-			//	@(posedge Clock);
-			//end
-		endcase
-   	end
-   	$stop;
+	i = 0;
+	DoFetch(1,OpcodeCondIn);
+	@(posedge Clock);
+	DoFetch(2,OpcodeCondIn);
+   	@(posedge Clock);
+	DoFetch(3,OpcodeCondIn);
+	@(posedge Clock);
+	DoFetch(4,OpcodeCondIn);
+	@(posedge Clock);
+	DoFetch(5,OpcodeCondIn);
+	pass;
 end
+
+task DoFetch;
+	input integer instruct;
+	output logic [7:0] op;
+	@(posedge Clock);
+		if(	(control.state != fetch)	||
+		 	(control.stateSub != cycle0)
+			) fail;
+    @(posedge Clock); // Cycle1 
+		if(	(control.state != fetch)	||
+		 	(control.stateSub != cycle1)
+			) fail;
+    @(posedge Clock); // Cycle2 
+		if(	(control.state != fetch)	||
+		 	(control.stateSub != cycle2)
+			) fail;
+    @(posedge Clock); // Cycle3 		
+		if(	(control.state != fetch)	||
+		 	(control.stateSub != cycle3)
+			) fail;
+		// Opcode is now present
+    op = Data_stored[instruct][15:8]; 
+endtask
+
 
 task fail;
    $display();
    $display("  !!!!!!!!!!!!!!!!!!!!!!!!");
    $display("  !!!      FAIL        !!!");
    $display("  !!!!!!!!!!!!!!!!!!!!!!!!");
+   $stop;
+endtask
+
+task pass;
+   $display();
+   $display("  ***********************");
+   $display("  **       PASS        **");
+   $display("  ***********************");
    $stop;
 endtask
 endmodule
