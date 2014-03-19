@@ -70,7 +70,15 @@ def RunSim(options):
 	#top level stim file
 	if (None != options.module): #use the stim file
 		#cmd.append("-v")
+
+		# AJR - Not ideal, just a hack job until we agree on a better way to deal with code in module sims
 		cmd.append(os.path.join(stim, options.module+"_stim.sv"))
+		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, "all.hex"))	# All commands
+		if os.path.exists(os.path.join(programs, "all.asm")): #found us some assembler - compile it!
+			print("Invoking compiler...")
+			asmb = os.path.join(programs, "all")
+			print asmb
+			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
 	else: #running a system program
 		#cmd.append("-v")
 		cmd.append(os.path.join(system, "system.sv"))

@@ -84,18 +84,23 @@ end
 //interupt and we get a request. Second, if request is satisfied and we get a
 //new one, we want to go back in - allows nestedd
 
-enum {
-   fetch,
-   execute,
-   interrupt
-}  state;
-enum { 	
-	cycle0,
-   	cycle1,
-   	cycle2,
-   	cycle3,
-   	cycle4     
-}  	stateSub;
+
+// AJR - Now in opcodes
+//enum {
+//   fetch,
+//   execute,
+//   interrupt
+//}  state;
+//enum { 	
+//	cycle0,
+//   	cycle1,
+//   	cycle2,
+//   	cycle3,
+//   	cycle4     
+//}  	stateSub;
+
+state_t state;
+stateSub_t stateSub;
 
 always_ff@(posedge Clock or negedge nReset) begin
 	// Major states

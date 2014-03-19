@@ -114,4 +114,19 @@ typedef enum logic [4:0] { 		ADD 		= 5'b00010,
 								PUSH		= 5'b01001,
 								POP			= 5'b00001	} Opcode_t;
 
+
+typedef enum logic [1:0] {
+   fetch,
+   execute,
+   interrupt
+}  state_t;
+typedef enum logic [2:0] { 	
+	cycle0,
+   	cycle1,
+   	cycle2,
+   	cycle3,
+   	cycle4     
+}  	stateSub_t;
+
+
 endpackage

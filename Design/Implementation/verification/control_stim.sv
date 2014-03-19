@@ -4,98 +4,152 @@ timeunit 1ns; timeprecision 10ps;
 
 import opcodes::*;
 
-parameter CLK_PERIOD = 100;
+parameter CLK_PERIOD = 500;
 
-opcodes::alu_functions_t 	AluOp;    
-opcodes::Op2_select_t		Op2Sel;   
-opcodes::Op1_select_t     Op1Sel;          
-logic       					AluEn;         
-logic       					LrEn;     
-logic       					LrWe;
-opcodes::Lr_select_t		LrSel;
-opcodes::Rs1_select_t		Rs1Sel;
-opcodes::Wd_select_t		WdSel;
-ogic       					PcWe;     
-opcodes::pc_select_t 		PcSel;    
-logic       					PcEn;     
-logic       					IrWe;     
-logic       					WdSel;    
-opcodes::Imm_select_t		ImmSel;   
-logic       					RegWe;    
-logic       					MemEn;
-logic       					nWE;
-logic       					nOE;
-logic       					nME;
-logic       					ENB;
-logic       					ALE;
-logic							CFlag;
-logic							AleWe;
-logic [7:0] 					OpcodeCondIn;
-logic       					Clock;    
-logic       					nReset;   
+
+logic                     	ALE;
+logic                     	AluEn;
+logic                     	AluWe; 
+opcodes::AluOR_select_t		AluOR;
+logic                     	CFlag;
+logic                     	ENB;
+opcodes::Imm_select_t		ImmSel;
+logic                     	IrWe;
+logic                     	LrEn;
+opcodes::Lr_select_t      	LrSel;
+logic                     	LrWe;
+logic                     	MemEn;   
+logic                     	nME;     
+logic                     	nOE;
+logic                     	nWE;	
+opcodes::Op1_select_t     	Op1Sel;
+opcodes::Op2_select_t     	Op2Sel; 		
+logic                     	PcEn;
+opcodes::pc_select_t      	PcSel;
+logic                     	PcWe;
+logic                     	RegWe;
+opcodes::Rs1_select_t     	Rs1Sel;
+opcodes::Rw_select_t		RwSel;
+opcodes::Wd_select_t      	WdSel;
+wire	[15:0] 				SysBus;
+logic	                  	Clock;
+logic	[3:0]             	Flags;
+logic						nIRQ;
+logic	                  	nReset;
+logic						nWait;
+logic	[7:0]             	OpcodeCondIn;  	
+
 
 control control(
-   .AluOp         	(AluOp      	),            
-   .Op2Sel        	(Op2Sel     	),
-   .Op1Sel        	(Op1Sel     	),
-   .AluEn         	(AluEn      	),      
-   .LrEn          	(LrEn       	),
-   .LrWe          	(LrWe       	),
-   .PcWe          	(PcWe       	),
-   .PcSel         	(PcSel      	),
-   .PcEn          	(PcEn       	),
-   .IrWe          	(IrWe       	),
-   .WdSel         	(WdSel      	),
-   .ImmSel        	(ImmSel     	),
-   .RegWe         	(RegWe      	),
-   .MemEn         	(MemEn      	),
-   .nWE           	(nWE        	),
-   .nOE           	(nOE        	),
-   .nME           	(nME        	),
-   .ENB           	(ENB        	),
-   .ALE           	(ALE        	),
-   .CFlag			(CFlag),
-   .LrSel			(LrSel),
-   .Rs1Sel			(Rs1Sel),
-   .AluWe			(AluWe),
-   .OpcodeCondIn  	(OpcodeCondIn	),
-   .Clock         	(Clock      	),
-   .nReset        	(nReset     	)
+   .ALE				(ALE			),            		
+   .AluEn          	(AluEn         	),
+   .AluWe          	(AluWe         	),
+   .AluOR          	(AluOR         	),      
+   .CFlag          	(CFlag         	),
+   .ENB            	(ENB           	),
+   .ImmSel         	(ImmSel        	),
+   .IrWe           	(IrWe          	),
+   .LrEn           	(LrEn          	),
+   .LrSel          	(LrSel         	),
+   .LrWe           	(LrWe          	),
+   .MemEn          	(MemEn         	),
+   .nME            	(nME           	),
+   .nOE            	(nOE           	),
+   .nWE	        	(nWE	        ),
+   .Op1Sel         	(Op1Sel       	),
+   .Op2Sel 			(Op2Sel 		),
+   .PcEn           	(PcEn          	),
+   .PcSel	        (PcSel	      	),
+   .PcWe           	(PcWe          	),
+   .RegWe          	(RegWe         	),
+   .Rs1Sel         	(Rs1Sel        	),
+   .RwSel          	(RwSel         	),
+   .WdSel          	(WdSel         	),
+   .SysBus         	(SysBus        	),
+   .Clock          	(Clock         	),
+   .Flags			(Flags		  	),
+   .nIRQ           	(nIRQ          	),
+   .nReset         	(nReset        	),
+   .nWait          	(nWait         	),
+   .OpcodeCondIn   	(OpcodeCondIn  	)
 );
 
+// Clock gen
 initial                          Clock = 1;
 always begin   #(CLK_PERIOD/2)   Clock = 0;
                #(CLK_PERIOD/2)   Clock = 1;
 end
 
-logic [9:0] prog [7:0];
+// Test signals
+logic [15:0] Data_stored [0:2047];
+Opcode_t Opcode;
+
+assign Opcode = Opcode_t'(OpcodeCondIn[7:3]);
+
+
+initial begin
+	#1ns
+	$readmemh(`prog_file,Data_stored);		
+end
+
+
+
+// Dead states
+always @(posedge Clock) begin
+	if((control.state == fetch) && (control.stateSub == cycle4)) fail;
+end
+
 
 initial begin
 	integer i;
 
-   	prog[1] = ADD;
-   	prog[2] = ADDI;
-   	prog[3] = ADDIB;
-   	prog[4] = ADC;
-   	prog[5] = ADCI;
-
-
-         	nReset = 0;
-   	#500  	nReset = 1; 
-   	for(i=0;i<20;i=i+1) begin
+         	nReset 	= 0;
+   			Flags	= 0;
+			nIRQ	= 1;
+			nWait 	= 1;
+			OpcodeCondIn = 0;
+	#5470  	nReset 	= 1; 
+   
+	i = -1;
+	while(1) begin
       	// Test fetch phase
-      	@(posedge Clock) if(!((MemEn == 1)&&(ALE == 0))) fail;
-      	@(posedge Clock) if(!((MemEn == 1)&&(ALE == 1)&&(nWE == 1)&&(nOE == 1))) fail;
-      	@(posedge Clock) if(!((MemEn == 0)&&(ALE == 0)&&(nWE == 1)&&(nOE == 1))) fail;
-      	@(posedge Clock) if(!((MemEn == 0)&&(ALE == 0)&&(nWE == 1)&&(nOE == 0))) fail;
-      	@(posedge Clock) if(!(IrWe == 1)) fail;
-   
-      	// Opcode is now present
-      	Opcode = prog[i];
-
-      	// Test Execute phase
-      	@(posedge Clock);
-   
+      	@(posedge Clock) begin	// Cycle0 
+			i = i + 1;
+			if(	(control.state != fetch)	||
+			 	(control.stateSub != cycle0)
+				) fail;
+		end
+       	@(posedge Clock) begin	// Cycle1 
+			if(	(control.state != fetch)	||
+			 	(control.stateSub != cycle1)
+				) fail;
+		end
+        @(posedge Clock) begin	// Cycle2 
+			if(	(control.state != fetch)	||
+			 	(control.stateSub != cycle2)
+				) fail;
+		end
+     	@(posedge Clock) begin	// Cycle3 		
+			if(	(control.state != fetch)	||
+			 	(control.stateSub != cycle3)
+				) fail;
+			// Opcode is now present
+      		OpcodeCondIn = Data_stored[i][15:8];
+		end
+        
+		// Test Execute phase
+		case(Opcode)
+			ADD:begin
+				@(posedge Clock);
+			end
+			//LDW:begin
+      		//	@(posedge Clock);
+			//	@(posedge Clock);
+			//	@(posedge Clock);
+			//	@(posedge Clock);
+			//	@(posedge Clock);
+			//end
+		endcase
    	end
    	$stop;
 end
