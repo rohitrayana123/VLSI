@@ -28,7 +28,8 @@ def RunSim(options):
 	magic = os.path.join(home, "Design/Implementation/magic/c035u/%s" % options.module)
 	datapathmag = os.path.join(home, "Design/Implementation/magic/c035u/Datapath/")
 	fcdecells = os.path.join(home,"Design/Implementation/verilog")
-	gate = os.path.join(home,"Design/Implementation/verilog/gate_level")
+	gate = os.path.join(home,"Design/Implementation/cadence/control/gate_level")
+
 	#@todo Check files exist
 
 	#piece together the command
@@ -61,9 +62,9 @@ def RunSim(options):
 		cmd.append("+incdir+%s" % mixed)
 		cmd.append("+define+crosssim")
 	elif options.gate:
-		cmd.append(behave)
-		cmd.append("%s/control.sv" % gate)
-		cmd.append("+incdir+%s" % behave)
+		cmd.append(gate)
+		#cmd.append("%s/options.sv" % gate)
+		cmd.append("+incdir+%s" % gate)
 	else:
 		cmd.append(behave)
 		cmd.append("+incdir+%s" % behave)
