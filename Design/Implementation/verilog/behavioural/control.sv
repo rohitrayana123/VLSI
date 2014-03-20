@@ -130,7 +130,7 @@ always_ff@(posedge Clock or negedge nReset) begin
         	cycle1: stateSub <= #20 cycle2;
         	cycle2: if(nWait)
 						stateSub <= #20 cycle3;		// !!!!!  Watch out for repeated operations in this state
-        	default:begin							// Should never get in cycle4 in fetch 
+        	cycle3:begin							// Should never get in cycle4 in fetch 
 						state <= #20 execute;
      					stateSub <= #20 cycle4;
 					end
@@ -141,9 +141,10 @@ always_ff@(posedge Clock or negedge nReset) begin
         	cycle4: case(Opcode)
         				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, 
 						LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
-							if (IntReq) 
+							if (IntReq) begin 
 								state <= #20 interrupt; //got an interrupt
-							else begin 
+								stateSub <= #20 cycle0;
+							end else begin 
 								state <= #20 fetch;	// Single cycle ops
 								stateSub <= #20 cycle0;
 							end
@@ -153,9 +154,11 @@ always_ff@(posedge Clock or negedge nReset) begin
 						INTERRUPT: begin
 							if ( BranchCode == 0 | BranchCode == 3 | BranchCode == 4)
 								stateSub <= #20 cycle0; //if a return from interrupt
-							else
+							else begin
 								state <= #20 fetch; //else single cycle
-							end//INTERRUPT
+								stateSub <= #20 cycle0;
+							end	
+						end//INTERRUPT
               		endcase
         	cycle0:	stateSub <= #20 cycle1;	
         	cycle1: stateSub <= #20 cycle2;  		
@@ -164,7 +167,7 @@ always_ff@(posedge Clock or negedge nReset) begin
 			cycle3:begin
 				stateSub <= #20 cycle0; //always go to cycle 0
 				if(IntReq)
-					state<= #20 interrupt;
+					state <= #20 interrupt;
 				else
 					state <= #20 fetch;	
 				if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
