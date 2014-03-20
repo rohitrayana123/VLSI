@@ -5,3 +5,4 @@ addpath ../Pc
 addpath ../IR
 addpath ../ALU
 addpath ../regBlock
+addpath /opt/cad/common/cad/lib/magic/c035u/pad_lib
