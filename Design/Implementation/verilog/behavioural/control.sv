@@ -132,34 +132,36 @@ always_ff@(posedge Clock or negedge nReset) begin
 						stateSub <= #20 cycle3;		// !!!!!  Watch out for repeated operations in this state
         	default:begin							// Should never get in cycle4 in fetch 
 						state <= #20 execute;
-     					stateSub <= #20 cycle0;
+     					stateSub <= #20 cycle4;
 					end
 		endcase
     // Execute     
     if(state == execute) 
      	case(stateSub)
-        	cycle0: case(Opcode)
+        	cycle4: case(Opcode)
         				ADD, ADDI, ADDIB, ADC, ADCI, SUB, SUBI, SUBIB, SUC, SUCI, LUI, 
 						LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
 							if (IntReq) 
 								state <= #20 interrupt; //got an interrupt
-							else 
+							else begin 
 								state <= #20 fetch;	// Single cycle ops
+								stateSub <= #20 cycle0;
+							end
 						end
             			LDW, STW,PUSH,POP: 	
-							stateSub <= #20 cycle1;
+							stateSub <= #20 cycle0;
 						INTERRUPT: begin
 							if ( BranchCode == 0 | BranchCode == 3 | BranchCode == 4)
-								stateSub <= #20 cycle1; //if a return from interrupt
+								stateSub <= #20 cycle0; //if a return from interrupt
 							else
 								state <= #20 fetch; //else single cycle
 							end//INTERRUPT
               		endcase
-        	cycle1:	stateSub <= #20 cycle2;	
-        	cycle2: stateSub <= #20 cycle3;  		
-			cycle3: if(nWait)						// Data setup, stay in place
-						stateSub <= #20 cycle4;	
-    		default:begin
+        	cycle0:	stateSub <= #20 cycle1;	
+        	cycle1: stateSub <= #20 cycle2;  		
+			cycle2: if(nWait)						// Data setup, stay in place
+						stateSub <= #20 cycle3;	
+			cycle3:begin
 				stateSub <= #20 cycle0; //always go to cycle 0
 				if(IntReq)
 					state<= #20 interrupt;
@@ -206,13 +208,13 @@ always_comb begin
       	fetch : 
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
-            	cycle1: begin nME = 0; nWE = 1; MemEn = 1; end
-            	cycle2: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; end 
-            	cycle3: begin nWE = 1; MemEn = 1; IrWe  = 1;  end
+            	cycle1: begin nME = 0; nWE = 1; MemEn = 1; PcEn =1;nOE = 1;  end
+            	cycle2: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; IrWe = 1; end 
+            	cycle3: begin nWE = 1; MemEn = 1;  end
          	endcase
       	execute: begin
          	case(stateSub)
-            	cycle0: begin    					
+            	cycle4: begin    					
 					case(Opcode)
                   		ADD:begin				
 		            		PcEn = 1;   		
@@ -258,7 +260,7 @@ always_comb begin
                            	PcSel = Pc1;
                     	end
                   		SUB:begin
-   		            		PcEn = 1;   		
+							PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
                            	Op2Sel = Op2Rd2;
                            	RegWe = 1;
@@ -515,7 +517,7 @@ always_comb begin
 						end //INTERRUPT
             		endcase //opcode
          		end //cycle0
-         		cycle1:begin
+         		cycle0:begin
 					case(Opcode)
 						LDW,STW:begin
 							ALE = 1;
@@ -546,7 +548,7 @@ always_comb begin
 						end
 					endcase
          		end
-         		cycle2: begin
+         		cycle1: begin
             		case(Opcode)
                			LDW:begin
 							nME = 0;
@@ -599,13 +601,18 @@ always_comb begin
 						end
             		endcase
          		end
-         		cycle3: begin
-            		case(Opcode)
+         		cycle2: begin
+            		PcWe = 1;
+					PcSel = Pc1; // Done, move on
+					case(Opcode)
 						LDW:begin
 							nME = 0;
 							MemEn = 1;
 							ENB = 1;
 							nWE = 1;
+							WdSel = WdSys;
+	  						RwSel = RwRd;
+	  						RegWe = 1;	
 						end
                			STW:begin
 							nME = 0;
@@ -655,21 +662,22 @@ always_comb begin
 						end
             		endcase  
          		end
-         		cycle4: begin
-         			PcWe = 1;
-					PcSel = Pc1; // Done, move on
+         		cycle3: begin
+         			//PcWe = 1;
+					//PcSel = Pc1; // Done, move on
 	  				nME = 1;
 	  				case(Opcode)
 	  					LDW: begin
 	  						nWE = 1;
 	  						MemEn = 1;
-	  						WdSel = WdSys;
-	  						RwSel = RwRd;
-	  						RegWe = 1;
-	  						WdSel = WdSys;
+	  						//WdSel = WdSys;
+	  						//RwSel = RwRd;
+	  						//RegWe = 1;
+	  						//WdSel = WdSys;
 	  					end
 	  					STW: begin
-	  						nOE = 1;
+	  						nWE = 0;
+							nOE = 1;
 	  						AluEn = 1;
 							Op2Sel = Op2zero;
 	  					end

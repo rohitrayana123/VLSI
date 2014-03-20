@@ -118,14 +118,14 @@ typedef enum logic [4:0] { 		ADD 		= 5'b00010,
 typedef enum logic [1:0] {
    fetch,
    execute,
-   interrupt
+   interrupt 
 }  state_t;
 typedef enum logic [2:0] { 	
-	cycle0,
-   	cycle1,
-   	cycle2,
-   	cycle3,
-   	cycle4     
+	cycle0	= 3'b000,
+   	cycle1	= 3'b001,
+   	cycle2	= 3'b011,
+   	cycle3	= 3'b010,
+   	cycle4	= 3'b110
 }  	stateSub_t;
 
 
