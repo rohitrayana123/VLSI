@@ -589,7 +589,7 @@ always_comb begin
 						  	Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
-							MemEn = 1;
+							//MemEn = 1;
 							nWE = 1;
 							AluEn = 1;
 						end
@@ -598,7 +598,7 @@ always_comb begin
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
-							MemEn = 1;
+							//MemEn = 1;
 							nWE = 1;
 							AluEn = 1;
 						end
@@ -606,48 +606,55 @@ always_comb begin
          		end
          		cycle2: begin
             		PcWe = 1;
-					PcSel = Pc1; // Done, move on
-					case(Opcode)
-						LDW:begin
-							nME = 0;
-							MemEn = 1;
-							ENB = 1;
-							nWE = 1;
-							WdSel = WdSys;
-	  						RwSel = RwRd;
-	  						RegWe = 1;	
-						end
+			PcSel = Pc1; // Done, move on
+			case(Opcode)
+				LDW:begin
+					nME = 0;
+					MemEn = 1;
+					ENB = 1;
+					nWE = 1;
+					WdSel = WdSys;
+	  				RwSel = RwRd;
+	  				RegWe = 1;	
+				end
                			STW:begin
-							nME = 0;
-                        	AluEn = 1;			// Hold data on sysbus
-                        	nOE = 1;               
-                     		Op2Sel = Op2zero;
-						end  
-						PUSH:begin
-							nME = 0;	
-							nOE = 1;	
-							if(OpcodeCondIn[2]) begin	// 1 = LR
-								LrEn = 1;
-							end else begin
-								AluEn = 1;
-								AluWe = 1;
-								Rs1Sel = Rs1Ra;
-								Op2Sel = Op2zero;
-							end
-						end
-						POP:begin
-							nME = 0;
-							MemEn = 1;
-							ENB = 1;
-							nWE = 1;
-							WdSel = WdAlu;
-							ImmSel = ImmShort;
-							Op2Sel = Op2Imm;
-							RegWe = nWait;		// Can get caught up
-							Rs1Sel = Seven;
-							WdSel = WdAlu;
-							RwSel = RwSeven;
-						end
+					nME = 0;
+	                        	AluEn = 1;			// Hold data on sysbus
+        	                	nOE = 1;               
+                	     		Op2Sel = Op2zero;
+				end  
+				PUSH:begin
+					nME = 0;	
+					nOE = 1;	
+					if(OpcodeCondIn[2]) begin	// 1 = LR
+						LrEn = 1;
+					end else begin
+						AluEn = 1;
+						AluWe = 1;
+						Rs1Sel = Rs1Ra;
+						Op2Sel = Op2zero;
+					end
+				end
+				POP:begin
+					nME = 0;
+					MemEn = 1;
+					ENB = 1;
+					nWE = 1;
+					WdSel = WdAlu;
+					//ImmSel = ImmShort;
+					//Op2Sel = Op2Imm;
+					if(OpcodeCondIn[2]) begin // 1 = LR
+						LrWe = 1;
+					end else begin
+						RegWe = nWait;
+						Rs1Sel = Rs1Rd;
+						RwSel = RwRa;
+						WdSel = WdSys;
+					end
+					//Rs1Sel = Seven;
+					//WdSel = WdAlu;
+					//RwSel = RwSeven;
+				end
 						INTERRUPT: begin
 							case(BranchCode)
 								0,4:begin
@@ -673,6 +680,7 @@ always_comb begin
 	  					LDW: begin
 	  						nWE = 1;
 	  						MemEn = 1;
+							ENB = 1;
 	  						//WdSel = WdSys;
 	  						//RwSel = RwRd;
 	  						//RegWe = 1;
@@ -697,14 +705,21 @@ always_comb begin
 						POP:begin
 							nWE = 1;
 							MemEn = 1;	
-							if(OpcodeCondIn[2]) begin // 1 = LR
-								LrWe = 1;
-							end else begin
-								RegWe = 1;
-								Rs1Sel = Rs1Rd;
-								RwSel = RwRa;
-								WdSel = WdSys;
-							end
+							ENB = 1;
+				//			if(OpcodeCondIn[2]) begin // 1 = LR
+				//				LrWe = 1;
+				//			end else begin
+				//				RegWe = 1;
+				//				Rs1Sel = Rs1Rd;
+				//				RwSel = RwRa;
+				//				WdSel = WdSys;
+				//			end
+							RegWe = 1;
+							ImmSel = ImmShort;
+							Op2Sel = Op2Imm;
+							Rs1Sel = Seven;
+							WdSel = WdAlu;
+							RwSel = RwSeven;
 						end
 						INTERRUPT:begin
 							case(BranchCode)
