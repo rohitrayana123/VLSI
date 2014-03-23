@@ -24,7 +24,9 @@ module datapath(
 	input 	opcodes::Rs1_select_t	Rs1Sel,
 	input 	opcodes::Rw_select_t	RwSel,		
 	input 	opcodes::AluOR_select_t AluOR,	
-	input 	opcodes::Wd_select_t	WdSel 
+	input 	opcodes::Wd_select_t	WdSel,
+	input   wire	[3:0]		StatusReg,
+	input	wire			StatusRegEn
  );
 
 import opcodes::*;
@@ -46,6 +48,7 @@ wire [3:0] AluFlags;
 assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
 //assign Opcode = {Ir[15:8]};
 assign SysBus = (MemEn) ? DataIn : {16{1'bz}};
+assign SysBus = (StatusRegEn)? StatusReg : {16{1'bz}};
 //assign SysBus = (FlagListen) ? {12'h000 , FlagsIn} : {16{1'bz}};
 //assign Flags = (FlagSel == FlagAlu) ? AluFlags : SysBus[3:0];
 assign Flags = AluFlags;

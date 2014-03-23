@@ -21,15 +21,17 @@ module control(
 	output 	opcodes::pc_select_t      	PcSel,	
    	output 	logic                     	PcWe,
 	output 	logic                     	RegWe,
-    output 	opcodes::Rs1_select_t     	Rs1Sel,
+ 	output 	opcodes::Rs1_select_t     	Rs1Sel,
    	output 	opcodes::Rw_select_t		RwSel,
 	output 	opcodes::Wd_select_t      	WdSel,
-   	inout	wire 	[15:0] 				SysBus,
+	output  logic   [3:0]			StatusReg,
+	output  logic  				StatusRegEn,
+   	inout	wire 	[15:0] 			SysBus,
 	input  	wire                      	Clock,
 	input  	wire    [3:0]             	Flags,
-	input  	wire 						nIRQ,
+	input  	wire 				nIRQ,
   	input  	wire                      	nReset,
-	input 	wire						nWait,
+	input 	wire				nWait,
 	input  	wire    [7:0]             	OpcodeCondIn   	
 );
 
@@ -48,13 +50,13 @@ Branch_t BranchCode;
 
 //Flags register
 logic StatusRegWe;
-logic StatusOut;
-logic [3:0] StatusReg;
+//logic StatusRegEn;
+//logic [3:0] StatusReg;
 Flag_select_t	FlagSel;
 logic [3:0] StatusRegIn;
 
 // AJR - vlog2edf doesn like zeros?
-assign SysBus[3:0] = StatusOut ? StatusReg  : 'bz;
+//assign SysBus[3:0] = StatusRegEn ? StatusReg  : 'bz;
 assign StatusRegIn = (FlagSel == FlagAlu) ? Flags : SysBus[3:0];
 
 // Type casting
@@ -204,7 +206,7 @@ always_comb begin
 	IntClear = 0;
 	IntEnable = 0;
 	IntDisable = 0;
-	StatusOut = 0;
+	StatusRegEn = 0;
 	FlagSel = FlagAlu;
 	AluOR = nOR;
 	case(state)
@@ -483,7 +485,7 @@ always_comb begin
 						INTERRUPT: begin
 							case(BranchCode)
 								// 0,4
-								BR,BNE: begin //RETI and LDF
+								0,4: begin //RETI and LDF
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
@@ -492,21 +494,21 @@ always_comb begin
 									AluWe = 1;	
 								end //0 
 								// 1
-								JMP: begin
+								1: begin
 									PcWe = 1;
 									PcSel = Pc1;
 									PcEn = 1; 
 									IntEnable = 1;
 								end //1
 								// 2
-								RET: begin
+								2: begin
 									PcWe = 1;
 									PcSel = Pc1;
 									PcEn = 1; 
 									IntDisable = 1;
 								end //2
 								// 3
-								BWL: begin // STF
+								3: begin // STF
 									Rs1Sel = Seven; //chose SP
    									AluEn = 1;
 									Op1Sel = Op1Rd1;
@@ -664,7 +666,7 @@ always_comb begin
 									nWE = 1;
 								end
 								3:begin
-									StatusOut = 1;
+									StatusRegEn = 1;
 									nME = 0;
 									nOE = 1;
 								end
@@ -738,7 +740,7 @@ always_comb begin
 								end
 								3: begin
 									nOE = 1;
-									StatusOut = 1;
+									StatusRegEn = 1;
 								end
 								4:	begin
 									Rs1Sel = Seven;

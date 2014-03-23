@@ -41,6 +41,8 @@ wire        AluWe;
 wire[1:0]	RwSel;
 wire [15:0]	SysBus;
 wire [3:0]	FlagsOut;
+wire [3:0]	StatusReg;
+wire 		StatusRegEn;
 wire [15:0]	Ir;
 wire FlagListen;
 wire FlagSel;
@@ -81,7 +83,9 @@ control control (
    	.AluOR		(AluOR     	),
    	.Clock      (Clock      ),
    	.nReset     (nReset     ),
-	.nIRQ		(nIRQ		)
+	.nIRQ		(nIRQ		),
+	.StatusReg	(StatusReg),
+	.StatusRegEn	(StatusRegEn)
 );
 
 datapath datapath ( 
@@ -107,6 +111,8 @@ datapath datapath (
    .RwSel	(RwSel      ),
    .CFlag      	(CFlag      ),
    .AluWe      	(AluWe      ),
+   .StatusReg	(StatusReg),
+   .StatusRegEn	(StatusRegEn),
    .AluOR	(AluOR	    ),
 `ifdef crosssim
    	.Test       (1'b0       ),
