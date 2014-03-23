@@ -1,36 +1,36 @@
 magic
 tech c035u
-timestamp 1395339964
+timestamp 1395569125
 << nwell >>
 rect 1464 684 3720 1082
 rect 15289 684 15912 1082
-rect 23568 684 24336 1082
+rect 23568 684 24696 1082
 << pwell >>
 rect 1464 283 3720 684
 rect 15289 290 15912 684
-rect 23568 283 24336 684
+rect 23568 283 24696 684
 << pohmic >>
 rect 1464 359 1470 369
 rect 3714 359 3720 369
 rect 15289 359 15294 369
 rect 15906 359 15912 369
 rect 23568 359 23572 369
-rect 24330 359 24336 369
+rect 24690 359 24696 369
 << nohmic >>
 rect 1464 1019 1470 1029
 rect 3716 1019 3720 1029
 rect 15289 1019 15294 1029
 rect 15906 1019 15912 1029
 rect 23568 1019 23572 1029
-rect 24330 1019 24336 1029
+rect 24690 1019 24696 1029
 << psubstratetap >>
 rect 1470 359 3714 375
 rect 15294 359 15906 375
-rect 23572 359 24330 375
+rect 23572 359 24690 375
 << nsubstratetap >>
 rect 1470 1013 3716 1029
 rect 15294 1013 15906 1029
-rect 23572 1013 24330 1029
+rect 23572 1013 24690 1029
 << metal1 >>
 rect 4621 1286 5807 1296
 rect 4669 1264 5759 1274
@@ -68,10 +68,10 @@ rect 4885 1087 6072 1097
 rect 15289 1087 15912 1097
 rect 1464 1065 3720 1075
 rect 15289 1065 15912 1075
-rect 23568 1065 24336 1075
+rect 23568 1065 24696 1075
 rect 1464 1042 3720 1052
 rect 15289 1042 15912 1052
-rect 23568 1042 24336 1052
+rect 23568 1042 24696 1052
 rect 1464 1013 1470 1029
 rect 3716 1013 3720 1029
 rect 1464 1004 3720 1013
@@ -79,17 +79,17 @@ rect 15289 1013 15294 1029
 rect 15906 1013 15912 1029
 rect 15289 1004 15912 1013
 rect 23568 1013 23572 1029
-rect 24330 1013 24336 1029
-rect 23568 1004 24336 1013
+rect 24690 1013 24696 1029
+rect 23568 1004 24696 1013
 rect 1464 375 3720 384
 rect 1464 359 1470 375
 rect 3714 359 3720 375
 rect 15289 375 15912 384
 rect 15289 359 15294 375
 rect 15906 359 15912 375
-rect 23568 375 24336 384
+rect 23568 375 24696 384
 rect 23568 359 23572 375
-rect 24330 359 24336 375
+rect 24690 359 24696 375
 rect 1464 336 3720 346
 rect 15289 336 15912 346
 rect 1464 313 3720 323
@@ -253,7 +253,7 @@ rect 5832 1082 5844 1152
 rect 5928 1082 5940 1174
 rect 5952 1082 5964 1152
 rect 6024 1082 6036 1221
-rect 24456 1082 24656 1321
+rect 24816 1082 25016 1321
 rect 0 0 200 283
 rect 216 0 228 283
 rect 240 0 252 283
@@ -334,74 +334,74 @@ rect 23088 0 23100 19
 rect 23256 0 23268 19
 rect 23496 7 24228 19
 rect 24216 0 24228 7
-rect 24456 0 24656 283
-use leftbuf leftbuf_1
+rect 24816 0 25016 283
+use leftbuf  leftbuf_1
 timestamp 1386242881
 transform 1 0 0 0 1 283
 box 0 0 1464 799
-use mux2 mux2_6
+use mux2  mux2_6
 timestamp 1386235218
 transform 1 0 3720 0 1 283
 box 0 0 192 799
-use tiehigh tiehigh_3
+use tiehigh  tiehigh_3
 timestamp 1386086759
 transform 1 0 3912 0 1 283
 box 0 0 48 799
-use mux2 mux2_7
+use mux2  mux2_7
 timestamp 1386235218
 transform 1 0 3960 0 1 283
 box 0 0 192 799
-use mux2 mux2_8
+use mux2  mux2_8
 timestamp 1386235218
 transform 1 0 4152 0 1 283
 box 0 0 192 799
-use mux2 mux2_9
+use mux2  mux2_9
 timestamp 1386235218
 transform 1 0 4344 0 1 283
 box 0 0 192 799
-use mux2 mux2_10
+use mux2  mux2_10
 timestamp 1386235218
 transform 1 0 4536 0 1 283
 box 0 0 192 799
-use mux2 mux2_11
+use mux2  mux2_11
 timestamp 1386235218
 transform 1 0 4728 0 1 283
 box 0 0 192 799
-use mux2 mux2_4
+use mux2  mux2_4
 timestamp 1386235218
 transform 1 0 4920 0 1 283
 box 0 0 192 799
-use mux2 mux2_5
+use mux2  mux2_5
 timestamp 1386235218
 transform 1 0 5112 0 1 283
 box 0 0 192 799
-use mux2 mux2_2
+use mux2  mux2_2
 timestamp 1386235218
 transform 1 0 5304 0 1 283
 box 0 0 192 799
-use mux2 mux2_3
+use mux2  mux2_3
 timestamp 1386235218
 transform 1 0 5496 0 1 283
 box 0 0 192 799
-use mux2 mux2_1
+use mux2  mux2_1
 timestamp 1386235218
 transform 1 0 5688 0 1 283
 box 0 0 192 799
-use mux2 mux2_0
+use mux2  mux2_0
 timestamp 1386235218
 transform 1 0 5880 0 1 283
 box 0 0 192 799
-use regBlock_decoder regBlock_decoder_0
+use regBlock_decoder  regBlock_decoder_0
 timestamp 1395339189
 transform 1 0 6072 0 1 178
 box 0 0 9217 1131
-use ALUDecoder_new ALUDecoder_new_0
+use ALUDecoder_new  ALUDecoder_new_0
 timestamp 1395338636
 transform 1 0 15912 0 1 19
 box 0 0 7656 1239
-use rightend rightend_0
+use rightend  rightend_0
 timestamp 1386235834
-transform 1 0 24336 0 1 283
+transform 1 0 24696 0 1 283
 box 0 0 320 799
 << labels >>
 rlabel metal1 6069 1228 6069 1228 1 Rw0
@@ -441,7 +441,6 @@ rlabel metal2 264 1321 276 1321 1 Clock
 rlabel metal2 288 1321 300 1321 1 nReset
 rlabel metal2 0 1321 200 1321 5 Vdd!
 rlabel metal2 216 1321 228 1321 5 SDO
-rlabel metal2 24456 1321 24656 1321 1 GND!
 rlabel metal2 17232 1321 17244 1321 5 Flags[3]
 rlabel metal2 17160 1321 17172 1321 5 Flags[1]
 rlabel metal2 16968 1321 16980 1321 5 Flags[2]
@@ -498,7 +497,6 @@ rlabel metal2 8256 0 8268 0 1 Rs2[1]
 rlabel metal2 7104 0 7116 0 1 Rs2[0]
 rlabel metal2 6888 0 6900 0 1 Rs1[0]
 rlabel metal2 6144 0 6156 0 1 Rw[0]
-rlabel metal2 24458 0 24656 0 1 GND!
 rlabel metal2 18792 0 18804 0 1 NAND
 rlabel metal2 16248 0 16260 0 1 SUB
 rlabel metal2 16416 0 16428 0 1 CIn_slice
@@ -520,4 +518,6 @@ rlabel metal2 23256 0 23268 0 1 LLI
 rlabel metal2 15984 0 15996 0 1 ZeroA
 rlabel metal2 16680 0 16692 0 1 Flags[3]
 rlabel metal2 21264 0 21276 0 1 Sh8
+rlabel metal2 24816 1321 25016 1321 1 GND!
+rlabel metal2 24818 0 25016 0 1 GND!
 << end >>

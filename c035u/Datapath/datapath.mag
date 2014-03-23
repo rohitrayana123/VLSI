@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1395340701
+timestamp 1395569259
 << metal1 >>
 rect 433 20600 14996 20610
 rect 456 20576 15189 20586
@@ -180,7 +180,7 @@ rect 21105 72 21140 82
 rect 21154 72 21452 82
 rect 21466 72 21500 82
 rect 21514 72 21884 82
-rect 21898 72 25245 82
+rect 21898 72 25605 82
 rect 989 51 3740 61
 << m2contact >>
 rect 419 20598 433 20612
@@ -265,7 +265,7 @@ rect 21140 70 21154 84
 rect 21452 70 21466 84
 rect 21500 70 21514 84
 rect 21884 70 21898 84
-rect 25245 70 25259 84
+rect 25605 70 25619 84
 rect 975 49 989 63
 rect 3740 48 3754 62
 << metal2 >>
@@ -320,7 +320,7 @@ rect 22773 20229 22785 20310
 rect 22965 20229 22977 20285
 rect 23085 20229 23097 20262
 rect 23205 20229 23217 20238
-rect 25244 20229 25444 20615
+rect 25605 20229 25805 20615
 rect 24045 18885 24057 18908
 rect 3501 18708 3513 18778
 rect 24045 17709 24057 17843
@@ -398,117 +398,127 @@ rect 21501 84 21513 92
 rect 21885 84 21897 92
 rect 24261 43 24273 92
 rect 25005 43 25017 92
-rect 25245 84 25445 92
-rect 25259 70 25445 84
-rect 25245 43 25445 70
-use slice17 slice17_0
-timestamp 1395339964
+rect 25149 43 25161 92
+rect 25197 43 25209 92
+rect 25245 43 25257 92
+rect 25293 43 25305 92
+rect 25365 43 25377 92
+rect 25605 84 25805 92
+rect 25619 70 25805 84
+rect 25605 43 25805 70
+use slice17  slice17_0
+timestamp 1395569125
 transform 1 0 789 0 1 18908
-box 0 0 24656 1321
-use leftbuf_slice leftbuf_slice_0
+box 0 0 25016 1321
+use leftbuf_slice  leftbuf_slice_0
 array 0 0 1685 0 15 1176
 timestamp 1394551156
 transform 1 0 784 0 1 98
 box 0 -6 1685 1170
-use IrAA IrAA_0
+use IrAA  IrAA_0
 array 0 0 1008 0 7 1176
 timestamp 1394489502
 transform 1 0 2469 0 1 9611
 box 0 -111 1008 1065
-use tielow tielow_0
+use tielow  tielow_0
 timestamp 1386086605
 transform 1 0 3477 0 1 17909
 box 0 0 48 799
-use tielow tielow_1
+use tielow  tielow_1
 timestamp 1386086605
 transform 1 0 3477 0 1 16733
 box 0 0 48 799
-use tielow tielow_2
+use tielow  tielow_2
 timestamp 1386086605
 transform 1 0 3477 0 1 15557
 box 0 0 48 799
-use tielow tielow_3
+use tielow  tielow_3
 timestamp 1386086605
 transform 1 0 3477 0 1 14381
 box 0 0 48 799
-use tielow tielow_4
+use tielow  tielow_4
 timestamp 1386086605
 transform 1 0 3477 0 1 13205
 box 0 0 48 799
-use tielow tielow_5
+use tielow  tielow_5
 timestamp 1386086605
 transform 1 0 3477 0 1 12029
 box 0 0 48 799
-use tielow tielow_6
+use tielow  tielow_6
 timestamp 1386086605
 transform 1 0 3477 0 1 10853
 box 0 0 48 799
-use tielow tielow_7
+use tielow  tielow_7
 timestamp 1386086605
 transform 1 0 3477 0 1 9677
 box 0 0 48 799
-use IrBA IrBA_0
+use IrBA  IrBA_0
 array 0 0 1008 0 2 1176
 timestamp 1394489502
 transform 1 0 2469 0 1 6083
 box 0 -111 1008 1065
-use tielow tielow_8
+use tielow  tielow_8
 timestamp 1386086605
 transform 1 0 3477 0 1 8501
 box 0 0 48 799
-use tielow tielow_9
+use tielow  tielow_9
 timestamp 1386086605
 transform 1 0 3477 0 1 7325
 box 0 0 48 799
-use tielow tielow_10
+use tielow  tielow_10
 timestamp 1386086605
 transform 1 0 3477 0 1 6149
 box 0 0 48 799
-use IrBB IrBB_0
+use IrBB  IrBB_0
 array 0 0 1008 0 4 1176
 timestamp 1394489502
 transform 1 0 2469 0 1 204
 box 0 -112 1008 1064
-use tiehigh tiehigh_0
+use tiehigh  tiehigh_0
 timestamp 1386086759
 transform 1 0 3477 0 1 4973
 box 0 0 48 799
-use tielow tielow_12
+use tielow  tielow_12
 timestamp 1386086605
 transform 1 0 3477 0 1 3797
 box 0 0 48 799
-use tielow tielow_13
+use tielow  tielow_13
 timestamp 1386086605
 transform 1 0 3477 0 1 2621
 box 0 0 48 799
-use tielow tielow_14
+use tielow  tielow_14
 timestamp 1386086605
 transform 1 0 3477 0 1 1445
 box 0 0 48 799
-use tielow tielow_15
+use tielow  tielow_15
 timestamp 1386086605
 transform 1 0 3477 0 1 269
 box 0 0 48 799
-use Datapath_slice Datapath_slice_0
+use Datapath_slice  Datapath_slice_0
 array 0 0 12364 0 15 1176
 timestamp 1394725603
 transform 1 0 3525 0 1 92
 box 0 0 20472 1176
-use LLIcell_U LLIcell_U_0
+use LLIcell_U  LLIcell_U_0
 array 0 0 6 0 7 1176
 timestamp 1394841956
 transform 1 0 23997 0 1 9611
 box 0 0 192 1042
-use LLIcell_L LLIcell_L_0
+use LLIcell_L  LLIcell_L_0
 array 0 0 1 0 7 1176
 timestamp 1394447900
 transform 1 0 23997 0 1 203
 box 0 0 192 1042
-use Datapath_end Datapath_end_0
-array 0 0 1256 0 15 1176
-timestamp 1394720841
+use Datapath_end_high  Datapath_end_high_0
+array 0 0 1621 0 11 1176
+timestamp 1395568782
+transform 1 0 24189 0 1 4796
+box 0 0 1621 1176
+use Datapath_end_low  Datapath_end_low_0
+array 0 0 1616 0 3 1176
+timestamp 1395569259
 transform 1 0 24189 0 1 92
-box 0 0 1256 1176
+box 0 0 1621 1176
 << labels >>
 rlabel metal1 24093 1257 24093 1257 1 Aluout[0]
 rlabel metal2 425 20303 425 20303 1 Ir[15]
@@ -596,7 +606,6 @@ rlabel metal2 789 20615 989 20615 5 Vdd!
 rlabel metal2 1077 20615 1089 20615 1 nReset
 rlabel metal2 1053 20615 1065 20615 1 Clock
 rlabel metal2 1029 20615 1041 20615 1 Test
-rlabel metal2 25244 20615 25444 20615 1 GND!
 rlabel metal2 18117 20615 18129 20615 5 Flags[0]
 rlabel metal2 18021 20615 18033 20615 5 Flags[3]
 rlabel metal2 17949 20615 17961 20615 5 Flags[1]
@@ -615,7 +624,6 @@ rlabel metal2 5013 43 5025 43 1 PcSel[0]
 rlabel metal2 5397 43 5409 43 1 PcSel[1]
 rlabel metal2 24261 43 24273 43 1 AluWe
 rlabel metal2 25005 43 25017 43 1 AluEn
-rlabel metal2 25245 43 25445 43 1 GND!
 rlabel metal2 789 43 989 43 1 Vdd!
 rlabel metal2 1005 43 1017 43 1 SDI
 rlabel metal2 1029 43 1041 43 1 Test
@@ -631,4 +639,11 @@ rlabel metal2 6717 43 6729 43 1 WdSel
 rlabel metal2 16125 43 16137 43 1 Op1Sel
 rlabel metal2 16317 43 16329 43 1 Op2Sel[0]
 rlabel metal2 16557 43 16569 43 1 Op2Sel[1]
+rlabel metal2 25605 43 25805 43 1 GND!
+rlabel metal2 25605 20615 25805 20615 1 GND!
+rlabel metal2 25149 43 25161 43 1 StatusReg[0]
+rlabel metal2 25197 43 25209 43 1 StatusReg[1]
+rlabel metal2 25245 43 25257 43 1 StatusReg[2]
+rlabel metal2 25293 43 25305 43 1 StatusReg[3]
+rlabel metal2 25365 43 25377 43 1 StatusRegEn
 << end >>
