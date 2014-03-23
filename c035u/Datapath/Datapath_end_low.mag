@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1395569514
+timestamp 1395570626
 << metal1 >>
 rect 0 1159 23 1169
 rect 0 162 23 172
@@ -68,17 +68,17 @@ rlabel metal1 0 1159 0 1169 3 AluOut
 rlabel metal2 654 980 654 980 1 AluRegOut
 rlabel metal2 1416 1176 1616 1176 5 GND!
 rlabel metal2 1416 0 1616 0 1 GND!
-rlabel metal2 960 0 972 0 1 StatusReg[0]
-rlabel metal2 1008 0 1020 0 1 StatusReg[1]
-rlabel metal2 1056 0 1068 0 1 StatusReg[2]
-rlabel metal2 1104 0 1116 0 1 StatusReg[3]
 rlabel metal2 1176 0 1188 0 1 StatusRegEn
-rlabel metal2 1008 1176 1020 1176 5 StatusReg[0]
-rlabel metal2 1056 1176 1068 1176 5 StatusReg[1]
-rlabel metal2 1104 1176 1116 1176 5 StatusReg[2]
 rlabel metal2 1176 1176 1188 1176 5 StatusRegEn
 rlabel metal1 1621 95 1621 105 7 DataOut
 rlabel metal1 0 95 0 105 3 DataOut
 rlabel metal2 816 0 828 0 1 AluEn
 rlabel metal1 0 162 0 172 3 AluOut
+rlabel metal2 960 0 972 0 1 StatusReg[3]
+rlabel metal2 1104 0 1116 0 1 StatusReg[0]
+rlabel metal2 1056 0 1068 0 1 StatusReg[1]
+rlabel metal2 1008 0 1020 0 1 StatusReg[2]
+rlabel metal2 1008 1176 1020 1176 5 StatusReg[3]
+rlabel metal2 1056 1176 1068 1176 5 StatusReg[2]
+rlabel metal2 1104 1176 1116 1176 5 StatusReg[1]
 << end >>

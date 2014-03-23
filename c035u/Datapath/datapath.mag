@@ -1,10 +1,6 @@
 magic
 tech c035u
-timestamp 1395569717
-<< checkpaint >>
-rect 0 0 27110 20800
-rect 20800 -1257 27110 0
-rect 20800 -1300 26696 -1257
+timestamp 1395570683
 << metal1 >>
 rect 19 20557 14582 20567
 rect 42 20533 14775 20543
@@ -520,7 +516,7 @@ transform 1 0 23775 0 1 4753
 box 0 0 1621 1176
 use Datapath_end_low Datapath_end_low_0
 array 0 0 1616 0 3 1176
-timestamp 1395569514
+timestamp 1395570626
 transform 1 0 23775 0 1 49
 box 0 0 1621 1176
 << labels >>
@@ -645,9 +641,9 @@ rlabel metal2 15903 0 15915 0 1 Op2Sel[0]
 rlabel metal2 16143 0 16155 0 1 Op2Sel[1]
 rlabel metal2 25191 0 25391 0 1 GND!
 rlabel metal2 25191 20572 25391 20572 1 GND!
-rlabel metal2 24735 0 24747 0 1 StatusReg[0]
-rlabel metal2 24783 0 24795 0 1 StatusReg[1]
-rlabel metal2 24831 0 24843 0 1 StatusReg[2]
-rlabel metal2 24879 0 24891 0 1 StatusReg[3]
 rlabel metal2 24951 0 24963 0 1 StatusRegEn
+rlabel metal2 24735 0 24747 0 1 StatusReg[3]
+rlabel metal2 24783 0 24795 0 1 StatusReg[2]
+rlabel metal2 24831 0 24843 0 1 StatusReg[1]
+rlabel metal2 24879 0 24891 0 1 StatusReg[0]
 << end >>

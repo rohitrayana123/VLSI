@@ -29,6 +29,8 @@ module datapath(
 	input SDI ,
 	input Test ,
 	input [1:0] AluOR,
+	input [3:0] StatusReg,
+	input 	StatusRegEn,
 	input WdSel 
 	);
 
@@ -260,11 +262,11 @@ assign nreg7 = {
 wire [15:0] reg7;
 assign reg7 = ~nreg7;
 
-wire [2:0] Rs1;
-assign Rs1 = {
-\slice17_0/Rs10 ,
-\slice17_0/Rs11 ,
-\slice17_0/Rs12 };
+//wire [2:0] Rs1;
+//assign Rs1 = {
+//\slice17_0/Rs10 ,
+//\slice17_0/Rs11 ,
+//\slice17_0/Rs12 };
 
 wire [2:0] Rw;
 assign Rw = {
@@ -272,24 +274,24 @@ assign Rw = {
 \slice17_0/Rw1 ,
 \slice17_0/Rw2 };
 
-wire [15:0] AluRegOut;
-assign AluRegOut = {
-\Datapath_end_0[15]/AluRegOut ,
-\Datapath_end_0[14]/AluRegOut ,
-\Datapath_end_0[13]/AluRegOut ,
-\Datapath_end_0[12]/AluRegOut ,
-\Datapath_end_0[11]/AluRegOut ,
-\Datapath_end_0[10]/AluRegOut ,
-\Datapath_end_0[9]/AluRegOut ,
-\Datapath_end_0[8]/AluRegOut ,
-\Datapath_end_0[7]/AluRegOut ,
-\Datapath_end_0[6]/AluRegOut ,
-\Datapath_end_0[5]/AluRegOut ,
-\Datapath_end_0[4]/AluRegOut ,
-\Datapath_end_0[3]/AluRegOut ,
-\Datapath_end_0[2]/AluRegOut ,
-\Datapath_end_0[1]/AluRegOut ,
-\Datapath_end_0[0]/AluRegOut };
+//wire [15:0] AluRegOut;
+//assign AluRegOut = {
+//\Datapath_end_0[15]/AluRegOut ,
+//\Datapath_end_0[14]/AluRegOut ,
+//\Datapath_end_0[13]/AluRegOut ,
+//\Datapath_end_0[12]/AluRegOut ,
+//\Datapath_end_0[11]/AluRegOut ,
+//\Datapath_end_0[10]/AluRegOut ,
+//\Datapath_end_0[9]/AluRegOut ,
+//\Datapath_end_0[8]/AluRegOut ,
+//\Datapath_end_0[7]/AluRegOut ,
+//\Datapath_end_0[6]/AluRegOut ,
+//\Datapath_end_0[5]/AluRegOut ,
+//\Datapath_end_0[4]/AluRegOut ,
+//\Datapath_end_0[3]/AluRegOut ,
+//\Datapath_end_0[2]/AluRegOut ,
+//\Datapath_end_0[1]/AluRegOut ,
+//\Datapath_end_0[0]/AluRegOut };
 
 
 wire [15:0] Rd2;
