@@ -76,7 +76,7 @@ always_ff @ (posedge Clock or negedge nReset) begin
 	else begin
 		IRQ1 <= #20 ~nIRQ;
 		IRQ2 <= #20 IRQ1;
-		IntReq <= #20 (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2) | (IntReq & ~IntClear);
+		IntReq <= #20 (IRQ2 & IntStatus);//(IRQ2 & ~InISR) | (IRQ1 & ~IRQ2) | (IntReq & ~IntClear);
 		if(IntEnable)
 			IntStatus <= #20 1;
 		if(IntDisable)
@@ -766,6 +766,7 @@ always_comb begin
 	interrupt:
 		case(stateSub)
 			cycle0:begin
+				IntDisable = 1;
 				Rs1Sel = Seven;//choose sp
 				AluOR = subOR;
 				Op1Sel = Op1Rd1;
