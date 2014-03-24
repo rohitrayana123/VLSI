@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1395689161
+timestamp 1395690245
 << metal1 >>
 rect 1573 1159 3215 1169
 rect 3229 1159 20472 1169
@@ -227,35 +227,35 @@ rect 19752 0 19764 111
 rect 19992 0 20004 111
 rect 20064 0 20076 111
 rect 20352 0 20364 111
-use Pc_slice  Pc_slice_0
+use Pc_slice Pc_slice_0
 timestamp 1394724028
 transform 1 0 0 0 1 111
 box 0 0 3144 1042
-use mux2  mux2_0
+use mux2 mux2_0
 timestamp 1386235218
 transform 1 0 3144 0 1 177
 box 0 0 192 799
-use regBlock_slice  regBlock_slice_0
+use regBlock_slice regBlock_slice_0
 timestamp 1395689161
 transform 1 0 3336 0 1 111
 box 0 0 9216 1042
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
 transform 1 0 12552 0 1 177
 box 0 0 192 799
-use mux2  mux2_2
+use mux2 mux2_2
 timestamp 1386235218
 transform 1 0 12744 0 1 177
 box 0 0 192 799
-use tielow  tielow_0
+use tielow tielow_0
 timestamp 1386086605
 transform 1 0 12936 0 1 177
 box 0 0 48 799
-use mux2  mux2_3
+use mux2 mux2_3
 timestamp 1386235218
 transform 1 0 12984 0 1 177
 box 0 0 192 799
-use ALUSlice  ALUSlice_0
+use ALUSlice ALUSlice_0
 timestamp 1394559926
 transform 1 0 13176 0 1 111
 box 0 0 7296 1042
@@ -451,4 +451,6 @@ rlabel metal2 2064 0 2076 0 1 PcSel[2]
 rlabel metal2 2064 1176 2076 1176 5 PcSel[2]
 rlabel metal1 0 29 0 39 3 DataIn
 rlabel metal1 20472 29 20472 39 7 DataIn
+rlabel metal1 12577 1035 12577 1035 1 Rd1
+rlabel metal1 12579 1013 12579 1013 1 Rd2
 << end >>
