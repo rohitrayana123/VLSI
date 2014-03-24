@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394489502
+timestamp 1395689161
 << metal1 >>
 rect 805 891 935 901
 rect 757 869 887 879
@@ -10,6 +10,7 @@ rect 757 49 791 59
 rect 0 -17 23 -7
 rect 37 -17 1008 -7
 rect 973 -39 1008 -29
+rect 0 -83 1008 -73
 << m2contact >>
 rect 791 889 805 903
 rect 935 889 949 903
@@ -63,4 +64,6 @@ rlabel metal2 72 1064 84 1064 5 IrWe
 rlabel metal2 744 1064 756 1064 5 Ir
 rlabel metal2 792 1064 804 1064 5 Ir
 rlabel metal1 0 -17 0 -7 3 SysBus
+rlabel metal1 0 -83 0 -73 3 DataIn
+rlabel metal1 1008 -83 1008 -73 7 DataIn
 << end >>

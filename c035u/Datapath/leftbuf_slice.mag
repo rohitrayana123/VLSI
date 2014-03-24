@@ -1,14 +1,14 @@
 magic
 tech c035u
-timestamp 1394551156
+timestamp 1395689161
 << metal1 >>
 rect 0 155 1685 165
-rect 0 123 1492 133
 rect 0 89 1636 99
 rect 1650 89 1685 99
+rect 1506 23 1685 33
 << m2contact >>
-rect 1492 121 1506 135
 rect 1636 87 1650 101
+rect 1492 21 1506 35
 << metal2 >>
 rect 5 970 205 1170
 rect 221 970 233 1170
@@ -21,14 +21,14 @@ rect 221 -6 233 171
 rect 245 -6 257 171
 rect 269 -6 281 171
 rect 293 -6 305 171
-rect 1493 135 1505 171
+rect 1493 35 1505 171
 rect 1565 -6 1577 171
 rect 1637 101 1649 171
-use leftbuf leftbuf_0
+use leftbuf  leftbuf_0
 timestamp 1386242881
 transform 1 0 5 0 1 171
 box 0 0 1464 799
-use trisbuf trisbuf_0
+use trisbuf  trisbuf_0
 timestamp 1386237216
 transform 1 0 1469 0 1 171
 box 0 0 216 799
@@ -49,5 +49,4 @@ rlabel metal1 1685 155 1685 165 7 Ir
 rlabel metal1 1685 89 1685 99 7 SysBus
 rlabel metal2 1565 -6 1577 -6 1 MemEn
 rlabel metal2 1565 1170 1577 1170 5 MemEn
-rlabel metal1 0 123 0 133 3 DataIn
 << end >>

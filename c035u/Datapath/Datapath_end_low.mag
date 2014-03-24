@@ -1,12 +1,13 @@
 magic
 tech c035u
-timestamp 1395570626
+timestamp 1395689161
 << metal1 >>
 rect 0 1159 23 1169
 rect 0 162 23 172
 rect 0 95 887 105
 rect 901 95 1247 105
 rect 1261 95 1621 105
+rect 0 29 1621 39
 << m2contact >>
 rect 23 1157 37 1171
 rect 23 160 37 174
@@ -39,24 +40,24 @@ rect 1104 0 1116 177
 rect 1176 0 1188 177
 rect 1248 106 1260 177
 rect 1416 0 1616 177
-use scanreg scanreg_0
+use scanreg  scanreg_0
 timestamp 1386241447
 transform 1 0 0 0 1 177
 box 0 0 720 799
-use trisbuf trisbuf_0
+use trisbuf  trisbuf_0
 timestamp 1386237216
 transform 1 0 720 0 1 177
 box 0 0 216 799
-use rowcrosser rowcrosser_0
+use rowcrosser  rowcrosser_0
 array 0 2 48 0 0 799
 timestamp 1386086759
 transform 1 0 936 0 1 177
 box 0 0 48 799
-use trisbuf trisbuf_1
+use trisbuf  trisbuf_1
 timestamp 1386237216
 transform 1 0 1080 0 1 177
 box 0 0 216 799
-use rightend rightend_0
+use rightend  rightend_0
 timestamp 1386235834
 transform 1 0 1296 0 1 177
 box 0 0 320 799
@@ -81,4 +82,6 @@ rlabel metal2 1008 0 1020 0 1 StatusReg[2]
 rlabel metal2 1008 1176 1020 1176 5 StatusReg[3]
 rlabel metal2 1056 1176 1068 1176 5 StatusReg[2]
 rlabel metal2 1104 1176 1116 1176 5 StatusReg[1]
+rlabel metal1 1621 29 1621 39 7 DataIn
+rlabel metal1 0 29 0 39 3 DataIn
 << end >>
