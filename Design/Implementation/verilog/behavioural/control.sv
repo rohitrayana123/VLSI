@@ -70,19 +70,20 @@ always_ff @ (posedge Clock or negedge nReset) begin
 	if(!nReset) begin
 		IRQ1 <= #20 0;
 		IRQ2 <= #20 0;
-		IntReq <= #20 0;
+		//IntReq <= #20 0;
 		IntStatus <= #20 0;
 		end
 	else begin
 		IRQ1 <= #20 ~nIRQ;
 		IRQ2 <= #20 IRQ1;
-		IntReq <= #20 (IRQ2 & IntStatus);//(IRQ2 & ~InISR) | (IRQ1 & ~IRQ2) | (IntReq & ~IntClear);
+		//IntReq <= #20 (IRQ2 & IntStatus);//(IRQ2 & ~InISR) | (IRQ1 & ~IRQ2) | (IntReq & ~IntClear);
 		if(IntEnable)
 			IntStatus <= #20 1;
 		if(IntDisable)
 			IntStatus <= #20 0;
 	end
 end
+assign IntReq = IRQ2 & IntStatus;
 //assign IntReq = (IRQ2 & ~InISR) | (IRQ1 & ~IRQ2); //first - if we're not in an
 //interupt and we get a request. Second, if request is satisfied and we get a
 //new one, we want to go back in - allows nestedd
@@ -119,11 +120,11 @@ always_ff@(posedge Clock or negedge nReset) begin
 	// Interrupt
 	if(state == interrupt)
 		case(stateSub)
-			cycle0: begin stateSub <= #20 cycle1; InISR <= #20 1; end
+			cycle0: begin stateSub <= #20 cycle1; end
 			cycle1: stateSub <= #20 cycle2;
 			cycle2: stateSub <= #20 cycle3;
-			cycle3: stateSub <= #20 cycle4;
-			cycle4: begin stateSub <= #20 cycle0; state <= #20 fetch;  end
+			cycle3: begin stateSub <= #20 cycle0; state <= #20 fetch; end
+			cycle4: begin stateSub <= #20 cycle0; end
 		endcase
   	// Fetch  
     if(state == fetch)
@@ -145,7 +146,7 @@ always_ff@(posedge Clock or negedge nReset) begin
 						LLI, RET, CMP, CMPI, AND, OR, XOR, NOT, NAND, NOR, LSL, LSR, ASR, NEG, BRANCH: begin 
 							if (IntReq) begin 
 								state <= #20 interrupt; //got an interrupt
-								stateSub <= #20 cycle0;
+								stateSub <= #20 cycle4;
 							end else begin 
 								state <= #20 fetch;	// Single cycle ops
 								stateSub <= #20 cycle0;
@@ -167,12 +168,17 @@ always_ff@(posedge Clock or negedge nReset) begin
 			cycle2: if(nWait)						// Data setup, stay in place
 						stateSub <= #20 cycle3;	
 			cycle3:begin
-				stateSub <= #20 cycle0; //always go to cycle 0
-				if(IntReq)
+//				stateSub <= #20 cycle0; //always go to cycle 0
+				if(IntReq) begin
 					state <= #20 interrupt;
+					stateSub <= #20 cycle4;
+				end
 				else
+				begin
 					state <= #20 fetch;	
-				if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
+					stateSub <= #20 cycle0;
+				end
+//				if(Opcode == INTERRUPT && BranchCode == 0) InISR <= #20 0; //
 			end
      	endcase
    	end
@@ -203,7 +209,7 @@ always_comb begin
 	PcSel = Pc1;
 	RwSel = RwRd;	
 	StatusRegWe= 0;
-	IntClear = 0;
+	//IntClear = 0;
 	IntEnable = 0;
 	IntDisable = 0;
 	StatusRegEn = 0;
@@ -765,7 +771,7 @@ always_comb begin
       	end
 	interrupt:
 		case(stateSub)
-			cycle0:begin
+			cycle4:begin
 				IntDisable = 1;
 				Rs1Sel = Seven;//choose sp
 				AluOR = subOR;
@@ -777,8 +783,8 @@ always_comb begin
 				AluWe = 1;
 				AluEn = 1;
 			end
-			cycle1:begin
-			    nWE = 1;
+			cycle0:begin
+			   	nWE = 1;
 				nOE = 1;
 				AluOR = subOR;
 				Op2Sel = Op2zero;
@@ -787,7 +793,7 @@ always_comb begin
 				AluEn = 1;
 				ALE = 1;
 			end
-			cycle2: begin
+			cycle1: begin
 				nME = 0;
 				Op2Sel = Op2zero;
 				Op1Sel = Op1Rd1;
@@ -795,15 +801,15 @@ always_comb begin
 				nWE = 1;
 				AluEn = 1;
 			end
-			cycle3: begin
+			cycle2: begin
 				nME = 0;
 				PcEn = 1; // Hold data on sysbus
 				nOE = 1;
 			end
-			cycle4: begin
+			cycle3: begin
 				nOE = 1;
 				PcEn = 1;
-				IntClear = 1;
+			//	IntClear = 1;
 				PcSel = PcInt;
 				PcWe = 1;
 			end
