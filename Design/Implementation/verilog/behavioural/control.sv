@@ -65,7 +65,7 @@ assign BranchCode = Branch_t'(OpcodeCondIn[2:0]);
 assign CFlag = StatusReg[`FLAGS_C];
 
 //double buffer the IRQ signal
-logic IRQ1, IRQ2, IntReq, IntClear, IntEnable, IntDisable, IntStatus, InISR;
+logic IRQ1, IRQ2, IntReq, IntEnable, IntDisable, IntStatus; //InISR;
 always_ff @ (posedge Clock or negedge nReset) begin
 	if(!nReset) begin
 		IRQ1 <= #20 0;
@@ -112,7 +112,7 @@ always_ff@(posedge Clock or negedge nReset) begin
  	    StatusReg <= #20 0;
 	  	state <= #20 fetch;
       	stateSub <= #20 cycle0;
-		InISR <= #20 0;
+		//InISR <= #20 0;
 	end else begin 
 	// Status update
       	if (StatusRegWe)
