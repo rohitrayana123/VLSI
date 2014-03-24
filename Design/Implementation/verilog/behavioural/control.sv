@@ -713,8 +713,9 @@ always_comb begin
 						end
 						POP:begin
 							nWE = 1;
-							MemEn = 1;	
-							ENB = 1;
+							PcEn = 1;
+							//MemEn = 1;	
+							//ENB = 1;
 				//			if(OpcodeCondIn[2]) begin // 1 = LR
 				//				LrWe = 1;
 				//			end else begin
@@ -734,10 +735,13 @@ always_comb begin
 							case(BranchCode)
 								0: begin
 									nWE = 1;
-									PcWe = 1;
-									PcSel = PcSysbus;
-									MemEn = 1;
-									nME = 1;
+									PcEn = 1;
+									//PcWe = 1;
+									//PcSel = PcSysbus;
+									//MemEn = 1;
+									//ENB = 1;
+									//nME = 0;
+									//nME = 1;
 									Rs1Sel = Seven;
 									Op2Sel = Op2zero;
 									AluOR = addOR;
