@@ -4,7 +4,8 @@ control_0/Op2Sel[1]
 datapath_0/Op2Sel[1]
 
 Data_2/A
-datapath_0/SysBus[2]
+datapath_0/DataOut[2]
+control_0/SysBus[2]
 
 datapath_0/LrSel
 control_0/LrSel
@@ -53,16 +54,17 @@ datapath_0/MemEn
 control_0/MemEn
 
 Data_13/A
-datapath_0/SysBus[13]
+datapath_0/DataOut[13]
 
 datapath_0/DataIn[12]
 Data_12/QC
 
-datapath_0/SysBus[3]
+datapath_0/DataOut[3]
 Data_3/A
+control_0/SysBus[3]
 
 Data_6/A
-datapath_0/SysBus[6]
+datapath_0/DataOut[6]
 
 Data_6/EN
 Data_7/EN
@@ -125,7 +127,7 @@ nIRQ/PB
 control_0/SDO
 SDO/A
 
-datapath_0/SysBus[7]
+datapath_0/DataOut[7]
 Data_7/A
 
 Data_2/QC
@@ -135,7 +137,8 @@ datapath_0/LrWe
 control_0/LrWe
 
 Data_1/A
-datapath_0/SysBus[1]
+datapath_0/DataOut[1]
+control_0/SysBus[1]
 
 datapath_0/Ir[11]
 control_0/OpcodeCondIn[3]
@@ -146,17 +149,18 @@ ALE/A
 datapath_0/PcSel[0]
 control_0/PcSel[0]
 
-datapath_0/SysBus[0]
+datapath_0/DataOut[0]
+control_0/SysBus[0]
 Data_0/A
 
 control_0/nME
 nME/A
 
 Data_12/A
-datapath_0/SysBus[12]
+datapath_0/DataOut[12]
 
 Data_5/A
-datapath_0/SysBus[5]
+datapath_0/DataOut[5]
 
 datapath_0/Flags[1]
 control_0/Flags[1]
@@ -173,14 +177,14 @@ nWait/QC
 datapath_0/Op1Sel
 control_0/Op1Sel
 
-datapath_0/SysBus[4]
+datapath_0/DataOut[4]
 Data_4/A
 
-datapath_0/SysBus[10]
+datapath_0/DataOut[10]
 Data_10/A
 
 Data_9/A
-datapath_0/SysBus[9]
+datapath_0/DataOut[9]
 
 datapath_0/Ir[8]
 control_0/OpcodeCondIn[0]
@@ -191,7 +195,7 @@ control_0/CFlag
 datapath_0/LrEn
 control_0/LrEn
 
-datapath_0/SysBus[8]
+datapath_0/DataOut[8]
 Data_8/A
 
 Data_1/QC
@@ -209,7 +213,7 @@ Data_3/QC
 datapath_0/Ir[12]
 control_0/OpcodeCondIn[4]
 
-datapath_0/SysBus[14]
+datapath_0/DataOut[14]
 Data_14/A
 
 datapath_0/PcSel[1]
@@ -222,7 +226,7 @@ datapath_0/DataIn[10]
 Data_10/QC
 
 Data_11/A
-datapath_0/SysBus[11]
+datapath_0/DataOut[11]
 
 Data_8/QC
 datapath_0/DataIn[8]
@@ -249,7 +253,7 @@ datapath_0/RegWe
 control_0/RegWe
 
 Data_15/A
-datapath_0/SysBus[15]
+datapath_0/DataOut[15]
 
 datapath_0/DataIn[14]
 Data_14/QC
@@ -280,3 +284,18 @@ control_0/PcSel[2]
 
 datapath_0/Flags[3]
 control_0/Flags[3]
+
+datapath_0/StatusReg[3]
+control_0/StatusReg[3]
+
+datapath_0/StatusReg[2]
+control_0/StatusReg[2]
+
+datapath_0/StatusReg[1]
+control_0/StatusReg[1]
+
+datapath_0/StatusReg[0]
+control_0/StatusReg[0]
+
+datapath_0/StatusRegEn
+control_0/StatusRegEn
