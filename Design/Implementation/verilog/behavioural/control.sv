@@ -669,6 +669,9 @@ always_comb begin
 									nME = 0;
 									MemEn = 1;
 									ENB = 1;
+									if (BranchCode == 0) 
+										PcSel = PcSysbus;
+									
 									nWE = 1;
 								end
 								3:begin
