@@ -26,7 +26,7 @@ module control(
 	output 	opcodes::Wd_select_t      	WdSel,
 	output  logic   [3:0]			StatusReg,
 	output  logic  				StatusRegEn,
-   	inout	wire 	[15:0] 			SysBus,
+   	input	wire 	[3:0] 			SysBus,		// Only use low nibble on SysBus
 	input  	wire                      	Clock,
 	input  	wire    [3:0]             	Flags,
 	input  	wire 				nIRQ,

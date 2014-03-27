@@ -5,7 +5,7 @@ timeunit 1ns; timeprecision 10ps;
 import opcodes::*;
 
 parameter CLK_PERIOD = 500;
-
+parameter NUM_INSTRUCTIONS = 30;
 
 logic                     	ALE;
 logic                     	AluEn;
@@ -31,7 +31,7 @@ logic                     	RegWe;
 opcodes::Rs1_select_t     	Rs1Sel;
 opcodes::Rw_select_t		RwSel;
 opcodes::Wd_select_t      	WdSel;
-wire	[15:0] 				SysBus;
+logic	[3:0] 				SysBus;
 logic	                  	Clock;
 logic	[3:0]             	Flags;
 logic						nIRQ;
@@ -92,60 +92,87 @@ initial begin
 	$readmemh(`prog_file,Data_stored);		
 end
 
+task ResetFetch;
+	input logic [4:0] op;
+	@(posedge Clock);	
+	@(posedge Clock);	
+	@(posedge Clock);	
+	while(nWait == 0)		// Slow memory
+		@(posedge Clock);	
+	OpcodeCondIn[7:3] = op;
+	@(posedge Clock);	
+endtask
 
-
-// Dead states
-//always @(posedge Clock) begin
-//	if((control.state == fetch) && (control.stateSub == cycle4)) fail;
-//end
+task DoFetch;
+	input logic [4:0] op;
+	@(posedge Clock);
+	ResetFetch(op);	
+endtask
 
 
 initial begin
 	integer i;
-
          	nReset 	= 0;
    			Flags	= 0;
 			nIRQ	= 1;
 			nWait 	= 1;
 			OpcodeCondIn = 0;
-	#5470  	nReset 	= 1; 
-   
-	i = 0;
-	DoFetch(1,OpcodeCondIn);
-	@(posedge Clock);
-	DoFetch(2,OpcodeCondIn);
-   	@(posedge Clock);
-	DoFetch(3,OpcodeCondIn);
-	@(posedge Clock);
-	DoFetch(4,OpcodeCondIn);
-	@(posedge Clock);
-	DoFetch(5,OpcodeCondIn);
+			SysBus = 0;
+	#5000  	nReset 	= 1;  
+  	
+	// Standard operation
+	ResetFetch(ADD);
+	#CLK_PERIOD
+	DoFetch(ADDI);	
+	#CLK_PERIOD
+	DoFetch(ADDIB);	
+	#CLK_PERIOD
+	DoFetch(ADC);	
+	#CLK_PERIOD	
+	DoFetch(NEG);	
+	#CLK_PERIOD
+	DoFetch(SUB);	
+	#CLK_PERIOD
+	DoFetch(SUBI);	
+	#CLK_PERIOD
+	DoFetch(SUBIB);	
+	#CLK_PERIOD
+	DoFetch(SUC);	
+	#CLK_PERIOD	
+	DoFetch(SUCI);
+	#CLK_PERIOD
+	DoFetch(CMP);	
+	#CLK_PERIOD
+	DoFetch(CMPI);	
+	#CLK_PERIOD
+	DoFetch(AND);	
+	#CLK_PERIOD
+	DoFetch(OR);	
+	#CLK_PERIOD
+	DoFetch(XOR);	
+	#CLK_PERIOD
+	DoFetch(NOT);	
+	#CLK_PERIOD
+	DoFetch(NAND);	
+	#CLK_PERIOD
+	DoFetch(NOR);	
+	#CLK_PERIOD
+	DoFetch(LSL);	
+	#CLK_PERIOD
+	DoFetch(LSR);	
+	#CLK_PERIOD
+	DoFetch(ASR);	
+	#CLK_PERIOD
+	DoFetch(LDW);	
+	#CLK_PERIOD
+	DoFetch(STW);	
+	#CLK_PERIOD
+	DoFetch(LUI);	
+	#CLK_PERIOD
+	DoFetch(LLI);	
+	#CLK_PERIOD
 	pass;
 end
-
-task DoFetch;
-	input integer instruct;
-	output logic [7:0] op;
-	@(posedge Clock);
-	//	if(	(control.state != fetch)	||
-	//	 	(control.stateSub != cycle0)
-	//		) fail;
-    @(posedge Clock); // Cycle1 
-//		if(	(control.state != fetch)	||
-//		 	(control.stateSub != cycle1)
-//			) fail;
-    @(posedge Clock); // Cycle2 
-//		if(	(control.state != fetch)	||
-//		 	(control.stateSub != cycle2)
-//			) fail;
-    @(posedge Clock); // Cycle3 		
-//		if(	(control.state != fetch)	||
-//		 	(control.stateSub != cycle3)
-//			) fail;
-		// Opcode is now present
-    op = Data_stored[instruct][15:8]; 
-endtask
-
 
 task fail;
    $display();
