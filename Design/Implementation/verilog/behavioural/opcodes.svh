@@ -112,7 +112,8 @@ typedef enum logic [4:0] { 					ADD 		= 5'b00010,
 								BRANCH 	 	= 5'b11110,	
 								INTERRUPT 	= 5'b11001,
 								PUSH		= 5'b01001,
-								POP		= 5'b00001	} Opcode_t;
+								POP		= 5'b00001,
+								NOP		= 5'b11000	} Opcode_t;
 
 
 typedef enum logic [1:0] {
