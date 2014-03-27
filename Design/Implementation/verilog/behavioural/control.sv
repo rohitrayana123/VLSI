@@ -594,6 +594,7 @@ always_comb begin
 						end
 						POP:begin
 						 	nME = 0;
+							nOE = 1;
 						  	Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
