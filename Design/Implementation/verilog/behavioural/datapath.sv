@@ -1,26 +1,26 @@
 // Written by hl13g10
 module datapath(
-  	output 	logic 	[3:0]   		Flags,
-	output 	logic  	[15:0] 			Ir,
-  	inout 	wire 	[15:0]			SysBus,
-	input	wire					AluEn,
-	input 	wire					AluWe,
-	input 	wire					CFlag ,
-	input 	wire					Clock ,
-	input 	wire	[15:0] 			DataIn,
+  	output 	logic 	[3:0]   	Flags,
+	output 	logic  	[15:0] 		Ir,
+  	inout 	wire 	[15:0]		SysBus,
+	input	wire			AluEn,
+	input 	wire			AluWe,
+	input 	wire			CFlag ,
+	input 	wire			Clock ,
+	input 	wire	[15:0] 		DataIn,
 	input 	opcodes::Imm_select_t	ImmSel,
-	input 	wire					IrWe,
-	input 	wire					LrEn,
+	input 	wire			IrWe,
+	input 	wire			LrEn,
 	input 	opcodes::Lr_select_t	LrSel,
-	input 	wire					LrWe,
-	input 	wire					MemEn,
-	input 	wire					nReset,
+	input 	wire			LrWe,
+	input 	wire			MemEn,
+	input 	wire			nReset,
 	input 	opcodes::Op1_select_t	Op1Sel,
 	input	opcodes::Op2_select_t	Op2Sel, 
-	input 	wire					PcEn,
+	input 	wire			PcEn,
 	input 	opcodes::pc_select_t    PcSel,
-	input 	wire					PcWe,
-	input 	wire					RegWe,
+	input 	wire			PcWe,
+	input 	wire			RegWe,
 	input 	opcodes::Rs1_select_t	Rs1Sel,
 	input 	opcodes::Rw_select_t	RwSel,		
 	input 	opcodes::AluOR_select_t AluOR,	
@@ -39,10 +39,9 @@ assign OpCode = Opcode_t'(Ir[15:11]);
 //opcodes::alu_functions_t AluOp;
 wire  [15:0]   AluRes, Rd1, Rd2, WData, Extended, SpNext, SpDataIn, PcInc;
 logic [15:0]   Op1, Op2, AluOut, Pc, PcIn, Sp, Lr, LrIn;
-logic [2:0] Rs1In,Rw;
-logic AluCFlag;
-wire [3:0] AluFlags;
-
+logic [2:0]    Rs1In,Rw;
+logic          AluCFlag;
+wire  [3:0]    AluFlags;
 
 //Combinational logic for tristate bus, reg inputs or outputs
 assign Extended = (ImmShort == ImmSel) ? {{11{Ir[4]}}, Ir[4:0] } : { {8{Ir[7]}}, Ir[7:0]};
@@ -112,7 +111,7 @@ always_comb begin : OpMux                 // Control ALU data input
    case(Op1Sel)                           // 3 input mux
       	Op1Rd1   :  Op1 = Rd1;
 	Op1Pc    :  Op1 = Pc;
-	//Op1Sp    :  Op1 = Sp;	
+	//Op1Sp  :  Op1 = Sp;	
 	default  :  Op1 = Rd1;
    endcase
 //   case(Op2Sel)                           // 3 input mux
@@ -129,18 +128,19 @@ regBlock regBlock(      // Register block instance
    .WData   (WData   ),
    .Rs1     (Rs1In   ),
    .Rs2     (Ir[4:2] ),
-   .Rw      (Rw		),//Ir[10:8]),
+   .Rw      (Rw      ),//Ir[10:8]),
    .Clock   (Clock   ),
    .nReset  (nReset  ),
    .We      (RegWe   )
 );
 alu a(                // Combo ALU only
-   .Flags   (AluFlags), 
-   .Result  (AluRes  ),
-   .Op1     (Op1     ),
-   .Op2     (Op2     ),
-   .CarryIn (AluCFlag   ),
-   .OpCode   (AluOpCode)
+   .Flags   (AluFlags  ), 
+   .Result  (AluRes    ),
+   .Op1     (Op1       ),
+   .Op2     (Op2       ),
+   .CarryIn (AluCFlag  ),
+   .OpCode  (AluOpCode ),
+   .ShAmount(Ir[3:0]   )
 );
 
 //Registers

@@ -19,7 +19,7 @@ from subprocess import call
 
 def RunSim(options):
 	print "Running sim..."
-	home = os.path.expanduser("~/VLSI")
+	home = os.path.expanduser("~/VLSI/GIT")
 	behave = os.path.join(home, "Design/Implementation/verilog/behavioural")
 	mixed = os.path.join(home, "Design/Implementation/verilog/mixed")
 	system = os.path.join(home, "Design/Implementation/verilog/system")
