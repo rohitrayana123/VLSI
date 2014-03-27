@@ -1,11 +1,12 @@
 // Written by hl13g10 
 module alu(
-  	output 	logic 	[3:0]             	Flags, 
-  	output 	logic 	[15:0]            	Result,
-  	input      		[15:0]            	Op1,
-  	input        	[15:0]            	Op2,
+  	output 	logic 	[3:0]	Flags, 
+  	output 	logic 	[15:0]	Result,
+  	input      	[15:0]	Op1,
+  	input        	[15:0]	Op2,
 	input opcodes::Opcode_t OpCode,
-  	input 	wire CarryIn
+  	input 	wire		CarryIn,
+	input	logic 	[3:0]	ShAmount
 );
 
 timeunit 1ns; timeprecision 100ps;
@@ -24,7 +25,7 @@ begin
 	case(OpCode)
 		ADD,ADDI,ADDIB,BRANCH,INTERRUPT,POP, LDW,STW: {Carry,Result} = {1'b0, Op1} + {1'b0, Op2};
 		ADC,ADCI: {Carry,Result} = {1'b0, Op1} + {1'b0, Op2} + CarryIn; 
-		NEG: Result = ~Op1 + 1;
+		NEG: Result = -Op1;
 		SUB, SUBI,SUBIB,CMP,CMPI,PUSH: {Carry,Result} = {1'b0, Op1} - {1'b0, Op2};
 		SUC, SUCI: {Carry, Result} = {1'b0,Op1} - {1'b0,Op2} - (CarryIn);
 		AND:Result = Op1 & Op2; 
@@ -33,10 +34,10 @@ begin
 		NOT:Result = ~Op1;   		
 		NAND: Result = ~(Op1 & Op2);   		
 		NOR:Result = ~(Op1 | Op2);  		
-		LSL:Result = Op1 << Op2;   		
-		LSR:Result = Op1 >> Op2;   		
-		ASR:Result = Op1 >>> Op2;   		
-		LUI:Result = {Op2[7:0], Op1[7:0]};   		
+		LSL:Result = Op1 << ShAmount;   		
+		LSR:Result = Op1 >> ShAmount;   		
+		ASR:Result = Op1 >>> ShAmount;   		
+		LUI:Result = {Op2[7:0], 8'b0};   		
 		LLI:Result = {Op1[15:8], Op2[7:0]};
 	endcase
 end

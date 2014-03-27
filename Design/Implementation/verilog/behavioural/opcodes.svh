@@ -83,10 +83,10 @@ typedef enum logic [2:0] 	{	BR  		= 3'b000,
 //  these could be defined with a further enumerated type declaration
 //  unfortunately this doesn't easily map to a situation where opcode lengths are variable
 //
-typedef enum logic [4:0] { 		ADD 		= 5'b00010, 
+typedef enum logic [4:0] { 					ADD 		= 5'b00010, 
 								ADDI 		= 5'b00110, 
 								ADDIB		= 5'b00011, 
-								ADC			= 5'b00100, 
+								ADC		= 5'b00100, 
 								ADCI		= 5'b00101, 
 								NEG  		= 5'b11010, 
 								SUB    		= 5'b01010, 
@@ -108,11 +108,11 @@ typedef enum logic [4:0] { 		ADD 		= 5'b00010,
 								LDW   		= 5'b00000, 
 								STW    		= 5'b01000, 
 								LUI    		= 5'b10100, 
-								LLI	  		= 5'b10101, 
+								LLI	  	= 5'b10101, 
 								BRANCH 	 	= 5'b11110,	
 								INTERRUPT 	= 5'b11001,
 								PUSH		= 5'b01001,
-								POP			= 5'b00001	} Opcode_t;
+								POP		= 5'b00001	} Opcode_t;
 
 
 typedef enum logic [1:0] {
