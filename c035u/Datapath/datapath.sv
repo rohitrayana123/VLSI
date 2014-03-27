@@ -225,15 +225,15 @@ assign reg7 = ~nreg7;
 
 wire [2:0] Rs1;
 assign Rs1 = {
-\slice17_0/Rs10 ,
-\slice17_0/Rs11 ,
-\slice17_0/Rs12 };
+\slice17_0/Rs1[0] ,
+\slice17_0/Rs1[1] ,
+\slice17_0/Rs1[2] };
 
 wire [2:0] Rw;
 assign Rw = {
-\slice17_0/Rw0 ,
-\slice17_0/Rw1 ,
-\slice17_0/Rw2 };
+\slice17_0/Rw[0] ,
+\slice17_0/Rw[1] ,
+\slice17_0/Rw[2] };
 
 wire [15:0] AluRegOut;
 assign AluRegOut = {
