@@ -11,6 +11,7 @@ simvision {
 #
 set wave_signal_list {
   datapath_stim.AluEn
+  datapath_stim.AluOR
   datapath_stim.AluWe
   datapath_stim.CFlag
   datapath_stim.Clock
@@ -31,24 +32,15 @@ set wave_signal_list {
   datapath_stim.Rs1Sel
   datapath_stim.RwSel
   datapath_stim.SDI
+  datapath_stim.StatusReg
+  datapath_stim.StatusRegEn
   datapath_stim.Test
   datapath_stim.WdSel
+  datapath_stim.DataOut
   datapath_stim.Flags
   datapath_stim.Ir
   datapath_stim.SDO
-  datapath_stim.SysBus
-  datapath_stim.instance1.Pc
-  datapath_stim.instance1.AluOut
-  datapath_stim.instance1.reg0
-  datapath_stim.instance1.reg1
-  datapath_stim.instance1.reg2
-  datapath_stim.instance1.reg3
-  datapath_stim.instance1.reg4
-  datapath_stim.instance1.reg5
-  datapath_stim.instance1.reg6
-  datapath_stim.instance1.Rd2
-  datapath_stim.instance1.Rd1
-  datapath_stim.instance1.ImmProbe
+  datapath_stim.instance1.Aluout
 }
 
 # View Results

@@ -7,6 +7,7 @@ timeunit 1ns;
 timeprecision 10ps;
 
 logic AluEn ;
+logic [1:0] AluOR ;
 logic AluWe ;
 logic CFlag ;
 logic Clock ;
@@ -19,28 +20,31 @@ logic LrWe ;
 logic MemEn ;
 logic nReset ;
 logic Op1Sel ;
-logic Op2Sel ;
+logic [1:0] Op2Sel ;
 logic PcEn ;
-logic [1:0] PcSel ;
+logic [2:0] PcSel ;
 logic PcWe ;
 logic RegWe ;
 logic [1:0] Rs1Sel ;
 logic [1:0] RwSel ;
 logic SDI ;
+logic [3:0] StatusReg ;
+logic StatusRegEn ;
 logic Test ;
 logic WdSel ;
 
+wire [15:0] DataOut ;
 wire [3:0] Flags ;
 wire [15:0] Ir ;
 wire SDO ;
-wire [15:0] SysBus ;
 
 datapath instance1(
+	.DataOut ( DataOut ),
 	.Flags ( Flags ),
 	.Ir ( Ir ),
 	.SDO ( SDO ),
-	.SysBus ( SysBus ),
 	.AluEn ( AluEn ),
+	.AluOR ( AluOR ),
 	.AluWe ( AluWe ),
 	.CFlag ( CFlag ),
 	.Clock ( Clock ),
@@ -61,6 +65,8 @@ datapath instance1(
 	.Rs1Sel ( Rs1Sel ),
 	.RwSel ( RwSel ),
 	.SDI ( SDI ),
+	.StatusReg ( StatusReg ),
+	.StatusRegEn ( StatusRegEn ),
 	.Test ( Test ),
 	.WdSel ( WdSel )
 	);
@@ -70,6 +76,7 @@ datapath instance1(
 initial
   begin
     AluEn = 0;
+    AluOR = 0;
     AluWe = 0;
     CFlag = 0;
     Clock = 0;
@@ -90,11 +97,15 @@ initial
     Rs1Sel = 0;
     RwSel = 0;
     SDI = 0;
+    StatusReg = 0;
+    StatusRegEn = 0;
     Test = 0;
     WdSel = 0;
 
     #1000
           AluEn = 1;
+    #1000
+          AluOR = 1;
     #1000
           AluWe = 1;
     #1000
@@ -136,11 +147,17 @@ initial
     #1000
           SDI = 1;
     #1000
+          StatusReg = 1;
+    #1000
+          StatusRegEn = 1;
+    #1000
           Test = 1;
     #1000
           WdSel = 1;
     #1000
           AluEn = 0;
+    #1000
+          AluOR = 0;
     #1000
           AluWe = 0;
     #1000
@@ -182,6 +199,10 @@ initial
     #1000
           SDI = 0;
     #1000
+          StatusReg = 0;
+    #1000
+          StatusRegEn = 0;
+    #1000
           Test = 0;
     #1000
           WdSel = 0;
@@ -196,6 +217,7 @@ initial
 initial
   $monitor($time,
     ,"%b", AluEn ,
+    ,"%b", AluOR ,
     ,"%b", AluWe ,
     ,"%b", CFlag ,
     ,"%b", Clock ,
@@ -216,24 +238,15 @@ initial
     ,"%b", Rs1Sel ,
     ,"%b", RwSel ,
     ,"%b", SDI ,
+    ,"%b", StatusReg ,
+    ,"%b", StatusRegEn ,
     ,"%b", Test ,
     ,"%b", WdSel ,
+    ,"%b", DataOut ,
     ,"%b", Flags ,
     ,"%b", Ir ,
     ,"%b", SDO ,
-    ,"%b", SysBus ,
-    ,"%b", instance1.Pc ,
-    ,"%b", instance1.AluOut ,
-    ,"%b", instance1.reg0 ,
-    ,"%b", instance1.reg1 ,
-    ,"%b", instance1.reg2 ,
-    ,"%b", instance1.reg3 ,
-    ,"%b", instance1.reg4 ,
-    ,"%b", instance1.reg5 ,
-    ,"%b", instance1.reg6 ,
-    ,"%b", instance1.Rd2 ,
-    ,"%b", instance1.Rd1 ,
-    ,"%b", instance1.ImmProbe ,
+    ,"%b", instance1.Aluout ,
     );
 
 
