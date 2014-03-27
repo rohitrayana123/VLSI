@@ -220,7 +220,7 @@ always_comb begin
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
             	cycle1: begin nME = 0; nWE = 1; MemEn = 1; PcEn =1;nOE = 1;  end
-            	cycle2: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; IrWe = 1; end 
+            	cycle2: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; IrWe = nWait; end 
             	cycle3: begin nWE = 1; PcEn = 1;end//MemEn = 1; ENB = 1; end
          	endcase
       	execute: begin
@@ -594,6 +594,7 @@ always_comb begin
 						end
 						POP:begin
 						 	nME = 0;
+							nOE = 1;
 						  	Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
@@ -613,7 +614,7 @@ always_comb begin
             		endcase
          		end
          		cycle2: begin
-            		PcWe = 1;
+            		PcWe = nWait;
 			PcSel = Pc1; // Done, move on
 			case(Opcode)
 				LDW:begin
