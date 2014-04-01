@@ -1,37 +1,34 @@
 magic
 tech c035u
-timestamp 1396313505
+timestamp 1396390031
 << metal1 >>
-rect 0 1137 192 1147
-rect 0 981 119 991
-rect 0 140 71 150
-rect 157 140 192 150
-rect 0 72 192 82
-rect 0 28 192 38
+rect 0 1094 192 1104
+rect 0 938 119 948
+rect 0 97 71 107
+rect 157 97 192 107
+rect 0 29 192 39
 << m2contact >>
-rect 119 979 133 993
-rect 71 138 85 152
-rect 143 138 157 152
+rect 119 936 133 950
+rect 71 95 85 109
+rect 143 95 157 109
 << metal2 >>
-rect 48 954 60 1154
-rect 120 954 132 979
-rect 48 0 60 155
-rect 72 152 84 155
-rect 144 152 156 155
+rect 48 911 60 1111
+rect 120 911 132 936
+rect 48 0 60 112
+rect 72 109 84 112
+rect 144 109 156 112
 use mux2 mux2_0
 timestamp 1386235218
-transform 1 0 0 0 1 155
+transform 1 0 0 0 1 112
 box 0 0 192 799
 << labels >>
-rlabel metal1 0 140 0 150 3 LLIIn
-rlabel metal1 192 140 192 150 1 ALUOut
-rlabel metal1 0 981 0 991 3 B
-rlabel metal2 48 1154 60 1154 5 LLI
+rlabel metal1 0 97 0 107 3 LLIIn
+rlabel metal1 192 97 192 107 1 ALUOut
+rlabel metal1 0 938 0 948 3 B
+rlabel metal2 48 1111 60 1111 5 LLI
+rlabel metal1 192 1094 192 1104 7 ALUOut
+rlabel metal1 0 1094 0 1104 3 ALUOut
+rlabel metal1 0 29 0 39 3 SysBus
+rlabel metal1 192 29 192 39 7 SysBus
 rlabel metal2 48 0 60 0 1 LLI
-rlabel metal1 192 1137 192 1147 7 ALUOut
-rlabel metal1 0 1137 0 1147 3 ALUOut
-rlabel metal1 0 72 0 82 3 SysBus
-rlabel metal1 0 28 0 38 3 DataIn
-rlabel metal1 192 28 192 38 7 DataIn
-rlabel metal1 192 72 192 82 7 SysBus
 << end >>

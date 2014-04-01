@@ -1,82 +1,80 @@
 magic
 tech c035u
-timestamp 1396385716
+timestamp 1396389730
 << metal1 >>
-rect 0 1137 23 1147
-rect 0 140 23 150
-rect 0 72 887 82
-rect 901 72 1103 82
-rect 1117 72 1463 82
-rect 1477 72 1837 82
-rect 0 28 959 38
-rect 973 28 1837 38
+rect 0 1094 23 1104
+rect 0 97 23 107
+rect 0 29 887 39
+rect 901 29 1103 39
+rect 1117 29 1463 39
+rect 1477 29 1837 39
+rect 973 7 1837 17
 << m2contact >>
-rect 23 1135 37 1149
-rect 23 138 37 152
-rect 887 70 901 84
-rect 1103 70 1117 84
-rect 1463 69 1477 83
-rect 959 26 973 40
+rect 23 1092 37 1106
+rect 23 95 37 109
+rect 887 27 901 41
+rect 1103 27 1117 41
+rect 1463 27 1477 41
+rect 959 5 973 19
 << metal2 >>
-rect 24 954 36 1135
-rect 72 954 84 1154
-rect 600 954 756 966
-rect 816 954 828 1154
-rect 1032 954 1044 1154
-rect 1392 954 1404 1154
-rect 1632 954 1832 1154
-rect 24 152 36 155
-rect 72 0 84 155
-rect 816 0 828 155
-rect 888 84 900 155
-rect 960 40 972 155
-rect 1032 0 1044 155
-rect 1104 84 1116 155
-rect 1272 143 1332 155
-rect 1392 0 1404 155
-rect 1464 83 1476 155
-rect 1632 0 1832 155
+rect 24 911 36 1092
+rect 72 911 84 1111
+rect 600 911 756 923
+rect 816 911 828 1111
+rect 1032 911 1044 1111
+rect 1392 911 1404 1111
+rect 1632 911 1832 1111
+rect 24 109 36 112
+rect 72 0 84 112
+rect 816 0 828 112
+rect 888 41 900 112
+rect 960 19 972 112
+rect 1032 0 1044 112
+rect 1104 41 1116 112
+rect 1272 100 1332 112
+rect 1392 0 1404 112
+rect 1464 41 1476 112
+rect 1632 0 1832 112
 use scanreg scanreg_0
 timestamp 1386241447
-transform 1 0 0 0 1 155
+transform 1 0 0 0 1 112
 box 0 0 720 799
 use trisbuf trisbuf_0
 timestamp 1386237216
-transform 1 0 720 0 1 155
+transform 1 0 720 0 1 112
 box 0 0 216 799
 use trisbuf trisbuf_2
 timestamp 1386237216
-transform 1 0 936 0 1 155
+transform 1 0 936 0 1 112
 box 0 0 216 799
 use tielow tielow_0
 array 0 2 48 0 0 799
 timestamp 1386086605
-transform 1 0 1152 0 1 155
+transform 1 0 1152 0 1 112
 box 0 0 48 799
 use trisbuf trisbuf_1
 timestamp 1386237216
-transform 1 0 1296 0 1 155
+transform 1 0 1296 0 1 112
 box 0 0 216 799
 use rightend rightend_0
 timestamp 1386235834
-transform 1 0 1512 0 1 155
+transform 1 0 1512 0 1 112
 box 0 0 320 799
 << labels >>
-rlabel metal2 816 1154 828 1154 5 AluEn
-rlabel metal2 72 1154 84 1154 5 AluWe
-rlabel metal1 0 1137 0 1147 3 AluOut
-rlabel metal2 654 958 654 958 1 AluRegOut
-rlabel metal1 0 140 0 150 3 AluOut
-rlabel metal1 0 72 0 82 3 DataOut
-rlabel metal1 0 28 0 38 3 DataIn
+rlabel metal2 816 1111 828 1111 5 AluEn
+rlabel metal2 72 1111 84 1111 5 AluWe
+rlabel metal1 0 1094 0 1104 3 AluOut
+rlabel metal2 654 915 654 915 1 AluRegOut
+rlabel metal1 0 97 0 107 3 AluOut
+rlabel metal1 0 29 0 39 3 DataOut
+rlabel metal2 1632 1111 1832 1111 5 GND!
+rlabel metal2 1392 1111 1404 1111 5 StatusRegEn
+rlabel metal1 1837 29 1837 39 7 DataOut
+rlabel metal2 1032 1111 1044 1111 5 MemEn
 rlabel metal2 72 0 84 0 1 AluWe
 rlabel metal2 816 0 828 0 1 AluEn
-rlabel metal2 1632 1154 1832 1154 5 GND!
-rlabel metal2 1392 1154 1404 1154 5 StatusRegEn
-rlabel metal1 1837 72 1837 82 7 DataOut
-rlabel metal1 1837 28 1837 38 7 DataIn
 rlabel metal2 1632 0 1832 0 1 GND!
 rlabel metal2 1392 0 1404 0 1 StatusRegEn
 rlabel metal2 1032 0 1044 0 1 MemEn
-rlabel metal2 1032 1154 1044 1154 5 MemEn
+rlabel metal1 1837 7 1837 17 7 DataIn
 << end >>
