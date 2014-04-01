@@ -1,33 +1,41 @@
 magic
 tech c035u
-timestamp 1396310136
+timestamp 1396385716
 << metal1 >>
 rect 0 1137 23 1147
 rect 0 140 23 150
 rect 0 72 887 82
-rect 901 72 1247 82
-rect 1261 72 1621 82
-rect 0 28 1621 38
+rect 901 72 1103 82
+rect 1117 72 1463 82
+rect 1477 72 1837 82
+rect 0 28 959 38
+rect 973 28 1837 38
 << m2contact >>
 rect 23 1135 37 1149
 rect 23 138 37 152
 rect 887 70 901 84
-rect 1247 69 1261 83
+rect 1103 70 1117 84
+rect 1463 69 1477 83
+rect 959 26 973 40
 << metal2 >>
 rect 24 954 36 1135
 rect 72 954 84 1154
 rect 600 954 756 966
 rect 816 954 828 1154
-rect 1176 954 1188 1154
-rect 1416 954 1616 1154
+rect 1032 954 1044 1154
+rect 1392 954 1404 1154
+rect 1632 954 1832 1154
 rect 24 152 36 155
 rect 72 0 84 155
 rect 816 0 828 155
-rect 888 84 900 217
-rect 1056 143 1116 155
-rect 1176 0 1188 155
-rect 1248 83 1260 203
-rect 1416 0 1616 155
+rect 888 84 900 155
+rect 960 40 972 155
+rect 1032 0 1044 155
+rect 1104 84 1116 155
+rect 1272 143 1332 155
+rect 1392 0 1404 155
+rect 1464 83 1476 155
+rect 1632 0 1832 155
 use scanreg scanreg_0
 timestamp 1386241447
 transform 1 0 0 0 1 155
@@ -36,33 +44,39 @@ use trisbuf trisbuf_0
 timestamp 1386237216
 transform 1 0 720 0 1 155
 box 0 0 216 799
+use trisbuf trisbuf_2
+timestamp 1386237216
+transform 1 0 936 0 1 155
+box 0 0 216 799
 use tielow tielow_0
 array 0 2 48 0 0 799
 timestamp 1386086605
-transform 1 0 936 0 1 155
+transform 1 0 1152 0 1 155
 box 0 0 48 799
 use trisbuf trisbuf_1
 timestamp 1386237216
-transform 1 0 1080 0 1 155
+transform 1 0 1296 0 1 155
 box 0 0 216 799
 use rightend rightend_0
 timestamp 1386235834
-transform 1 0 1296 0 1 155
+transform 1 0 1512 0 1 155
 box 0 0 320 799
 << labels >>
 rlabel metal2 816 1154 828 1154 5 AluEn
 rlabel metal2 72 1154 84 1154 5 AluWe
 rlabel metal1 0 1137 0 1147 3 AluOut
 rlabel metal2 654 958 654 958 1 AluRegOut
-rlabel metal2 1416 1154 1616 1154 5 GND!
-rlabel metal2 1176 1154 1188 1154 5 StatusRegEn
 rlabel metal1 0 140 0 150 3 AluOut
 rlabel metal1 0 72 0 82 3 DataOut
-rlabel metal1 1621 72 1621 82 7 DataOut
 rlabel metal1 0 28 0 38 3 DataIn
-rlabel metal1 1621 28 1621 38 7 DataIn
 rlabel metal2 72 0 84 0 1 AluWe
-rlabel metal2 1416 0 1616 0 1 GND!
-rlabel metal2 1176 0 1188 0 1 StatusRegEn
 rlabel metal2 816 0 828 0 1 AluEn
+rlabel metal2 1632 1154 1832 1154 5 GND!
+rlabel metal2 1392 1154 1404 1154 5 StatusRegEn
+rlabel metal1 1837 72 1837 82 7 DataOut
+rlabel metal1 1837 28 1837 38 7 DataIn
+rlabel metal2 1632 0 1832 0 1 GND!
+rlabel metal2 1392 0 1404 0 1 StatusRegEn
+rlabel metal2 1032 0 1044 0 1 MemEn
+rlabel metal2 1032 1154 1044 1154 5 MemEn
 << end >>
