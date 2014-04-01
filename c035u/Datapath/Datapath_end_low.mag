@@ -1,21 +1,21 @@
 magic
 tech c035u
-timestamp 1396390193
+timestamp 1396394133
 << metal1 >>
 rect 0 1094 23 1104
 rect 0 97 23 107
+rect 973 95 1837 105
 rect 0 29 887 39
 rect 901 29 1103 39
 rect 1117 29 1463 39
 rect 1477 29 1837 39
-rect 973 7 1837 17
 << m2contact >>
 rect 23 1092 37 1106
 rect 23 95 37 109
+rect 959 93 973 107
 rect 887 27 901 41
 rect 1103 27 1117 41
 rect 1463 27 1477 41
-rect 959 5 973 19
 << metal2 >>
 rect 24 911 36 1092
 rect 72 911 84 1111
@@ -37,7 +37,7 @@ rect 24 109 36 112
 rect 72 0 84 112
 rect 816 0 828 112
 rect 888 41 900 112
-rect 960 19 972 112
+rect 960 107 972 200
 rect 1032 0 1044 112
 rect 1104 41 1116 112
 rect 1176 0 1188 112
@@ -95,5 +95,5 @@ rlabel metal2 1176 0 1188 0 1 StatusReg[3]
 rlabel metal2 1392 0 1404 0 1 StatusRegEn
 rlabel metal2 1632 0 1832 0 1 GND!
 rlabel metal2 1032 0 1044 0 1 MemEn
-rlabel metal1 1837 7 1837 17 7 DataIn
+rlabel metal1 1837 95 1837 105 7 DataIn
 << end >>
