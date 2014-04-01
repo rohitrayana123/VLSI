@@ -1,52 +1,52 @@
 magic
 tech c035u
-timestamp 1395689796
+timestamp 1396382297
 << metal1 >>
-rect 0 161 1685 171
-rect 0 95 1636 105
-rect 1650 95 1685 105
-rect 1506 29 1685 39
+rect 0 139 1685 149
+rect 0 72 1636 82
+rect 1650 72 1685 82
+rect 1506 28 1685 38
 << m2contact >>
-rect 1636 93 1650 107
-rect 1492 27 1506 41
+rect 1636 70 1650 84
+rect 1492 26 1506 40
 << metal2 >>
-rect 5 976 205 1176
-rect 221 976 233 1176
-rect 245 976 257 1176
-rect 269 976 281 1176
-rect 293 976 305 1176
-rect 1565 976 1577 1176
-rect 5 0 205 177
-rect 221 0 233 177
-rect 245 0 257 177
-rect 269 0 281 177
-rect 293 0 305 177
-rect 1493 41 1505 177
-rect 1565 0 1577 177
-rect 1637 107 1649 177
+rect 5 954 205 1154
+rect 221 954 233 1154
+rect 245 954 257 1154
+rect 269 954 281 1154
+rect 293 954 305 1154
+rect 1565 954 1577 1154
+rect 5 0 205 155
+rect 221 0 233 155
+rect 245 0 257 155
+rect 269 0 281 155
+rect 293 0 305 155
+rect 1493 40 1505 155
+rect 1565 0 1577 155
+rect 1637 84 1649 155
 use leftbuf leftbuf_0
 timestamp 1386242881
-transform 1 0 5 0 1 177
+transform 1 0 5 0 1 155
 box 0 0 1464 799
 use trisbuf trisbuf_0
 timestamp 1386237216
-transform 1 0 1469 0 1 177
+transform 1 0 1469 0 1 155
 box 0 0 216 799
 << labels >>
-rlabel metal1 0 161 0 171 3 Ir
+rlabel metal2 5 1154 205 1154 5 Vdd!
+rlabel metal2 221 1154 233 1154 5 SDO
+rlabel metal2 245 1154 257 1154 5 Test
+rlabel metal2 269 1154 281 1154 5 Clock
+rlabel metal2 293 1154 305 1154 5 nReset
+rlabel metal2 1565 1154 1577 1154 5 MemEn
+rlabel metal2 1565 0 1577 0 1 MemEn
 rlabel metal2 5 0 205 0 1 Vdd!
 rlabel metal2 221 0 233 0 1 SDI
 rlabel metal2 245 0 257 0 1 Test
 rlabel metal2 269 0 281 0 1 Clock
 rlabel metal2 293 0 305 0 1 nReset
-rlabel metal2 5 1176 205 1176 5 Vdd!
-rlabel metal2 221 1176 233 1176 5 SDO
-rlabel metal2 245 1176 257 1176 5 Test
-rlabel metal2 269 1176 281 1176 5 Clock
-rlabel metal2 293 1176 305 1176 5 nReset
-rlabel metal1 0 95 0 105 3 SysBus
-rlabel metal1 1685 161 1685 171 7 Ir
-rlabel metal1 1685 95 1685 105 7 SysBus
-rlabel metal2 1565 0 1577 0 1 MemEn
-rlabel metal2 1565 1176 1577 1176 5 MemEn
+rlabel metal1 0 72 0 82 3 SysBus
+rlabel metal1 1685 72 1685 82 7 SysBus
+rlabel metal1 0 139 0 149 3 Ir
+rlabel metal1 1685 139 1685 149 7 Ir
 << end >>

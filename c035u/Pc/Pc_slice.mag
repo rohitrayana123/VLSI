@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394724028
+timestamp 1396307000
 << metal1 >>
 rect 0 937 2135 947
 rect 1261 915 1751 925
@@ -39,55 +39,55 @@ rect 1703 42 1717 56
 rect 3095 42 3109 56
 << metal2 >>
 rect 48 865 60 890
-rect 216 865 228 1042
+rect 216 865 228 954
 rect 264 865 276 869
-rect 360 865 372 1042
+rect 360 865 372 954
 rect 432 865 444 869
 rect 456 865 540 877
-rect 576 865 588 1042
+rect 576 865 588 954
 rect 1248 877 1260 913
 rect 1104 865 1260 877
-rect 1320 865 1332 1042
-rect 1488 865 1500 1042
+rect 1320 865 1332 954
+rect 1488 865 1500 954
 rect 1512 865 1524 869
-rect 1560 865 1572 1042
+rect 1560 865 1572 954
 rect 1584 865 1596 868
 rect 1752 865 1764 913
 rect 1776 865 1788 913
-rect 1872 865 1884 1042
+rect 1872 865 1884 954
 rect 1896 865 1908 868
 rect 1944 865 1956 913
 rect 1968 865 1980 869
-rect 2064 859 2076 1042
+rect 2064 859 2076 954
 rect 2088 865 2100 868
 rect 2136 865 2148 935
 rect 2160 865 2172 868
 rect 2232 865 2244 868
-rect 2280 865 2292 1042
+rect 2280 865 2292 954
 rect 2808 865 2820 891
 rect 2952 865 2964 891
-rect 3024 865 3036 1042
-rect 3096 865 3108 1042
+rect 3024 865 3036 954
+rect 3096 865 3108 954
 rect 72 56 84 66
 rect 72 44 228 56
-rect 216 0 228 44
-rect 360 0 372 66
+rect 216 37 228 44
+rect 360 37 372 66
 rect 384 54 396 66
-rect 576 0 588 66
-rect 1320 0 1332 66
+rect 576 37 588 66
+rect 1320 37 1332 66
 rect 1392 56 1404 66
 rect 1488 56 1500 66
 rect 1680 56 1692 66
 rect 1704 56 1716 66
 rect 1488 44 1692 56
-rect 1488 0 1500 44
-rect 1872 0 1884 66
-rect 2064 0 2076 66
-rect 2280 0 2292 66
-rect 2808 0 2820 66
-rect 3024 0 3036 66
+rect 1488 37 1500 44
+rect 1872 37 1884 66
+rect 2064 37 2076 66
+rect 2280 37 2292 66
+rect 2808 37 2820 66
+rect 3024 37 3036 66
 rect 3096 56 3108 66
-rect 3096 0 3108 42
+rect 3096 37 3108 42
 use halfadder halfadder_0
 timestamp 1386235204
 transform 1 0 0 0 1 66
@@ -129,29 +129,29 @@ timestamp 1386237216
 transform 1 0 2928 0 1 66
 box 0 0 216 799
 << labels >>
-rlabel metal2 1320 1042 1332 1042 1 LrEn
-rlabel metal2 576 1042 588 1042 1 LrWe
-rlabel metal2 360 1042 372 1042 1 LrSel
-rlabel metal2 216 1042 228 1042 5 PcIncCout
-rlabel metal2 216 0 228 0 1 PcIncCin
-rlabel metal2 360 0 372 0 1 LrSel
-rlabel metal2 576 0 588 0 1 LrWe
-rlabel metal2 1320 0 1332 0 1 LrEn
-rlabel metal2 1872 0 1884 0 1 PcSel[1]
-rlabel metal2 1488 0 1500 0 1 PcSel[0]
-rlabel metal2 1872 1042 1884 1042 1 PcSel[1]
-rlabel metal2 1560 1042 1572 1042 1 ALU
-rlabel metal2 1488 1042 1500 1042 1 PcSel[0]
 rlabel metal1 1745 920 1745 920 1 Lr
 rlabel metal1 1505 876 1505 876 1 Pc1
-rlabel metal2 3024 1042 3036 1042 1 PcEn
-rlabel metal2 2280 1042 2292 1042 1 PcWe
-rlabel metal2 2280 0 2292 0 1 PcWe
-rlabel metal2 2808 0 2820 0 1 Pc
-rlabel metal2 3024 0 3036 0 1 PcEn
-rlabel metal2 3096 0 3108 0 1 SysBus
-rlabel metal2 3096 1042 3108 1042 5 SysBus
-rlabel metal2 2064 1042 2076 1042 5 PcSel[2]
-rlabel metal2 2064 0 2076 0 1 PcSel[2]
 rlabel metal1 0 937 0 947 3 PCI_Value
+rlabel metal2 216 37 228 37 1 PcIncCin
+rlabel metal2 360 37 372 37 1 LrSel
+rlabel metal2 576 37 588 37 1 LrWe
+rlabel metal2 1320 37 1332 37 1 LrEn
+rlabel metal2 1872 37 1884 37 1 PcSel[1]
+rlabel metal2 1488 37 1500 37 1 PcSel[0]
+rlabel metal2 2280 37 2292 37 1 PcWe
+rlabel metal2 2808 37 2820 37 1 Pc
+rlabel metal2 3024 37 3036 37 1 PcEn
+rlabel metal2 3096 37 3108 37 1 SysBus
+rlabel metal2 2064 37 2076 37 1 PcSel[2]
+rlabel metal2 1320 954 1332 954 1 LrEn
+rlabel metal2 576 954 588 954 1 LrWe
+rlabel metal2 360 954 372 954 1 LrSel
+rlabel metal2 216 954 228 954 5 PcIncCout
+rlabel metal2 1872 954 1884 954 1 PcSel[1]
+rlabel metal2 1560 954 1572 954 1 ALU
+rlabel metal2 1488 954 1500 954 1 PcSel[0]
+rlabel metal2 3024 954 3036 954 1 PcEn
+rlabel metal2 2280 954 2292 954 1 PcWe
+rlabel metal2 3096 954 3108 954 5 SysBus
+rlabel metal2 2064 954 2076 954 5 PcSel[2]
 << end >>

@@ -1,69 +1,69 @@
 magic
 tech c035u
-timestamp 1395689161
+timestamp 1396382275
 << metal1 >>
-rect 805 891 935 901
-rect 757 869 887 879
-rect 0 49 599 59
-rect 613 49 743 59
-rect 757 49 791 59
-rect 0 -17 23 -7
-rect 37 -17 1008 -7
-rect 973 -39 1008 -29
-rect 0 -83 1008 -73
+rect 805 981 935 991
+rect 757 959 887 969
+rect 0 139 599 149
+rect 613 139 743 149
+rect 757 139 791 149
+rect 0 72 23 82
+rect 37 72 1008 82
+rect 973 50 1008 60
+rect 0 28 1008 38
 << m2contact >>
-rect 791 889 805 903
-rect 935 889 949 903
-rect 743 867 757 881
-rect 887 867 901 881
-rect 599 47 613 61
-rect 743 47 757 61
-rect 791 47 805 61
-rect 23 -18 37 -4
-rect 959 -41 973 -27
+rect 791 979 805 993
+rect 935 979 949 993
+rect 743 957 757 971
+rect 887 957 901 971
+rect 599 137 613 151
+rect 743 137 757 151
+rect 791 137 805 151
+rect 23 71 37 85
+rect 959 48 973 62
 << metal2 >>
-rect 72 864 84 1064
-rect 744 881 756 1064
-rect 792 903 804 1064
-rect 744 864 756 867
-rect 792 864 804 889
-rect 864 864 876 1064
-rect 888 864 900 867
-rect 936 864 948 889
-rect 24 -4 36 65
-rect 72 -112 84 65
-rect 600 61 612 65
-rect 744 61 756 65
-rect 792 61 804 65
-rect 864 -112 876 65
-rect 960 -27 972 65
-use scanreg  scanreg_1
+rect 72 954 84 1154
+rect 744 971 756 1154
+rect 792 993 804 1154
+rect 744 954 756 957
+rect 792 954 804 979
+rect 864 954 876 1154
+rect 888 954 900 957
+rect 936 954 948 979
+rect 24 85 36 155
+rect 72 0 84 155
+rect 600 151 612 155
+rect 744 151 756 155
+rect 792 151 804 155
+rect 864 0 876 155
+rect 960 62 972 155
+use scanreg scanreg_1
 timestamp 1386241447
-transform 1 0 0 0 1 65
+transform 1 0 0 0 1 155
 box 0 0 720 799
-use rowcrosser  rowcrosser_2
+use rowcrosser rowcrosser_2
 timestamp 1386086759
-transform 1 0 720 0 1 65
+transform 1 0 720 0 1 155
 box 0 0 48 799
-use rowcrosser  rowcrosser_3
+use rowcrosser rowcrosser_3
 timestamp 1386086759
-transform 1 0 768 0 1 65
+transform 1 0 768 0 1 155
 box 0 0 48 799
-use mux2  mux2_1
+use mux2 mux2_1
 timestamp 1386235218
-transform 1 0 816 0 1 65
+transform 1 0 816 0 1 155
 box 0 0 192 799
 << labels >>
-rlabel metal1 0 49 0 59 3 Ir
-rlabel metal1 1008 -17 1008 -7 7 SysBus
-rlabel metal1 1008 -39 1008 -29 7 Imm
-rlabel metal2 864 -112 876 -112 1 ImmSel
-rlabel metal2 72 -112 84 -112 1 IrWe
-rlabel metal2 864 1064 876 1064 5 ImmSel
-rlabel metal2 72 1064 84 1064 5 IrWe
-rlabel metal2 744 1064 756 1064 5 Ir
-rlabel metal2 792 1064 804 1064 5 Ir
-rlabel metal1 0 -17 0 -7 3 SysBus
-rlabel metal1 0 -83 0 -73 3 DataIn
-rlabel metal1 1008 -83 1008 -73 7 DataIn
+rlabel metal2 864 1154 876 1154 5 ImmSel
+rlabel metal2 72 1154 84 1154 5 IrWe
+rlabel metal2 744 1154 756 1154 5 Ir
+rlabel metal2 792 1154 804 1154 5 Ir
+rlabel metal2 864 0 876 0 1 ImmSel
+rlabel metal2 72 0 84 0 1 IrWe
+rlabel metal1 0 72 0 82 3 SysBus
+rlabel metal1 1008 72 1008 82 7 SysBus
+rlabel metal1 1008 50 1008 60 7 Imm
+rlabel metal1 0 28 0 38 3 DataIn
+rlabel metal1 1008 28 1008 38 7 DataIn
+rlabel metal1 0 139 0 149 3 Ir
 << end >>

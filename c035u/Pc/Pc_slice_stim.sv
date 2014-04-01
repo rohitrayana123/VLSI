@@ -117,7 +117,7 @@ initial
 
 	//Lr Load from PC+1
 	LrSel = LrPc;
-	#1000 assert(1 == SysBus) else begin errors++; $display("LrPc Error"); end //HERE!!!!
+	#1000 assert(1 == SysBus) else begin errors++; $display("LrPc Error"); end
 	
 	PcIncCin = 1;
 	#1000 assert(0 == SysBus) else begin errors++; $display("LrPc Error"); end
