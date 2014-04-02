@@ -84,7 +84,7 @@ task checkArith;
 		$write("-");
 	else
 		$write("+");
-	$write(" %b -> S = %b, C = %b ::: a.LLI_In = %b\n", CIn_Slice, Sum, COut, a.LLI_In);
+	$write(" %b -> %b, %b     ::: %b\n", CIn_Slice, Sum, COut, a.LLI_In);
 endtask
 //Check Expected Shifting Operations
 task checkShift;
@@ -116,6 +116,8 @@ initial
     Sh8D_R = 0; Sh4C_R = 0; Sh2B_R = 0; Sh1_R_In = 0;
 
 	//Arithmetic Testing
+    $display("---ARITH TESTS---");
+    $display(" A   B   Cin  S  Cout  ::: a.LLI_In");
     #50 FAOut = 1;				//Sum == a.LLI_In
     #50 checkArith;
     #50 B = 1;
@@ -132,22 +134,24 @@ initial
     #50 checkArith;
 
 	//Logic Testing
+    $display("---LOGICAL TESTS---");
+    $display(" A   B   a.LLI_In");
     #50 FAOut = 0; AND = 1;
-    #50 assert(a.LLI_In == 1); $display("%b & %b = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == 1); $display("  %b & %b  = %b", A, B, a.LLI_In);
     #50 B = 0; 
-    #50 assert(a.LLI_In == 0); $display("%b & %b = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == 0); $display("  %b & %b  = %b", A, B, a.LLI_In);
     #50 AND = 0; OR = 1; 
-    #50 assert(a.LLI_In == 1); $display("%b | %b = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == 1); $display("  %b | %b  = %b", A, B, a.LLI_In);
     #50 A = 0; 
-    #50 assert(a.LLI_In == 0); $display("%b | %b = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == 0); $display("  %b | %b  = %b", A, B, a.LLI_In);
     #50 A = 1; OR = 0; XOR = 1; 
-    #50 assert(a.LLI_In == 1); $display("%b ^ %b = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == 1); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
     #50 B = 1; 
-    #50 assert(a.LLI_In == 0); $display("%b ^ %b = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == 0); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
     #50 XOR = 0; NOT = 1;
-    #50 assert(a.LLI_In == 0); $display("~%b = %b", A, a.LLI_In);
+    #50 assert(a.LLI_In == 0); $display("~ %b      = %b", A, a.LLI_In);
     #50 A = 0; 
-    #50 assert(a.LLI_In == 1); $display("~%b = %b", A, a.LLI_In);
+    #50 assert(a.LLI_In == 1); $display("~ %b      = %b", A, a.LLI_In);
     #50 NOT = 0; NAND = 1;
     #50 assert(a.LLI_In == 1); $display("~(%b & %b) = %b", A, B, a.LLI_In);
     #50 A = 1; 
@@ -158,6 +162,8 @@ initial
     #50 assert(a.LLI_In == 1); $display("~(%b | %b) = %b", A, B, a.LLI_In);
 
 	//Shifting Testing
+    $display("---SHIFTING TESTS---");
+    $display("nothing to display...");
     #50 NOR = 0; ShOut = 1;
     #50 assert(a.LLI_In == 0);
     #50 Sh8E_L = 1; Sh4D_L = 1; Sh2C_L = 1; Sh1_L_In = 1; //Feed 1's in inter-bit signals
@@ -204,7 +210,7 @@ initial
     #50 B = 1;
     #50 checkShift;
 
-    #500 $stop;
+    #500 $finish;
 
   end
 

@@ -8,36 +8,36 @@ timeprecision 10ps;
 import opcodes::*;
 
 logic ALU ;
-logic Clock ;
 logic LrEn ;
 Lr_select_t LrSel ;
 logic LrWe ;
-logic nReset ;
 logic PcEn ;
 logic PcIncCin ;
 pc_select_t PcSel ;
 logic PcWe ;
-logic Test ;
 logic DR_SysBus ;
+logic PCI_Value ;
+logic Clock, nReset, Test ;
 
 wire Pc ;
 wire PcIncCout ;
 wire SysBus ;
 
-Pc_slice instance1(
+Pc_slice pc(
 	.SysBus ( SysBus ),
 	.Pc ( Pc ),
 	.PcIncCout ( PcIncCout ),
 	.ALU ( ALU ),
-	.Clock ( Clock ),
 	.LrEn ( LrEn ),
 	.LrSel ( LrSel ),
 	.LrWe ( LrWe ),
-	.nReset ( nReset ),
 	.PcEn ( PcEn ),
 	.PcIncCin ( PcIncCin ),
 	.PcSel ( PcSel ),
 	.PcWe ( PcWe ),
+	.PCI_Value ( PCI_Value ),
+	.Clock ( Clock ),
+	.nReset ( nReset ),
 	.Test ( Test )
 	);
 
@@ -45,7 +45,6 @@ Pc_slice instance1(
 // Drive them indiectly via DR_xxxx
 
 assign SysBus = DR_SysBus ;
-
 
 // stimulus information follows
 
@@ -64,18 +63,7 @@ int errors;
 
 initial
   begin
-    errors = 0;
-    ALU = 0;
-    LrEn = 0;
-    LrSel = 0;
-    LrWe = 0;
-    nReset = 1;
-    PcEn = 0;
-    PcIncCin = 0;
-    PcSel = 0;
-    PcWe = 0;
-    Test = 0;
-    DR_SysBus = 'bz;
+    errors = 0; ALU = 0; LrEn = 0; LrSel = 0; LrWe = 0; nReset = 1; PcEn = 0; PcIncCin = 0; PcSel = 0; PcWe = 0; Test = 0; PCI_Value = 0; DR_SysBus = 'bz;
 
 	//Reset 
 	#100 nReset = 0;
@@ -83,16 +71,13 @@ initial
 	
 	//Pc Inc
 	PcEn = 1;
-	#1000 assert(SysBus == 0) else begin errors++; $display("PcEn Error");
-end	
+	#1000 assert(SysBus == 0) else begin errors++; $display("PcEn Error"); end	
 	
 	PcIncCin = 1; 
 	PcWe = 1;
-	#1000 assert(SysBus == 1) else begin errors++; $display("PcInc Error");
-end	
-PcIncCin = 0;
-	#1000 assert(SysBus == 0) else begin errors++; $display("PcInc Error");
-end	
+	#1000 assert(SysBus == 1) else begin errors++; $display("PcInc Error"); end	
+	PcIncCin = 0;
+	#1000 assert(SysBus == 1) else begin errors++; $display("PcInc Error"); end	
 
 	//Pc from Sysbus
 	PcEn = 0;
@@ -101,18 +86,22 @@ end
 	#1000 PcWe = 0;
 	DR_SysBus = 'bz; 
 	PcEn = 1;
-	#1000 assert(SysBus == 1) else begin errors++; $display("PcSysBus Error");
-end
-	
+	#1000 assert(SysBus == 1) else begin errors++; $display("PcSysBus Error"); end
+
+	//Pc from AluOut
 	PcSel = PcAluOut;
 	ALU = 0;
 	PcWe = 1;
-	#1000 assert(SysBus == 0) else begin errors++; $display("PcAlu Error"); 
-end	
+	#1000 assert(SysBus == 0) else begin errors++; $display("PcAlu Error"); end	
 	ALU = 1;
-	#1000 assert(SysBus == 1) else begin errors++; $display("PcAlu Error"); 
-end	
+	#1000 assert(SysBus == 1) else begin errors++; $display("PcAlu Error"); end	
 	ALU = 0;
+
+	//Pc from constant (for interrupts)
+	PcSel = PcInt;
+	#1000 assert(SysBus == 0) else begin errors++; $display("PcInt Error"); end
+	PCI_Value = 1;
+	#1000 assert(SysBus == 1) else begin errors++; $display("PcInt Error"); end
 
 	#1000 PcWe = 0;
 	PcEn = 0;
@@ -123,23 +112,21 @@ end
 	LrWe = 1;
 	#1000 DR_SysBus = 'bz;
 	LrEn = 1;
-	assert(1 == SysBus) else begin errors++; $display("LrSysBus Error");
-end
+	assert(1 == SysBus) else begin errors++; $display("LrSysBus Error"); end
 	PcIncCin = 0;
+
+	//Lr Load from PC+1
 	LrSel = LrPc;
-	#1000 assert(0 == SysBus) else begin errors++; $display("LrPc Error");
-end
+	#1000 assert(1 == SysBus) else begin errors++; $display("LrPc Error"); end
 	
 	PcIncCin = 1;
-	#1000 assert(1 == SysBus) else begin errors++; $display("LrPc Error");
-end
+	#1000 assert(0 == SysBus) else begin errors++; $display("LrPc Error"); end
 	
     #1000
 	if(errors == 0)
 		$display("Simulation PASSED");
 	else
 		$display("Simulation FAILED");
-          $stop;
           $finish;
   end
 
@@ -161,8 +148,8 @@ initial
     ,"%b", Pc ,
     ,"%b", PcIncCout ,
     ,"%b", SysBus ,
-    ,"%b", instance1.Lr ,
-    ,"%b", instance1.Pc1 ,
+    ,"%b", pc.Lr ,
+    ,"%b", pc.Pc1 ,
     );
 
 
