@@ -30,7 +30,7 @@ module datapath(
 	input Test ,
 	input [1:0] AluOR,
 	input [3:0] StatusReg,
-	input 	StatusRegEn,
+	input StatusRegEn,
 	input WdSel 
 	);
 
@@ -62,7 +62,7 @@ assign Pc = { \Datapath_slice_0[15]/Pc ,
 \Datapath_slice_0[0]/Pc };
 wire [15:0] Operand1;
 assign Operand1 = {
- \slice17_0/ASign ,
+ \Datapath_slice_0[15]/A ,
  \Datapath_slice_0[14]/A ,
  \Datapath_slice_0[13]/A ,
  \Datapath_slice_0[12]/A ,
