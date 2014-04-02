@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1396441164
+timestamp 1396444550
 << metal1 >>
 rect 0 1094 23 1104
 rect 0 97 23 107
@@ -96,4 +96,5 @@ rlabel metal2 1392 0 1404 0 1 StatusRegEn
 rlabel metal2 1632 0 1832 0 1 GND!
 rlabel metal2 1032 0 1044 0 1 MemEn
 rlabel metal1 1837 95 1837 105 7 DataIn
+rlabel metal1 13 101 13 101 1 AluOut
 << end >>

@@ -72,36 +72,26 @@ datapath instance1(
 	);
 
 // stimulus information follows
+int errors;
+
+always
+	#50 Clock = ~Clock;
 
 initial
   begin
-    AluEn = 0;
-    AluOR = 0;
-    AluWe = 0;
-    CFlag = 0;
-    Clock = 0;
-    DataIn = 0;
-    ImmSel = 0;
-    IrWe = 0;
-    LrEn = 0;
-    LrSel = 0;
-    LrWe = 0;
-    MemEn = 0;
-    nReset = 0;
-    Op1Sel = 0;
-    Op2Sel = 0;
-    PcEn = 0;
-    PcSel = 0;
-    PcWe = 0;
-    RegWe = 0;
-    Rs1Sel = 0;
-    RwSel = 0;
-    SDI = 0;
-    StatusReg = 0;
-    StatusRegEn = 0;
-    Test = 0;
-    WdSel = 0;
+    AluEn = 0; AluOR = 0; AluWe = 0; CFlag = 0; Clock = 0; DataIn = 0; ImmSel = 0; IrWe = 0; LrEn = 0; LrSel = 0; LrWe = 0; MemEn = 0; nReset = 0; Op1Sel = 0; Op2Sel = 0;
+    PcEn = 0; PcSel = 0; PcWe = 0; RegWe = 0; Rs1Sel = 0; RwSel = 0; SDI = 0; StatusReg = 0; StatusRegEn = 0; Test = 0; WdSel = 0;
 
+    #100 nReset = 1;
+
+    //Load immediate value tests
+    #100 DataIn = 16'hA801; //LLI R0, #1
+	 MemEn = 1; IrWe = 1;
+    #51 assert(DataOut == DataIn) else begin errors++; $display("ERROR: SysBus incorrect"); end
+	assert(Ir == DataIn) else begin errors++; $display("ERROR: IR incorrect"); end
+	assert(DataOut == DataIn) else begin errors++; $display("ERROR: SysBus incorrect"); end
+
+    #100 $finish;
   end
 
 //SIMVISION SCRIPT:datapath.tcl
