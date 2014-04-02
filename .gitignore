@@ -34,6 +34,9 @@ ncverilog.key
 
 ##Magic
 *.ext
+*.al
+*.nodes
+*.vnet
 magicext
 magicsim
 ## Misc
