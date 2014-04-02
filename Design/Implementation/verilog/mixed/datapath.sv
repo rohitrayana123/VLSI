@@ -5,7 +5,7 @@ module datapath(
 	output [3:0] Flags ,
 	output [15:0] Ir ,
 	output SDO ,
-	output [15:0] SysBus ,
+	output [15:0] DataOut ,
 	input AluEn ,
 	input AluWe ,
 	input CFlag ,

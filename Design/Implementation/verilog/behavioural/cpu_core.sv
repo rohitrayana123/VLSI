@@ -89,7 +89,11 @@ control control (
 );
 
 datapath datapath ( 
+`ifdef crosssim
+   .DataOut     (SysBus   ),
+`else
    .SysBus     	(SysBus   ),   // Output
+`endif
    .Ir	  		(Ir			),
    .Flags      	(Flags      ),  
    .DataIn     	(Data_in    ),
