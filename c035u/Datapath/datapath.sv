@@ -96,7 +96,7 @@ assign PcPlus1 = { \Datapath_slice_0[15]/Pc_slice_0/Pc1 ,
 \Datapath_slice_0[0]/Pc_slice_0/Pc1 };
 wire [15:0] Operand1;
 assign Operand1 = {
- \slice17_0/ASign ,
+ \Datapath_slice_0[15]/A ,
  \Datapath_slice_0[14]/A ,
  \Datapath_slice_0[13]/A ,
  \Datapath_slice_0[12]/A ,
@@ -147,7 +147,7 @@ assign AluOut = {
  \LLIcell_L_0[3]/ALUOut ,
  \LLIcell_L_0[2]/ALUOut ,
  \LLIcell_L_0[1]/ALUOut ,
- Aluout[0] };
+ \LLIcell_L_0[0]/ALUOut };
 wire [15:0] reg0;
 assign reg0 = {
 \Datapath_slice_0[15]/regBlock_slice_0/Reg0 ,

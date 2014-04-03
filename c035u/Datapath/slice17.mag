@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1396388721
+timestamp 1396539544
 << nwell >>
 rect 1464 665 3504 1063
 rect 15073 665 15696 1063
@@ -414,4 +414,7 @@ rlabel metal2 6672 0 6684 0 1 Rs1[0]
 rlabel metal2 5928 0 5940 0 1 Rw[0]
 rlabel metal2 24818 0 25016 0 1 GND!
 rlabel metal2 24000 0 24012 0 1 ALUOutEn
+rlabel metal1 5845 1072 5845 1072 1 Rs1In0
+rlabel metal1 5845 1095 5845 1095 1 Rs1In1
+rlabel metal1 5845 1117 5845 1117 1 Rs1In2
 << end >>
