@@ -1,21 +1,5 @@
-#!/usr/bin/python
-#Simple assembly program, takes assembly input file and outputs flat binary line with one line per instruction
-#Input syntax rules:	':' or ';' for commenting
-#			'.' must start label names
-#			Parts of instruction must be seperated by one space
-#			Ordering: [LABEL] - INSTRUCTION - OPERANDS - [COMMENTS]
-#Currently supports: 	Only R0-R7, LR & recognises SP == R7
-#			8 condition codes
-#			Output to same directory as input file
-#			Symbolic and numeric branching
-#			Checking of immediate value sizes
-#			NO input args checking
-#			Instruction-less lines allowed (empty line or comments)
-#Version: 1 (CMPI addition onwards)
-#	  2 (Changed to final ISA, added special case I's and error checking
-#         3 (Ajr changes - Hex output added, bug fix)
-#	  4 (Added SP symbol)
-
+#Author: Martin Wearn, mw20g10
+#Assembler program, takes assembly input file and outputs hex line with one line per instruction
 
 import os
 import re
@@ -119,7 +103,7 @@ def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
 			return int(value)
 	except:
 		for link in LINKTABLE:
-			if value == '.ISR':
+			if value in ('.ISR','.isr'):
 				print 'ERROR12: Illegal branch to ISR'
 				sys.exit()
 			elif link[0] == value:
@@ -209,7 +193,7 @@ elif sys.argv[1] in ("help", "-h"):
 	print "      Current is most recent iteration"
 	print "Input Syntax: ./assemble filename"
 	print "Commenting uses : or ;"
-	print "Labels start with . (SPECIAL .ISR-> Interrupt Service Routine)"
+	print "Labels start with . (SPECIAL .ISR/.isr-> Interrupt Service Routine)"
 	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
 	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
 	print "Branching: Symbolic and Numeric supported"
@@ -276,22 +260,23 @@ ISRcalc = 0
 ISRlen = 0
 #Find ISR, and remove label
 for i, line in enumerate(SEGMLINES):
-	if line[0].startswith('.'):
+	if (line[0] in ('.ISR','.isr')):				#ISR located
+		if ISR == 1:
+			print 'ERROR13: Multiple ISRs Present'
+			sys.exit()
+		ISR = 1
+		ISRloc = i
+		ISRcalc = 1
+		SEGMLINES[i].remove(line[0])			#remove label from instruction
+	elif ('RETI' in line):
 		if (ISRcalc == 1):				#Set length of ISR
-			ISRlen = ISRLines+1
+			ISRlen = ISRLines+2
 			ISRcalc = 0
 			print 'info: ISR Recognized - line ', ISRloc, ', length ', ISRlen
-		if (line[0] == '.ISR'):				#ISR located
-			if ISR == 1:
-				print 'ERROR13: Multiple ISRs Present'
-				sys.exit()
-			ISR = 1
-			ISRloc = i
-			ISRcalc = 1
-			SEGMLINES[i].remove(line[0])			#remove label from instruction
 	else:
 		if (ISRcalc == 1):				#Count length of ISR
 			ISRLines = ISRLines + 1
+
 #Reposition ISR to start of program
 for i in range(ISRlen):
 	print "      line", ISRloc + i, SEGMLINES[ISRloc + i]
