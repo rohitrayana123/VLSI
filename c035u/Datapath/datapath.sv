@@ -2,11 +2,12 @@
 // created by ext2svmod 5.5
 // Written by Henry Lovett hl13g10
 module datapath(
+	output [15:0] DataOut ,
 	output [3:0] Flags ,
 	output [15:0] Ir ,
 	output SDO ,
-	output [15:0] DataOut ,
 	input AluEn ,
+	input [1:0] AluOR ,
 	input AluWe ,
 	input CFlag ,
 	input Clock ,
@@ -27,10 +28,9 @@ module datapath(
 	input [1:0] Rs1Sel ,
 	input [1:0] RwSel ,
 	input SDI ,
+	input [3:0] StatusReg ,
+	input StatusRegEn ,
 	input Test ,
-	input [1:0] AluOR,
-	input [3:0] StatusReg,
-	input StatusRegEn,
 	input WdSel 
 	);
 
@@ -96,7 +96,7 @@ assign PcPlus1 = { \Datapath_slice_0[15]/Pc_slice_0/Pc1 ,
 \Datapath_slice_0[0]/Pc_slice_0/Pc1 };
 wire [15:0] Operand1;
 assign Operand1 = {
- \Datapath_slice_0[15]/A ,
+ \slice17_0/ASign ,
  \Datapath_slice_0[14]/A ,
  \Datapath_slice_0[13]/A ,
  \Datapath_slice_0[12]/A ,
@@ -147,7 +147,7 @@ assign AluOut = {
  \LLIcell_L_0[3]/ALUOut ,
  \LLIcell_L_0[2]/ALUOut ,
  \LLIcell_L_0[1]/ALUOut ,
- \LLIcell_L_0[0]/ALUOut };
+ Aluout[0] };
 wire [15:0] reg0;
 assign reg0 = {
 \Datapath_slice_0[15]/regBlock_slice_0/Reg0 ,
@@ -297,21 +297,21 @@ assign reg7 = ~nreg7;
 
 wire [2:0] Rs1;
 assign Rs1 = {
- \slice17_0/Rs1[0] ,
- \slice17_0/Rs1[1] ,
- \slice17_0/Rs1[2] };
+ \slice17_0/Rs1In2 ,
+ \slice17_0/Rs1In1 ,
+ \slice17_0/Rs1In0 };
 
 wire [2:0] Rs2;
 assign Rs2 = {
- \slice17_0/Rs2[0] ,
- \slice17_0/Rs2[1] ,
- \slice17_0/Rs2[2] };
+ Ir[4] ,
+ Ir[3] ,
+ Ir[2] };
 
 wire [2:0] Rw;
 assign Rw = {
-\slice17_0/Rw0 ,
+\slice17_0/Rw2 ,
 \slice17_0/Rw1 ,
-\slice17_0/Rw2 };
+\slice17_0/Rw0 };
 
 wire [15:0] WD;
 assign WD = {
@@ -408,5 +408,7 @@ assign ImmProbe = {
 \IrBB_0[2]/Imm ,
 \IrBB_0[1]/Imm ,
 \IrBB_0[0]/Imm };
+
+//Add AluOR[1:0]
 
 endmodule

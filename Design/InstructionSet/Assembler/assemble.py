@@ -119,7 +119,10 @@ def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
 			return int(value)
 	except:
 		for link in LINKTABLE:
-			if link[0] == value:
+			if value == '.ISR':
+				print 'ERROR12: Illegal branch to ISR'
+				sys.exit()
+			elif link[0] == value:
 				if b:
 					return ConvertToBin(link[1] - lineNo, 8)
 				else:
@@ -200,11 +203,13 @@ elif sys.argv[1] in ("help", "-h"):
         print "               3 (Ajr changes - Hex output added, bug fix)"
 	print "               4 (Added SP symbol)"
 	print "               5 (NOP support added, help added) UNTESTED"
-	print "               6 (Interrupt support added [ENAI, DISI, RETI]. New sub-encoding type F |11001|Cond[3]|Ra[3]|xxxxx|.) UNTESTED"
+	print "               6 (Interrupt support added [ENAI, DISI, RETI]"
+	print "               7 (Checks for duplicate Labels)"
+	print "               8 (Support for any ISR location & automated startup code entry)"
 	print "      Current is most recent iteration"
 	print "Input Syntax: ./assemble filename"
 	print "Commenting uses : or ;"
-	print "Labels start with ."
+	print "Labels start with . (SPECIAL .ISR-> Interrupt Service Routine)"
 	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
 	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
 	print "Branching: Symbolic and Numeric supported"
@@ -217,7 +222,7 @@ elif sys.argv[1] in ("help", "-h"):
 
 #Determine input/output file paths
 assemfile = sys.argv[1]		#filename only
-print '--------Converting File %s.py to machine code--------\n' % assemfile
+print '--------Converting File %s.py--------\n' % assemfile
 INPUTFILE = assemfile + ".asm"
 OUTPUTFILE = assemfile + ".mc"
 HEXFILE = assemfile + ".hex"
@@ -261,21 +266,75 @@ for line in LINES:
 	#print pass_two
 	SEGMLINES.append(pass_two)				#create list of lists
 	#print pass_two
-print 'Done\n'
+print 'Done'
 
 #Check each line for a link reference and create link table
+print '--------Locating ISR----------\n'
+ISRLines = 0
+ISR = 0
+ISRcalc = 0
+ISRlen = 0
+#Find ISR, and remove label
+for i, line in enumerate(SEGMLINES):
+	if line[0].startswith('.'):
+		if (ISRcalc == 1):				#Set length of ISR
+			ISRlen = ISRLines+1
+			ISRcalc = 0
+			print 'info: ISR Recognized - line ', ISRloc, ', length ', ISRlen
+		if (line[0] == '.ISR'):				#ISR located
+			if ISR == 1:
+				print 'ERROR13: Multiple ISRs Present'
+				sys.exit()
+			ISR = 1
+			ISRloc = i
+			ISRcalc = 1
+			SEGMLINES[i].remove(line[0])			#remove label from instruction
+	else:
+		if (ISRcalc == 1):				#Count length of ISR
+			ISRLines = ISRLines + 1
+#Reposition ISR to start of program
+for i in range(ISRlen):
+	print "      line", ISRloc + i, SEGMLINES[ISRloc + i]
+	temp = SEGMLINES.pop(ISRloc + i)
+	SEGMLINES.insert(i,temp)
+#Add setup code before ISR
+SEGMLINES.insert(0, ['BR', str(17-15+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-14+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-13+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-12+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-11+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-10+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-9+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-8+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-7+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-6+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-5+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-4+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-3+ISRlen-1)])
+SEGMLINES.insert(0, ['BR', str(17-2+ISRlen-1)])
+SEGMLINES.insert(0, ['LLI', 'R7', '255'])
+SEGMLINES.insert(0, ['LUI', 'R7', '7'])
+#Create link table, ignoring ISR
 print '--------Creating Link Table----------\n'
 for i, line in enumerate(SEGMLINES):
 	if line[0].startswith('.'):
+		if (line[0] in (l[0] for l in LINKTABLE)):	#Check if label already exists in linktable
+			print 'ERROR11: Duplicate Symbolic Links (', line[0], ')'
+			sys.exit()
 		LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 		SEGMLINES[i].remove(line[0])			#remove label from instruction
-		#SEGMLINES[i].remove(line[0])			#remove empty element from seperation bug
-print '    Link Table'
-for l in LINKTABLE:
-	print l
-print '    Segmented instruction list:'
+		#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
+	
+print 'After Reorder and Initialization Code'
 for s in SEGMLINES:
 	print s
+
+print 'Link Table'
+for l in LINKTABLE:
+	print l
+#print '    Segmented instruction list:'
+#for s in SEGMLINES:
+#	print s
 
 #Check for over-sized immediate values
 for i, line in enumerate(SEGMLINES):
@@ -297,10 +356,10 @@ for i, line in enumerate(SEGMLINES):
 			sys.exit()
 
 #Convert each element to machine code and concatenate
-print '--------Converting to machine code-----------\n'
-print 'Converting::',
+print '--------Converting to machine code-----------'
+#print 'Converting::',
 for i, line in enumerate(SEGMLINES):
-	print line[0],
+	#print line[0],
 	if OpType(line[0]) == 'F':				#Interrupt operations
 		if line[0] == 'ENAI':
 			MC.append(OpNum('F') + '001' + '00000000')
@@ -366,7 +425,7 @@ for i, line in enumerate(SEGMLINES):
 			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + ConvertToBin(line[2], 5))
 		else:
 			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
-	print ',',
+	#print ',',
 #print ''
 #print '    Binary Output:'
 #for l in MC:
@@ -381,12 +440,13 @@ for i, line in enumerate(SEGMLINES):
 
 #Output to hex file too
 print ''
-print '    Hex Output:'
+print('Hex Output:'),
 for line in MC:
 	hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
 	while(len(hexline) < 4):
 		hexline = '0'+ hexline
-	print hexline
+	print(hexline),
 	hexfile.write(hexline + '\n')
+print("\n"),
 
 print '--------Assembly Complete!--------\n'
