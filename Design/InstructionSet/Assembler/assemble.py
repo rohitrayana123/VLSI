@@ -190,10 +190,12 @@ elif sys.argv[1] in ("help", "-h"):
 	print "               6 (Interrupt support added [ENAI, DISI, RETI]"
 	print "               7 (Checks for duplicate Labels)"
 	print "               8 (Support for any ISR location & automated startup code entry)"
+	print "               9 (Support for .define)"
 	print "      Current is most recent iteration"
 	print "Input Syntax: ./assemble filename"
 	print "Commenting uses : or ;"
-	print "Labels start with . (SPECIAL .ISR/.isr-> Interrupt Service Routine)"
+	print "Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)"
+	print "                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP"
 	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
 	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
 	print "Branching: Symbolic and Numeric supported"
@@ -202,6 +204,9 @@ elif sys.argv[1] in ("help", "-h"):
 	print "       Input files assume .asm, no extension needed"
 	print "       Immediate value sizes are checked"
 	print "       Instruction-less lines allowed"
+	print "       .ISR may be located anywhere in file"
+	print "       Startup code is automatically added [initialize SP, jump to main program]"
+	print "       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions"
 	sys.exit()
 
 #Determine input/output file paths
@@ -250,10 +255,47 @@ for line in LINES:
 	#print pass_two
 	SEGMLINES.append(pass_two)				#create list of lists
 	#print pass_two
+
+defines = [''] * 10
+definelines = []
+#Check for any .defines in file
+for line in SEGMLINES:
+	if(line[0] == '.define'):				#Create variable mapping for new define statement
+		print 'Found definition', line
+		if (line[2] == 'R0'):
+			defines[0] = line[1]
+		elif (line[2] == 'R1'):
+			defines[1] = line[1]
+		elif (line[2] == 'R2'):
+			defines[2] = line[1]
+		elif (line[2] == 'R3'):
+			defines[3] = line[1]
+		elif (line[2] == 'R4'):
+			defines[4] = line[1]
+		elif (line[2] == 'R5'):
+			defines[5] = line[1]
+		elif (line[2] == 'R6'):
+			defines[6] = line[1]
+		elif (line[2] in ('R7','SP')):
+			defines[7] = line[1]
+		else:
+			print 'ERROR14: Required .define format - .define NAME R0-R7/SP'
+			sys.exit()
+		definelines.append(line)			#remove define from file
+	else:							#Check if line has any current defines
+		#print 'Not .define line - ', line,
+		for j, part in enumerate(line):
+			if part in defines:
+				#print 'Identified', part,
+				line[j] = 'R' + str(defines.index(part))
+		#print ''
+#Remove .defines
+for d in definelines:
+	SEGMLINES.remove(d)
 print 'Done'
 
 #Check each line for a link reference and create link table
-print '--------Locating ISR----------\n'
+print '--------Locating ISR----------'
 ISRLines = 0
 ISR = 0
 ISRcalc = 0
@@ -300,7 +342,7 @@ SEGMLINES.insert(0, ['BR', str(17-2+ISRlen-1)])
 SEGMLINES.insert(0, ['LLI', 'R7', '255'])
 SEGMLINES.insert(0, ['LUI', 'R7', '7'])
 #Create link table, ignoring ISR
-print '--------Creating Link Table----------\n'
+print '--------Creating Link Table----------'
 for i, line in enumerate(SEGMLINES):
 	if line[0].startswith('.'):
 		if (line[0] in (l[0] for l in LINKTABLE)):	#Check if label already exists in linktable
@@ -312,11 +354,11 @@ for i, line in enumerate(SEGMLINES):
 	
 print 'After Reorder and Initialization Code'
 for s in SEGMLINES:
-	print s
+	print '    ', s
 
 print 'Link Table'
 for l in LINKTABLE:
-	print l
+	print '    ', l
 #print '    Segmented instruction list:'
 #for s in SEGMLINES:
 #	print s
@@ -424,8 +466,7 @@ for i, line in enumerate(SEGMLINES):
 #
 
 #Output to hex file too
-print ''
-print('Hex Output:'),
+print 'Hex Output:',
 for line in MC:
 	hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
 	while(len(hexline) < 4):
