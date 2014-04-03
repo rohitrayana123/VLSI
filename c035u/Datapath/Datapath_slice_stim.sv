@@ -104,6 +104,7 @@ initial
     AluOut = 0;
 
     //Only Testing Unique sections as sub-modules are tested already and just extended to top/bottom
+    //Section A
     #500 assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
     #500 AluOut = 1;
     #500 assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
@@ -111,6 +112,17 @@ initial
     #500 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
     #500 DR_SysBus = 1;
     #500 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
+    //Section B
+    #500 assert(ds.A == ds.Rd1) else begin $display("ERROR: A, Op1Sel=0"); errors++; end
+    #500 Op1Sel = 1;
+    #500 assert(ds.A == ds.Pc) else begin $display("ERROR: A, Op1Sel=1"); errors++; end
+	 assert(ds.B == ds.Imm) else begin $display("ERROR: B, Op2Sel=0"); errors++; end
+    #500 Op2Sel = 1;
+    #500 assert(ds.B == ds.Rd2) else begin $display("ERROR: B, Op2Sel=1"); errors++; end
+    #500 Op2Sel = 2;
+    #500 assert(ds.B == 0) else begin $display("ERROR: B, Op2Sel=2"); errors++; end
+    #500 Op2Sel = 3; 
+    #500 assert(ds.B == 0) else begin $display("ERROR: B, Op2Sel=3"); errors++; end
 
     #500 if(errors == 0)
 		$display("Simulation PASSED");
