@@ -13,7 +13,7 @@ control_0/LrSel
 control_0/PcEn
 datapath_0/PcEn
 
-datapath_0/SDI
+control_0/SDI
 SDI/QC
 
 control_0/OpcodeCondIn[5]
@@ -25,8 +25,8 @@ control_0/IrWe
 datapath_0/ImmSel
 control_0/ImmSel
 
-control_0/SDI
-datapath_0/SDO
+control_0/SDO
+datapath_0/SDI
 
 datapath_0/Flags[0]
 control_0/Flags[0]
@@ -124,7 +124,7 @@ VDDcore/Vdd!
 nIRQ/PA
 nIRQ/PB
 
-control_0/SDO
+datapath_0/SDO
 SDO/A
 
 datapath_0/DataOut[7]
