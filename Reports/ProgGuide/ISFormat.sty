@@ -1,10 +1,13 @@
+%  ISFormat.sty
+%  Date created: Fri 04 Apr 2014
+%  <+Last edited: Sat 05 Apr 2014 by mw20g10
 
-%\NeedsTexFormat{LaTeX2e}
 \ProvidesPackage{ISFormat}[2014/04/03 ISFormat package]
 
 \RequirePackage{array}
 \RequirePackage{xstring}
 \RequirePackage{varwidth}
+\RequirePackage{amsmath}
 \def\arraystretch{1.5}	
 
 \newcommand{\Imnemonic}[2]
@@ -14,72 +17,72 @@
 	\subsection{#2 \hfill #1}
 	\quad\\
 }
-\newcommand{\Iformat}[2]
+\newcommand{\Iformat}[3][5]
 {
 	\indent\textbf{Format}
 	\begin{table}[h]
 		\centering
-		\if A#1 %opcode[5]
+		\if A#2 %opcode[5]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{\StrChar{#2}{1}} & \StrChar{#2}{2} & \StrChar{#2}{3} & \StrChar{#2}{4} & \StrChar{#2}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{|c|}{Ra} & \multicolumn{3}{|c|}{Rb} & X & \multicolumn{1}{c|}{X} \\
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \multicolumn{3}{c|}{Rb} & X & \multicolumn{1}{c|}{X} \\
 				\hline
 			\end{tabular}
 		\fi
-		\if a#1 %opcode[5]
+		\if a#2 %opcode[5]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{\StrChar{#2}{1}} & \StrChar{#2}{2} & \StrChar{#2}{3} & \StrChar{#2}{4} & \StrChar{#2}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{|c|}{Ra} & \multicolumn{5}{|c|}{imm4/5} \\
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \if s#1 0 & \multicolumn{4}{|c|}{imm4} \else \multicolumn{5}{c|}{imm5} \fi\\
 				\hline
 			\end{tabular}
 		\fi
-		\if B#1 %opcode[5]
+		\if B#2 %opcode[5]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{\StrChar{#2}{1}} & \StrChar{#2}{2} & \StrChar{#2}{3} & \StrChar{#2}{4} & \StrChar{#2}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{8}{|c|}{imm8} \\
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{8}{c|}{imm8} \\
 				\hline
 			\end{tabular}
 		\fi
-		\if C#1 %LS[1]
+		\if C#2 %LS[1]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#2}{1}} & 0 & 0 & 0 & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{|c|}{Ra} & \multicolumn{5}{|c|}{imm5} \\
+				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#3}{1}} & 0 & 0 & 0 & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \multicolumn{5}{c|}{imm5} \\
 				\hline
 			\end{tabular}
 		\fi
-		\if D#1 %Cond.[3]
+		\if D#2 %Cond.[3]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{1} & 1 & 1 & 1 & 0 & \multicolumn{1}{|c}{\StrChar{#2}{1}} & \StrChar{#2}{2} & \multicolumn{1}{c|}{\StrChar{#2}{3}} & \multicolumn{8}{|c|}{imm8} \\
+				\multicolumn{1}{|c}{1} & 1 & 1 & 1 & 0 & \multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \multicolumn{1}{c|}{\StrChar{#3}{3}} & \multicolumn{8}{c|}{imm8} \\
 				\hline
 			\end{tabular}
 		\fi
-		\if d#1  %Cond.[3]
+		\if d#2  %Cond.[3]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{1} & 1 & 1 & 1 & 0 & \multicolumn{1}{|c}{\StrChar{#2}{1}} & \StrChar{#2}{2} & \multicolumn{1}{c|}{\StrChar{#2}{3}} & \multicolumn{3}{|c|}{Ra} & \multicolumn{5}{|c|}{imm5} \\
+				\multicolumn{1}{|c}{1} & 1 & 1 & 1 & 0 & \multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \multicolumn{1}{c|}{\StrChar{#3}{3}} & \multicolumn{3}{c|}{Ra} & \multicolumn{5}{c|}{imm5} \\
 				\hline
 			\end{tabular}
 		\fi
-		\if E#1 %U[1] L[1]
+		\if E#2 %U[1] L[1]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#2}{1}} & 0 & 0 & 1 & \multicolumn{1}{|c|}{\StrChar{#2}{2}} & X & X & \multicolumn{3}{|c|}{Ra} & X & X & X & X & \multicolumn{1}{c|}{X} \\
+				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#3}{1}} & 0 & 0 & 1 & \multicolumn{1}{|c|}{\StrChar{#3}{2}} & X & X & \multicolumn{3}{|c|}{Ra} & X & X & X & X & \multicolumn{1}{c|}{X} \\
 				\hline
 			\end{tabular}
 		\fi
-		\if F#1 %ICond.[3]
+		\if F#2 %ICond.[3]
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{1} & 1 & 0 & 0 & 1 & \multicolumn{1}{|c}{\StrChar{#2}{1}} & \StrChar{#2}{2} & \multicolumn{1}{c|}{\StrChar{#2}{3}} & 1 & 1 & \multicolumn{1}{c|}{1} & X & X & X & X & \multicolumn{1}{c|}{X} \\
+				\multicolumn{1}{|c}{1} & 1 & 0 & 0 & 1 & \multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \multicolumn{1}{c|}{\StrChar{#3}{3}} & 1 & 1 & \multicolumn{1}{c|}{1} & X & X & X & X & \multicolumn{1}{c|}{X} \\
 				\hline
 			\end{tabular}
 		\fi
@@ -105,80 +108,85 @@
 	
 }
 %Argument Summary: 1:Semantics Text, 2:NewCFlag(C/0), 3:NewVFlag(V/0), 4:V2ndOperand(b/5/8/0), 5:VUseCarry(0/c/n), 6:NewNFlag(N/0), 7:NewZFlag(Z/0)
-\newcommand{\Ioperation}[7]
-{	
+\newcommand{\Ioperation}[8]
+{	\begingroup
+	\setlength{\tabcolsep}{2pt}
 	\indent\textbf{Operation} \\
-	\indent\indent#1 \\
 	\indent\indent
-	\if N#6
-		~N $\leftarrow$ Rd[31] \\
+	\begin{tabular}{rl}
+	\if X#1
+		\phantom{Rd $\leftarrow$}& #2 \\
 	\else
-		~N $\leftarrow$ N \\
+		#1& #2 \\
 	\fi
-	\indent\indent
-	\if Z#7
-		~Z $\leftarrow$ if $Rd = 0$ then 1, else 0 \\
+	\if N#7
+		N $\leftarrow$& Rd[31] \\
 	\else
-		~Z $\leftarrow$ Z \\
+		N $\leftarrow$& N \\
 	\fi
-	\indent
-	\if V#3
-		\if b#4
-			\if 0#5
-				~~~~V $\leftarrow$ if $(+Ra, +Rb, -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Ra, -Rb, +Result)$ then 1, else 0 \\
+	\if Z#8
+		Z $\leftarrow$& if Rd = 0 then 1, else 0\\
+	\else
+		Z $\leftarrow$& Z \\
+	\fi
+	\if V#4
+		\if b#5
+			\if 0#6
+				V $\leftarrow$& if (+Ra, +Rb, -Result) or \\
+				&~~~(-Ra, -Rb, +Result) then 1, else 0 \\
 			\fi
-			\if c#5
-				~~~~V $\leftarrow$ if $(+Ra, +(Rb+CFlag), -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Ra, -(Rb+CFlag), +Result)$ then 1, else 0 \\
+			\if c#6
+				V $\leftarrow$& if (+Ra, +(Rb+CFlag), -Result) or\\
+				&~~~(-Ra, -(Rb+CFlag), +Result) then 1, else 0\\
 			\fi
-			\if n#5
-				~~~~V $\leftarrow$ if $(+Ra, +(Rb-CFlag), -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Ra, -(Rb-CFlag), +Result)$ then 1, else 0 \\
+			\if n#6
+				V $\leftarrow$& if (+Ra, +(Rb-CFlag), -Result) or\\
+				&~~~(-Ra, -(Rb-CFlag), +Result) then 1, else 0\\
 			\fi
 		\fi
-		\if 5#4
-			\if 0#5
-				~~~~V $\leftarrow$ if $(+Ra, +\#imm5, -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Ra, -\#imm5, +Result)$ then 1, else 0 \\
+		\if 5#5
+			\if 0#6
+				V $\leftarrow$& if (+Ra, +\#imm5, -Result) or\\
+				&~~~(-Ra, -\#imm5, +Result) then 1, else 0\\
 			\fi
-			\if c#5
-				~~~~V $\leftarrow$ if $(+Ra, +(\#imm5+CFlag), -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Ra, -(\#imm5+CFlag), +Result)$ then 1, else 0 \\
+			\if c#6
+				V $\leftarrow$& if (+Ra, +(\#imm5+CFlag), -Result) or\\
+				&~~~(-Ra, -(\#imm5+CFlag), +Result) then 1, else 0\\
 			\fi
-			\if n#5
-				~~~~V $\leftarrow$ if $(+Ra, +(\#imm5-CFlag), -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Ra, -(\#imm5-CFlag), +Result)$ then 1, else 0 \\
-			\fi
-		\fi
-		\if 8#4
-			\if 0#5
-				~~~~V $\leftarrow$ if $(+Rd, +\#imm8, -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Rd, -\#imm8, +Result)$ then 1, else 0 \\
-			\fi
-			\if c#5
-				~~~~V $\leftarrow$ if $(+Rd, +(\#imm8+CFlag), -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Rd, -(\#imm8+CFlag), +Result)$ then 1, else 0 \\
-			\fi
-			\if n#5
-				~~~~V $\leftarrow$ if $(+Rd, +(\#imm8-CFlag), -Result)$ or \\
-				\indent\indent\indent\indent~~~ $(-Rd, -(\#imm8-CFlag), +Result)$ then 1, else 0 \\
+			\if n#6
+				V $\leftarrow$& if (+Ra, +(\#imm5-CFlag), -Result) or\\
+				&~~~(-Ra, -(\#imm5-CFlag), +Result) then 1, else 0\\
 			\fi
 		\fi
-		\if 0#4
-			~~~~V $\leftarrow$ 0 \\
+		\if 8#5
+			\if 0#6
+				V $\leftarrow$& if (+Rd, +\#imm8, -Result) or\\
+				&~~~(-Rd, -\#imm8, +Result) then 1, else 0\\
+			\fi
+			\if c#6
+				V $\leftarrow$& if (+Rd, +(\#imm8+CFlag), -Result or\\
+				&~~~(-Rd, -(\#imm8+CFlag), +Result) then 1, else 0\\
+			\fi
+			\if n#6
+				V $\leftarrow$& if (+Rd, +(\#imm8-CFlag), -Result) or\\
+				&~~~(-Rd, -(\#imm8-CFlag), +Result) then 1, else 0\\
+			\fi
+		\fi
+		\if 0#5
+			V $\leftarrow$& 0 \\
 		\fi
 	\else
-		~~~~V $\leftarrow$ V \\
+		V $\leftarrow$& V \\
 	\fi
-	\indent\indent
-	\if C#2
-		~C $\leftarrow$ if $(Result > 2^{15})$ or \\
-		\indent\indent\indent\indent~~~ $(Result < -2^{16})$ then 1, else 0 \\
+	\if C#3
+		C $\leftarrow$& if (Result $> 2^{15}$) or\\
+		&~~~(Result $< -2^{16}$) then 1, else 0\\
 	\else
-		~C $\leftarrow$ C \\
+		C $\leftarrow$& C \\
 	\fi
-	\\\\
+	\end{tabular}
+	\\\\	
+	\endgroup
 }
 \newcommand{\Idesc}[1]
 {
