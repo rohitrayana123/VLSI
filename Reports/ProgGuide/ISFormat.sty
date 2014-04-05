@@ -103,11 +103,11 @@
 		\indent\indent#2 eg. #3\\
 	\fi
 	\if F#1 %Final: Use for last entry of multiple syntaxs
-		\indent\indent#2 \hfill eg. #3\\\\\\
+		\indent\indent#2 \hfill eg. #3\\\\
 	\fi
 	
 }
-%Argument Summary: 1:Semantics Text, 2:NewCFlag(C/0), 3:NewVFlag(V/0), 4:V2ndOperand(b/5/8/0), 5:VUseCarry(0/c/n), 6:NewNFlag(N/0), 7:NewZFlag(Z/0)
+%Argument Summary: 1:Left of assign, 2:Right of assign, 3:NewCFlag(C/0), 4:NewVFlag(V/0), 5:V2ndOperand(b/5/8/0), 6:VUseCarry(0/c/n), 7:NewNFlag(N/0), 8:NewZFlag(Z/0)
 \newcommand{\Ioperation}[8]
 {	\begingroup
 	\setlength{\tabcolsep}{2pt}
@@ -190,7 +190,7 @@
 }
 \newcommand{\Idesc}[1]
 {
-	\indent\textbf{Description} \\
+	\indent\textbf{Description} \\\\
 	\indent\indent
 	\begin{minipage}[h]{4.9in}
 		#1

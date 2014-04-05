@@ -4,5 +4,63 @@
 %  <+Last Edited: Thu 27 Mar 2014 10:13:27 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
 
 \section{Assembler}
-Lorem Ipsum\dots
+The current instruction set architecture includes an assembler for converting symbolic sequences into machine code. This chapter outlines the required formatting and available features of this assembler. 
 
+\subsection{Instruction Formatting}
+Each instruction must be formatted using the following syntax, here [] indicates an optional field:
+
+\begin{center}[.LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]\end{center}
+
+\begin{center}eg. .loop ADDI, R5, R3, \#5 :Add 5 to R3\end{center}
+
+\noindent Comments may be added by preceding them with either : or ;.\\
+
+\noindent Accepted general purpose register values are: R0, R1, R2, R3, R4, R5, R6, R7, SP. These can be upper or lower case and SP is equivalently evaluated to R7.\\
+
+\noindent Branch instructions can take either a symbolic or numeric value. Where a numeric must be relative and between -32 and 31 for a JMP instruction, or between -128 and 127 for any other branch type. If the branch exceed the accepted range, the assembler will flag an error message. \\
+
+\noindent All label names must begin with a '.' while .ISR/.isr and .define are special cases used for the interrupt service routine and variable definitions respectively. \\
+
+\noindent Instruction-less or comments only lines are allowed within the assembly file. \\
+\newpage
+\noindent {\bf Special Case Label}
+
+\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a 'RETI' instruction. Branches may occur moving out of this subroutine, if within an accepted distance, but are not allowed into this subroutine with the exception of a RET call. \\
+
+\noindent Outputted machine code requires the ISR to be in a specific location in memory. This is automatically accounted for by the assembler as well as including some initialization code before main program execution. This start-up code includes initialization of the stack pointer to 2047. 
+
+\subsection{Assembler Directives}
+Currently there is one supported assembler directive for assigning meaningful names to each of the general purpose registers. Definitions can occur at any point within the file and create a valid equivalence mapping from that point onwards. Different names can be assigned to the same register, but only one is valid at a time. \\
+
+\noindent The accepted syntax for defintions is:
+
+\begin{center}.define NAME REGISTER\end{center}
+
+\subsection{Running The Assembler}
+The assembler reads a '.asm' file and outputs a '.hex' file in hexadecimal format. It is run by typing "python assemble filename" at the command line when in the directory of both the assembler executable and the program assembly file. "filename" does not have to include the .asm file extension. The outputted file is saved to the same directory as the input file. \\
+
+\noindent Typing -h or --help instead of the file name will bring up the help menu with version information and basic formatting support. 
+
+\newpage
+\subsection{Error Messages}
+\begin{center}
+	\centering
+	\begin{tabular}{r|p{12cm}}
+		\multicolumn{1}{c}{\bf Code} & \multicolumn{1}{c}{\bf Description} \\
+		\hline\hline
+		ERROR1& Instruction mneumonic is not recognized \\
+		ERROR2& Register code within instruction is not recognized\\
+		ERROR3& Branch condition code is not recognised\\
+		ERROR4& Attempting to branch to undefined location \\
+		ERROR5& Instruction mneumonic is not recognized \\
+		ERROR6& Attempting to shift by more than 16 or perform a negative shift \\
+		ERROR7& Magnitude of immediate value for ADDI, ADCI, SUBI, SUCI, LDW or STW is too large\\
+		ERROR8& Magnitude of immediate value for CMPI or JMP is too large \\
+		ERROR9& Magnitude of immediate value for ADDIB, SUBIB, LUI or LLI is too large \\
+		ERROR10& Attempting to jump more than 127 forward or 128 backwards \\
+		ERROR11& Duplicate symbolic link names \\
+		ERROR12& Illegal branch to ISR \\
+		ERROR13& Multiple ISRs in file \\
+		ERROR14& Invalid formatting for .define directive \\
+	\end{tabular}
+\end{center}
