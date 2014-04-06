@@ -1,0 +1,205 @@
+%  ISFormat.sty
+%  Date created: Fri 04 Apr 2014
+%  <+Last edited: Sat 05 Apr 2014 by mw20g10
+
+\ProvidesPackage{ISFormat}[2014/04/03 ISFormat package]
+
+\RequirePackage{array}
+\RequirePackage{xstring}
+\RequirePackage{varwidth}
+\RequirePackage{amsmath}
+\def\arraystretch{1.5}	
+
+\newcommand{\Imnemonic}[2]
+{
+	\newpage
+	%{\LARGE #1 #2}
+	\subsection{#2 \hfill #1}
+	\quad\\
+}
+\newcommand{\Iformat}[3][5]
+{
+	\indent\textbf{Format}
+	\begin{table}[h]
+		\centering
+		\if A#2 %opcode[5]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \multicolumn{3}{c|}{Rb} & X & \multicolumn{1}{c|}{X} \\
+				\hline
+			\end{tabular}
+		\fi
+		\if a#2 %opcode[5]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \if s#1 0 & \multicolumn{4}{|c|}{imm4} \else \multicolumn{5}{c|}{imm5} \fi\\
+				\hline
+			\end{tabular}
+		\fi
+		\if B#2 %opcode[5]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{8}{c|}{imm8} \\
+				\hline
+			\end{tabular}
+		\fi
+		\if C#2 %LS[1]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#3}{1}} & 0 & 0 & 0 & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \multicolumn{5}{c|}{imm5} \\
+				\hline
+			\end{tabular}
+		\fi
+		\if D#2 %Cond.[3]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{1} & 1 & 1 & 1 & 0 & \multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \multicolumn{1}{c|}{\StrChar{#3}{3}} & \multicolumn{8}{c|}{imm8} \\
+				\hline
+			\end{tabular}
+		\fi
+		\if d#2  %Cond.[3]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{1} & 1 & 1 & 1 & 0 & \multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \multicolumn{1}{c|}{\StrChar{#3}{3}} & \multicolumn{3}{c|}{Ra} & \multicolumn{5}{c|}{imm5} \\
+				\hline
+			\end{tabular}
+		\fi
+		\if E#2 %U[1] L[1]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#3}{1}} & 0 & 0 & 1 & \multicolumn{1}{|c|}{\StrChar{#3}{2}} & X & X & \multicolumn{3}{|c|}{Ra} & X & X & X & X & \multicolumn{1}{c|}{X} \\
+				\hline
+			\end{tabular}
+		\fi
+		\if F#2 %ICond.[3]
+			\begin{tabular}{cccccccccccccccc}
+				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+				\hline
+				\multicolumn{1}{|c}{1} & 1 & 0 & 0 & 1 & \multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \multicolumn{1}{c|}{\StrChar{#3}{3}} & 1 & 1 & \multicolumn{1}{c|}{1} & X & X & X & X & \multicolumn{1}{c|}{X} \\
+				\hline
+			\end{tabular}
+		\fi
+	\end{table}
+	\\\\
+}
+\newcommand{\Isyntax}[3][S]
+{
+	\if S#1 %Single: Use for only one syntax
+		\indent\textbf{Syntax} \\
+		\indent\indent#2 \hfill eg. #3\\\\\\
+	\fi
+	\if M#1 %Multiple: Use for first entry of multiple syntaxs
+		\indent\textbf{Syntax} \\
+		\indent\indent#2 \hfill eg. #3
+	\fi
+	\if E#1 %Extra: Use for middle entry of multiple syntaxs
+		\indent\indent#2 eg. #3\\
+	\fi
+	\if F#1 %Final: Use for last entry of multiple syntaxs
+		\indent\indent#2 \hfill eg. #3\\\\
+	\fi
+	
+}
+%Argument Summary: 1:Left of assign, 2:Right of assign, 3:NewCFlag(C/0), 4:NewVFlag(V/0), 5:V2ndOperand(b/5/8/0), 6:VUseCarry(0/c/n), 7:NewNFlag(N/0), 8:NewZFlag(Z/0)
+\newcommand{\Ioperation}[8]
+{	\begingroup
+	\setlength{\tabcolsep}{2pt}
+	\indent\textbf{Operation} \\
+	\indent\indent
+	\begin{tabular}{rl}
+	\if X#1
+		\phantom{Rd $\leftarrow$}& #2 \\
+	\else
+		#1& #2 \\
+	\fi
+	\if N#7
+		N $\leftarrow$& Rd[31] \\
+	\else
+		N $\leftarrow$& N \\
+	\fi
+	\if Z#8
+		Z $\leftarrow$& if Rd = 0 then 1, else 0\\
+	\else
+		Z $\leftarrow$& Z \\
+	\fi
+	\if V#4
+		\if b#5
+			\if 0#6
+				V $\leftarrow$& if (+Ra, +Rb, -Result) or \\
+				&~~~(-Ra, -Rb, +Result) then 1, else 0 \\
+			\fi
+			\if c#6
+				V $\leftarrow$& if (+Ra, +(Rb+CFlag), -Result) or\\
+				&~~~(-Ra, -(Rb+CFlag), +Result) then 1, else 0\\
+			\fi
+			\if n#6
+				V $\leftarrow$& if (+Ra, +(Rb-CFlag), -Result) or\\
+				&~~~(-Ra, -(Rb-CFlag), +Result) then 1, else 0\\
+			\fi
+		\fi
+		\if 5#5
+			\if 0#6
+				V $\leftarrow$& if (+Ra, +\#imm5, -Result) or\\
+				&~~~(-Ra, -\#imm5, +Result) then 1, else 0\\
+			\fi
+			\if c#6
+				V $\leftarrow$& if (+Ra, +(\#imm5+CFlag), -Result) or\\
+				&~~~(-Ra, -(\#imm5+CFlag), +Result) then 1, else 0\\
+			\fi
+			\if n#6
+				V $\leftarrow$& if (+Ra, +(\#imm5-CFlag), -Result) or\\
+				&~~~(-Ra, -(\#imm5-CFlag), +Result) then 1, else 0\\
+			\fi
+		\fi
+		\if 8#5
+			\if 0#6
+				V $\leftarrow$& if (+Rd, +\#imm8, -Result) or\\
+				&~~~(-Rd, -\#imm8, +Result) then 1, else 0\\
+			\fi
+			\if c#6
+				V $\leftarrow$& if (+Rd, +(\#imm8+CFlag), -Result or\\
+				&~~~(-Rd, -(\#imm8+CFlag), +Result) then 1, else 0\\
+			\fi
+			\if n#6
+				V $\leftarrow$& if (+Rd, +(\#imm8-CFlag), -Result) or\\
+				&~~~(-Rd, -(\#imm8-CFlag), +Result) then 1, else 0\\
+			\fi
+		\fi
+		\if 0#5
+			V $\leftarrow$& 0 \\
+		\fi
+	\else
+		V $\leftarrow$& V \\
+	\fi
+	\if C#3
+		C $\leftarrow$& if (Result $> 2^{15}$) or\\
+		&~~~(Result $< -2^{16}$) then 1, else 0\\
+	\else
+		C $\leftarrow$& C \\
+	\fi
+	\end{tabular}
+	\\\\	
+	\endgroup
+}
+\newcommand{\Idesc}[1]
+{
+	\indent\textbf{Description} \\\\
+	\indent\indent
+	\begin{minipage}[h]{4.9in}
+		#1
+	\end{minipage}
+	\\\\
+}
+\newcommand{\Ispecial}[1]
+{
+	#1
+}
+
+\endinput

@@ -180,14 +180,14 @@ def OpNum(value):	#Determine specific binary value for instruction
 if sys.argv[1] == "":
 	print "Please provide input file name, type 'help' or '-h' for information and version history"
 	sys.exit()
-elif sys.argv[1] in ("help", "-h"):
+elif sys.argv[1] in ("--help", "-h"):
 	print "---Team R4 Assembler Help---"
 	print "------Version: 1 (CMPI addition onwards)"
 	print "               2 (Changed to final ISA, added special case I's and error checking"
         print "               3 (Ajr changes - Hex output added, bug fix)"
 	print "               4 (Added SP symbol)"
 	print "               5 (NOP support added, help added) UNTESTED"
-	print "               6 (Interrupt support added [ENAI, DISI, RETI]"
+	print "               6 (Interrupt support added [ENAI, DISI, RETI])"
 	print "               7 (Checks for duplicate Labels)"
 	print "               8 (Support for any ISR location & automated startup code entry)"
 	print "               9 (Support for .define)"
@@ -212,9 +212,14 @@ elif sys.argv[1] in ("help", "-h"):
 #Determine input/output file paths
 assemfile = sys.argv[1]		#filename only
 print '--------Converting File %s.py--------\n' % assemfile
-INPUTFILE = assemfile + ".asm"
-OUTPUTFILE = assemfile + ".mc"
-HEXFILE = assemfile + ".hex"
+if assemfile.endswith(".asm"):
+	INPUTFILE = assemfile
+	OUTPUTFILE = assemfile[:-len(".asm")] + ".mc"
+	HEXFILE = assemfile[:-len(".asm")] + ".hex"
+else:
+	INPUTFILE = assemfile + ".asm"
+	OUTPUTFILE = assemfile + ".mc"
+	HEXFILE = assemfile + ".hex"
 
 ifile = open(INPUTFILE, 'r')
 outfile = open(OUTPUTFILE, 'w')
@@ -369,16 +374,19 @@ for i, line in enumerate(SEGMLINES):
 		if int(line[3]) > 16:
 			print 'ERROR6: Shifting By More Than 16'
 			sys.exit()
+		elif int(line[3]) < 0:
+			print 'ERROR6: Negative Shifting'
+			sys.exit()
 	elif line[0] in ('ADDI', 'ADCI', 'SUBI', 'SUCI', 'LDW', 'STW'):
-		if int(line[3]) > 32:
+		if int(line[3]) > 15 or int(line[3]) < -16 :
 			print 'ERROR7: Imm5 Out Of Bounds'
 			sys.exit()
 	elif line[0] in ('CMPI', 'JMP'):
-		if int(line[2]) > 32:
+		if int(line[2]) > 15 or int(line[2]) < -16:
 			print 'ERROR8: Imm5 Out Of Bounds'
 			sys.exit()
 	elif line[0] in ('ADDIB', 'SUBIB', 'LUI', 'LLI'):
-		if int(line[2]) > 256:
+		if int(line[2]) > 127 or int(line[2]) < -128:
 			print 'ERROR9: Imm8 Out Of Bounds'
 			sys.exit()
 
