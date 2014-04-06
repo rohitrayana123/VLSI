@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1396307000
+timestamp 1396719273
 << metal1 >>
 rect 0 937 2135 947
 rect 1261 915 1751 925
@@ -154,4 +154,5 @@ rlabel metal2 3024 954 3036 954 1 PcEn
 rlabel metal2 2280 954 2292 954 1 PcWe
 rlabel metal2 3096 954 3108 954 5 SysBus
 rlabel metal2 2064 954 2076 954 5 PcSel[2]
+rlabel metal1 2201 874 2201 874 1 PcIn
 << end >>
