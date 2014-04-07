@@ -671,7 +671,11 @@ always_comb begin
 									ENB = 1;
 									if (BranchCode == 0) 
 										PcSel = PcSysbus;
-									
+									else
+									begin
+										FlagSel = FlagSys;
+										StatusRegWe = 1;
+									end
 									nWE = 1;
 								end
 								3:begin
@@ -758,7 +762,9 @@ always_comb begin
 								end
 								4:	begin
 									Rs1Sel = Seven;
-									MemEn = 1;
+									PcEn = 1;
+									//MemEn = 1;
+									//ENB = 1;
 									nWE = 1;	
 									Op2Sel = Op2zero;
 									AluOR = addOR;
@@ -766,7 +772,7 @@ always_comb begin
 									RwSel = RwSeven;
 									RegWe = 1;
 									FlagSel = FlagSys;
-									StatusRegWe = 1;
+									//StatusRegWe = 1;
 								end
 							endcase
 						end

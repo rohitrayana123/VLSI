@@ -58,4 +58,5 @@ begin
 				$display("StatusReg driving bus");
 		end
 	end
+	assert (CPU.CPU_core.MemEn == CPU.CPU_core.ENB) else begin $display("MemEn and ENB not asserted together");end
 end
