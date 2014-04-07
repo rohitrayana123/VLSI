@@ -44,7 +44,6 @@ import opcodes::*;
 `define FLAGS_V  2
 `define FLAGS_N  3
 
-
 Opcode_t Opcode;
 Branch_t BranchCode;
 
@@ -219,7 +218,7 @@ always_comb begin
       	fetch : 
          	case(stateSub)
             	cycle0: begin ALE = 1;  nWE  = 1; nOE  = 1; PcEn  = 1; end 
-            	cycle1: begin nME = 0; nWE = 1; MemEn = 1; PcEn =1;nOE = 1;  end
+            	cycle1: begin nME = 0; nWE = 1;  PcEn =1;nOE = 1;  end
             	cycle2: begin nME = 0; MemEn = 1; ENB = 1; nWE   = 1; IrWe = nWait; end 
             	cycle3: begin nWE = 1; PcEn = 1;end//MemEn = 1; ENB = 1; end
          	endcase
@@ -566,7 +565,7 @@ always_comb begin
                         	Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 			             	Rs1Sel = Rs1Rd;
-							MemEn = 1;
+							//MemEn = 1;
 							nOE = 1;
 							nWE = 1;
         	               	AluWe = 1;			// Pass right through on next clock
