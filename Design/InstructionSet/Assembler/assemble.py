@@ -356,7 +356,7 @@ for i, line in enumerate(SEGMLINES):
 		LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 		SEGMLINES[i].remove(line[0])			#remove label from instruction
 		#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
-	
+
 print 'After Reorder and Initialization Code'
 for s in SEGMLINES:
 	print '    ', s
@@ -386,7 +386,7 @@ for i, line in enumerate(SEGMLINES):
 			print 'ERROR8: Imm5 Out Of Bounds'
 			sys.exit()
 	elif line[0] in ('ADDIB', 'SUBIB', 'LUI', 'LLI'):
-		if int(line[2]) > 127 or int(line[2]) < -128:
+		if int(line[2]) > 255  or int(line[2]) < -128:
 			print 'ERROR9: Imm8 Out Of Bounds'
 			sys.exit()
 
