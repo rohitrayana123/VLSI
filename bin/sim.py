@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Thu 13 Mar 2014 19:32:35 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 07 Apr 2014 17:04:52 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -28,7 +28,7 @@ def RunSim(options):
 	magic = os.path.join(home, "Design/Implementation/magic/c035u/%s" % options.module)
 	datapathmag = os.path.join(home, "Design/Implementation/magic/c035u/Datapath/")
 	fcdecells = os.path.join(home,"Design/Implementation/verilog")
-	gate = os.path.join(home,"Design/Implementation/cadence/control/gate_level")
+	gate = os.path.join(home,"Design/Implementation/verilog/gate_level")
 
 	#@todo Check files exist
 
