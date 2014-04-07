@@ -111,7 +111,7 @@ def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
 					return ConvertToBin(link[1] - lineNo, 8)
 				else:
 					return link[1] - lineNo
-		print 'ERROR4: Unknown Link Label'
+		print ('ERROR4: Unknown Link Label, \'%s\''% value)
 		sys.exit()
 
 def OpNum(value):	#Determine specific binary value for instruction
