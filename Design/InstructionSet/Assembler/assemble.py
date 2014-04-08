@@ -385,9 +385,13 @@ for i, line in enumerate(SEGMLINES):
 		if int(line[2]) > 15 or int(line[2]) < -16:
 			print 'ERROR8: Imm5 Out Of Bounds'
 			sys.exit()
-	elif line[0] in ('ADDIB', 'SUBIB', 'LUI', 'LLI'):
-		if int(line[2]) > 255  or int(line[2]) < -128:
-			print 'ERROR9: Imm8 Out Of Bounds'
+	elif line[0] in ('ADDIB', 'SUBIB'):
+		if int(line[2]) > 127 or int(line[2]) < -128:
+			print 'ERROR9: Arith Imm8 Out Of Bounds'
+			sys.exit()
+	elif line[0] in ('LUI', 'LLI'):
+		if int(line[2]) > 255:
+			print 'ERROR9: Load Imm8 Out Of Bounds'
 			sys.exit()
 
 #Convert each element to machine code and concatenate
