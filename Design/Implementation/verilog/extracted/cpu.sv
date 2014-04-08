@@ -34,7 +34,7 @@ wire[2:0] sst;
 assign sst = {
 \control_0/stateSub[2] ,
 \control_0/stateSub[1] ,
-\control_0/stateSub[0] };
+~\control_0/stateSub[0] };
 assign stateSub = stateSub_t'(sst);
 
 wire [15:0] Pc;

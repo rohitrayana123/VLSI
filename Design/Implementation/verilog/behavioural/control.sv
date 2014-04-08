@@ -46,7 +46,6 @@ import opcodes::*;
 
 Opcode_t Opcode;
 Branch_t BranchCode;
-
 //Flags register
 logic StatusRegWe;
 //logic StatusRegEn;
@@ -561,26 +560,26 @@ always_comb begin
          		cycle1: begin
             		case(Opcode)
                			LDW:begin
-							nME = 0;
-                        	Op1Sel = Op1Rd1;
-							Op2Sel = Op2zero;
-			             	Rs1Sel = Rs1Rd;
-							//MemEn = 1;
-							nOE = 1;
-							nWE = 1;
-        	               	AluWe = 1;			// Pass right through on next clock
-	                	    AluEn = 1;
-						end
+						nME = 0;
+                        			Op1Sel = Op1Rd1;
+						Op2Sel = Op2zero;
+			             		Rs1Sel = Rs1Rd;
+						//MemEn = 1;
+						nOE = 1;
+						nWE = 1;
+        	               			AluWe = 1;			// Pass right through on next clock
+	                	    		AluEn = 1;
+				end
 					STW:begin					// Get the data out of the reg
-        	                nME = 0;
-							Op1Sel = Op1Rd1;
-							Op2Sel = Op2zero;
-							Rs1Sel = Rs1Rd;
-							nOE = 1;
-	                		nWE = 1;
-	                     	AluWe = 1;			// Pass right through on next clock
-        	                AluEn = 1;
-						end
+        	                		nME = 0;
+						Op1Sel = Op1Rd1;
+						Op2Sel = Op2zero;
+						Rs1Sel = Rs1Rd;
+						nOE = 1;
+	                			nWE = 1;
+	                     			AluWe = 1;			// Pass right through on next clock
+        	                		AluEn = 1;
+					end
 					PUSH:begin
 							nME = 0;
 							Op1Sel = Op1Rd1;
@@ -606,6 +605,7 @@ always_comb begin
 							Op1Sel = Op1Rd1;
 							Op2Sel = Op2zero;
 							Rs1Sel = Seven;
+							nOE = 1;
 							//MemEn = 1;
 							nWE = 1;
 							AluEn = 1;
