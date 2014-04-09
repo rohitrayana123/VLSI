@@ -90,24 +90,24 @@ assign Operand2 = {
  \datapath_0/LLIcell_L_0[2]/B ,
  \datapath_0/LLIcell_L_0[1]/B ,
  \datapath_0/LLIcell_L_0[0]/B };
-wire [15:0] AluOut;
-assign AluOut = {
- \datapath_0/LLIcell_U_0[7]/ALUOut ,
- \datapath_0/LLIcell_U_0[6]/ALUOut ,
- \datapath_0/LLIcell_U_0[5]/ALUOut ,
- \datapath_0/LLIcell_U_0[4]/ALUOut ,
- \datapath_0/LLIcell_U_0[3]/ALUOut ,
- \datapath_0/LLIcell_U_0[2]/ALUOut ,
- \datapath_0/LLIcell_U_0[1]/ALUOut ,
- \datapath_0/LLIcell_U_0[0]/ALUOut ,
- \datapath_0/LLIcell_L_0[7]/ALUOut ,
- \datapath_0/LLIcell_L_0[6]/ALUOut ,
- \datapath_0/LLIcell_L_0[5]/ALUOut ,
- \datapath_0/LLIcell_L_0[4]/ALUOut ,
- \datapath_0/LLIcell_L_0[3]/ALUOut ,
- \datapath_0/LLIcell_L_0[2]/ALUOut ,
- \datapath_0/LLIcell_L_0[1]/ALUOut ,
- \datapath_0/LLIcell_L_0[0]/ALUOut };
+//wire [15:0] AluOut;
+//assign AluOut = {
+// \datapath_0/LLIcell_U_0[7]/ALUOut ,
+// \datapath_0/LLIcell_U_0[6]/ALUOut ,
+// \datapath_0/LLIcell_U_0[5]/ALUOut ,
+// \datapath_0/LLIcell_U_0[4]/ALUOut ,
+// \datapath_0/LLIcell_U_0[3]/ALUOut ,
+// \datapath_0/LLIcell_U_0[2]/ALUOut ,
+// \datapath_0/LLIcell_U_0[1]/ALUOut ,
+// \datapath_0/LLIcell_U_0[0]/ALUOut ,
+// \datapath_0/LLIcell_L_0[7]/ALUOut ,
+// \datapath_0/LLIcell_L_0[6]/ALUOut ,
+// \datapath_0/LLIcell_L_0[5]/ALUOut ,
+// \datapath_0/LLIcell_L_0[4]/ALUOut ,
+// \datapath_0/LLIcell_L_0[3]/ALUOut ,
+// \datapath_0/LLIcell_L_0[2]/ALUOut ,
+// \datapath_0/LLIcell_L_0[1]/ALUOut ,
+// \datapath_0/LLIcell_L_0[0]/ALUOut };
 wire [15:0] reg0;
 assign reg0 = {
 \datapath_0/Datapath_slice_0[15]/regBlock_slice_0/Reg0 ,
