@@ -132,7 +132,7 @@ assign Operand2 = {
  \LLIcell_L_0[0]/B };
 wire [15:0] AluOut;
 assign AluOut = {
- \LLIcell_U_0[7]/ALUOut ,
+ Flags[3] ,
  \LLIcell_U_0[6]/ALUOut ,
  \LLIcell_U_0[5]/ALUOut ,
  \LLIcell_U_0[4]/ALUOut ,
