@@ -60,3 +60,116 @@ begin
 	end
 	assert (CPU.CPU_core.MemEn == CPU.CPU_core.ENB) else begin $display("MemEn and ENB not asserted together");end
 end
+
+logic [15:0] sysir;
+assign sysir = CPU.CPU_core.datapath.Ir;
+logic [30:0][7:0] Dissembly;
+assign Dissembly = disassemble(sysir);
+
+function [30:0][7:0] disassemble;
+   input [15:0] instruction;
+   case (Opcode_t'(instruction[15:11]))
+	PUSH,POP: return {get_opmnemonic(instruction[15:11]), (instruction[10] ? "LR R" : "  R"), itoa_4(instruction[7:5])};
+	INTERRUPT: return get_intmnemonic(instruction[10:8]);
+	BRANCH: 
+		case(Branch_t'(instruction[10:8]))
+			RET: return "RET";
+			JMP: return {"JMP R", itoa_4(instruction[7:5]), itoa(instruction[4:0])};
+			default: return {get_branchmnemonic(sysir[10:8]), " ", itoa(instruction[7:0])};
+		endcase
+	ADDIB,SUBIB,LUI,LLI: return {get_opmnemonic(sysir[15:11]), " R", itoa(instruction[10:8]), " ", itoa(instruction[7:0])};
+	LDW,STW: return {get_opmnemonic(instruction[15:11]), " R", itoa(instruction[10:8])," R", itoa(instruction[7:5])," ", itoa(instruction[4:0])};
+ 	ADD,ADC,NEG,SUB,SUC,CMP,AND,OR,XOR,NOT,NAND,NOR: return {get_opmnemonic(instruction[15:11]), " R", itoa(instruction[10:8])," R", itoa(instruction[7:5])," R", itoa(instruction[4:2])};
+	
+	ADDI, ADCI, SUBI, SUCI, CMPI: return {get_opmnemonic(instruction[15:11]), " R", itoa(instruction[10:8])," R", itoa(instruction[7:5])," ", itoa(instruction[4:0])};
+
+
+	LSL, LSR, ASR: return {get_opmnemonic(instruction[15:11]), " R", itoa(instruction[10:8])," R", itoa(instruction[7:5])," ", itoa(instruction[3:0])};
+
+
+	default: return "XXXX";	
+   endcase
+endfunction
+
+function [3:0][7:0] get_intmnemonic;
+   input [2:0] intcode;
+   case(intcode)
+	0  : return "RETI";
+	1  : return "ENAI"; 
+	2  : return "DISI"; 
+	3  : return "STF "; 
+	4  : return "LDF "; 
+	default : return "X"; 
+   endcase
+endfunction
+
+function [2:0][7:0] get_branchmnemonic;
+   input [2:0] brcode;
+   case(Branch_t'(brcode))
+	BR  : return "BR ";
+	BNE : return "BNE"; 
+	BE  : return "BE "; 
+	BLT : return "BLT"; 
+	BGE : return "BGE"; 
+	BWL : return "BWL"; 
+	RET : return "RET"; 
+	JMP : return "JMP"; 
+   endcase
+endfunction
+
+function [5:0][7:0] get_opmnemonic;
+   input [9:0] opcode;
+   case (Opcode_t'(opcode))
+	ADD 		: return "ADD"; 	
+	ADDI 		: return "ADDI"; 		 
+	ADDIB		: return "ADDIB";		 
+	ADC		: return "ADC";		 
+	ADCI		: return "ADCI";		 
+	NEG  		: return "NEG";  		 
+	SUB    		: return "SUB";    		 
+	SUBI   		: return "SUBI";   		 
+	SUBIB  		: return "SUBIB";  		 
+	SUC    		: return "SUC";    		 
+	SUCI   		: return "SUCI";   		 
+	CMP    		: return "CMP";    		 
+	CMPI   		: return "CMPI";   		 
+	AND    		: return "AND";    		 
+	OR     		: return "OR";     		 
+	XOR    		: return "XOR";    		 
+	NOT    		: return "NOT";    		 
+	NAND   		: return "NAND";   		 
+	NOR    		: return "NOR";    		 
+	LSL    		: return "LSL";    		 
+	LSR    		: return "LSR";    		 
+	ASR    		: return "ASR";    		 
+	LDW   		: return "LDW";   		 
+	STW    		: return "STW";    		 
+	LUI    		: return "LUI";    		 
+	LLI	  	: return "LLI";	  	 
+	BRANCH 	 	: return "BRANCH"; 	 	 
+	INTERRUPT 	: return "INTERRUPT"; 	 
+	PUSH		: return "PUSH";		 
+	POP		: return "POP";		 
+	NOP		: return "NOP";		 
+   endcase
+endfunction
+
+
+function [8:1] itoa_4;
+  input [3:0] val;
+  if ( val < 10 )  
+    return "0"+val;
+  else if ( val >= 10 )
+    return "A"-10+val;
+  else
+    return "X";
+endfunction
+
+function [3:0][7:0] itoa;
+  input [15:0] val;
+  return {itoa_4(val[15:12]),
+          itoa_4(val[11:8]),
+	  itoa_4(val[7:4]),
+	  itoa_4(val[3:0])};
+endfunction
+
