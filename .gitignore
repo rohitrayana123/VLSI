@@ -41,3 +41,8 @@ magicext
 magicsim
 ## Misc
 *~
+
+##Hex files
+/home/hl13g10/VLSI/Design/Implementation/programs/*.hex
+
+
