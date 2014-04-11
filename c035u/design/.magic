@@ -1,0 +1,5 @@
+addpath ../cell_lib
+addpath /opt/cad/common/cad/lib/magic/c035u/pad_lib
+macro XK_F "drc find"
+macro XK_m "erase m1"
+macro XK_M "erase m2"

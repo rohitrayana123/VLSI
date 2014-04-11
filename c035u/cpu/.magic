@@ -1,9 +1,0 @@
-addpath ../cell_lib
-addpath ../Control
-addpath ../Datapath
-addpath ../Pc
-addpath ../IR
-addpath ../ALU
-addpath ../regBlock
-addpath /opt/cad/common/cad/lib/magic/c035u/pad_lib
-macro XK_F "drc find"
