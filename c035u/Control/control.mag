@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1397222253
+timestamp 1397224710
 << nwell >>
 rect 25803 1395 26450 1793
 << pwell >>
@@ -12,6 +12,13 @@ rect 26443 1070 26450 1080
 rect 25803 1730 25808 1740
 rect 26443 1730 26450 1740
 << psubstratetap >>
+rect 25863 1305 25879 1321
+rect 25952 1305 25968 1321
+rect 26041 1305 26057 1321
+rect 26130 1305 26146 1321
+rect 26219 1305 26235 1321
+rect 26308 1305 26324 1321
+rect 26397 1305 26413 1321
 rect 25808 1070 26443 1086
 << nsubstratetap >>
 rect 25808 1724 26443 1740
@@ -1029,6 +1036,13 @@ rect 25803 1753 26450 1763
 rect 25803 1724 25808 1740
 rect 26443 1724 26450 1740
 rect 25803 1715 26450 1724
+rect 25863 1095 25879 1305
+rect 25952 1095 25968 1305
+rect 26041 1095 26057 1305
+rect 26130 1095 26146 1305
+rect 26219 1095 26235 1305
+rect 26308 1095 26324 1305
+rect 26397 1095 26413 1305
 rect 25803 1086 26450 1095
 rect 25803 1070 25808 1086
 rect 26443 1070 26450 1086
@@ -4157,7 +4171,7 @@ timestamp 1386235306
 transform 1 0 4899 0 1 7515
 box 0 0 120 799
 use rowcrosser WdSel
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 5019 0 1 7515
 box 0 0 48 799
 use nand3 g8069
@@ -4317,7 +4331,7 @@ timestamp 1386238110
 transform 1 0 9363 0 1 7515
 box 0 0 120 799
 use rowcrosser PcWe
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 9483 0 1 7515
 box 0 0 48 799
 use nand2 g8347
@@ -4349,11 +4363,11 @@ timestamp 1386238110
 transform 1 0 10227 0 1 7515
 box 0 0 120 799
 use rowcrosser AluOR_91_0_93_
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 10347 0 1 7515
 box 0 0 48 799
 use rowcrosser ALE
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 10395 0 1 7515
 box 0 0 48 799
 use and2 g8354
@@ -4373,7 +4387,7 @@ timestamp 1386234936
 transform 1 0 10755 0 1 7515
 box 0 0 144 799
 use rowcrosser StatusRegEn
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 10899 0 1 7515
 box 0 0 48 799
 use nand2 g8284
@@ -4385,7 +4399,7 @@ timestamp 1396952988
 transform 1 0 11043 0 1 7515
 box 0 0 120 799
 use rowcrosser PcSel_91_2_93_
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 11163 0 1 7515
 box 0 0 48 799
 use nand2 g8272
@@ -4533,7 +4547,7 @@ timestamp 1386234792
 transform 1 0 16107 0 1 7515
 box 0 0 96 799
 use rowcrosser RegWe
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 16203 0 1 7515
 box 0 0 48 799
 use nand2 g8092
@@ -4561,7 +4575,7 @@ timestamp 1386234792
 transform 1 0 16827 0 1 7515
 box 0 0 96 799
 use rowcrosser MemEn
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 16923 0 1 7515
 box 0 0 48 799
 use inv g8234
@@ -4625,7 +4639,7 @@ timestamp 1386235306
 transform 1 0 18987 0 1 7515
 box 0 0 120 799
 use rowcrosser IrWe
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 19107 0 1 7515
 box 0 0 48 799
 use nand2 g8159
@@ -4669,7 +4683,7 @@ timestamp 1386235306
 transform 1 0 20139 0 1 7515
 box 0 0 120 799
 use rowcrosser LrSel
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 20259 0 1 7515
 box 0 0 48 799
 use nand2 g8278
@@ -4697,7 +4711,7 @@ timestamp 1386241841
 transform 1 0 20811 0 1 7515
 box 0 0 624 799
 use rowcrosser AluOR_91_1_93_
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 21435 0 1 7515
 box 0 0 48 799
 use nand2 g8373
@@ -4709,7 +4723,7 @@ timestamp 1386234845
 transform 1 0 21579 0 1 7515
 box 0 0 120 799
 use rowcrosser Op2Sel_91_1_93_
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 21699 0 1 7515
 box 0 0 48 799
 use nand3 g8424
@@ -4745,7 +4759,7 @@ timestamp 1386234792
 transform 1 0 22563 0 1 7515
 box 0 0 96 799
 use rowcrosser ImmSel
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 22659 0 1 7515
 box 0 0 48 799
 use and2 g8341
@@ -4845,7 +4859,7 @@ timestamp 1396952988
 transform 1 0 25323 0 1 7515
 box 0 0 120 799
 use rowcrosser rowcrosser_0
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 25443 0 1 7515
 box 0 0 48 799
 use nand4 g8393
@@ -4881,11 +4895,11 @@ timestamp 1396952988
 transform 1 0 26235 0 1 7515
 box 0 0 120 799
 use rowcrosser nME
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 26355 0 1 7515
 box 0 0 48 799
 use rowcrosser Op2Sel_91_0_93_
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 26403 0 1 7515
 box 0 0 48 799
 use rightend rightend_0
@@ -5053,7 +5067,7 @@ timestamp 1386238110
 transform 1 0 7347 0 1 994
 box 0 0 120 799
 use rowcrosser g8182
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 7467 0 1 994
 box 0 0 48 799
 use nand3 g8395
@@ -5569,7 +5583,7 @@ timestamp 1386234936
 transform 1 0 22827 0 1 994
 box 0 0 144 799
 use rowcrosser Flags_91_2_93_
-timestamp 1386086759
+timestamp 1397224710
 transform 1 0 22971 0 1 994
 box 0 0 48 799
 use nand2 g8083
