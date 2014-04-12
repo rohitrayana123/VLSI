@@ -74,7 +74,7 @@
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#3}{1}} & 0 & 0 & 1 & \multicolumn{1}{|c|}{\StrChar{#3}{2}} & X & X & \multicolumn{3}{|c|}{Ra} & X & X & X & X & \multicolumn{1}{c|}{X} \\
+				\multicolumn{1}{|c}{0} & \multicolumn{1}{|c|}{\StrChar{#3}{1}} & 0 & 0 & 1 & \multicolumn{1}{|c|}{\StrChar{#3}{2}} & X & X & \multicolumn{3}{|c|}{Ra} & 0 & 0 & 0 & 0 & \multicolumn{1}{c|}{1} \\
 				\hline
 			\end{tabular}
 		\fi
@@ -107,7 +107,7 @@
 	\fi
 	
 }
-%Argument Summary: 1:Left of assign, 2:Right of assign, 3:NewCFlag(C/0), 4:NewVFlag(V/0), 5:V2ndOperand(b/5/8/0), 6:VUseCarry(0/c/n), 7:NewNFlag(N/0), 8:NewZFlag(Z/0)
+%Argument Summary: 1:Left of assign, 2:Right of assign, 3:NewCFlag(C/0/U), 4:NewVFlag(V/0/U), 5:V2ndOperand(b/5/8/0), 6:VUseCarry(0/c/n), 7:NewNFlag(N/0/U), 8:NewZFlag(Z/0/U)
 \newcommand{\Ioperation}[8]
 {	\begingroup
 	\setlength{\tabcolsep}{2pt}
@@ -120,14 +120,22 @@
 		#1& #2 \\
 	\fi
 	\if N#7
-		N $\leftarrow$& Rd[31] \\
+		N $\leftarrow$& Result[31] \\
 	\else
-		N $\leftarrow$& N \\
+		\if U#7
+			N $\leftarrow$& UNPREDICTABLE \\
+		\else
+			N $\leftarrow$& N \\
+		\fi
 	\fi
 	\if Z#8
-		Z $\leftarrow$& if Rd = 0 then 1, else 0\\
+		Z $\leftarrow$& if Result = 0 then 1, else 0\\
 	\else
-		Z $\leftarrow$& Z \\
+		\if U#8
+			Z $\leftarrow$& UNPREDICTABLE \\
+		\else
+			Z $\leftarrow$& Z \\
+		\fi
 	\fi
 	\if V#4
 		\if b#5
@@ -176,13 +184,21 @@
 			V $\leftarrow$& 0 \\
 		\fi
 	\else
-		V $\leftarrow$& V \\
+		\if U#4
+			V $\leftarrow$& UNPREDICTABLE \\
+		\else
+			V $\leftarrow$& V \\
+		\fi
 	\fi
 	\if C#3
 		C $\leftarrow$& if (Result $> 2^{15}$) or\\
 		&~~~(Result $< -2^{16}$) then 1, else 0\\
 	\else
-		C $\leftarrow$& C \\
+		\if U#3
+			C $\leftarrow$& UNPREDICTABLE \\
+		\else
+			C $\leftarrow$& C \\
+		\fi
 	\fi
 	\end{tabular}
 	\\\\	
