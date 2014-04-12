@@ -25,14 +25,14 @@ Each instruction must be formatted using the following syntax, here [] indicates
 \newpage
 \noindent {\bf Special Case Label}
 
-\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a 'RETI' instruction. Branches may occur moving out of this subroutine, if within an accepted distance, but are not allowed into this subroutine with the exception of a RET call. \\
+\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a 'RETI' instruction and be no longer than 126 lines of code. Branches may occur moving out of this subroutine, if within an accepted distance, but are not allowed into this subroutine with the exception of a RET call. \\
 
-\noindent Outputted machine code requires the ISR to be in a specific location in memory. This is automatically accounted for by the assembler as well as including some initialization code before main program execution. This start-up code includes initialization of the stack pointer to 2047. 
+\noindent Outputted machine code requires the ISR to be in a specific location in memory. This is automatically accounted for by the assembler as well as branching over the ISR during main program execution.
 
 \subsection{Assembler Directives}
 Currently there is one supported assembler directive for assigning meaningful names to each of the general purpose registers. Definitions can occur at any point within the file and create a valid equivalence mapping from that point onwards. Different names can be assigned to the same register, but only one is valid at a time. \\
 
-\noindent The accepted syntax for defintions is:
+\noindent The accepted syntax for definitions is:
 
 \begin{center}.define NAME REGISTER\end{center}
 
