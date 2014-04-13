@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Author: Martin Wearn, mw20g10
 #Assembler program, takes assembly input file and outputs hex line with one line per instruction
 
