@@ -6,7 +6,7 @@
 \section{Instruction Set}
 
 The complete instruction set architecture includes a number of instructions for performing calculations on data, moving data between external memory and general purpose registers, transfer of control within a program and interrupt handling. 
-It is based around a RISC architecture and as such has a highly orthogonal formatting of bit fields within the instruction code. 
+It is based around a RISC \todo{HSL: I agree, but this may be discussed in the architecture section. This is a note to check when that is done} architecture and as such has a highly orthogonal formatting of bit fields within the instruction code. 
 
 All instruction implemented by the architecture fall into one of 6 groups:
 \begin{itemize}
@@ -18,10 +18,17 @@ All instruction implemented by the architecture fall into one of 6 groups:
 	\item Interrupts
 \end{itemize}
 
-Each instruction has only one addressing mode associated with it, determined by which group it fall within. Data manipulation instructions have either a register register or register immediate addressing mode for performing arithmetic, logical and shifting type operations. Byte immediate instructions have a register immediate addressing mode for arithmetic and load immediate type operations. Data transfer instructions have a base plus offset addressing mode for accessing external memory using an address stored in a GPR. Control transfer instructions have PC relative, register indirect and base plus offset addressing modes for changing the value of the program counter. Stack operations have register indirect preincrement or register indirect postdecrement addressing modes for accessing external memory and adjusting the stack pointer value. While interrupt operations have register indirect with postdecrement or preincrement addressing modes for restoring program counter and accessing the stack.
+Each instruction has only one addressing mode associated with it, determined by which group it falls within. 
+Data manipulation instructions have either a register-register or register-immediate addressing mode for performing arithmetic, logic or shift operations. 
+Byte immediate instructions have a register-immediate addressing mode for arithmetic and load immediate type operations. 
+Data transfer instructions have a base plus offset addressing mode for accessing external memory using an address stored in a GPR. 
+Control transfer instructions have PC relative, register indirect and base plus offset addressing modes for changing the value of the program counter. 
+Stack operations have register indirect preincrement or register indirect postdecrement addressing modes for accessing external memory and adjusting the stack pointer value. 
+While interrupt operations have register indirect with postdecrement or preincrement addressing modes for restoring program counter and accessing the stack.
+\todo[inline]{HSL: This is quite tough to read. Maybe refer to the types of instruction using the letters in the table below. Maybe bullet too? I'll have a ponder on this}
 \newpage
 
-\noindent{\bf General Instruction Formatting}
+\subsection{General Instruction Formatting}
 %\newcolumntype{B}{>{\begin{varwidth}{0.2cm}} c <{\end{varwidth}}}
 \newcolumntype{B}{c}
 \begin{table}[h]
@@ -66,7 +73,7 @@ Each instruction has only one addressing mode associated with it, determined by 
 	\text{ICond.:}& \text{ Interrupt instruction code as defined for interrupt instructions} \\
 	\text{LS:}& \text{ 0=Load Data, 1=Store Data} \\
 	\text{U:}& \text{ 1=PUSH, 0=POP} \\
-	\text{L:}& \text{ 1=Use Link Register, 0=Use General Purpose Register} \\
+	\text{L:}& \text{ 1=Use Link Register, 0=Use GPR} \\
 \end{alignat*}
 \endgroup
 
