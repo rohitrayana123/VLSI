@@ -7,7 +7,7 @@ import re
 import sys
 import binascii
 import string
-
+from optparse import OptionParser
 LINES = []
 SEGMLINES = []
 LINKTABLE = []
@@ -177,43 +177,45 @@ def OpNum(value):	#Determine specific binary value for instruction
 	else:
 		print 'ERROR5: Unrecognised Mneumonic'
 		sys.exit()
-
+class MyParser(OptionParser):
+        def format_description(self, formatter):
+            return self.description
 if "__main__" == __name__:
 	'''The main of the script'''
-	if sys.argv[1] == "":
-		print "Please provide input file name, type 'help' or '-h' for information and version history"
-		sys.exit()
-	elif sys.argv[1] in ("--help", "-h"):
-		print "---Team R4 Assembler Help---"
-		print "------Version: 1 (CMPI addition onwards)"
-		print "               2 (Changed to final ISA, added special case I's and error checking"
-	        print "               3 (Ajr changes - Hex output added, bug fix)"
-		print "               4 (Added SP symbol)"
-		print "               5 (NOP support added, help added) UNTESTED"
-		print "               6 (Interrupt support added [ENAI, DISI, RETI])"
-		print "               7 (Checks for duplicate Labels)"
-		print "               8 (Support for any ISR location & automated startup code entry)"
-		print "               9 (Support for .define)"
-		print "      Current is most recent iteration"
-		print "Input Syntax: ./assemble filename"
-		print "Commenting uses : or ;"
-		print "Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)"
-		print "                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP"
-		print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
-		print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
-		print "Branching: Symbolic and Numeric supported"
-		print ""
-		print "Notes: Input and output file directory are the same"
-		print "       Input files assume .asm, no extension needed"
-		print "       Immediate value sizes are checked"
-		print "       Instruction-less lines allowed"
-		print "       .ISR may be located anywhere in file"
-		print "       Startup code is automatically added [initialize SP, jump to main program]"
-		print "       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions"
-		sys.exit()
+	#Optparser is a much better way of doing this. Same result but more easily expandable when adding options
+	des = "---Team R4 Assembler Help---\n\r------Version: 1 (CMPI addition onwards)\
+\n               2 (Changed to final ISA, added special case I's and error checking\
+\n               3 (Ajr changes - Hex output added, bug fix)\
+\n               4 (Added SP symbol)\
+\n               5 (NOP support added, help added) UNTESTED\
+\n               6 (Interrupt support added [ENAI, DISI, RETI])\
+\n               7 (Checks for duplicate Labels)\
+\n               8 (Support for any ISR location & automated startup code entry)\
+\n               9 (Support for .define)\
+\n              10 (Changed usage)\
+\n      Current is most recent iteration\
+\nInput Syntax: ./assemble filename\
+\nCommenting uses : or ;\
+\nLabels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)\
+\n                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP\
+\nInstruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]\
+\nRegisters: R0, R1, R2, R3, R4, R5, R6, R7==SP\
+\nBranching: Symbolic and Numeric supported\n\
+\nNotes:\
+\n       Input files are assumed to end with a .asm extension\
+\n       Immediate value sizes are checked\
+\n       Instruction-less lines allowed\
+\n       .ISR may be located anywhere in file\
+\n       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions\n\n"
+
+	parser = MyParser(usage="%prog [-o outfile] input", description=des)
+        parser.add_option("-o", "--output", dest="outfile", metavar="FILE",
+                  help="output file for the assembled output")
+	#@todo add a verbose and quiet mode?
+        (options, args) = parser.parse_args()
 	
+	assemfile = args[0]		#filename only
 	#Determine input/output file paths
-	assemfile = sys.argv[1]		#filename only
 	print '--------Converting File %s.py--------\n' % assemfile
 	if assemfile.endswith(".asm"):
 		INPUTFILE = assemfile
@@ -223,6 +225,10 @@ if "__main__" == __name__:
 		INPUTFILE = assemfile + ".asm"
 		OUTPUTFILE = assemfile + ".mc"
 		HEXFILE = assemfile + ".hex"
+	if options.outfile: #user override
+		HEXFILE = options.outfile
+	if not os.path.isfile(INPUTFILE):
+		parser.print_help()
 	
 	ifile = open(INPUTFILE, 'r')
 	outfile = open(OUTPUTFILE, 'w')
