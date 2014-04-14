@@ -178,314 +178,316 @@ def OpNum(value):	#Determine specific binary value for instruction
 		print 'ERROR5: Unrecognised Mneumonic'
 		sys.exit()
 
-if sys.argv[1] == "":
-	print "Please provide input file name, type 'help' or '-h' for information and version history"
-	sys.exit()
-elif sys.argv[1] in ("--help", "-h"):
-	print "---Team R4 Assembler Help---"
-	print "------Version: 1 (CMPI addition onwards)"
-	print "               2 (Changed to final ISA, added special case I's and error checking"
-        print "               3 (Ajr changes - Hex output added, bug fix)"
-	print "               4 (Added SP symbol)"
-	print "               5 (NOP support added, help added) UNTESTED"
-	print "               6 (Interrupt support added [ENAI, DISI, RETI])"
-	print "               7 (Checks for duplicate Labels)"
-	print "               8 (Support for any ISR location & automated startup code entry)"
-	print "               9 (Support for .define)"
-	print "      Current is most recent iteration"
-	print "Input Syntax: ./assemble filename"
-	print "Commenting uses : or ;"
-	print "Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)"
-	print "                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP"
-	print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
-	print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
-	print "Branching: Symbolic and Numeric supported"
-	print ""
-	print "Notes: Input and output file directory are the same"
-	print "       Input files assume .asm, no extension needed"
-	print "       Immediate value sizes are checked"
-	print "       Instruction-less lines allowed"
-	print "       .ISR may be located anywhere in file"
-	print "       Startup code is automatically added [initialize SP, jump to main program]"
-	print "       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions"
-	sys.exit()
-
-#Determine input/output file paths
-assemfile = sys.argv[1]		#filename only
-print '--------Converting File %s.py--------\n' % assemfile
-if assemfile.endswith(".asm"):
-	INPUTFILE = assemfile
-	OUTPUTFILE = assemfile[:-len(".asm")] + ".mc"
-	HEXFILE = assemfile[:-len(".asm")] + ".hex"
-else:
-	INPUTFILE = assemfile + ".asm"
-	OUTPUTFILE = assemfile + ".mc"
-	HEXFILE = assemfile + ".hex"
-
-ifile = open(INPUTFILE, 'r')
-outfile = open(OUTPUTFILE, 'w')
-hexfile = open(HEXFILE,'w')
-
-LINES = ifile.readlines()	#Read input file contents
-
-#Seperate each line into a list of elements
-print '--------Interpreting Syntax-----------'
-for line in LINES:
-	#print '1. ' + line.strip('\n').strip('\t')
-	try:
-		code = line.split(':')[0]			#remove comments and newline char
-		code = code.split(';')[0]
-	except:
-		code = line	#no comments on line
-	if code.strip('\t').strip('\n') == '':			#skip blank lines
-		continue
-	#print code
-	#print '2. ' + code.strip('\t')
-	code = code.replace('\n',',')
-	code = code.replace('\t',',')				#Remove tabs
-	code = code.replace(' ',',')
-	pass_zero = code.split(',')				#seperate by comma
-	pass_one = []
-	for seg in pass_zero:
-		if(seg != ''):
-			pass_one.append(seg)
-	#print pass_one
-	pass_two = []
-	for j, part in enumerate(pass_one):
-		pass_one[j] = pass_one[j].strip()		#remove lead/trail spaces
-		pass_one[j] = pass_one[j].strip('[').strip(']').strip('#')
-		if pass_one[j].count(' ') >= 1:			#check if there are spaces in string
-			pass_two.extend(pass_one[j].split(' '))	#seperate by spaces
-		else:
-			pass_two.append(pass_one[j])
-	#print pass_two
-	SEGMLINES.append(pass_two)				#create list of lists
-	#print pass_two
-
-defines = [''] * 10
-definelines = []
-#Check for any .defines in file
-for line in SEGMLINES:
-	if(line[0] == '.define'):				#Create variable mapping for new define statement
-		print 'Found definition', line
-		if (line[2] == 'R0'):
-			defines[0] = line[1]
-		elif (line[2] == 'R1'):
-			defines[1] = line[1]
-		elif (line[2] == 'R2'):
-			defines[2] = line[1]
-		elif (line[2] == 'R3'):
-			defines[3] = line[1]
-		elif (line[2] == 'R4'):
-			defines[4] = line[1]
-		elif (line[2] == 'R5'):
-			defines[5] = line[1]
-		elif (line[2] == 'R6'):
-			defines[6] = line[1]
-		elif (line[2] in ('R7','SP')):
-			defines[7] = line[1]
-		else:
-			print 'ERROR14: Required .define format - .define NAME R0-R7/SP'
-			sys.exit()
-		definelines.append(line)			#remove define from file
-	else:							#Check if line has any current defines
-		#print 'Not .define line - ', line,
-		for j, part in enumerate(line):
-			if part in defines:
-				#print 'Identified', part,
-				line[j] = 'R' + str(defines.index(part))
-		#print ''
-#Remove .defines
-for d in definelines:
-	SEGMLINES.remove(d)
-print 'Done'
-
-#Check each line for a link reference and create link table
-print '--------Locating ISR----------'
-ISRLines = 0
-ISR = 0
-ISRcalc = 0
-ISRlen = 0
-#Find ISR, and remove label
-for i, line in enumerate(SEGMLINES):
-	if (line[0] in ('.ISR','.isr')):				#ISR located
-		if ISR == 1:
-			print 'ERROR13: Multiple ISRs Present'
-			sys.exit()
-		ISR = 1
-		ISRloc = i
-		ISRcalc = 1
-		SEGMLINES[i].remove(line[0])			#remove label from instruction
-	elif ('RETI' in line):
-		if (ISRcalc == 1):				#Set length of ISR
-			ISRlen = ISRLines+2
-			ISRcalc = 0
-			print 'info: ISR Recognized - line ', ISRloc, ', length ', ISRlen
+if "__main__" == __name__:
+	'''The main of the script'''
+	if sys.argv[1] == "":
+		print "Please provide input file name, type 'help' or '-h' for information and version history"
+		sys.exit()
+	elif sys.argv[1] in ("--help", "-h"):
+		print "---Team R4 Assembler Help---"
+		print "------Version: 1 (CMPI addition onwards)"
+		print "               2 (Changed to final ISA, added special case I's and error checking"
+	        print "               3 (Ajr changes - Hex output added, bug fix)"
+		print "               4 (Added SP symbol)"
+		print "               5 (NOP support added, help added) UNTESTED"
+		print "               6 (Interrupt support added [ENAI, DISI, RETI])"
+		print "               7 (Checks for duplicate Labels)"
+		print "               8 (Support for any ISR location & automated startup code entry)"
+		print "               9 (Support for .define)"
+		print "      Current is most recent iteration"
+		print "Input Syntax: ./assemble filename"
+		print "Commenting uses : or ;"
+		print "Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)"
+		print "                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP"
+		print "Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]"
+		print "Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP"
+		print "Branching: Symbolic and Numeric supported"
+		print ""
+		print "Notes: Input and output file directory are the same"
+		print "       Input files assume .asm, no extension needed"
+		print "       Immediate value sizes are checked"
+		print "       Instruction-less lines allowed"
+		print "       .ISR may be located anywhere in file"
+		print "       Startup code is automatically added [initialize SP, jump to main program]"
+		print "       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions"
+		sys.exit()
+	
+	#Determine input/output file paths
+	assemfile = sys.argv[1]		#filename only
+	print '--------Converting File %s.py--------\n' % assemfile
+	if assemfile.endswith(".asm"):
+		INPUTFILE = assemfile
+		OUTPUTFILE = assemfile[:-len(".asm")] + ".mc"
+		HEXFILE = assemfile[:-len(".asm")] + ".hex"
 	else:
-		if (ISRcalc == 1):				#Count length of ISR
-			ISRLines = ISRLines + 1
-
-#Reposition ISR to start of program
-for i in range(ISRlen):
-	print "      line", ISRloc + i, SEGMLINES[ISRloc + i]
-	temp = SEGMLINES.pop(ISRloc + i)
-	SEGMLINES.insert(i,temp)
-#Add setup code before ISR
-SEGMLINES.insert(0, ['BR', str(17-15+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-14+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-13+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-12+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-11+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-10+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-9+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-8+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-7+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-6+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-5+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-4+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-3+ISRlen-1)])
-SEGMLINES.insert(0, ['BR', str(17-2+ISRlen-1)])
-SEGMLINES.insert(0, ['LLI', 'R7', '255'])
-SEGMLINES.insert(0, ['LUI', 'R7', '7'])
-#Create link table, ignoring ISR
-print '--------Creating Link Table----------'
-for i, line in enumerate(SEGMLINES):
-	if line[0].startswith('.'):
-		if (line[0] in (l[0] for l in LINKTABLE)):	#Check if label already exists in linktable
-			print 'ERROR11: Duplicate Symbolic Links (', line[0], ')'
-			sys.exit()
-		LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
-		SEGMLINES[i].remove(line[0])			#remove label from instruction
-		#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
-
-print 'After Reorder and Initialization Code'
-for s in SEGMLINES:
-	print '    ', s
-
-print 'Link Table'
-for l in LINKTABLE:
-	print '    ', l
-#print '    Segmented instruction list:'
-#for s in SEGMLINES:
-#	print s
-
-#Check for over-sized immediate values
-for i, line in enumerate(SEGMLINES):
-	if line[0] in ('LSL', 'LSR', 'ASR'):
-		if int(line[3]) > 16:
-			print 'ERROR6: Shifting By More Than 16'
-			sys.exit()
-		elif int(line[3]) < 0:
-			print 'ERROR6: Negative Shifting'
-			sys.exit()
-	elif line[0] in ('ADDI', 'ADCI', 'SUBI', 'SUCI', 'LDW', 'STW'):
-		if int(line[3]) > 15 or int(line[3]) < -16 :
-			print 'ERROR7: Imm5 Out Of Bounds'
-			sys.exit()
-	elif line[0] in ('CMPI', 'JMP'):
-		if int(line[2]) > 15 or int(line[2]) < -16:
-			print 'ERROR8: Imm5 Out Of Bounds'
-			sys.exit()
-	elif line[0] in ('ADDIB', 'SUBIB'):
-		if int(line[2]) > 127 or int(line[2]) < -128:
-			print 'ERROR9: Arith Imm8 Out Of Bounds'
-			sys.exit()
-	elif line[0] in ('LUI', 'LLI'):
-		if int(line[2]) > 255:
-			print 'ERROR9: Load Imm8 Out Of Bounds'
-			sys.exit()
-
-#Convert each element to machine code and concatenate
-print '--------Converting to machine code-----------'
-#print 'Converting::',
-for i, line in enumerate(SEGMLINES):
-	#print line[0],
-	if OpType(line[0]) == 'F':				#Interrupt operations
-		if line[0] == 'ENAI':
-			MC.append(OpNum('F') + '001' + '00000000')
-		elif line[0] == 'DISI':
-			MC.append(OpNum('F') + '010' + '00000000')
-		elif line[0] == 'RETI':
-			MC.append(OpNum('F') + '000' + '11100000')#Always reads location pointed to by SP
-		elif line[0] == 'STF':
-			MC.append(OpNum('F') + '011' + '00000000')
-		elif line[0] == 'LDF':
-			MC.append(OpNum('F') + '100' + '00000000')
-	elif OpType(line[0]) == 'E':				#Stack operations
-		temp = '0'
-		if line[0] == 'PUSH':
-			temp += '1'
-		else:
-			temp += '0'
-		temp += '001'
-		if line[1] == 'LR':
-			temp += '1'
-		else:
-			temp += '0'
-		temp += '00' + regcode(line[1]) + '00001'
-		MC.append(temp)
-	elif OpType(line[0]) == 'D1':				#Control transfer: Jump
-		MC.append(OpNum('D1') + conditioncode(line[0]) + regcode(line[1]) + ConvertToBin(line[2], 5))
-	elif OpType(line[0]) == 'D2':				#Control transfer: Others
-		if line[0] == 'RET':				#Specific -> Return
-			MC.append(OpNum('D2') + conditioncode(line[0]) + '00000000')
-		else:
-			MC.append(OpNum('D2') + conditioncode(line[0]) + branch(line[1], i))
-			tempi = branch(line[1], i, 0)
-			if  tempi > 127 or tempi < -128:
-				print 'ERROR10: Imm8 Branch Out Of Bounds'
+		INPUTFILE = assemfile + ".asm"
+		OUTPUTFILE = assemfile + ".mc"
+		HEXFILE = assemfile + ".hex"
+	
+	ifile = open(INPUTFILE, 'r')
+	outfile = open(OUTPUTFILE, 'w')
+	hexfile = open(HEXFILE,'w')
+	
+	LINES = ifile.readlines()	#Read input file contents
+	
+	#Seperate each line into a list of elements
+	print '--------Interpreting Syntax-----------'
+	for line in LINES:
+		#print '1. ' + line.strip('\n').strip('\t')
+		try:
+			code = line.split(':')[0]			#remove comments and newline char
+			code = code.split(';')[0]
+		except:
+			code = line	#no comments on line
+		if code.strip('\t').strip('\n') == '':			#skip blank lines
+			continue
+		#print code
+		#print '2. ' + code.strip('\t')
+		code = code.replace('\n',',')
+		code = code.replace('\t',',')				#Remove tabs
+		code = code.replace(' ',',')
+		pass_zero = code.split(',')				#seperate by comma
+		pass_one = []
+		for seg in pass_zero:
+			if(seg != ''):
+				pass_one.append(seg)
+		#print pass_one
+		pass_two = []
+		for j, part in enumerate(pass_one):
+			pass_one[j] = pass_one[j].strip()		#remove lead/trail spaces
+			pass_one[j] = pass_one[j].strip('[').strip(']').strip('#')
+			if pass_one[j].count(' ') >= 1:			#check if there are spaces in string
+				pass_two.extend(pass_one[j].split(' '))	#seperate by spaces
+			else:
+				pass_two.append(pass_one[j])
+		#print pass_two
+		SEGMLINES.append(pass_two)				#create list of lists
+		#print pass_two
+	
+	defines = [''] * 10
+	definelines = []
+	#Check for any .defines in file
+	for line in SEGMLINES:
+		if(line[0] == '.define'):				#Create variable mapping for new define statement
+			print 'Found definition', line
+			if (line[2] == 'R0'):
+				defines[0] = line[1]
+			elif (line[2] == 'R1'):
+				defines[1] = line[1]
+			elif (line[2] == 'R2'):
+				defines[2] = line[1]
+			elif (line[2] == 'R3'):
+				defines[3] = line[1]
+			elif (line[2] == 'R4'):
+				defines[4] = line[1]
+			elif (line[2] == 'R5'):
+				defines[5] = line[1]
+			elif (line[2] == 'R6'):
+				defines[6] = line[1]
+			elif (line[2] in ('R7','SP')):
+				defines[7] = line[1]
+			else:
+				print 'ERROR14: Required .define format - .define NAME R0-R7/SP'
 				sys.exit()
-	elif OpType(line[0]) == 'C':				#Data transfer
-		temp = '0'
-		if line[0] == 'STW':
-			temp += '1'
+			definelines.append(line)			#remove define from file
+		else:							#Check if line has any current defines
+			#print 'Not .define line - ', line,
+			for j, part in enumerate(line):
+				if part in defines:
+					#print 'Identified', part,
+					line[j] = 'R' + str(defines.index(part))
+			#print ''
+	#Remove .defines
+	for d in definelines:
+		SEGMLINES.remove(d)
+	print 'Done'
+	
+	#Check each line for a link reference and create link table
+	print '--------Locating ISR----------'
+	ISRLines = 0
+	ISR = 0
+	ISRcalc = 0
+	ISRlen = 0
+	#Find ISR, and remove label
+	for i, line in enumerate(SEGMLINES):
+		if (line[0] in ('.ISR','.isr')):				#ISR located
+			if ISR == 1:
+				print 'ERROR13: Multiple ISRs Present'
+				sys.exit()
+			ISR = 1
+			ISRloc = i
+			ISRcalc = 1
+			SEGMLINES[i].remove(line[0])			#remove label from instruction
+		elif ('RETI' in line):
+			if (ISRcalc == 1):				#Set length of ISR
+				ISRlen = ISRLines+2
+				ISRcalc = 0
+				print 'info: ISR Recognized - line ', ISRloc, ', length ', ISRlen
 		else:
-			temp += '0'
-		temp += '000'
-		temp += regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5)
-		MC.append(temp)
-	elif OpType(line[0]) == 'B':				#Byte immediate
-		temp = OpNum(line[0])
-		temp += regcode(line[1])
-		temp += ConvertToBin(line[2], 8)
-		MC.append(temp)
-	elif OpType(line[0]) == 'A1':				#Data manipulation:Register
-		if (line[0] == 'NEG'):	#NEG
-			MC.append(OpNum(line[0]) + regcode(line[1]) + '000' + '000' + '00')
-		elif (line[0] == 'CMP'):#CMP
-			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
-		elif (line[0] == 'NOT'):#NOT
-			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
-		elif (line[0] == 'NOP'):
-			MC.append(OpNum(line[0]) + '00000000000')
-		else:
-			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
-	elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
-		if (line[0] == 'CMPI'):	#CMPI
-			MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + ConvertToBin(line[2], 5))
-		else:
-			MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
-	#print ',',
-#print ''
-#print '    Binary Output:'
-#for l in MC:
-#	print l
-
-# AJR - Do we need binary?
-##Output result to file
-#print 'Writing machine code to file %s.mc...\n' % assemfile
-#for line in MC:
-#	outfile.write(line + '\n')
-#
-
-#Output to hex file too
-print 'Hex Output:',
-for line in MC:
-	hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
-	while(len(hexline) < 4):
-		hexline = '0'+ hexline
-	print(hexline),
-	hexfile.write(hexline + '\n')
-print("\n"),
-
-print '--------Assembly Complete!--------\n'
+			if (ISRcalc == 1):				#Count length of ISR
+				ISRLines = ISRLines + 1
+	
+	#Reposition ISR to start of program
+	for i in range(ISRlen):
+		print "      line", ISRloc + i, SEGMLINES[ISRloc + i]
+		temp = SEGMLINES.pop(ISRloc + i)
+		SEGMLINES.insert(i,temp)
+	#Add setup code before ISR
+	SEGMLINES.insert(0, ['BR', str(17-15+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-14+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-13+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-12+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-11+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-10+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-9+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-8+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-7+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-6+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-5+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-4+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-3+ISRlen-1)])
+	SEGMLINES.insert(0, ['BR', str(17-2+ISRlen-1)])
+	SEGMLINES.insert(0, ['LLI', 'R7', '255'])
+	SEGMLINES.insert(0, ['LUI', 'R7', '7'])
+	#Create link table, ignoring ISR
+	print '--------Creating Link Table----------'
+	for i, line in enumerate(SEGMLINES):
+		if line[0].startswith('.'):
+			if (line[0] in (l[0] for l in LINKTABLE)):	#Check if label already exists in linktable
+				print 'ERROR11: Duplicate Symbolic Links (', line[0], ')'
+				sys.exit()
+			LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
+			SEGMLINES[i].remove(line[0])			#remove label from instruction
+			#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
+	
+	print 'After Reorder and Initialization Code'
+	for s in SEGMLINES:
+		print '    ', s
+	
+	print 'Link Table'
+	for l in LINKTABLE:
+		print '    ', l
+	#print '    Segmented instruction list:'
+	#for s in SEGMLINES:
+	#	print s
+	
+	#Check for over-sized immediate values
+	for i, line in enumerate(SEGMLINES):
+		if line[0] in ('LSL', 'LSR', 'ASR'):
+			if int(line[3]) > 16:
+				print 'ERROR6: Shifting By More Than 16'
+				sys.exit()
+			elif int(line[3]) < 0:
+				print 'ERROR6: Negative Shifting'
+				sys.exit()
+		elif line[0] in ('ADDI', 'ADCI', 'SUBI', 'SUCI', 'LDW', 'STW'):
+			if int(line[3]) > 15 or int(line[3]) < -16 :
+				print 'ERROR7: Imm5 Out Of Bounds'
+				sys.exit()
+		elif line[0] in ('CMPI', 'JMP'):
+			if int(line[2]) > 15 or int(line[2]) < -16:
+				print 'ERROR8: Imm5 Out Of Bounds'
+				sys.exit()
+		elif line[0] in ('ADDIB', 'SUBIB'):
+			if int(line[2]) > 127 or int(line[2]) < -128:
+				print 'ERROR9: Arith Imm8 Out Of Bounds'
+				sys.exit()
+		elif line[0] in ('LUI', 'LLI'):
+			if int(line[2]) > 255:
+				print 'ERROR9: Load Imm8 Out Of Bounds'
+				sys.exit()
+	
+	#Convert each element to machine code and concatenate
+	print '--------Converting to machine code-----------'
+	#print 'Converting::',
+	for i, line in enumerate(SEGMLINES):
+		#print line[0],
+		if OpType(line[0]) == 'F':				#Interrupt operations
+			if line[0] == 'ENAI':
+				MC.append(OpNum('F') + '001' + '00000000')
+			elif line[0] == 'DISI':
+				MC.append(OpNum('F') + '010' + '00000000')
+			elif line[0] == 'RETI':
+				MC.append(OpNum('F') + '000' + '11100000')#Always reads location pointed to by SP
+			elif line[0] == 'STF':
+				MC.append(OpNum('F') + '011' + '00000000')
+			elif line[0] == 'LDF':
+				MC.append(OpNum('F') + '100' + '00000000')
+		elif OpType(line[0]) == 'E':				#Stack operations
+			temp = '0'
+			if line[0] == 'PUSH':
+				temp += '1'
+			else:
+				temp += '0'
+			temp += '001'
+			if line[1] == 'LR':
+				temp += '1'
+			else:
+				temp += '0'
+			temp += '00' + regcode(line[1]) + '00001'
+			MC.append(temp)
+		elif OpType(line[0]) == 'D1':				#Control transfer: Jump
+			MC.append(OpNum('D1') + conditioncode(line[0]) + regcode(line[1]) + ConvertToBin(line[2], 5))
+		elif OpType(line[0]) == 'D2':				#Control transfer: Others
+			if line[0] == 'RET':				#Specific -> Return
+				MC.append(OpNum('D2') + conditioncode(line[0]) + '00000000')
+			else:
+				MC.append(OpNum('D2') + conditioncode(line[0]) + branch(line[1], i))
+				tempi = branch(line[1], i, 0)
+				if  tempi > 127 or tempi < -128:
+					print 'ERROR10: Imm8 Branch Out Of Bounds'
+					sys.exit()
+		elif OpType(line[0]) == 'C':				#Data transfer
+			temp = '0'
+			if line[0] == 'STW':
+				temp += '1'
+			else:
+				temp += '0'
+			temp += '000'
+			temp += regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5)
+			MC.append(temp)
+		elif OpType(line[0]) == 'B':				#Byte immediate
+			temp = OpNum(line[0])
+			temp += regcode(line[1])
+			temp += ConvertToBin(line[2], 8)
+			MC.append(temp)
+		elif OpType(line[0]) == 'A1':				#Data manipulation:Register
+			if (line[0] == 'NEG'):	#NEG
+				MC.append(OpNum(line[0]) + regcode(line[1]) + '000' + '000' + '00')
+			elif (line[0] == 'CMP'):#CMP
+				MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
+			elif (line[0] == 'NOT'):#NOT
+				MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
+			elif (line[0] == 'NOP'):
+				MC.append(OpNum(line[0]) + '00000000000')
+			else:
+				MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + regcode(line[3]) + '00')
+		elif OpType(line[0]) == 'A2':				#Data manipulation:Immediate
+			if (line[0] == 'CMPI'):	#CMPI
+				MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + ConvertToBin(line[2], 5))
+			else:
+				MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
+		#print ',',
+	#print ''
+	#print '    Binary Output:'
+	#for l in MC:
+	#	print l
+	
+	# AJR - Do we need binary?
+	##Output result to file
+	#print 'Writing machine code to file %s.mc...\n' % assemfile
+	#for line in MC:
+	#	outfile.write(line + '\n')
+	#
+	
+	#Output to hex file too
+	print 'Hex Output:',
+	for line in MC:
+		hexline = ''.join([ "%x"%string.atoi(bin,2) for bin in line.split() ])
+		while(len(hexline) < 4):
+			hexline = '0'+ hexline
+		print(hexline),
+		hexfile.write(hexline + '\n')
+	print("\n"),
+	
+	print '--------Assembly Complete!--------\n'
