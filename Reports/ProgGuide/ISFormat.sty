@@ -120,7 +120,7 @@
 		#1& #2 \\
 	\fi
 	\if N#7
-		N $\leftarrow$& Result[31] \\
+		N $\leftarrow$& if Result $<$ 0 then 1, else 0 \\
 	\else
 		\if U#7
 			N $\leftarrow$& UNPREDICTABLE \\
@@ -191,7 +191,7 @@
 		\fi
 	\fi
 	\if C#3
-		C $\leftarrow$& if (Result $> 2^{15}$) or\\
+		C $\leftarrow$& if (Result $> 2^{16} - 1$) or\\
 		&~~~(Result $< -2^{16}$) then 1, else 0\\
 	\else
 		\if U#3

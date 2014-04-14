@@ -20,7 +20,7 @@ Each instruction must be formatted using the following syntax, here "[\dots]" in
 
 \noindent Branch instructions can take either a symbolic or numeric value. 
 Where a numeric must be relative and between -32 and 31 for a JMP instruction, or between -128 and 127 for any other branch type. 
-If the branch exceed the accepted range, the assembler will flag an error message. \\
+If the branch exceeds the accepted range, the assembler will flag an error message. \\
 
 \noindent All label names must begin with a '.' while .ISR/.isr and .define are special cases used for the interrupt service routine and variable definitions respectively. \\
 
@@ -28,15 +28,11 @@ If the branch exceed the accepted range, the assembler will flag an error messag
 \newpage
 \noindent {\bf Special Case Label}
 
-\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a 'RETI' instruction and be no longer than 126 lines of code. 
-Branches may occur within the ISR, if within an accepted distance\todo{HSL:what's an ``accepted'' distance?}, but are not allowed into this subroutine with the exception of a RET call. \todo{HSL: this last bit makes no sense}\\
-
-\noindent Outputted machine code requires the ISR to be in a specific location in memory. This is automatically accounted for by the assembler as well as branching over the ISR during main program execution.
-\todo{HSL: I don't think the above is needed. If it is automatically taken care of, the programmer does not need to know surely?}
+\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a 'RETI' instruction and be no longer than 126 lines of code. Branches may occur within the ISR, but are not allowed into this subroutine with the exception of a return from a separate subroutine.\\
 
 \subsection{Assembler Directives}
 %There is one supported assembler directive  for assigning meaningful names to each of the general purpose registers. 
-\todo{HSL: are branch labels not assembler directives?} 
+Symbolic label names are supported for branch-type instructions. Following the previous syntax definition for '.LABELNAME', they can be used instead of numeric branching provided they branch no further than the maximum distance allowed for the instruction used. 
 Definitions are supported by the assembler. 
 They are used to assign meaningful names to the GPRs to aid with programming.
 Definitions can occur at any point within the file and create a mapping from that point onwards. 
@@ -51,7 +47,6 @@ Different names can be assigned to the same register, but only one is valid at a
 The assembler reads a `.asm' file and outputs a `.hex' file in hexadecimal format. 
 It is run by typing ``./assemble filename'' at the command line when in the directory of both the assembler executable and the program assembly file. ``filename'' does not have to include the .asm file extension. 
 The outputted file is saved to the same directory as the input file. \\
-\todo[inline]{HSL: I've changed this to use the standard executable method that Unix users will be comfortable with}
 \todo[inline]{HSL: I'm going to add an option parser to make the UI a bit easier. This section is likely to change a fair amount}
 \noindent Typing -h or --help instead of the file name will bring up the help menu with version information and basic formatting support. 
 
