@@ -1,19 +1,28 @@
 %  Report.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 14:30:25 BST
-%  <+Last Edited: Thu 17 Apr 2014 15:33:28 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Thu 17 Apr 2014 17:40:17 BST by seblovett on seblovett-Ubuntu +>
 
-\documentclass[12pt,titlepage,draft]{report}
+%HSL: when compiling final, remove draft option and comment watermark out
+\documentclass[draft,12pt,titlepage]{report}
+\usepackage{draftwatermark}
 
 \usepackage[nodayofweek]{datetime}
+\usepackage[obeyDraft,colorinlistoftodos]{todonotes}
+\usepackage{graphicx}
+\setkeys{Gin}{draft=false} %the hacks to make images appear in a draft
+\SetWatermarkScale{4}
+\newcommand{\inote}[1]{\todo[inline]{#1}}
+\newcommand{\incomplete}[1]{\todo[inline,color=red]{INCOMPLETE CHAPTER: #1}}
 
-\author{Team R4}
+\author{Team R4 \\ Henry Lovett (hl13g10) \\ Ashley Robinson (ajr2g10) \\ Martin Wearn (mw20g10) \\ Anusha Reddy (arr1g13)}
 
-\title{Final Report \\ ELEC6027}
+\title{Final Report \\ ELEC6027: VLSI Design Project \todo{Format title page}}
 
 \begin{document}
 \maketitle
-
+\listoftodos
+\tableofcontents
 %\begin{abstract}
 %Abstract
 %\end{abstract}
