@@ -22,9 +22,9 @@
 		LUI R6,#0		; R6 - Constant 1 
 		LLI R6,#1 		; R1 - CMP var
 		AND R1,R2,R6 	; Stage 1
-		CMPI R1,#0		
+		CMPI R1,#0		; LSb ?	
 		BE .sh1
-		ADD R4,R4,R3
+		ADD R4,R4,R3	; (LSb == 1)?
 .sh1	LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6	; Stage 2 
@@ -67,55 +67,5 @@
 		CMPI R1,#0
 		BE .sh8
 		ADD R4,R4,R3
-.sh8	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6   	; Stage 9
-		CMPI R1,#0
-		BE .sh9
-		ADD R4,R4,R3
-.sh9	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6   	; Stage 10
-		CMPI R1,#0
-		BE .sh10
-		ADD R4,R4,R3
-.sh10	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6   	; Stage 11
-		CMPI R1,#0
-		BE .sh11
-		ADD R4,R4,R3
-.sh11	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 12
-		CMPI R1,#0
-		BE .sh12
-		ADD R4,R4,R3
-.sh12	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 13
-		CMPI R1,#0
-		BE .sh13
-		ADD R4,R4,R3
-.sh13	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 14
-		CMPI R1,#0
-		BE .sh14
-		ADD R4,R4,R3
-.sh14	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 15
-		CMPI R1,#0
-		BE .sh15
-		ADD R4,R4,R3
-.sh15	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 16
-		CMPI R1,#0
-		BE .sh16
-		ADD R4,R4,R3
-.sh16	LSL R3,R3,#1
-		LSR R2,R2,#1
-		STW R4,[SP,#0]	; Res on stack frame                                                                                         
+.sh8	STW R4,[SP,#0]	; Res on stack frame                                                                                         
 		RET
