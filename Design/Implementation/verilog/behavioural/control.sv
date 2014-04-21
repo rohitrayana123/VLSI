@@ -461,6 +461,7 @@ always_comb begin
 									PcSel = PcSysbus;	
 								end
 								JMP:begin
+									AluEn = 1;
 									ImmSel = ImmShort;
                            			Op1Sel = Op1Rd1;
 									PcSel = PcAluOut;
