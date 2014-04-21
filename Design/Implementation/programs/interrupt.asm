@@ -1,4 +1,6 @@
 		DISI			; Reset is off anyway	
+		LUI R7, #7
+		LLI R7, #208
 		LUI	R0,	#1		; R0 is read ptr	0x0100
 		ADDI R1,R0,#2	; 0x0102
 		STW R1,[R0,#0]	; Read ptr set to   0x0102			

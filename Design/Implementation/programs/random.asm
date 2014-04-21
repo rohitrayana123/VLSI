@@ -1,3 +1,5 @@
+		LUI R7, #7
+		LLI R7, #208
 		LUI R0, #8		; Address in R0
 		LLI R0, #0
 		LDW R0,[R0,#0]	; Read switches into R0
