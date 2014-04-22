@@ -7,21 +7,35 @@
 		LLI R1, #255	; 0x00FF in R1
 		AND R1,R0,R1	; Lower byte SWs in R1	
 		LSR R0,R0,#8	; Upper byte SWs in R0		 
-		PUSH R0
-		PUSH R1
+		SUB R2,R2,R2	; Zero required
+		PUSH R0			; Op1
+		PUSH R1			; Op2
+		PUSH R2			; Place holder is zero
 		BWL .multi		; Run Subroutine
 		POP R1			; Result
-		ADDIB SP,#1		; Duummy pop
+		ADDIB SP,#2		; Duummy pop
 		LUI R4, #8
 		LLI R4, #1		; Address of LEDS
 		STW R1,[R4,#0]	; Result on LEDS
 .end 	BR .end			; Finish loop
-.multi  LDW R2,[SP,#0]	; R2 - Multiplier
-		LDW R3,[SP,#1]  ; R3 - Quotient                  	                                                                              
+.multi  PUSH R1
+		PUSH R2
+		PUSH R3
+		PUSH R4
+		PUSH R6	
+		LDW R2,[SP,#6]	; R2 - Multiplier
+		LDW R3,[SP,#7]  ; R3 - Quotient                  	                                                                              
 		SUB R4,R4,R4    ; R4 - Accumulator                                                                                                
-		LUI R6,#0		; R6 - Constant 1 
-		LLI R6,#1 		; R1 - CMP var
-		AND R1,R2,R6 	; Stage 1
+		LUI R6,#255		; If larger than 8 bits
+		LLI R6,#0
+		AND R1,R6,R2
+		CMPI R1,#0
+		BNE .sh8		; Fail
+		AND R1,R6,R3
+		CMPI R1,#0
+		BNE .sh8		; Fail
+		ADDI R6,R4,#1	; R6 - Constant 1
+		AND R1,R2,R6 	; Stage 1, R1 - cmp
 		CMPI R1,#0		; LSb ?	
 		BE .sh1
 		ADD R4,R4,R3	; (LSb == 1)?
@@ -67,5 +81,10 @@
 		CMPI R1,#0
 		BE .sh8
 		ADD R4,R4,R3
-.sh8	STW R4,[SP,#0]	; Res on stack frame                                                                                         
+.sh8	STW R4,[SP,#5]	; Res on stack frame                                                                                         
+		POP R6
+		POP R4
+		POP R3
+		POP R2
+		POP R1
 		RET
