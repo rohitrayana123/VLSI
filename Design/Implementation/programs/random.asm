@@ -4,7 +4,11 @@
 		LLI R0, #0
 		LDW R0,[R0,#0]	; Read switches into R0
 		LUI R1, #8
-		LLI R1, #1		; Address of LEDS
+		LLI R1, #1		; CONSTANT - Address of LEDS
+		LUI R2,#0		
+		LLI R2,#10		; CONSTANT - 0x000A
+		LUI R3,#128
+		LLI R3,#0		; CONSTANT - 0x8000
 		PUSH R0
 .loop	BWL .rand		; 1 		
 		BWL .rand		; 2 
@@ -25,18 +29,12 @@
 		LDW R0,[SP,#0]	; No POP as re-run
 		STW R0,[R1,#0]	; Result on LEDS
 		BR .loop
-.rand 	LDW R2,[SP,#0]	; Linear feedback shift register sim
-		LUI R3,#0		; Three
-		LLI R3,#3
-		AND R4,R3,R2	; Bottom two bits of input
-		LSR R5,R2,#1	
-		CMP R4,R3		; Three
-		BE .done
-		SUB R3,R3,R3
-		CMP R4,R3		; Zero
-		BE .done
-		LUI R3,#128
-		LLI R3,#0
-		OR R5,R5,R3		
+.rand 	LDW R4,[SP,#0]	; Linear feedback shift register sim		
+		LSR R5,R4,#1
+		AND R4,R2,R4	; Mask bits one and three			
+		BE .done		; Both zero
+		CMP R4,R2		
+		BE .done		; Both one
+		OR R5,R5,R3
 .done	STW R5,[SP,#0]
 		RET
