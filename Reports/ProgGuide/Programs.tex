@@ -37,16 +37,17 @@ The code for the multiply program is held in appendix~\ref{sec:multiply} listing
 Capable of performing multiplication of two unsigned eight bit numbers to produce a single sixteen bit output.
 The eight bit numbers are read from the sixteen input switches and then split in to lower and upper bytes which are then multiplied.
 The resulting sixteen bit word is placed upon the LEDs before reaching a terminating loop.
-A shift and add algorithm is implemented and a trade of between code size and execution time is made by loop unrolling the sixteen stages.
 
-The subroutine is described as C in listing~\ref{lst:shiftAndAdd.c}. 
-Immediately the twooperands are compared against 0xFF00. 
-This checks the input parameters are only 8 bits long otherwise 0 is returned as 16 bits is the maximum length output.
+The subroutine operation is described as C in listing~\ref{lst:shiftAndAdd.c}. 
+Immediately the two operands are compared against 0xFF00. 
+This checks the input parameters are only eight bits long otherwise zero is returned.
 In every loop the state of the lowest bit in the multiplier byte controls the accumulator. 
 The multiplier is shifted right and the quotient is shifted left but no shifts occur in the last stage.
-Equation~\ref{eqn:multi} formally describes the result of algorithm.
+Equation~\eqref{eqn:multi} formally describes the result of algorithm.
+A trade off between code size and execution time is made by loop unrolling the eight stages.
+This creates scope for optimisation in loop operations and doesn't require a loop counter or branch operations.
 
-\lstinputlisting[label=lst:shiftAndAdd.c,caption=shiftAndAdd.c]{pseudocode/shiftAndAdd.c}
+\lstinputlisting[label=lst:shiftAndAdd.c,caption=Shift and Add Subroutine]{pseudocode/shiftAndAdd.c}
 
 \begin{equation}
    A = M \times Q = \sum_{i=0}^{7} 2^i M_i Q\:\:where\:\:M_i \in \{0,1\}
@@ -55,6 +56,7 @@ Equation~\ref{eqn:multi} formally describes the result of algorithm.
 
 \subsection{Factorial}
 The code for the factorial program is held in appendix~\ref{sec:factorial} listing~\ref{lst:factorial.asm}.
+At the heart
 
 \subsection{Random}
 The code for the random program is held in appendix~\ref{sec:random} listing~\ref{lst:random.asm}.

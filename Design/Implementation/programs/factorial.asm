@@ -26,9 +26,10 @@
 		PUSH R0        	; Pass para
 		BWL .fact		; The output from fact to multi remains on the stack
 		PUSH R1			; Pass para
+		SUBIB SP,#1		; Placeholder
 		BWL .multi
 		POP R1          ; Get res
-		ADDIB SP,#1     ; POP
+		ADDIB SP,#2     ; POP x 2
 		STW R1,[SP,#3]
 		POP LR
 		POP R1
@@ -40,116 +41,73 @@
 		POP R1                                                                                                          
 		POP R0                                                                                                          
 		RET
-.multi  PUSH R2 		; R2 is M
-		PUSH R3 		; R3 is Q
-		PUSH R4 		; R4 Is ACC
-		PUSH R6 		; R6 is 1
-		PUSH R1 		; R1 is temp
-		LDW R2,[SP,#5]
-		LDW R3,[SP,#6]                                                                                                  
-		SUB R4,R4,R4                                                                                                    
-		LUI R6,#0
-		LLI R6,#1 		; load 1 into R6 for compare
-		AND R1,R2,R6 	; Loop unroll for maximum fastness
+.multi  PUSH R1
+		PUSH R2
+		PUSH R3
+		PUSH R4
+		PUSH R6	
+		LDW R2,[SP,#6]	; R2 - Multiplier
+		LDW R3,[SP,#7]  ; R3 - Quotient                  	                                                                              
+		SUB R4,R4,R4    ; R4 - Accumulator                                                                                                
+		LUI R6,#255		; If larger than 8 bits
+		LLI R6,#0
+		AND R1,R6,R2
 		CMPI R1,#0
+		BNE .sh8		; Fail
+		AND R1,R6,R3
+		CMPI R1,#0
+		BNE .sh8		; Fail
+		ADDI R6,R4,#1	; R6 - Constant 1
+		AND R1,R2,R6 	; Stage 1, R1 - cmp
+		CMPI R1,#0		; LSb ?	
 		BE .sh1
-		ADD R4,R4,R3
+		ADD R4,R4,R3	; (LSb == 1)?
 .sh1	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6	; Stage 2 
 		CMPI R1,#0
 		BE .sh2
 		ADD R4,R4,R3
 .sh2	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6 	; Stage 3
 		CMPI R1,#0
 		BE .sh3
 		ADD R4,R4,R3
 .sh3	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6 	; Stage 4 
 		CMPI R1,#0
 		BE .sh4
 		ADD R4,R4,R3
 .sh4	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6 	; Stage 5 
 		CMPI R1,#0
 		BE .sh5
 		ADD R4,R4,R3
 .sh5	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6 	; Stage 6 
 		CMPI R1,#0
 		BE .sh6
 		ADD R4,R4,R3
 .sh6	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6  	; Stage 7
 		CMPI R1,#0
 		BE .sh7
 		ADD R4,R4,R3
 .sh7	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6 
+		AND R1,R2,R6  	; Stage 8 
 		CMPI R1,#0
 		BE .sh8
 		ADD R4,R4,R3
-.sh8	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh9
-		ADD R4,R4,R3
-.sh9	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh10
-		ADD R4,R4,R3
-.sh10	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh11
-		ADD R4,R4,R3
-.sh11	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh12
-		ADD R4,R4,R3
-.sh12	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh13
-		ADD R4,R4,R3
-.sh13	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh14
-		ADD R4,R4,R3
-.sh14	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh15
-		ADD R4,R4,R3
-.sh15	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 
-		CMPI R1,#0
-		BE .sh16
-		ADD R4,R4,R3
-.sh16	LSL R3,R3,#1
-		LSR R2,R2,#1
-		STW R4,[SP,#5]                                                                                                    
-		POP R1
+.sh8	STW R4,[SP,#5]	; Res on stack frame                                                                                         
 		POP R6
-	 	POP R4
+		POP R4
 		POP R3
 		POP R2
+		POP R1
 		RET
