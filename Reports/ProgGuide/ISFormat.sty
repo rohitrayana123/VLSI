@@ -120,12 +120,12 @@
 		#1& #2 \\
 	\fi
 	\if N#7
-		N $\leftarrow$& if Result $<$ 0 then 1, else 0 \\
+		\phantom{R} N $\leftarrow$& if Result $<$ 0 then 1, else 0 \\
 	\else
 		\if U#7
-			N $\leftarrow$& UNPREDICTABLE \\
+			\phantom{R} N $\leftarrow$& UNPREDICTABLE \\
 		\else
-			N $\leftarrow$& N \\
+			\phantom{R} N $\leftarrow$& N \\
 		\fi
 	\fi
 	\if Z#8
@@ -140,44 +140,44 @@
 	\if V#4
 		\if b#5
 			\if 0#6
-				V $\leftarrow$& if (+Ra, +Rb, -Result) or \\
-				&~~~(-Ra, -Rb, +Result) then 1, else 0 \\
+				V $\leftarrow$& if (+Ra and +Rb and -Result) or \\
+				&~~~(-Ra and -Rb and +Result) then 1, else 0 \\
 			\fi
 			\if c#6
-				V $\leftarrow$& if (+Ra, +(Rb+CFlag), -Result) or\\
-				&~~~(-Ra, -(Rb+CFlag), +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Ra and +(Rb+CFlag) and -Result) or\\
+				&~~~(-Ra and -(Rb+CFlag) and +Result) then 1, else 0\\
 			\fi
 			\if n#6
-				V $\leftarrow$& if (+Ra, +(Rb-CFlag), -Result) or\\
-				&~~~(-Ra, -(Rb-CFlag), +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Ra and +(Rb-CFlag) and -Result) or\\
+				&~~~(-Ra and -(Rb-CFlag) and +Result) then 1, else 0\\
 			\fi
 		\fi
 		\if 5#5
 			\if 0#6
-				V $\leftarrow$& if (+Ra, +\#imm5, -Result) or\\
-				&~~~(-Ra, -\#imm5, +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Ra and +\#imm5 and -Result) or\\
+				&~~~(-Ra and -\#imm5 and +Result) then 1, else 0\\
 			\fi
 			\if c#6
-				V $\leftarrow$& if (+Ra, +(\#imm5+CFlag), -Result) or\\
-				&~~~(-Ra, -(\#imm5+CFlag), +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Ra and +(\#imm5+CFlag) and -Result) or\\
+				&~~~(-Ra and -(\#imm5+CFlag) and +Result) then 1, else 0\\
 			\fi
 			\if n#6
-				V $\leftarrow$& if (+Ra, +(\#imm5-CFlag), -Result) or\\
-				&~~~(-Ra, -(\#imm5-CFlag), +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Ra and +(\#imm5-CFlag) and -Result) or\\
+				&~~~(-Ra and -(\#imm5-CFlag) and +Result) then 1, else 0\\
 			\fi
 		\fi
 		\if 8#5
 			\if 0#6
-				V $\leftarrow$& if (+Rd, +\#imm8, -Result) or\\
-				&~~~(-Rd, -\#imm8, +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Rd and +\#imm8 and -Result) or\\
+				&~~~(-Rd and -\#imm8 and +Result) then 1, else 0\\
 			\fi
 			\if c#6
-				V $\leftarrow$& if (+Rd, +(\#imm8+CFlag), -Result or\\
-				&~~~(-Rd, -(\#imm8+CFlag), +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Rd and +(\#imm8+CFlag) and -Result or\\
+				&~~~(-Rd and -(\#imm8+CFlag) and +Result) then 1, else 0\\
 			\fi
 			\if n#6
-				V $\leftarrow$& if (+Rd, +(\#imm8-CFlag), -Result) or\\
-				&~~~(-Rd, -(\#imm8-CFlag), +Result) then 1, else 0\\
+				V $\leftarrow$& if (+Rd and +(\#imm8-CFlag) and -Result) or\\
+				&~~~(-Rd and -(\#imm8-CFlag) and +Result) then 1, else 0\\
 			\fi
 		\fi
 		\if 0#5
@@ -195,9 +195,9 @@
 		&~~~(Result $< -2^{16}$) then 1, else 0\\
 	\else
 		\if U#3
-			C $\leftarrow$& UNPREDICTABLE \\
+			C $\leftarrow$& UNPREDICTABLE \\\\\\
 		\else
-			C $\leftarrow$& C \\
+			C $\leftarrow$& C \\\\\\
 		\fi
 	\fi
 	\end{tabular}
