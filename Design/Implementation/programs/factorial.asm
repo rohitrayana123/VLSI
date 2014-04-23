@@ -24,7 +24,7 @@
 		BE .retOne     	; 0! = 1
 		SUBI R0,R1,#1
 		PUSH R0        	; Pass para
-		BWL .fact		; The output from fact to multi remains on the stack
+		BWL .fact		; The output remains on the stack
 		PUSH R1			; Pass para
 		SUBIB SP,#1		; Placeholder
 		BWL .multi
@@ -35,7 +35,7 @@
 		POP R1
 		POP R0
 		RET
-.retOne ADDIB R1,#1    	; Trade off code size to avoid jump checking
+.retOne ADDIB R1,#1    	; Avoid jump checking
 		STW R1,[SP,#3]                                                                                                  
 		POP LR                                                                                                          
 		POP R1                                                                                                          
