@@ -7,7 +7,7 @@
 		LLI R1, #255	; 0x00FF in R1
 		AND R1,R0,R1	; Lower byte SWs in R1	
 		LSR R0,R0,#8	; Upper byte SWs in R0		 
-		SUB R2,R2,R2	; Zero required
+		SUB R2,R2,R2	; Zero required	
 		PUSH R0			; Op1
 		PUSH R1			; Op2
 		PUSH R2			; Place holder is zero
@@ -18,23 +18,19 @@
 		LLI R4, #1		; Address of LEDS
 		STW R1,[R4,#0]	; Result on LEDS
 .end 	BR .end			; Finish loop
-.multi  PUSH R1
+.multi  PUSH R0
+		PUSH R1
 		PUSH R2
 		PUSH R3
 		PUSH R4
-		PUSH R6	
-		LDW R2,[SP,#6]	; R2 - Multiplier
-		LDW R3,[SP,#7]  ; R3 - Quotient                  	                                                                              
-		SUB R4,R4,R4    ; R4 - Accumulator                                                                                                
-		LUI R6,#255		; If larger than 8 bits
-		LLI R6,#0
-		AND R1,R6,R2
-		CMPI R1,#0
-		BNE .sh8		; Fail
-		AND R1,R6,R3
-		CMPI R1,#0
-		BNE .sh8		; Fail
+		PUSH R5
+		PUSH R6
+		LDW R2,[SP,#8]	; R2 - Multiplier
+		LDW R3,[SP,#9]  ; R3 - Quotient                  	                                                                              
+		SUB R4,R4,R4    ; R4 - Accumulator                                                                                                	
 		ADDI R6,R4,#1	; R6 - Constant 1
+		SUB R5,R5,R5	; R5 - Constant 0
+		SUB R0,R0,R0	; R0 - C check
 		AND R1,R2,R6 	; Stage 1, R1 - cmp
 		CMPI R1,#0		; LSb ?	
 		BE .sh1
@@ -77,14 +73,98 @@
 		ADD R4,R4,R3
 .sh7	LSL R3,R3,#1
 		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 8 
+		AND R1,R2,R6	; Stage 8
 		CMPI R1,#0
 		BE .sh8
+		ADD R4,R4,R3	
+.sh8	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6 	; Stage 9
+		CMPI R1,#0
+		BE .sh9
+		ADD R4,R4,R3	
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh9	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6 	; Stage 10 
+		CMPI R1,#0
+		BE .sh10
 		ADD R4,R4,R3
-.sh8	STW R4,[SP,#5]	; Res on stack frame                                                                                         
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh10	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6 	; Stage 11
+		CMPI R1,#0
+		BE .sh11
+		ADD R4,R4,R3
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh11	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6 	; Stage 12
+		CMPI R1,#0
+		BE .sh12
+		ADD R4,R4,R3
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh12	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6  	; Stage 13
+		CMPI R1,#0
+		BE .sh13
+		ADD R4,R4,R3
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh13	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6	; Stage 14 
+		CMPI R1,#0
+		BE .sh14
+		ADD R4,R4,R3	
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh14	LSL R3,R3,#1
+		LSR R2,R2,#1
+		AND R1,R2,R6 	; Stage 15
+		CMPI R1,#0
+		BE .sh15
+		ADD R4,R4,R3
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh15	LSL R3,R3,#1
+		LSR R2,R2,#1	
+		AND R1,R2,R6  	; Stage 16 
+		CMPI R1,#0
+		BE .sh16
+		ADD R4,R4,R3
+		ADCI R0,R5,#0
+		CMPI R0,#0
+		BNE .over
+.sh16	STW R4,[SP,#7]	; Res on stack frame                                                                                         
 		POP R6
+		POP R5
 		POP R4
 		POP R3
 		POP R2
 		POP R1
+		POP R0
+		RET
+.over	SUB R4,R4,R4
+		STW R4,[SP,#7]	; Res on stack frame                                                                                         
+		POP R6
+		POP R5
+		POP R4
+		POP R3
+		POP R2
+		POP R1
+		POP R0
 		RET

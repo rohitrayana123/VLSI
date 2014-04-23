@@ -1,4 +1,4 @@
-		LUI R7, #7
+		LUI R7, #7		; Init SP
 		LLI R7, #208
 		LUI R0, #8		; Address in R0
 		LLI R0, #0
