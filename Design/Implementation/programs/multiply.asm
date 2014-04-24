@@ -28,126 +28,175 @@
 		LDW R2,[SP,#8]	; R2 - Multiplier
 		LDW R3,[SP,#9]  ; R3 - Quotient                  	                                                                              
 		SUB R4,R4,R4    ; R4 - Accumulator                                                                                                	
-		ADDI R6,R4,#1	; R6 - Constant 1
-		SUB R5,R5,R5	; R5 - Constant 0
-		SUB R0,R0,R0	; R0 - C check
+		ADDI R6,R4,#1	; R6 - Compare 1/0
+		LUI R5,#128
+		LLI R5,#0		; R5 - 0x8000
 		AND R1,R2,R6 	; Stage 1, R1 - cmp
 		CMPI R1,#0		; LSb ?	
 		BE .sh1
 		ADD R4,R4,R3	; (LSb == 1)?
-.sh1	LSL R3,R3,#1
+.sh1	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6	; Stage 2 
 		CMPI R1,#0
 		BE .sh2
 		ADD R4,R4,R3
-.sh2	LSL R3,R3,#1
+.sh2	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 3
 		CMPI R1,#0
 		BE .sh3
 		ADD R4,R4,R3
-.sh3	LSL R3,R3,#1
+.sh3	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 4 
 		CMPI R1,#0
 		BE .sh4
 		ADD R4,R4,R3
-.sh4	LSL R3,R3,#1
+.sh4	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 5 
 		CMPI R1,#0
 		BE .sh5
 		ADD R4,R4,R3
-.sh5	LSL R3,R3,#1
+.sh5	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 6 
 		CMPI R1,#0
 		BE .sh6
 		ADD R4,R4,R3
-.sh6	LSL R3,R3,#1
+.sh6	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6  	; Stage 7
 		CMPI R1,#0
 		BE .sh7
 		ADD R4,R4,R3
-.sh7	LSL R3,R3,#1
+.sh7	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6	; Stage 8
 		CMPI R1,#0
 		BE .sh8
-		ADD R4,R4,R3	
-.sh8	LSL R3,R3,#1
+		ADD R4,R4,R3
+		BR .sh8
+.over1  BR .over
+.sh8	AND R0,R5,R3
+		CMPI R0,#0
+		BNE .over
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 9
 		CMPI R1,#0
 		BE .sh9
+		SUB R6,R6,R6
 		ADD R4,R4,R3	
-		ADCI R0,R5,#0
+		ADCI R6,R4,#1
+		CMPI R6,#2
+		BNE .over
+.sh9	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh9	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 10 
 		CMPI R1,#0
 		BE .sh10
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
+		SUB R6,R6,R6
+		ADD R4,R4,R3	
+		ADCI R6,R4,#1
+		CMPI R6,#2
+		BNE .over
+.sh10	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh10	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 11
 		CMPI R1,#0
 		BE .sh11
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
+		SUB R6,R6,R6
+		ADD R4,R4,R3	
+		ADCI R6,R4,#1
+		BNE .over
+.sh11	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh11	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 12
 		CMPI R1,#0
 		BE .sh12
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
+		SUB R6,R6,R6
+		ADD R4,R4,R3	
+		ADCI R6,R4,#1	
+		BNE .over
+.sh12	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh12	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6  	; Stage 13
 		CMPI R1,#0
 		BE .sh13
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
+		SUB R6,R6,R6
+		ADD R4,R4,R3	
+		ADCI R6,R4,#1	
+		BNE .over
+.sh13	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh13	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6	; Stage 14 
 		CMPI R1,#0
 		BE .sh14
+		SUB R6,R6,R6
 		ADD R4,R4,R3	
-		ADCI R0,R5,#0
+		ADCI R6,R4,#1	
+		BNE .over
+.sh14	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh14	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1
 		AND R1,R2,R6 	; Stage 15
 		CMPI R1,#0
 		BE .sh15
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
+		SUB R6,R6,R6
+		ADD R4,R4,R3	
+		ADCI R6,R4,#1	
+		BNE .over
+.sh15	AND R0,R5,R3
 		CMPI R0,#0
 		BNE .over
-.sh15	LSL R3,R3,#1
+		LSL R3,R3,#1
 		LSR R2,R2,#1	
 		AND R1,R2,R6  	; Stage 16 
 		CMPI R1,#0
 		BE .sh16
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
+		SUB R6,R6,R6
+		ADD R4,R4,R3	
+		ADCI R6,R4,#1
 		BNE .over
 .sh16	STW R4,[SP,#7]	; Res on stack frame                                                                                         
 		POP R6
@@ -159,12 +208,4 @@
 		POP R0
 		RET
 .over	SUB R4,R4,R4
-		STW R4,[SP,#7]	; Res on stack frame                                                                                         
-		POP R6
-		POP R5
-		POP R4
-		POP R3
-		POP R2
-		POP R1
-		POP R0
-		RET
+		BR .sh16	
