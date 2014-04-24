@@ -4,12 +4,47 @@
 %  <+Last Edited: Thu 17 Apr 2014 17:34:32 BST by seblovett on seblovett-Ubuntu +>
 
 \chapter{Instruction Set}
-\incomplete{Instruction Set}
-Design of the instruction set
+\todo[color=cyan, inline]{Design of instruction set}
+\todo[color=cyan, inline]{Allocation of opcodes etc}
+\todo[color=cyan, inline]{Refer to research}
+\todo[color=cyan, inline]{ISA novelties}
 
-Allocation of opcodes etc
+In designing the instruction set architecture (ISA) emphasis was put on creating a complete set of basic operations which could be used to implement any program. This gave rise to a RISC based architecture since they have a small number of instructions and are optimized for a smaller chip area.
+\todo[inline]{Expand basic ISA design considerations}
 
-Refer to research done and original thinking
+Since a 16-bit microprocessor was to be designed, it was decided to base the system on the ARM Thumb architecture. This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. However it included a number of operations which take advantage of the ARM's 32-bit datapath, so any high register operations were removed. Change of state, sign extension and debugging instructions, among others, were also removed for simplification or because they were not necessary. This produced the original ISA made up of instructions 1-4, 6-10, 12-16, 20-24, 27-32, 35 and 36 as noted in the summary table in Appendix~\ref{chap:AppISS}. While instructions 5 and 11 were added to support use of carry flag with an immediate value. 17, 18 and 19 are included to form a complete logic set. 25 and 26 are for loading an initial value to any general purpose register. Instruction 33 is included from the SPARC ISA for returning from a procedure. Instruction 34 enables a control jump to anywhere in $2^{16}$ memory locations. With instructions 37-41 were added for support of a single interrupt.
 
-Feel free to use parts from the programmers guide.
+\newcolumntype{B}{c}
+\begin{table}[h]
+\def\arraystretch{1.5}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\makebox[\linewidth]{
+\begin{tabular}{|r|l|l||BBBBBBBBBBBBBBBc|}
+	 \multicolumn{1}{r}{} & \multicolumn{1}{l}{\bf Instruction Type} & \multicolumn{1}{l}{\bf Sub-Type} & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & \multicolumn{1}{B}{0} \\
+	\hline
+	A1 & \multirow{2}{*}{\bf Data Manipulation} & {\bf Register} & \multicolumn{5}{B|}{\multirow{2}{*}{Opcode}} & \multicolumn{3}{B|}{Rd} & \multicolumn{3}{B|}{Ra} & \multicolumn{3}{B|}{Rb} & X & X \\
+	\cline{1-1} \cline{3-3} \cline{9-19}
+	A2 &  & {\bf Immediate} & \multicolumn{5}{B|}{} & \multicolumn{3}{B|}{Rd} & \multicolumn{3}{B|}{Ra} & \multicolumn{5}{B|}{imm4/5} \\
+	\hline
+	B & \multicolumn{2}{l||}{\bf Byte Immediate} & \multicolumn{5}{B|}{Opcode} & \multicolumn{3}{B|}{Rd} & \multicolumn{8}{B|}{imm8} \\
+	\hline
+	C & \multicolumn{2}{l||}{\bf Data Transfer} & 0 & \multicolumn{1}{|B|}{LS} & 0 & 0 & \multicolumn{1}{B|}{0} & \multicolumn{3}{B|}{Rd}  &\multicolumn{3}{B|}{Ra} & \multicolumn{5}{B|}{imm5} \\
+	\hline
+	D1 & \multirow{2}{*}{\bf Control Transfer} & {\bf Others} & \multirow{2}{*}{1} & \multirow{2}{*}{1} & \multirow{2}{*}{1} & \multirow{2}{*}{1} & \multicolumn{1}{B|}{\multirow{2}{*}{0}} & \multicolumn{3}{B|}{\multirow{2}{*}{Cond.}}  & \multicolumn{8}{B|}{imm8} \\
+	\cline{1-1} \cline{3-3} \cline{12-19}
+	D2 &  & {\bf Jump} &  &  &  &  & \multicolumn{1}{B|}{} & & & \multicolumn{1}{B|}{ } & \multicolumn{3}{B|}{Ra} & \multicolumn{5}{B|}{imm5} \\
+	\hline
+	E & \multicolumn{2}{l||}{\bf Stack Operations} & 0 & \multicolumn{1}{|B|}{U} & 0 & 0 & \multicolumn{1}{B|}{1} & \multicolumn{1}{B|}{L} & X & \multicolumn{1}{B|}{X} & \multicolumn{3}{B|}{Ra} & 0 & 0 & 0 & 0 & \multicolumn{1}{B|}{1} \\
+	\hline
+	F & \multicolumn{2}{l||}{\bf Interrupts} & 1 & 1 & 0 & 0 & \multicolumn{1}{B|}{1} & \multicolumn{3}{B|}{ICond.} & 1 & 1 & \multicolumn{1}{B|}{1} & X & X & X & X & \multicolumn{1}{B|}{X} \\
+	\hline
+\end{tabular}
+}
+\caption{General Instruction Formatting}
+\label{tab:Thumb}
+\end{table}
+
+To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:Thumb}. Which was adapted to create all other types of formatting, and reordered to ensure immediate values were always on the far right of the instruction. This was to make sign extension of immediate values in the datapath easier since they are always in the same location in the instruction. 
 
