@@ -1,0 +1,60 @@
+
+\chapter{Instruction Set Summary}
+\label{chap:AppISS}
+\incomplete{Instruction Set Summary}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\makebox[\linewidth]{
+\begin{tabular}{r|c|c|c|c|c|c|c|}
+	\multicolumn{1}{c}{} & \multicolumn{1}{c}{\bf Mnemonic} & \multicolumn{1}{c}{\bf Syntax} & \multicolumn{1}{c}{\bf Semantics} & \multicolumn{1}{c}{\bf Flags} & \multicolumn{1}{c}{\bf Encoding} & \multicolumn{1}{c}{\bf Opcode} & \multicolumn{1}{c}{\bf Cond.} \\
+	\cline{2-8}
+	1 & ADD   & ADD Rd, Ra, Rb      & Rd $\leftarrow$ Ra + Rb       & c,v,n,z & A & 00010 & - \\
+	2 & ADDI  & ADDI Rd, Ra, \#imm5 & Rd $\leftarrow$ Ra + imm5 	& c,v,n,z & A & 00110 & - \\
+	3 & ADDIB & ADDIB Rd, \#imm8    & Rd $\leftarrow$ Rd + imm8     & c,v,n,z & B & 00011 & - \\
+	4 & ADC   & ADC Rd, Ra, Rb      & Rd $\leftarrow$ Ra + Rb + c   & c,v,n,z & A & 00100 & - \\
+	5 & ADCI  & ADCI Rd, Ra, \#imm5 & Rd $\leftarrow$ Ra + imm5 + c & c,v,n,z & A & 00101 & - \\
+	6 & NEG   & NEG Rd, Ra          & Rd $\leftarrow$ 0 - Ra        & c,v,n,z & A & 11010 & - \\
+	7 & SUB   & SUB Rd, Ra, Rb      & Rd $\leftarrow$ Ra - Rb       & c,v,n,z & A & 01010 & - \\
+	8 & SUBI  & SUBI Rd, Ra, \#imm5 & Rd $\leftarrow$ Ra - imm5     & c,v,n,z & A & 01110 & - \\
+	9 & SUBIB & SUBIB Rd, \#imm8    & Rd $\leftarrow$ Rd - imm8     & c,v,n,z & B & 01011 & - \\
+	10& SUC   & SUC Rd, Ra, Rb      & Rd $\leftarrow$ Ra - Rb - c   & c,v,n,z & A & 01100 & - \\
+	11& SUCI  & SUCI Rd, Ra, \#imm5 & Rd $\leftarrow$ Ra - imm5 - c & c,v,n,z & A & 01101 & - \\
+	12& CMP   & CMP Ra, Rb          & Rd $\leftarrow$ Ra - Rb       & c,v,n,z & A & 00111 & - \\
+	13& CMPI  & CMPI Ra, \#imm5     & Rd $\leftarrow$ Ra - imm5     & c,v,n,z & A & 01111 & - \\
+	14& AND   & AND Rd, Ra, Rb      & Rd $\leftarrow$ Ra \texttt{AND} Rb     & n,z     & A & 10000 & - \\
+	15& OR    & OR Rd, Ra, Rb       & Rd $\leftarrow$ Ra \texttt{OR} Rb      & n,z     & A & 10001 & - \\
+	16& XOR   & XOR Rd, Ra, Rb      & Rd $\leftarrow$ Ra \texttt{XOR} Rb     & n,z     & A & 10011 & - \\
+	17& NOT   & NOT Rd, Ra          & Rd $\leftarrow$ \texttt{NOT} Ra        & n,z     & A & 10010 & - \\
+	18& NAND  & NAND Rd, Ra, Rb     & Rd $\leftarrow$ Ra \texttt{NAND} Rb    & n,z     & A & 10110 & - \\
+	19& NOR   & NOR Rd, Ra, Rb      & Rd $\leftarrow$ Ra \texttt{NOR} Rb     & n,z     & A & 10111 & - \\
+	20& LSL   & LSL Rd, Ra, \#imm4  & Rd $\leftarrow$ Ra $<<$ imm4  & n,z     & A & 11111 & - \\
+	21& LSR   & LSR Rd, Ra, \#imm4  & Rd $\leftarrow$ Ra $>>$ imm4  & n,z     & A & 11101 & - \\
+	22& ASR   & ASR Rd, Ra, \#imm4  & Rd $\leftarrow$ Ra $>>>$ imm4 & n,z     & A & 11100 & - \\
+	23& LDW   & LDW Rd, [Ra, \#imm5]& Rd $\leftarrow$ Mem[Ra + imm5]& -       & C & 00000 & - \\
+	24& STW   & STW Rd, [Ra, \#imm5]& Mem[Ra + imm5] $\leftarrow$ Rd& -       & C & 01000 & - \\
+	25& LUI   & LUI Rd, \#imm8      & Rd $\leftarrow$ {imm8, 0}     & -       & B & 10100 & - \\
+	26& LLI   & LLI Rd, \#imm8      & Rd $\leftarrow$ {Rd[15:8], imm8}& -     & B & 10101 & - \\
+	27& BR    & BR LABEL            & PC $\leftarrow$ PC + imm8     & -       & D & - & 000 \\
+	28& BNE   & BNE LABEL           & (z==0)?PC $\leftarrow$ PC + imm8& -     & D & - & 110 \\
+	29& BE    & BE LABEL            & (z==1)?PC $\leftarrow$ PC + imm8& -     & D & - & 111 \\
+	30& BLT   & BLT LABEL           & (n\&$\sim$v \texttt{OR} $\sim$n\&v)?PC $\leftarrow$ PC + imm8& - & D & - & 100 \\
+	31& BGE   & BGE LABEL           & (n\&v \texttt{OR} $\sim$n\&$\sim$v)?PC $\leftarrow$ PC + imm8& - & D & - & 101 \\
+	32& BWL   & BWL LABEL           & LR $\leftarrow$ PC + 1; PC $\leftarrow$ PC + imm8& - & D & - & 011 \\
+	33& RET   & RET                 & PC $\leftarrow$ LR            & -       & D & -     & 010 \\
+	34& JMP   & JMP Ra, \#imm5      & PC $\leftarrow$ Ra + imm5     & -       & D & -     & 001 \\
+	\multirow{2}{*}{35}& \multirow{2}{*}{PUSH}  & PUSH Ra             & Mem[R7] $\leftarrow$ Ra; R7 $\leftarrow$ R7 - 1;& \multirow{2}{*}{-} & \multirow{2}{*}{E} & \multirow{2}{*}{-} & \multirow{2}{*}{-} \\
+	  &       & PUSH LR             & Mem[R7] $\leftarrow$ RL; R7 $\leftarrow$ R7 - 1;&   &   &   &   \\
+	\multirow{2}{*}{36}& \multirow{2}{*}{POP}   & POP Ra              & R7 $\leftarrow$ R7 + 1; Mem[R7] $\leftarrow$ Ra;& \multirow{2}{*}{-} & \multirow{2}{*}{E} & \multirow{2}{*}{-} & \multirow{2}{*}{-} \\
+	  &       & POP LR              & R7 $\leftarrow$ R7 + 1; Mem[R7] $\leftarrow$ RL;&   &   &   &   \\
+	37& RETI  & RETI                & PC $\leftarrow$ Mem[R7]       & -       & F & -     & 000 \\
+	38& ENAI  & ENAI                & IntEnFlag $\leftarrow$ 1      & -       & F & -     & 001 \\
+	39& DISI  & DISI                & IntEnFlag $\leftarrow$ 0      & -       & F & -     & 010 \\
+	40& STF   & STF                 & Mem[R7] $\leftarrow$ Flags; R7 $\leftarrow$ R7 - 1; & - & F & - & 011 \\
+	41& LDF   & LDF                 & R7 $\leftarrow$ R7 + 1; Mem[R7] $\leftarrow$ Flags; & c,v,n,z & F & - & 100 \\
+	\cline{2-8}
+\end{tabular}
+}
+\end{table}

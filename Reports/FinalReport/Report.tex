@@ -4,8 +4,12 @@
 %  <+Last Edited: Thu 17 Apr 2014 17:40:17 BST by seblovett on seblovett-Ubuntu +>
 
 %HSL: when compiling final, remove draft option and comment watermark out
-\documentclass[draft,12pt,titlepage]{report}
+\documentclass[draft, 12pt, titlepage]{report}
 \usepackage{draftwatermark}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage[bookmarks=false]{hyperref}
+\hypersetup{pdfstartview={XYZ null null 0.773},pdfpagelayout=SinglePage, final}
 
 \usepackage[nodayofweek]{datetime}
 \usepackage[obeyDraft,colorinlistoftodos]{todonotes}
@@ -14,6 +18,7 @@
 \SetWatermarkScale{4}
 \newcommand{\inote}[1]{\todo[inline]{#1}}
 \newcommand{\incomplete}[1]{\todo[inline,color=red]{INCOMPLETE CHAPTER: #1}}
+
 
 \author{Team R4 \\ Henry Lovett (hl13g10) \\ Ashley Robinson (ajr2g10) \\ Martin Wearn (mw20g10) \\ Anusha Reddy (arr1g13)}
 
@@ -33,6 +38,7 @@
 \input{Testing.tex}
 \input{Conclusion.tex}
 \appendix
+\input{ISSummary.tex}
 \input{ProjectManagement.tex}
 \input{DivisionOfLabour.tex}
 \end{document}
