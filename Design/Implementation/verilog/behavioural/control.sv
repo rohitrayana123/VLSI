@@ -255,7 +255,8 @@ always_comb begin
                   		ADC:begin
 		                	PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
-                           	RegWe = 1;
+							Op2Sel = Op2Rd2;
+							RegWe = 1;
                            	PcWe = 1;
 							StatusRegWe = 1;
                            	PcSel = Pc1;
@@ -263,11 +264,12 @@ always_comb begin
                   		ADCI:begin
 		                	PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
+							ImmSel = ImmShort;
                            	RegWe = 1;
                            	PcWe = 1;
 							StatusRegWe = 1;
                            	PcSel = Pc1;
-                    	end
+						end
                   		SUB:begin
 							PcEn = 1;   		
                            	Op1Sel = Op1Rd1;
