@@ -1,7 +1,7 @@
 %  Assembler.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:13 GMT
-%  <+Last Edited: Sun 13 Apr 2014 21:33:17 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Fri 25 Apr 2014 11:48:49 BST by hl13g10 on octopus +>
 
 \section{Assembler}
 The current instruction set architecture includes an assembler for converting assembly language into hex. This chapter outlines the required formatting and available features of this assembler. 
@@ -44,11 +44,60 @@ Different names can be assigned to the same register, but only one is valid at a
 \begin{center}\texttt{.define NAME REGISTER}\end{center}
 
 \subsection{Running The Assembler}
-The assembler reads a `.asm' file and outputs a `.hex' file in hexadecimal format. 
-It is run by typing ``./assemble filename'' at the command line when in the directory of both the assembler executable and the program assembly file. ``filename'' does not have to include the .asm file extension. 
-The outputted file is saved to the same directory as the input file. \\
-\todo[inline]{HSL: I'm going to add an option parser to make the UI a bit easier. This section is likely to change a fair amount}
-\noindent Typing -h or --help instead of the file name will bring up the help menu with version information and basic formatting support. 
+%The assembler reads a `.asm' file and outputs a `.hex' file in hexadecimal format. 
+%It is run by typing ``./assemble filename'' at the command line when in the directory of both the assembler executable and the program assembly file. ``filename'' does not have to include the .asm file extension. 
+%The outputted file is saved to the same directory as the input file. \\
+
+The assembler is a python executable and is run by typing ``./assemble.py''. 
+Alternatively, the assembler can be placed in a folder on the users path and executed by running ``assemble.py''.
+It supports Python versions 2.4.3 to 2.7.3.
+A help prompt is given by the script if the usage is not correct, or given a \texttt{-h} or \texttt{--help} argument. 
+
+By default, the script will output the assembled hex to a file with the same name, but with a `.hex' extension in the same directory.
+The user can specify a different file to use by using a \texttt{-o filename.hex} or \texttt{--output=filename.hex} argument to the script.
+The output file can also be a relative or absolute path to a different directory. 
+
+The full usage for the script is seen in listing~\ref{lst:assemblerusage}. 
+This includes the basic rules for writing the assembly language and a version log. 
+
+\begin{lstlisting}[label=lst:assemblerusage,caption={Assembler help prompt}]
+$> assemble.py 
+Usage: assemble.py [-o outfile] input
+
+---Team R4 Assembler Help---
+------Version: 
+ 1 (CMPI addition onwards)
+ 2 (Changed to final ISA, added special case I's and error checking
+ 3 (Ajr changes - Hex output added, bug fix)
+ 4 (Added SP symbol)
+ 5 (NOP support added, help added) UNTESTED
+ 6 (Interrupt support added [ENAI, DISI, RETI])
+ 7 (Checks for duplicate Labels)
+ 8 (Support for any ISR location & automated startup code entry)
+ 9 (Support for .define)
+ 10 (Changed usage)
+ Current is most recent iteration
+Commenting uses : or ;
+Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)
+                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP
+Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
+Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP
+Branching: Symbolic and Numeric supported
+
+Notes:
+ Input files are assumed to end with a .asm extension
+ Immediate value sizes are checked
+ Instruction-less lines allowed
+ .ISR may be located anywhere in file
+ .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions
+
+
+Options:
+  -h, --help            show this help message and exit
+  -o FILE, --output=FILE
+                        output file for the assembled output
+
+\end{lstlisting}
 
 \newpage
 \subsection{Error Messages}
