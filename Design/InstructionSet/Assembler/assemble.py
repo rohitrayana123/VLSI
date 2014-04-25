@@ -211,7 +211,7 @@ if "__main__" == __name__:
 \n       .ISR may be located anywhere in file\
 \n       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions\n\n"
 
-	parser = MyParser(usage="%prog [-o outfile] input", description=des)
+	parser = MyParser(usage="%prog [-o outfile] input", description=des, version="%prog V12")
         parser.add_option("-o", "--output", dest="outfile", metavar="FILE",
                   help="output file for the assembled output")
 	#@todo add a verbose and quiet mode?
