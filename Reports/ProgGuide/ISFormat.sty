@@ -14,7 +14,17 @@
 {
 	\newpage
 	%{\LARGE #1 #2}
-	\subsection{#2 \hfill #1}
+	%\subsection{#2 \hfill #1}
+	\begin{minipage}[t]{7cm}
+		\flushleft
+		\subsection{#2}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{7cm}
+	\flushright
+	\large
+	{\bf #1}
+	\end{minipage}
 	\quad\\
 }
 \newcommand{\Iformat}[3][5]
