@@ -1,24 +1,89 @@
 %  Simulation.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:53 GMT
-%  <+Last Edited: Sun 13 Apr 2014 22:15:20 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Fri 25 Apr 2014 13:08:35 BST by hl13g10 on octopus +>
 
 \section{Simulation}
 
 \subsection{Running the simulations}
+\todo[inline]{A register window could also be done for this section too}
 
-Describe sim.py
+\todo[inline]{Sim.py needs a fair bit of change. If we have time, this could be altered to use Iains dir structure. This section highlights how to use his script and our assembler.}
 
-What it does, why it is needed
 
 How to run for each of the behavioural, extracted and mixed
 
-NEED TO CHANGE SIM.PY TO RUN USING IAINS STRUCTURE (/home/user/design/fcde\dots)
+Before the simulator is invoked, the assembler should be invoked. 
+This is discussed in section~\ref{sect:runningassembler}. 
+It can be done from within the programs directory (\texttt{~/design/fcde/verilog/programs}) by running, for example \texttt{assemble.py multiply}
 
-Clock cycles for each of the programs
+The script ``simulate'' is an executable shell script. 
+It is run from the terminal in the directory \texttt{~/design/fcde/verilog}. 
+This supports running simulations of a full verilog model, cross simulation and a fully extracted simulation. 
+Usage is as follows:\\
+\begin{center}
+./simulate type program [definitions] 
+\end{center}
 
-Register window - need to do one. 
-Description of also.
+The `type' can be one of the following: \textit{behavioural, mixed, extracted}.
+`Program' is a relative path to the assembled hex file, usually located in the programs folder. 
+Extra definitions can also be included to set the switch value or serial data input.
 
+The serial data file used is located in the programs directory. 
+This is a hex file with white space separated values of the form `` time data''. 
+The data is then sent at the time to the processor by the serial module. 
+An example serial data hex file is shown in listing~\ref{lst:serialdata}.
 
+\lstinputlisting[label=lst:serialdata,caption={Example serial data file}]{../../Design/Implementation/programs/serial_data.hex}
+
+Below is a complete list of commands to run all programs on all versions of the processor.
+`Number' is a user defined decimal value to set the switches.
+\begin{itemize}
+\item ./assembler/assemble.py programs/multiply.asm \\ ./simulate behavioural programs/multiply.hex +define+switch\_value=number
+\item ./assembler/assemble.py programs/multiply.asm \\ ./simulate mixed programs/multiply.hex +define+switch\_value=number
+\item ./assembler/assemble.py programs/multiply.asm \\ ./simulate extracted programs/multiply.hex +define+switch\_value=number\\
+
+\item ./assembler/assemble.py programs/random.asm \\ ./simulate behavioural programs/random.hex +define+switch\_value=number
+\item ./assembler/assemble.py programs/random.asm \\ ./simulate mixed programs/random.hex +define+switch\_value=number
+\item ./assembler/assemble.py programs/random.asm \\ ./simulate extracted programs/random.hex +define+switch\_value=number\\
+
+\item ./assembler/assemble.py programs/factorial.asm \\ ./simulate behavioural programs/factorial.hex +define+switch\_value=number
+\item ./assembler/assemble.py programs/factorial.asm \\ ./simulate mixed programs/factorial.hex +define+switch\_value=number
+\item ./assembler/assemble.py programs/factorial.asm \\ ./simulate extracted programs/factorial.hex +define+switch\_value=number\\
+
+\item ./assembler/assemble.py programs/interrupt.asm \\ ./simulate behavioural programs/interrupt.hex programs/serial\_data.hex
+\item ./assembler/assemble.py programs/interrupt.asm \\ ./simulate mixed programs/interrupt.hex programs/serial\_data.hex
+\item ./assembler/assemble.py programs/interrupt.asm \\ ./simulate extracted programs/interrupt.hex programs/serial\_data.hex
+\end{itemize}
+
+\todo[inline]{how to run scan path sim too}
+
+\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
+
+The number of clock cycles for each program to fully run is shown in table~\ref{tab:runtimes}. 
+Factorial run time is given for an input of 8 and is the worst case. 
+Interrupt is dependant on the serial data input and the time is given for the serial data file mentioned above.
+
+\begin{table}
+\centering
+\caption{Clock cycles required for each program to run\todo[inline]{Make these more accurate when AJR has finished playing around}}
+\label{tab:runtimes}
+\begin{tabular}{|c|c|}
+Program & Clock Cycles \\ \hline
+Multiply	& 900	\\
+Factorial	& 6000	\\
+Random		& 	\\
+Interrupt	& 30000	\\ \hline
+\end{tabular}
+\end{table}
+
+\todo[inline]{and TCL?}
+A dissembler is also implemented in system verilog to aid debugging.
+It is an ASCII formatted array implemented at the top level of the simulation. 
+It is capable of reading the instruction register with in the design, and reconstructing the assembly language of the instruction. 
+It will show the opcode, register addresses and immediate values.
+It is automatically included by the TCL script.
+The TCL script also opens a waveform window and adds important signals.
+
+\todo[inline]{check that the dissembler works in all the simulations (it doesn't\dots)}
 
