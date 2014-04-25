@@ -58,6 +58,13 @@ No more PUSH or POP operations are performed.
 A load from the stack pointer is used write a new random number to LEDs.
 All contained within an unconditional branch.
 
+\begin{figure}[ht]
+   \centering
+    \includegraphics[width = 0.8\textwidth]{LFSR.pdf}
+   \caption{16 Bit Linear Feedback Shift Register.}
+   \label{fig:circles}
+\end{figure}
+
 An 2 input XOR gate is simulated by using masking the register value the comparing against inputs $00$ and $11$.\todo{surely this we can just use the XOR instruction}
 These would return zero so only a shift is performed.
 If this is not true then a shift is performed followed by an OR operation with $0$x$8000$ therefore feeding back a value to the top of the shift register.
