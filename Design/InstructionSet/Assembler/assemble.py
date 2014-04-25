@@ -188,14 +188,16 @@ if "__main__" == __name__:
 \n               2 (Changed to final ISA, added special case I's and error checking\
 \n               3 (Ajr changes - Hex output added, bug fix)\
 \n               4 (Added SP symbol)\
-\n               5 (NOP support added, help added) UNTESTED\
+\n               5 (NOP support added, help added)\
 \n               6 (Interrupt support added [ENAI, DISI, RETI])\
 \n               7 (Checks for duplicate Labels)\
 \n               8 (Support for any ISR location & automated startup code entry)\
 \n               9 (Support for .define)\
 \n              10 (Changed usage)\
 \n		11 (ISR setup shortened, Numeric branching support removed)\
+\n		12 (Branches automatically extended if out of 8-bit range)\
 \n      Current is most recent iteration\
+\nInput Syntax: ./assemble filename\
 \nCommenting uses : or ;\
 \nLabels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)\
 \n                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP\
@@ -214,10 +216,7 @@ if "__main__" == __name__:
                   help="output file for the assembled output")
 	#@todo add a verbose and quiet mode?
         (options, args) = parser.parse_args()
-	#print args
-	if len(args) != 1: #only supports one file input
-		parser.print_help()
-		exit(1)
+	
 	assemfile = args[0]		#filename only
 	#Determine input/output file paths
 	print '--------Converting File %s.py--------\n' % assemfile
@@ -340,8 +339,9 @@ if "__main__" == __name__:
 	#Extract ISR
 	ISR = []
 	for i in range(ISRlen):
-		print "      asm file line", ISRloc + i, SEGMLINES[ISRloc + i]
 		ISR.append(SEGMLINES.pop(ISRloc))
+	for i in range(ISRlen):
+		print "      asm file line", ISRloc + i, ISR[i]
 	#ISR.insert(0, ['numBR', str(ISRlen+1)])			#Add unconditional branch over ISR
 	SPInit = 0							#Check if SP has been initialised
 	for l in SEGMLINES[0:10]:
@@ -379,46 +379,50 @@ if "__main__" == __name__:
 			SEGMLINES[i].remove(line[0])			#remove label from instruction
 			#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
 	#Check for out-of-range branching
-	print "--Before newSEGMLINES--"
-	print 'Link Table'
-	for l in LINKTABLE:
-		print '    ', l
-	newSEGMLINES = []
-	newSEGMLINES.extend(SEGMLINES)
+	finish = 0
 	autoCount = 0
-	for i, line in enumerate(SEGMLINES):
-		if OpType(line[0]) == 'D2':
-			print 'D2', line[1], i,
-			distance = branch(line[1], i, 0)
-			print distance
-		if OpType(line[0]) == 'D2':
-			if distance > 127:			#Branching forwards more than possible
-				autoCount += 1
-				newSEGMLINES.insert(i, ['BR', '+auto' + str(autoCount)])#new branch source
-				newSEGMLINES.insert(i+124, ['numBR', '2'])		#main program branches over new instruction
-				newSEGMLINES.insert(i+124, newSEGMLINES.pop(i+1))	#new branch destination, and old branch source
-				LINKTABLE.append(['+auto' + str(autoCount), i+125])	#add new link to table
-				for l in LINKTABLE:					#update new link positions
-					if l[1] >= (i+124):
-						l[1] += 2
-			elif distance < -128:			#Branching backwards more than possible
-				autoCount += 1
-				newSEGMLINES.insert(i-126, ['numBR', '2'])		#main program branches over new instruction
-				newSEGMLINES.insert(i-125, newSEGMLINES.pop(i+1))	#new branch destination, and old branch source
-				newSEGMLINES.insert(i, ['BR', '+auto' + str(autoCount)])#new branch source
-				LINKTABLE.append(['+auto' + str(autoCount), i-125])	#add new link to table
-				#for l in LINKTABLE:					#update new link positions
-				#	if l[1] >= (i-126):
-				#		l[1] += 2
-				print i, newSEGMLINES[i-126], newSEGMLINES[i-125]
-	SEGMLINES = newSEGMLINES
-	
-	print 'Program File After Preprocessing'
-	for i, s in enumerate(SEGMLINES):
-		if (OpType(s[0]) == 'D2') & (s[0] != 'numBR'):
-			print i, '    ', s, '---->', branch(s[1], i, 0)
+	while finish == 0:						#Repeat checking until there are no branches out-of-bounds (middle branch max 125 as 2 lines used to extend)
+		newSEGMLINES = []
+		newSEGMLINES.extend(SEGMLINES)
+		for i, line in enumerate(SEGMLINES):
+			if (OpType(line[0]) == 'D2') & (line[0] != 'numBR'):
+				distance = branch(line[1], i, 0)
+				if distance > 127:			#Branching forwards more than possible
+					autoCount += 1
+					newSEGMLINES.insert(i, ['BR', '+auto' + str(autoCount)])#new branch source
+					newSEGMLINES.insert(i+125, ['numBR', '2'])		#main program branches over new instruction
+					newSEGMLINES.insert(i+125, newSEGMLINES.pop(i+1))	#new branch destination, and old branch source
+					for l in LINKTABLE:					#update new link positions
+						if l[1] >= (i+124):
+							l[1] += 2
+					LINKTABLE.append(['+auto' + str(autoCount), i+125])	#add new link to table
+					finish = 1						#Leave current pass of loop
+					SEGMLINES = newSEGMLINES[:]
+					break
+				elif distance < -128:			#Branching backwards more than possible
+					autoCount += 1
+					newSEGMLINES.insert(i-126, ['numBR', '2'])		#main program branches over new instruction
+					newSEGMLINES.insert(i-125, newSEGMLINES.pop(i+1))	#new branch destination, and old branch source
+					newSEGMLINES.insert(i+2, ['BR', '+auto' + str(autoCount)])#new branch source
+					for l in LINKTABLE:					#update new link positions
+						if l[1] >= (i-126):
+							l[1] += 2
+					LINKTABLE.append(['+auto' + str(autoCount), i-125])	#add new link to table
+					finish = 1						#Leave current pass of loop
+					SEGMLINES = newSEGMLINES[:]
+					break
+		if finish == 1:
+			finish = 0
 		else:
-			print i, '    ', s
+			finish = 2
+	SEGMLINES = newSEGMLINES[:]
+	
+	#print 'Program File After Preprocessing'
+	#for i, s in enumerate(SEGMLINES):
+	#	if (OpType(s[0]) == 'D2') & (s[0] != 'numBR'):
+	#		print i, '    ', s, '---->', branch(s[1], i, 0)
+	#	else:
+	#		print i, '    ', s
 	
 	print 'Link Table'
 	for l in LINKTABLE:

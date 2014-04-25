@@ -27,7 +27,7 @@
 		LLI t, #0	:t = 0
 		STW R2, [R6, 2]	:Store R2
 		BR .loop
-.end		BR .start	:Remain in tight loop
+.end		BR .longtarget	:Remain in tight loop
 		ADDI R6, R6, #1	:Filling Code that does nothing useful
 .goingup	BR .goingup
 .start		ADDI R6, R6, #1
@@ -41,7 +41,7 @@
 		ADDI R6, R6, #9
 		ADDI R6, R6, #1
 		ADDI R6, R6, #1
-		ADDI R6, R6, #1
+		BR .middletest
 		ADDI R6, R6, #1
 		ADDI R6, R6, #1
 		ADDI R6, R6, #1
@@ -66,6 +66,159 @@
 		ADDI R6, R6, #3
 		ADDI R6, R6, #3
 		ADDI R6, R6, #3
+		ADDI R6, R6, #12
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #4
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #5
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #6
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #7
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #7
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #8
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #9
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #1
+		ADDI R6, R6, #2
+		ADDI R6, R6, #2
+		ADDI R6, R6, #2
+		ADDI R6, R6, #2
+		ADDI R6, R6, #2
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #3
+		ADDI R6, R6, #12
 		ADDI R6, R6, #3
 		ADDI R6, R6, #3
 		ADDI R6, R6, #3
@@ -120,7 +273,7 @@
 		ADDI R6, R6, #8
 		ADDI R6, R6, #8
 		ADDI R6, R6, #9
-		ADDI R6, R6, #9
+.middletest	SUBI R6, R6, #9
 		ADDI R6, R6, #9
 		ADDI R6, R6, #9
 		ADDI R6, R6, #9
