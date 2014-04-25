@@ -1,19 +1,12 @@
 // Hex file to specify serial data input
 //
-// each line consists of two hex numbers
-// the first specifies the cycle number
-// the second specifies the data value
-
-// this is a dummy version containing no data
-
-// uncomment the following lines for a simple serial data stream
 //
-	248			7
-	48F			6
-	6D6			5
-	91D			4
-	B64			7
-	DAB			5
+	248		7
+	48F		6
+	6D6		5
+	91D		4
+	B64		7
+	DAB		5
 	36B1		3
 	6D61		2
 

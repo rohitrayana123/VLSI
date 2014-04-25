@@ -1,14 +1,14 @@
 %  ProgGuide.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:09:06 GMT
-%  <+Last Edited: Thu 24 Apr 2014 18:27:59 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Fri 25 Apr 2014 13:23:07 BST by hl13g10 on octopus +>
 
 \documentclass[12pt]{article}
 
 %\usepackage[nodayofweek]{datetime}
 \usepackage{ISFormat}
 \usepackage{multirow}
-\usepackage{todonotes}
+\usepackage[colorinlistoftodos]{todonotes}
 \usepackage[nodayofweek]{datetime}
 \usepackage{listings}
 \usepackage{graphicx}
@@ -19,10 +19,15 @@
 
 \begin{document}
 \maketitle
+\newpage
 \input{definitions.tex}%import some definitions
+
+\listoftodos
 %\begin{abstract}
 %Abstract
 %\end{abstract}
+\tableofcontents
+\newpage
 \input{Introduction.tex}
 \input{Architecture.tex}
 \input{RegDescription.tex}
@@ -31,6 +36,7 @@
 \input{Assembler.tex}
 \input{Programs.tex}
 \input{Simulation.tex}
+\newpage
 \appendix
 \input{CodeListings.tex}
 	

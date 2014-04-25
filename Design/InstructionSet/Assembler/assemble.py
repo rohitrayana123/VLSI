@@ -196,7 +196,6 @@ if "__main__" == __name__:
 \n              10 (Changed usage)\
 \n		11 (ISR setup shortened, Numeric branching support removed)\
 \n      Current is most recent iteration\
-\nInput Syntax: ./assemble filename\
 \nCommenting uses : or ;\
 \nLabels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)\
 \n                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP\
@@ -215,7 +214,10 @@ if "__main__" == __name__:
                   help="output file for the assembled output")
 	#@todo add a verbose and quiet mode?
         (options, args) = parser.parse_args()
-	
+	#print args
+	if len(args) != 1: #only supports one file input
+		parser.print_help()
+		exit(1)
 	assemfile = args[0]		#filename only
 	#Determine input/output file paths
 	print '--------Converting File %s.py--------\n' % assemfile
