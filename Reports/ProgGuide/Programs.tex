@@ -2,7 +2,6 @@
 
 \section{Programs}
 Every example program in this section uses R7 as a stack pointer which is initialised to the by the program to 0x07D0 using the LUI and LLI instructions.
-It is possible a stack is not required in which case no initialisation is needed and R7 can be used as a general purpose register. \todo{surely this should be in the register description section}
 
 
 
@@ -14,20 +13,22 @@ The code for the multiply program is held in Appendix~\ref{sec:multiply_appendix
 A sixteen bit number is read from input switches and then split in to lower and upper bytes which are then multiplied.
 The resulting sixteen bit word is written to the LEDs before reaching a terminating loop.
 
-The subroutine operation is described using C in listing~\ref{lst:shiftAndAdd.c}. 
+The subroutine operation is described using C in listing~\ref{lst:multiply.c}. 
 If the result is greater than or equal to $2^{16}$ the subroutine will fail and return zero;
 The lowest bit of the multiplier control the accumulator and the overflow check.
 The multiplier is shifted right and the quotient is shifted left at every iteration.
-Equation~\eqref{eqn:multi} formally describes the result of algorithm.
-In implementation a trade off between code size and execution time is made by loop unrolling the eight stages.
-This creates scope for optimisation in operations contained in the loop, doesn't use a counter and requires less branch operations.
+Equation~\eqref{eqn:multi} formally describes the result of algorithm disregarding physical limitations.
 
-\lstinputlisting[style=C,label=lst:shiftAndAdd.c,caption=Shift and Add Subroutine]{pseudocode/shiftAndAdd.c}
+\lstinputlisting[style=C,label=lst:multiply.c,caption=Multiply Subroutine]{pseudocode/multiply.c}
 
 \begin{equation}
-   A = M \times Q = \sum_{i=0}^{7} 2^i M_i Q\:\:where\:\:M_i \in \{0,1\}
+   A = M \times Q = \sum_{i=0}^{\infty} 2^i M_i Q\:\:where\:\:M_i \in \{0,1\}
    \label{eqn:multi}
 \end{equation}
+
+The multiply code has also been optimised by unrolling the loop contents and is held in Appendix~\ref{sec:multiply_unrolled_appendix} listing~\ref{lst:multiplyUnroll.asm}.
+In implementation a trade off between code size and execution time is made by loop unrolling the eight stages.
+This creates scope for optimisation in operations contained in the loop, doesn't use a counter and requires less branch operations.
 
 
 
