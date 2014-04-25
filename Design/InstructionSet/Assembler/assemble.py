@@ -36,7 +36,7 @@ def OpType(value):	#Determine instruction format type
 		return "E"
 	elif value in ("JMP"):
 		return "D1"
-	elif value in ("BR", "BNE", "BE", "BLT", "BGE", "BWL", "RET", "OVERISR"):
+	elif value in ("BR", "BNE", "BE", "BLT", "BGE", "BWL", "RET", "numBR"):
 		return "D2"
 	elif value in ("LDW", "STW"):
 		return "C"
@@ -339,10 +339,32 @@ if "__main__" == __name__:
 	ISR = []
 	for i in range(ISRlen):
 		print "      asm file line", ISRloc + i, SEGMLINES[ISRloc + i]
-		#temp = SEGMLINES.pop(ISRloc + i)
 		ISR.append(SEGMLINES.pop(ISRloc))
-	ISR.insert(0, ['OVERISR', str(ISRlen+1)])				#Add unconditional branch over ISR
-	SEGMLINES[15:1] = ISR						#Insert ISR into location 16 in memory (15 used due to previous branch)
+	#ISR.insert(0, ['numBR', str(ISRlen+1)])			#Add unconditional branch over ISR
+	SPInit = 0							#Check if SP has been initialised
+	for l in SEGMLINES[0:10]:
+		if (l[0] == 'LUI') & (l[1] == 'R7'):
+			SPInit += 1;
+		elif (l[0] == 'LLI') & (l[1] == 'R7'):
+			SPInit += 1;
+		elif l[0].startswith('.'):
+			if (l[1] == 'LUI') & (l[2] == 'R7'):
+				SPInit += 1;
+			elif (l[1] == 'LUI') & (l[2] == 'R7'):
+				SPInit += 1;
+	if SPInit < 2:#SP has not been setup so add initialization code
+		ISR.insert(0, ['LUI', 'R7', '7'])
+		ISR.insert(1, ['LLI', 'R7', '255'])
+	ISR.insert(2, ['PUSH', 'R0'])
+	tempsplit = (ISRlen+1)//256
+	ISR.insert(3, ['LUI', 'R0', str(tempsplit)])
+	ISR.insert(4, ['LLI', 'R0', str(ISRlen - tempsplit*256)])
+	ISR.insert(5, ['JMP', 'R0', '0'])
+	ISR.append(['POP', 'R0'])
+	if SPInit < 2:
+		SEGMLINES[10:1] = ISR						#Insert ISR into location 16 in memory (10 used due to setup code w SP setup)
+	else:
+		SEGMLINES[12:1] = ISR						#Insert ISR into location 16 in memory (12 used due to setup code w/o SP setup)
 	#print ISR
 	#Create link table, ignoring ISR
 	print '--------Creating Link Table----------'
@@ -354,10 +376,47 @@ if "__main__" == __name__:
 			LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 			SEGMLINES[i].remove(line[0])			#remove label from instruction
 			#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
+	#Check for out-of-range branching
+	print "--Before newSEGMLINES--"
+	print 'Link Table'
+	for l in LINKTABLE:
+		print '    ', l
+	newSEGMLINES = []
+	newSEGMLINES.extend(SEGMLINES)
+	autoCount = 0
+	for i, line in enumerate(SEGMLINES):
+		if OpType(line[0]) == 'D2':
+			print 'D2', line[1], i,
+			distance = branch(line[1], i, 0)
+			print distance
+		if OpType(line[0]) == 'D2':
+			if distance > 127:			#Branching forwards more than possible
+				autoCount += 1
+				newSEGMLINES.insert(i, ['BR', '+auto' + str(autoCount)])#new branch source
+				newSEGMLINES.insert(i+124, ['numBR', '2'])		#main program branches over new instruction
+				newSEGMLINES.insert(i+124, newSEGMLINES.pop(i+1))	#new branch destination, and old branch source
+				LINKTABLE.append(['+auto' + str(autoCount), i+125])	#add new link to table
+				for l in LINKTABLE:					#update new link positions
+					if l[1] >= (i+124):
+						l[1] += 2
+			elif distance < -128:			#Branching backwards more than possible
+				autoCount += 1
+				newSEGMLINES.insert(i-126, ['numBR', '2'])		#main program branches over new instruction
+				newSEGMLINES.insert(i-125, newSEGMLINES.pop(i+1))	#new branch destination, and old branch source
+				newSEGMLINES.insert(i, ['BR', '+auto' + str(autoCount)])#new branch source
+				LINKTABLE.append(['+auto' + str(autoCount), i-125])	#add new link to table
+				#for l in LINKTABLE:					#update new link positions
+				#	if l[1] >= (i-126):
+				#		l[1] += 2
+				print i, newSEGMLINES[i-126], newSEGMLINES[i-125]
+	SEGMLINES = newSEGMLINES
 	
-	print 'After Preprocessing'
-	for s in SEGMLINES:
-		print '    ', s
+	print 'Program File After Preprocessing'
+	for i, s in enumerate(SEGMLINES):
+		if (OpType(s[0]) == 'D2') & (s[0] != 'numBR'):
+			print i, '    ', s, '---->', branch(s[1], i, 0)
+		else:
+			print i, '    ', s
 	
 	print 'Link Table'
 	for l in LINKTABLE:
@@ -426,7 +485,7 @@ if "__main__" == __name__:
 		elif OpType(line[0]) == 'D2':				#Control transfer: Others
 			if line[0] == 'RET':				#Specific -> Return
 				MC.append(OpNum('D2') + conditioncode(line[0]) + '00000000')
-			elif line[0] == 'OVERISR':			#Special PseudoInstruction for branching over ISR
+			elif line[0] == 'numBR':			#Special PseudoInstruction for branching over ISR
 				MC.append(OpNum('D2') + conditioncode('BR') + ConvertToBin(int(line[1]),8))
 			else:
 				MC.append(OpNum('D2') + conditioncode(line[0]) + branch(line[1], i))
