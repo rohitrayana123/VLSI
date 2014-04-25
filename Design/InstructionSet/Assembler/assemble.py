@@ -36,7 +36,7 @@ def OpType(value):	#Determine instruction format type
 		return "E"
 	elif value in ("JMP"):
 		return "D1"
-	elif value in ("BR", "BNE", "BE", "BLT", "BGE", "BWL", "RET"):
+	elif value in ("BR", "BNE", "BE", "BLT", "BGE", "BWL", "RET", "OVERISR"):
 		return "D2"
 	elif value in ("LDW", "STW"):
 		return "C"
@@ -72,7 +72,7 @@ def regcode(value):	#Get binary equivalent of register name
 	elif value.upper() == "LR":
 		return "000"
 	else:
-		print 'ERROR2: Unrecognized Register Code'
+		print 'ERROR2: Unrecognized Register Code, is there a .define missing?'
 		sys.exit()
 
 def conditioncode(value):	#Get binary code for branching conditions
@@ -96,15 +96,16 @@ def conditioncode(value):	#Get binary code for branching conditions
 		print 'ERROR3: Unrecognized Branch Condition'
 		sys.exit()
 
+#Args: Destination, Source, Binary
 def branch(value, lineNo, b=1):	#Calculate relative branch address for PC
-	try:
-		if b:
-			return ConvertToBin(int(value), 8)
-		else:
-			return int(value)
-	except:
+	#try:
+	#	if b:
+	#		return ConvertToBin(int(value), 8)
+	#	else:
+	#		return int(value)
+	#except:
 		for link in LINKTABLE:
-			if value in ('.ISR','.isr'):
+			if value in ('.ISR','.isr'):			#Needs more extensive tests to ensure not branching into an ISR
 				print 'ERROR12: Illegal branch to ISR'
 				sys.exit()
 			elif link[0] == value:
@@ -193,6 +194,7 @@ if "__main__" == __name__:
 \n               8 (Support for any ISR location & automated startup code entry)\
 \n               9 (Support for .define)\
 \n              10 (Changed usage)\
+\n		11 (ISR setup shortened, Numeric branching support removed)\
 \n      Current is most recent iteration\
 \nInput Syntax: ./assemble filename\
 \nCommenting uses : or ;\
@@ -200,7 +202,7 @@ if "__main__" == __name__:
 \n                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP\
 \nInstruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]\
 \nRegisters: R0, R1, R2, R3, R4, R5, R6, R7==SP\
-\nBranching: Symbolic and Numeric supported\n\
+\nBranching: Only Symbolic Supported\n\
 \nNotes:\
 \n       Input files are assumed to end with a .asm extension\
 \n       Immediate value sizes are checked\
@@ -333,28 +335,15 @@ if "__main__" == __name__:
 			if (ISRcalc == 1):				#Count length of ISR
 				ISRLines = ISRLines + 1
 	
-	#Reposition ISR to start of program
+	#Extract ISR
+	ISR = []
 	for i in range(ISRlen):
-		print "      line", ISRloc + i, SEGMLINES[ISRloc + i]
-		temp = SEGMLINES.pop(ISRloc + i)
-		SEGMLINES.insert(i,temp)
-	#Add setup code before ISR
-	SEGMLINES.insert(0, ['BR', str(17-15+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-14+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-13+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-12+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-11+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-10+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-9+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-8+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-7+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-6+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-5+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-4+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-3+ISRlen-1)])
-	SEGMLINES.insert(0, ['BR', str(17-2+ISRlen-1)])
-	SEGMLINES.insert(0, ['LLI', 'R7', '255'])
-	SEGMLINES.insert(0, ['LUI', 'R7', '7'])
+		print "      asm file line", ISRloc + i, SEGMLINES[ISRloc + i]
+		#temp = SEGMLINES.pop(ISRloc + i)
+		ISR.append(SEGMLINES.pop(ISRloc))
+	ISR.insert(0, ['OVERISR', str(ISRlen+1)])				#Add unconditional branch over ISR
+	SEGMLINES[15:1] = ISR						#Insert ISR into location 16 in memory (15 used due to previous branch)
+	#print ISR
 	#Create link table, ignoring ISR
 	print '--------Creating Link Table----------'
 	for i, line in enumerate(SEGMLINES):
@@ -366,7 +355,7 @@ if "__main__" == __name__:
 			SEGMLINES[i].remove(line[0])			#remove label from instruction
 			#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
 	
-	print 'After Reorder and Initialization Code'
+	print 'After Preprocessing'
 	for s in SEGMLINES:
 		print '    ', s
 	
@@ -437,6 +426,8 @@ if "__main__" == __name__:
 		elif OpType(line[0]) == 'D2':				#Control transfer: Others
 			if line[0] == 'RET':				#Specific -> Return
 				MC.append(OpNum('D2') + conditioncode(line[0]) + '00000000')
+			elif line[0] == 'OVERISR':			#Special PseudoInstruction for branching over ISR
+				MC.append(OpNum('D2') + conditioncode('BR') + ConvertToBin(int(line[1]),8))
 			else:
 				MC.append(OpNum('D2') + conditioncode(line[0]) + branch(line[1], i))
 				tempi = branch(line[1], i, 0)
