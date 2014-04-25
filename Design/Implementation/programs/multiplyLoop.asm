@@ -8,13 +8,6 @@
 		AND R1,R0,R1	; Lower byte SWs in R1	
 		LSR R0,R0,#8	; Upper byte SWs in R0		 
 		SUB R2,R2,R2	; Zero required	
-		
-		LUI R1,#1
-		LLI R1,#255
-		
-		LUI R0,#0
-		LLI R0,#255
-
 		PUSH R0			; Op1
 		PUSH R1			; Op2
 		PUSH R2			; Place holder is zero
@@ -49,8 +42,10 @@
 		LLI R5,#0		; 0x8000
 		AND R5,R5,R1
 		CMPI R5,#0
-		BNE .over
-		LSL R1,R1,#1	; Q = Q << 1
+		BE .shift		
+		CMPI R0,#0
+		BNE .over		; And M != 0
+.shift	LSL R1,R1,#1	; Q = Q << 1
 		LSR R0,R0,#1	; M = M >> 1
 		ADDIB R4,#1		; i++
 		CMPI R4,#15
