@@ -367,12 +367,12 @@ if "__main__" == __name__:
 		ISR.insert(2, ['PUSH', 'R0'])
 		ISR.insert(3, ['LUI', 'R0', str(tempsplit)])
 		ISR.insert(4, ['LLI', 'R0', str(ISRlen+1 - tempsplit*256)])
-		ISR.insert(5, ['JMP', 'R0', '0'])
+		ISR.insert(5, ['JMP', 'R0', '15'])
 	else:
 		ISR.insert(0, ['PUSH', 'R0'])
 		ISR.insert(1, ['LUI', 'R0', str(tempsplit)])
 		ISR.insert(2, ['LLI', 'R0', str(ISRlen+1 - tempsplit*256)])
-		ISR.insert(3, ['JMP', 'R0', '0'])
+		ISR.insert(3, ['JMP', 'R0', '15'])
 	
 	ISR.append(['POP', 'R0'])
 	if SPInit < 2:
