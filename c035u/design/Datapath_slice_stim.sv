@@ -6,6 +6,7 @@ module Datapath_slice_stim;
 timeunit 1ns;
 timeprecision 10ps;
 
+logic Clock, nReset;
 wire SysBus;							//Global Bus
 logic DR_SysBus;
 logic Imm;							//Left inputs (DataIn ignored)
@@ -76,7 +77,9 @@ Datapath_slice ds(
 	.SUB ( SUB ),
 	.WdSel ( WdSel ),
 	.XOR ( XOR ),
-	.ZeroA ( ZeroA )
+	.ZeroA ( ZeroA ),
+	.Clock ( Clock ),
+	.nReset ( nReset )
 	);
 
 //Prevent directly driving bus
@@ -89,7 +92,7 @@ initial
   begin
     errors = 0; 
     //Globals
-    Imm = 0; DR_SysBus = 0; 
+    Imm = 0; DR_SysBus = 0; Clock = 0; nReset = 1;
     //Pc_slice
     PcIncCin = 0; LrSel = 0; LrWe = 0; LrEn = 0; PcWe = 0; PcEn = 0; PcSel = 0;
     //Datapath_slice unique (sectionA)
@@ -103,6 +106,9 @@ initial
     ShB = 0; ShL = 0; Sh8H_L = 0; Sh4D_L = 0; Sh2C_L = 0; Sh1_L_In = 0; Sh8 = 0; ShR = 0; Sh8H_R = 0; Sh4 = 0; Sh4C_R = 0; Sh2 = 0; Sh2B_R = 0; Sh1 = 0; Sh1_R_in = 0; ShOut = 0; 
     AluOut = 0;
 
+    //Reset Registers
+    #500 nReset = 0;
+    #500 nReset = 1;
     //Only Testing Unique sections as sub-modules are tested already and just extended to top/bottom
     //Section A
     #500 assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
@@ -113,6 +119,10 @@ initial
     #500 DR_SysBus = 1;
     #500 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
     //Section B
+    #500 Rw = 8'b11110000; Rs1 = 1; Rs2 = 16;
+    #500 Clock = 1;
+    #500 Clock = 0;
+    //#500 assert(ds.Regs == ds.WData) else begin $display("ERROR: Regs not written"); errors++; end
     #500 assert(ds.A == ds.Rd1) else begin $display("ERROR: A, Op1Sel=0"); errors++; end
     #500 Op1Sel = 1;
     #500 assert(ds.A == ds.Pc) else begin $display("ERROR: A, Op1Sel=1"); errors++; end
