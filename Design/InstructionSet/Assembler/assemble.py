@@ -335,7 +335,9 @@ if "__main__" == __name__:
 		else:
 			if (ISRcalc == 1):				#Count length of ISR
 				ISRLines = ISRLines + 1
-	
+	if ISR != 1:
+		print "No ISR Found"	
+
 	#Extract ISR
 	ISR = []
 	for i in range(ISRlen):
@@ -345,15 +347,19 @@ if "__main__" == __name__:
 	#ISR.insert(0, ['numBR', str(ISRlen+1)])			#Add unconditional branch over ISR
 	SPInit = 0							#Check if SP has been initialised
 	for l in SEGMLINES[0:10]:
-		if (l[0] == 'LUI') & (l[1] == 'R7'):
-			SPInit += 1;
-		elif (l[0] == 'LLI') & (l[1] == 'R7'):
-			SPInit += 1;
+		if (l[0] == 'LUI'):
+			if (l[1] == 'R7'):
+				SPInit += 1;
+		elif (l[0] == 'LLI'):
+			if (l[1] == 'R7'):
+				SPInit += 1;
 		elif l[0].startswith('.'):
-			if (l[1] == 'LUI') & (l[2] == 'R7'):
-				SPInit += 1;
-			elif (l[1] == 'LUI') & (l[2] == 'R7'):
-				SPInit += 1;
+			if (l[1] == 'LUI'):
+				if (l[2] == 'R7'):
+					SPInit += 1;
+			elif (l[1] == 'LUI'):
+				if (l[2] == 'R7'):
+					SPInit += 1;
 	if SPInit < 2:#SP has not been setup so add initialization code
 		ISR.insert(0, ['LUI', 'R7', '7'])
 		ISR.insert(1, ['LLI', 'R7', '255'])
@@ -385,7 +391,7 @@ if "__main__" == __name__:
 		newSEGMLINES = []
 		newSEGMLINES.extend(SEGMLINES)
 		for i, line in enumerate(SEGMLINES):
-			if (OpType(line[0]) == 'D2') & (line[0] != 'numBR'):
+			if (OpType(line[0]) == 'D2') & (line[0] != 'numBR') & (line[0] != 'RET'):
 				distance = branch(line[1], i, 0)
 				if distance > 127:			#Branching forwards more than possible
 					autoCount += 1
