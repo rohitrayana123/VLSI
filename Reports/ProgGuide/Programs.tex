@@ -2,7 +2,8 @@
 
 \section{Programs}
 Every example program in this section uses R7 as a stack pointer which is initialised to the by the program to 0x07D0 using the LUI and LLI instructions.
-
+The testbench contains an area of an area of memory with $2048$ locations and memory mapped deices.
+$16$ switches at location $0x0800$, $16$ LEDs at location $0x0801$ and a serial io device which can be read from location $0xA000$ and has a control register at location $0xA001$. 
 
 
 
@@ -10,25 +11,32 @@ Every example program in this section uses R7 as a stack pointer which is initia
 \subsection{Multiply}
 \label{sec:multiply}
 The code for the multiply program is held in Appendix~\ref{sec:multiply_appendix} listing~\ref{lst:multiply.asm}.
-A sixteen bit number is read from input switches and then split in to lower and upper bytes which are then multiplied.
+A sixteen bit number is read from input switches, split in to lower and upper bytes which are then multiplied.
 The resulting sixteen bit word is written to the LEDs before reaching a terminating loop.
-
-The subroutine operation is described using C in listing~\ref{lst:multiply.c}. 
-If the result is greater than or equal to $2^{16}$ the subroutine will fail and return zero;
-The lowest bit of the multiplier control the accumulator and the overflow check.
-The multiplier is shifted right and the quotient is shifted left at every iteration.
-Equation~\eqref{eqn:multi} formally describes the result of algorithm disregarding physical limitations.
-
-\lstinputlisting[style=C,label=lst:multiply.c,caption=Multiply Subroutine]{pseudocode/multiply.c}
+Equation~\eqref{eqn:multi} formally describes the algorithm disregarding physical limitations.
 
 \begin{equation}
-   A = M \times Q = \sum_{i=0}^{\infty} 2^i M_i Q\:\:where\:\:M_i \in \{0,1\}
+	A = M \times Q = \sum_{i=0}^{\infty} 2^i M_i Q\:\:where\:\:M_i \in \{0,1\}
    \label{eqn:multi}
 \end{equation}
 
-The multiply code has also been optimised by unrolling the loop contents and is held in Appendix~\ref{sec:multiply_unrolled_appendix} listing~\ref{lst:multiplyUnroll.asm}.
-In implementation a trade off between code size and execution time is made by loop unrolling the eight stages.
-This creates scope for optimisation in operations contained in the loop, doesn't use a counter and requires less branch operations.
+
+
+The subroutine operation is described using C in listing~\ref{lst:multiply.c}. 
+If the result is greater than or equal to $2^{16}$ the subroutine will fail and return zero.
+The lowest bit of the multiplier controls the accumulator and the overflow check.
+The multiplier is shifted right and the quotient is shifted left at every iteration.
+An unconditional branch is used to keep the algorithm in a while loop. 
+The state of the multiplier is compared at every iteration against zero when the algorithm is finished.
+As size of the multiplier controls the number of iterations a comparison is made on entry to use the smallest operand.
+
+\lstinputlisting[style=C,label=lst:multiply.c,caption=Multiply Subroutine]{pseudocode/multiply.c}
+
+
+
+%The multiply code has also been optimised by unrolling the loop contents and is held in Appendix~\ref{sec:multiply_unrolled_appendix} listing~\ref{lst:multiplyUnroll.asm}.
+%In implementation a trade off between code size and execution time is made by loop unrolling the eight stages.
+%This creates scope for optimisation in operations contained in the loop, doesn't use a counter and requires less branch operations.
 
 
 
