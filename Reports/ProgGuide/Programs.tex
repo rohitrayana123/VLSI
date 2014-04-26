@@ -3,7 +3,7 @@
 \section{Programs}
 Every example program in this section uses R7 as a stack pointer which is initialised to the by the program to 0x07D0 using the LUI and LLI instructions.
 The testbench contains an area of an area of memory with $2048$ locations and memory mapped deices.
-$16$ switches at location $0x0800$, $16$ LEDs at location $0x0801$ and a serial io device which can be read from location $0xA000$ and has a control register at location $0xA001$. 
+$16$ switches at location $0$x$0800$, $16$ LEDs at location $0$x$0801$ and a serial io device which can be read from location $0$x$A000$ and has a control register at location $0$x$A001$. 
 
 
 
@@ -46,10 +46,10 @@ As size of the multiplier controls the number of iterations a comparison is made
 \label{sec:factorial}
 The code for the factorial program is held in Appendix~\ref{sec:factorial_appendix} listing~\ref{lst:factorial.asm}.
 It is possible to calculate the factorial of any integer value between $0$ and $8$ inclusive.
-The main body of code masks the value read from the input switches so only acceptable values are passed to subroutine.
-The factorial subroutine is called which in turn calls the multiply subroutine discussed in section~\ref{sec:multiply}. 
-The result is calculated recursively as described using C in listing~\ref{lst:factorial.c}. 
-
+The subroutine is called which in turn calls the multiply subroutine discussed in section~\ref{sec:multiply}. 
+The factorial subroutine does no parameter checking but the multiply code does so if overflow does occur zero is propagated and returned; zero is not a possible factorial.
+The result is calculated recursively as described using C in listing~\ref{lst:factorial.c}.
+Large values can cause stack overflow the main body of code makes sure inputs, read from the switches, are sufficiently small.
 
 \lstinputlisting[style=C,label=lst:factorial.c,caption=Recursive Factorial Subroutine]{pseudocode/factorial.c}
 
@@ -60,23 +60,23 @@ The result is calculated recursively as described using C in listing~\ref{lst:fa
 
 \subsection{Random}
 The code for the random program is held in Appendix~\ref{sec:random_appendix} listing~\ref{lst:random.asm}.
-A random series of numbers is achieved by simulating a $16$ bit linear feedback shift register. 
+A random series of numbers is achieved by simulating the $16$ bit linear feedback shift register in Figure~\ref{fig:lfsr}. 
 This produces a new number every $16$ sixteen clock cycles so in this case a simulation subroutine is called $16$ times.
-A seed taken from switches is passed to the first subroutine call then using BWL instructions the parameter is altered and passed to the next subroutine call.
-No more PUSH or POP operations are performed.
+A seed taken from switches and passed to the first subroutine call via the stack is altered and passed to the next subroutine call.
+No more stack operations are performed.
 A load from the stack pointer is used write a new random number to LEDs.
-All contained within an unconditional branch.
+All contained within an unconditional branch but a loop counter is used control write and reset.
 
 \begin{figure}[ht]
    \centering
     \includegraphics[width = 0.8\textwidth]{LFSR.pdf}
-   \caption{16 Bit Linear Feedback Shift Register.\todo[inline]{Maybe change to IEEE symbols if we have time}}
-   \label{fig:circles}
+		\caption{16 Bit Linear Feedback Shift Register. \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
+   \label{fig:lfsr}
 \end{figure}
 
-An 2 input XOR gate is simulated by using masking the register value the comparing against inputs $00$ and $11$.\todo{surely this we can just use the XOR instruction}
-These would return zero so only a shift is performed.
-If this is not true then a shift is performed followed by an OR operation with $0$x$8000$ therefore feeding back a value to the top of the shift register.
+A two input XOR gate is simulated using the XOR operation along with shifting to compare bits in different locations.
+Bits $2$ and $4$ are used as inputs so a logical shift left by two is used to align them at the bit $4$ position. 
+Masking the output value is used feedback to the top bit.
 This is described using C in listing~\ref{lst:random.c}. 
 
 \lstinputlisting[style=C,label=lst:random.c,caption=Linear Feedback Shift Register Subroutine]{pseudocode/random.c}
@@ -88,6 +88,9 @@ This is described using C in listing~\ref{lst:random.c}.
 \subsection{Interrupt}
 The code for the interrupt program is held in Appendix~\ref{sec:interrupt_appendix} listing~\ref{lst:interrupt.asm}.
 This is the most complex example and makes use of both the multiply and factorial subroutines in sections~\ref{sec:multiply} and~\ref{sec:factorial} respectively.
+The interrupt services the serial device by writing data to a $4$ byte circular buffer. 
+A main program check to see if data is in the buffer then and if so calculates the factorial writing the result to the LEDs.
+The buffer is purposefully small to test overflow.
 
 \lstinputlisting[style=C,label=lst:interrupt.c,caption=Serial Device Interrupt Service Request]{pseudocode/interrupt.c}
 
