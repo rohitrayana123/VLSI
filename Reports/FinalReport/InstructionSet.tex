@@ -12,7 +12,12 @@
 In designing the instruction set architecture (ISA) emphasis was put on creating a complete set of basic operations which could be used to implement any program. This gave rise to a RISC based architecture since they have a small number of instructions and are optimized for a smaller chip area.
 \todo[inline]{Expand basic ISA design considerations}
 
-Since a 16-bit microprocessor was to be designed, it was decided to base the system on the ARM Thumb architecture. This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. However it included a number of operations which take advantage of the ARM's 32-bit datapath, so any high register operations were removed. Change of state, sign extension and debugging instructions, among others, were also removed for simplification or because they were not necessary. This produced the original ISA made up of instructions 1-4, 6-10, 12-16, 20-24, 27-32, 35 and 36 as noted in the summary table in Appendix~\ref{chap:AppISS}. While instructions 5 and 11 were added to support use of carry flag with an immediate value. 17, 18 and 19 are included to form a complete logic set. 25 and 26 are for loading an initial value to any general purpose register. Instruction 33 is included from the SPARC ISA for returning from a procedure. Instruction 34 enables a control jump to anywhere in $2^{16}$ memory locations. With instructions 37-41 were added for support of a single interrupt.
+Since a 16-bit microprocessor was to be designed, it was decided to base the system on the ARM Thumb architecture. This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. However it included a number of operations which take advantage of the ARM's 32-bit datapath, so any high register operations were removed. Change of state, sign extension and debugging instructions, among others, were also removed for simplification or because they were not necessary. This produced the original ISA made up of instructions 1-4, 6-10, 12-16, 20-24, 27-32, 35 and 36 as noted in the summary table in Appendix~\ref{chap:AppISS}. While instructions 5 and 11 were added to support use of carry flag with an immediate value. 17, 18 and 19 are included to form a complete logic set. 25 and 26 are for loading an initial value to any general purpose register. Instruction 33 is included from the SPARC ISA for returning from a procedure. Instruction 34 enables a control jump to anywhere in $2^{16}$ memory locations. While instructions 37-41 were added for support of a single interrupt.
+
+It was decided to use up to 3 operands. This allows greater flexibility with the instructions available and reduces the amount of memory required to perform data processing operations. The number of instructions and their groupings determined the requirement of having 6-bits for the Opcode field. As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be referenced in the remaining 10 bits. With the option of expanding the third operand to a 5 bit immediate value. This benefits from how common it is that a small immediate value is used more than a larger one. 
+
+Both control transfer and interrupt operations, with one exception, do not use any registers. This meant the free space could be used for further definitions, leaving only one opcode being needed for each. A 3-bit condition field allows a sufficient quantity of branching operations to be supported, as well as moving control forward 127 lines or backwards 128 lines. However since there is a limitation on the distance, it was deemed necessary to include the instruction ``JMP'' which takes a register address for transferring to any position in memory. 
+
 
 \newcolumntype{B}{c}
 \begin{table}[h]
@@ -24,9 +29,9 @@ Since a 16-bit microprocessor was to be designed, it was decided to base the sys
 \begin{tabular}{|r|l|l||BBBBBBBBBBBBBBBc|}
 	 \multicolumn{1}{r}{} & \multicolumn{1}{l}{\bf Instruction Type} & \multicolumn{1}{l}{\bf Sub-Type} & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & \multicolumn{1}{B}{0} \\
 	\hline
-	A1 & \multirow{2}{*}{\bf Data Manipulation} & {\bf Register} & \multicolumn{5}{B|}{\multirow{2}{*}{Opcode}} & \multicolumn{3}{B|}{Rd} & \multicolumn{3}{B|}{Ra} & \multicolumn{3}{B|}{Rb} & X & X \\
-	\cline{1-1} \cline{3-3} \cline{9-19}
-	A2 &  & {\bf Immediate} & \multicolumn{5}{B|}{} & \multicolumn{3}{B|}{Rd} & \multicolumn{3}{B|}{Ra} & \multicolumn{5}{B|}{imm4/5} \\
+	A1 & \multirow{2}{*}{\bf Data Manipulation} & {\bf Register} & \multicolumn{5}{B|}{\multirow{2}{*}{Opcode}} & \multicolumn{3}{B|}{\multirow{2}{*}{Rd}} & \multicolumn{3}{B|}{\multirow{2}{*}{Ra}} & \multicolumn{3}{B|}{Rb} & X & X \\
+	\cline{1-1} \cline{3-3} \cline{15-19}
+	A2 &  & {\bf Immediate} & \multicolumn{5}{B|}{} & \multicolumn{3}{B|}{} & \multicolumn{3}{B|}{} & \multicolumn{5}{B|}{imm4/5} \\
 	\hline
 	B & \multicolumn{2}{l||}{\bf Byte Immediate} & \multicolumn{5}{B|}{Opcode} & \multicolumn{3}{B|}{Rd} & \multicolumn{8}{B|}{imm8} \\
 	\hline
