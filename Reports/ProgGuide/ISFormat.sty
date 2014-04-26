@@ -15,12 +15,12 @@
 	\newpage
 	%{\LARGE #1 #2}
 	%\subsection{#2 \hfill #1}
-	\begin{minipage}[t]{7cm}
+	\begin{minipage}[t]{5cm}
 		\flushleft
 		\subsection{#2}
 	\end{minipage}
 	\hfill
-	\begin{minipage}[t]{7cm}
+	\begin{minipage}[t]{9cm}
 	\flushright
 	\large
 	{\bf #1}
@@ -36,7 +36,11 @@
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \multicolumn{3}{c|}{Rb} & X & \multicolumn{1}{c|}{X} \\
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & 
+				\if d#1 \multicolumn{1}{|c}{X} & X & \multicolumn{1}{c|}{X} \else \multicolumn{3}{|c|}{Rd} \fi
+				& \multicolumn{3}{c|}{Ra} & 
+				\if b#1 X & X & \multicolumn{1}{c|}{X} \else \multicolumn{3}{c|}{Rb} \fi
+				& X & \multicolumn{1}{c|}{X} \\
 				\hline
 			\end{tabular}
 		\fi
@@ -44,7 +48,10 @@
 			\begin{tabular}{cccccccccccccccc}
 				15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
 				\hline
-				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & \multicolumn{3}{|c|}{Rd} & \multicolumn{3}{c|}{Ra} & \if s#1 0 & \multicolumn{4}{|c|}{imm4} \else \multicolumn{5}{c|}{imm5} \fi\\
+				\multicolumn{1}{|c}{\StrChar{#3}{1}} & \StrChar{#3}{2} & \StrChar{#3}{3} & \StrChar{#3}{4} & \StrChar{#3}{5} & 
+				\if d#1 \multicolumn{1}{|c}{X} & X & \multicolumn{1}{c|}{X} \else \multicolumn{3}{|c|}{Rd} \fi
+				& \multicolumn{3}{c|}{Ra} & 
+				\if s#1 0 & \multicolumn{4}{|c|}{imm4} \else \multicolumn{5}{c|}{imm5} \fi\\
 				\hline
 			\end{tabular}
 		\fi
@@ -123,14 +130,18 @@
 	\setlength{\tabcolsep}{2pt}
 	\indent\textbf{Operation} \\
 	\indent\indent
-	\begin{tabular}{rl}
+	\begin{tabular}{|r|l|}
 	\if X#1
 		\phantom{Rd $\leftarrow$}& #2 \\
 	\else
-		#1& #2 \\
+		\if F#1
+			\multicolumn{2}{l}{#2} \\
+		\else
+			#1& #2 \\
+		\fi
 	\fi
 	\if N#7
-		\phantom{R} N $\leftarrow$& if Result $<$ 0 then 1, else 0 \\
+		\phantom{R} N $\leftarrow$& if (Result $<$ 0) then 1, else 0 \\
 	\else
 		\if U#7
 			\phantom{R} N $\leftarrow$& UNPREDICTABLE \\
@@ -139,7 +150,7 @@
 		\fi
 	\fi
 	\if Z#8
-		Z $\leftarrow$& if Result = 0 then 1, else 0\\
+		Z $\leftarrow$& if (Result = 0) then 1, else 0\\
 	\else
 		\if U#8
 			Z $\leftarrow$& UNPREDICTABLE \\
@@ -150,44 +161,44 @@
 	\if V#4
 		\if b#5
 			\if 0#6
-				V $\leftarrow$& if (+Ra and +Rb and -Result) or \\
-				&~~~(-Ra and -Rb and +Result) then 1, else 0 \\
+				V $\leftarrow$& if (Ra$>$0 and Rb$>$0 and Result$<$0) or \\
+				&~~~(Ra$<$0 and Rb$<$0 and Result$>$0) then 1, else 0 \\
 			\fi
 			\if c#6
-				V $\leftarrow$& if (+Ra and +(Rb+CFlag) and -Result) or\\
-				&~~~(-Ra and -(Rb+CFlag) and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Ra$>$0 and (Rb+CFlag)$>$0 and Result$<$0) or\\
+				&~~~(Ra$<$0 and (Rb+CFlag)$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 			\if n#6
-				V $\leftarrow$& if (+Ra and +(Rb-CFlag) and -Result) or\\
-				&~~~(-Ra and -(Rb-CFlag) and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Ra$>$0 and (Rb-CFlag)$>$0 and Result$<$0) or\\
+				&~~~(Ra$<$0 and (Rb-CFlag)$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 		\fi
 		\if 5#5
 			\if 0#6
-				V $\leftarrow$& if (+Ra and +\#imm5 and -Result) or\\
-				&~~~(-Ra and -\#imm5 and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Ra$>$0 and \#imm5$>$0 and Result$<$0) or\\
+				&~~~(Ra$<$0 and \#imm5$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 			\if c#6
-				V $\leftarrow$& if (+Ra and +(\#imm5+CFlag) and -Result) or\\
-				&~~~(-Ra and -(\#imm5+CFlag) and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Ra$>$0 and (\#imm5+CFlag)$>$0 and Result$<$0) or\\
+				&~~~(Ra$<$0 and (\#imm5+CFlag)$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 			\if n#6
-				V $\leftarrow$& if (+Ra and +(\#imm5-CFlag) and -Result) or\\
-				&~~~(-Ra and -(\#imm5-CFlag) and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Ra$>$0 and (\#imm5-CFlag)$>$0 and Result$<$0) or\\
+				&~~~(Ra$<$0 and (\#imm5-CFlag)$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 		\fi
 		\if 8#5
 			\if 0#6
-				V $\leftarrow$& if (+Rd and +\#imm8 and -Result) or\\
-				&~~~(-Rd and -\#imm8 and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Rd$>$0 and \#imm8$>$0 and Result$<$0) or\\
+				&~~~(Rd$<$0 and \#imm8$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 			\if c#6
-				V $\leftarrow$& if (+Rd and +(\#imm8+CFlag) and -Result or\\
-				&~~~(-Rd and -(\#imm8+CFlag) and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Rd$>$0 and (\#imm8+CFlag)$>$0 and Result$<$0 or\\
+				&~~~(Rd$<$0 and (\#imm8+CFlag)$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 			\if n#6
-				V $\leftarrow$& if (+Rd and +(\#imm8-CFlag) and -Result) or\\
-				&~~~(-Rd and -(\#imm8-CFlag) and +Result) then 1, else 0\\
+				V $\leftarrow$& if (Rd$>$0 and (\#imm8-CFlag)$>$0 and Result$<$0) or\\
+				&~~~(Rd$<$0 and (\#imm8-CFlag)$<$0 and Result$>$0) then 1, else 0\\
 			\fi
 		\fi
 		\if 0#5

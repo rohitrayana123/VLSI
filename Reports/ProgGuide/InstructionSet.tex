@@ -145,7 +145,7 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Idesc{The 16-bit word in GPR[Ra] is added to the sign-extended 5-bit value given in the instruction with carry in set according to the Carry flag from previous operation, and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Immediate.}
 \newpage
 \Imnemonic{Negate Word}{NEG}
-\Iformat{A}{11010}
+\Iformat[b]{A}{11010}
 \Isyntax{NEG Rd, Ra}{NEG R5, R3}
 \Ioperation{Rd $\leftarrow$}{0 - Ra}{C}{V}{b}{0}{N}{Z}
 \Idesc{The 16-bit word in GPR[Ra] is added to the 16-bit word in GPR[Rb] and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
@@ -184,13 +184,13 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Idesc{The 5-bit immediate value in instruction is subtracted from the 16-bit word in GPR[Ra] with the subtracted carry in set according to the Carry flag from previous operation, and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Immediate.}
 \newpage
 \Imnemonic{Compare Word}{CMP}
-\Iformat{A}{00111}
+\Iformat[d]{A}{00111}
 \Isyntax{CMP Ra, Rb}{CMP R3, R2}
 \Ioperation{X}{Ra - Rb}{C}{V}{b}{0}{N}{Z}
 \Idesc{The 16-bit word in GPR[Rb] is subtracted from the 16-bit word in GPR[Ra] and the status flags are updated without saving the result. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Compare Immediate}{CMPI}
-\Iformat{a}{01111}
+\Iformat[d]{a}{01111}
 \Isyntax{CMPI Ra, \#imm5}{CMPI R3, \#7}
 \Ioperation{X}{Ra - \#imm5}{C}{V}{5}{0}{N}{Z}
 \Idesc{The sign extended 5-bit value given in the instruction is subtracted from the 16-bit word in GPR[Ra] and the status flags are updated without saving the result. \\\\ Addressing Mode: Register-Immediate.}
@@ -198,41 +198,41 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Logical AND}{AND}
 \Iformat{A}{10000}
 \Isyntax{AND Rd, Ra, Rb}{AND R5, R3, R2}
-\Ioperation{Rd $\leftarrow$}{Ra AND Rb}{U}{U}{0}{0}{N}{Z}
-\Idesc{The logical AND of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
+\Ioperation{Rd $\leftarrow$}{Ra \texttt{AND} Rb}{U}{U}{0}{0}{N}{Z}
+\Idesc{The logical \texttt{AND} of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Logical OR}{OR}
 \Iformat{A}{10001}
 \Isyntax{OR Rd, Ra, Rb}{OR R5, R3, R2}
-\Ioperation{Rd $\leftarrow$}{Ra OR Rb}{U}{U}{0}{0}{N}{Z}
-\Idesc{The logical OR of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
+\Ioperation{Rd $\leftarrow$}{Ra \texttt{OR} Rb}{U}{U}{0}{0}{N}{Z}
+\Idesc{The logical \texttt{OR} of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Logical XOR}{XOR}
 \Iformat{A}{10011}
 \Isyntax{XOR Rd, Ra, Rb}{XOR R5, R3, R2}
-\Ioperation{Rd $\leftarrow$}{Ra XOR Rb}{U}{U}{0}{0}{N}{Z}
-\Idesc{The logical XOR of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
+\Ioperation{Rd $\leftarrow$}{Ra \texttt{XOR} Rb}{U}{U}{0}{0}{N}{Z}
+\Idesc{The logical \texttt{XOR} of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 %
 % Instructions 17-24
 %
 \Imnemonic{Logical NOT}{NOT}
-\Iformat{A}{10010}
+\Iformat[b]{A}{10010}
 \Isyntax{NOT Rd, Ra}{NOT R5, R3}
-\Ioperation{Rd $\leftarrow$}{NOT Ra}{U}{U}{0}{0}{N}{Z}
-\Idesc{The logical NOT of the 16-bit word in GPR[Ra] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
+\Ioperation{Rd $\leftarrow$}{\texttt{NOT} Ra}{U}{U}{0}{0}{N}{Z}
+\Idesc{The logical \texttt{NOT} of the 16-bit word in GPR[Ra] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Logical NAND}{NAND}
 \Iformat{A}{10110}
 \Isyntax{NAND Rd, Ra, Rb}{NAND R5, R3, R2}
-\Ioperation{Rd $\leftarrow$}{Ra NAND Rb}{U}{U}{0}{0}{N}{Z}
-\Idesc{The logical NAND of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
+\Ioperation{Rd $\leftarrow$}{Ra \texttt{NAND} Rb}{U}{U}{0}{0}{N}{Z}
+\Idesc{The logical \texttt{NAND} of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Logical NOR}{NOR}
 \Iformat{A}{10111}
 \Isyntax{NOR Rd, Ra, Rb}{NOR R5, R3, R2}
-\Ioperation{Rd $\leftarrow$}{Ra NOR Rb}{U}{U}{0}{0}{N}{Z}
-\Idesc{The logical NOR of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
+\Ioperation{Rd $\leftarrow$}{Ra \texttt{NOR} Rb}{U}{U}{0}{0}{N}{Z}
+\Idesc{The logical \texttt{NOR} of the 16-bit words in GPR[Ra] and GPR[Rb] is performed and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Logical Shift Left}{LSL}
 \Iformat[s]{a}{11111}
@@ -261,7 +261,7 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Store Word}{STW}
 \Iformat{C}{1}
 \Isyntax{STW Rd, [Ra, \#imm5]}{STW R5, [R3, \#7]}
-\Ioperation{Mem}{[Ra + \#imm5] $\leftarrow$ Rd}{n}{n}{5}{0}{n}{n}
+\Ioperation{F}{~Mem[Ra + \#imm5] $\leftarrow$ Rd}{n}{n}{5}{0}{n}{n}
 \Idesc{Data in GPR[Rd] is stored to memory at the resultant address from addition of GPR[Ra] and the 5-bit immediate value specified in the instruction. \\\\ Addressing Mode: Base Plus Offset.}
 \newpage
 %
@@ -288,25 +288,25 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Branch If Not Equal}{BNE}
 \Iformat{D}{110}
 \Isyntax{BNE LABEL}{BNE .loop}
-\Ioperation{PC $\leftarrow$}{PC + \#imm8~(z==0)?}{n}{n}{8}{0}{n}{n}
+\Ioperation{F}{~if (z=0) PC $\leftarrow$ PC + \#imm8}{n}{n}{8}{0}{n}{n}
 \Idesc{Conditionally branch to the resultant address from addition of PC and the 8-bit immediate value specified in the instruction if zero status flag (Z) equals zero. LABEL can be both a symbolic name or a numeric value, and is capable of jumping forwards or backwards.\\\\ Addressing Mode: PC Relative.}
 \newpage
 \Imnemonic{Branch If Equal}{BE}
 \Iformat{D}{111}
 \Isyntax{BE LABEL}{BE .loop}
-\Ioperation{PC $\leftarrow$}{PC + \#imm8~(z==1)?}{n}{n}{8}{0}{n}{n}
+\Ioperation{F}{~if (z=1) PC $\leftarrow$ PC + \#imm8}{n}{n}{8}{0}{n}{n}
 \Idesc{Conditionally branch to the resultant address from addition of PC and the 8-bit immediate value specified in the instruction if zero status flag (Z) equals one. LABEL can be both a symbolic name or a numeric value, and is capable of jumping forwards or backwards.\\\\ Addressing Mode: PC Relative.}
 \newpage
 \Imnemonic{Branch If Less Than}{BLT}
 \Iformat{D}{100}
 \Isyntax{BLT LABEL}{BLT .loop}
-\Ioperation{PC $\leftarrow$}{PC + \#imm8~(n\&!v~OR~!n\&v)?}{n}{n}{8}{0}{n}{n}
+\Ioperation{F}{~if (n\&!v~OR~!n\&v) PC $\leftarrow$ PC + \#imm8}{n}{n}{8}{0}{n}{n}
 \Idesc{Conditionally branch to the resultant address from addition of PC and the 8-bit immediate value specified in the instruction if negative status flag and overflow status flag are not equivalent. LABEL can be both a symbolic name or a numeric value, and is capable of jumping forwards or backwards.\\\\ Addressing Mode: PC Relative.}
 \newpage
 \Imnemonic{Branch If Greater Than Or Equal}{BGE}
 \Iformat{D}{101}
 \Isyntax{BGE LABEL}{BGE .loop}
-\Ioperation{PC $\leftarrow$}{PC + \#imm8~(n\&v~OR~!n\&!v)?}{n}{n}{8}{0}{n}{n}
+\Ioperation{F}{~if (n\&v~OR~!n\&!v) PC $\leftarrow$ PC + \#imm8}{n}{n}{8}{0}{n}{n}
 \Idesc{Conditionally branch to the resultant address from addition of PC and the 8-bit immediate value specified in the instruction if negative status flag and overflow status flag are equivalent. LABEL can be both a symbolic name or a numeric value, and is capable of jumping forwards or backwards.\\\\ Addressing Mode: PC Relative.}
 \newpage
 \Imnemonic{Branch With Link}{BWL}
@@ -334,7 +334,7 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Iformat{E}{1L0}
 \Isyntax[M]{PUSH Ra}{PUSH R3}
 \Isyntax[F]{PUSH RL}{PUSH RL}
-\Ioperation{Mem}{[R7] $\leftarrow$ reg; R7 $\leftarrow$ R7 - 1}{n}{n}{0}{0}{n}{n}
+\Ioperation{F}{~Mem[R7] $\leftarrow$ reg; R7 $\leftarrow$ R7 - 1}{n}{n}{0}{0}{n}{n}
 \Idesc{`reg' corresponds to either a GPR or the link register, the contents of which are stored to the stack using the address stored in the stack pointer (R7). Then Decrement the stack pointer by one. \\\\Addressing Modes: Register-Indirect, Postdecrement.}
 \newpage
 \Imnemonic{Pop From Stack}{POP}
@@ -353,19 +353,19 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Enable Interrupts}{ENAI}
 \Iformat{F}{001}
 \Isyntax{ENAI}{ENAI}
-\Ioperation{Set }{Interrupt Enable Flag}{n}{n}{0}{0}{n}{n}
+\Ioperation{F}{~Set Interrupt Enable Flag}{n}{n}{0}{0}{n}{n}
 \Idesc{Turn on interrupts by setting interrupt enable flag to true (1).}
 \newpage
 \Imnemonic{Disable Interrupts}{DISI}
 \Iformat{F}{010}
 \Isyntax{DISI}{DISI}
-\Ioperation{Reset}{ Interrupt Enable Flag}{n}{n}{0}{0}{n}{n}
+\Ioperation{F}{~Reset Interrupt Enable Flag}{n}{n}{0}{0}{n}{n}
 \Idesc{Turn off interrupts by setting interrupt enable flag to false (0).}
 \newpage
 \Imnemonic{Store Status Flags}{STF}
 \Iformat{F}{011}
 \Isyntax{STF}{STF}
-\Ioperation{Mem}{[R7] $\leftarrow$ \{12-bit 0, Z, C, V, N\}; R7 $\leftarrow$ R7 - 1;}{n}{n}{0}{0}{n}{n}
+\Ioperation{F}{~Mem[R7] $\leftarrow$ \{12-bit 0, Z, C, V, N\}; R7 $\leftarrow$ R7 - 1;}{n}{n}{0}{0}{n}{n}
 \Idesc{Store contents of status flags to stack using address held in stack pointer (R7). Then decrement the stack pointer (R7) by one. \\\\  Addressing Modes: Register-Indirect, Postdecrement.}
 \newpage
 %
@@ -387,6 +387,6 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 		C $\leftarrow$& Mem[R7][2] \\\\\\
 	\end{tabular}
 	\\\\	
-	\endgroup
+\endgroup
 \Idesc{Increment the stack pointer (R7) by one. Then load content of status flags with lower 4 bits of value retrieved from stack using address held in stack pointer (R7). \\\\ Addressing Modes: Register-Indirect, Preincrement.}
 \newpage
