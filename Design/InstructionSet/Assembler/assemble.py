@@ -360,14 +360,20 @@ if "__main__" == __name__:
 			elif (l[1] == 'LUI'):
 				if (l[2] == 'R7'):
 					SPInit += 1;
+	tempsplit = (ISRlen+1)//256
 	if SPInit < 2:#SP has not been setup so add initialization code
 		ISR.insert(0, ['LUI', 'R7', '7'])
 		ISR.insert(1, ['LLI', 'R7', '255'])
-	ISR.insert(2, ['PUSH', 'R0'])
-	tempsplit = (ISRlen+1)//256
-	ISR.insert(3, ['LUI', 'R0', str(tempsplit)])
-	ISR.insert(4, ['LLI', 'R0', str(ISRlen - tempsplit*256)])
-	ISR.insert(5, ['JMP', 'R0', '0'])
+		ISR.insert(2, ['PUSH', 'R0'])
+		ISR.insert(3, ['LUI', 'R0', str(tempsplit)])
+		ISR.insert(4, ['LLI', 'R0', str(ISRlen - tempsplit*256)])
+		ISR.insert(5, ['JMP', 'R0', '0'])
+	else:
+		ISR.insert(0, ['PUSH', 'R0'])
+		ISR.insert(1, ['LUI', 'R0', str(tempsplit)])
+		ISR.insert(2, ['LLI', 'R0', str(ISRlen - tempsplit*256)])
+		ISR.insert(3, ['JMP', 'R0', '0'])
+	
 	ISR.append(['POP', 'R0'])
 	if SPInit < 2:
 		SEGMLINES[10:1] = ISR						#Insert ISR into location 16 in memory (10 used due to setup code w SP setup)
@@ -423,12 +429,12 @@ if "__main__" == __name__:
 			finish = 2
 	SEGMLINES = newSEGMLINES[:]
 	
-	#print 'Program File After Preprocessing'
-	#for i, s in enumerate(SEGMLINES):
-	#	if (OpType(s[0]) == 'D2') & (s[0] != 'numBR'):
-	#		print i, '    ', s, '---->', branch(s[1], i, 0)
-	#	else:
-	#		print i, '    ', s
+	print 'Program File After Preprocessing'
+	for i, s in enumerate(SEGMLINES):
+		if (OpType(s[0]) == 'D2') & (s[0] != 'numBR') & (s[0] != 'RET'):
+			print i, '    ', s, '---->', branch(s[1], i, 0)
+		else:
+			print i, '    ', s
 	
 	print 'Link Table'
 	for l in LINKTABLE:
