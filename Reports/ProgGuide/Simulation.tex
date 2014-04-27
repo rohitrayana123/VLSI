@@ -1,7 +1,7 @@
 %  Simulation.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:53 GMT
-%  <+Last Edited: Fri 25 Apr 2014 13:08:35 BST by hl13g10 on octopus +>
+%  <+Last Edited: Sun 27 Apr 2014 14:58:45 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Simulation}
 
@@ -58,7 +58,7 @@ Below is a complete list of commands to run all programs on all versions of the 
 
 \todo[inline]{how to run scan path sim too}
 
-\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
+%\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
 
 The number of clock cycles for each program to fully run is shown in table~\ref{tab:runtimes}. 
 Factorial run time is given for an input of 8 and is the worst case. 
@@ -77,13 +77,14 @@ Interrupt	& 30000	\\ \hline
 \end{tabular}
 \end{table}
 
-\todo[inline]{and TCL?}
-A dissembler is also implemented in system verilog to aid debugging.
+%\todo[inline]{and TCL?}
+A dissembler is also implemented in System Verilog to aid debugging.
 It is an ASCII formatted array implemented at the top level of the simulation. 
-It is capable of reading the instruction register with in the design, and reconstructing the assembly language of the instruction. 
+It is capable of reading the instruction register with in the design, and reconstructing the assembly language of the instruction and is supported in behavioural, mixed and extracted simulations.
 It will show the opcode, register addresses and immediate values.
 It is automatically included by the TCL script.
 The TCL script also opens a waveform window and adds important signals.
 
-\todo[inline]{check that the dissembler works in all the simulations (it doesn't\dots)}
+
+%\todo[inline]{check that the dissembler works in all the simulations (it doesn't\dots)}
 
