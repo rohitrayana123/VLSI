@@ -1,20 +1,31 @@
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0	
 		LUI R7, #7
 		LLI R7, #208
 		LUI R0, #8		; Address in R0
 		LLI R0, #0
-		LDW R0,[R0,#0]	; Read switches into R0
-		LUI R1,#0		; Calculate only 8 or less
-		LLI R1,#8
-		CMP R1,R0
-		BE .do
-		SUBIB R1,#1
-		AND R0,R0,R1
-.do		PUSH R0			; Pass para
+		LDW R1,[R0,#0]	; Read switches into R1	
+		PUSH R1			; Pass para
 		BWL .fact		; Run Subroutine
-		POP R0			; Para overwritten with result	
-		LUI R4, #8
-		LLI R4, #1		; Address of LEDS
-		STW R0,[R4,#0]	; Result on LEDS
+		POP R3			; Para overwritten with result		
+		ADDIB R0,#1
+		STW R3,[R0,#0]	; Result on LEDS
 .end 	BR .end			; finish loop
 .fact   PUSH R0
 		PUSH R1
@@ -48,131 +59,34 @@
 		PUSH R4
 		PUSH R5
 		PUSH R6
-		LDW R2,[SP,#8]	; R2 - Multiplier
-		LDW R3,[SP,#9]  ; R3 - Quotient                  	                                                                              
-		SUB R4,R4,R4    ; R4 - Accumulator                                                                                                	
-		ADDI R6,R4,#1	; R6 - Constant 1
-		SUB R5,R5,R5	; R5 - Constant 0
-		SUB R0,R0,R0	; R0 - C check
-		AND R1,R2,R6 	; Stage 1, R1 - cmp
-		CMPI R1,#0		; LSb ?	
-		BE .sh1
-		ADD R4,R4,R3	; (LSb == 1)?
-.sh1	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6	; Stage 2 
-		CMPI R1,#0
-		BE .sh2
-		ADD R4,R4,R3
-.sh2	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 3
-		CMPI R1,#0
-		BE .sh3
-		ADD R4,R4,R3
-.sh3	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 4 
-		CMPI R1,#0
-		BE .sh4
-		ADD R4,R4,R3
-.sh4	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 5 
-		CMPI R1,#0
-		BE .sh5
-		ADD R4,R4,R3
-.sh5	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 6 
-		CMPI R1,#0
-		BE .sh6
-		ADD R4,R4,R3
-.sh6	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 7
-		CMPI R1,#0
-		BE .sh7
-		ADD R4,R4,R3
-.sh7	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6	; Stage 8
-		CMPI R1,#0
-		BE .sh8
-		ADD R4,R4,R3	
-.sh8	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 9
-		CMPI R1,#0
-		BE .sh9
-		ADD R4,R4,R3	
-		ADCI R0,R5,#0
+		LDW R0,[SP,#8]	; R0 - Multiplier
+		LDW R1,[SP,#9]  ; R1 - Quotient                  	                                                                              	
+		CMP R0,R1
+		BLT .nSw		; Branch if M < Q
+		ADDI R2,R1,#0	; Make M the smallest
+		ADDI R1,R0,#0
+		ADDI R0,R2,#0
+.nSw	SUB R2,R2,R2    ; R2 - Accumulator                                                                                                	
+		ADDI R3,R2,#1	; R3 - 0x0001		
+		LUI R4,#128		; R4 - 0x8000
+		LLI R4,#0
+.mloop	AND R6,R0,R3	; R6 - Cmp var  	
+		CMPI R6,#1
+		BNE .nAcc
+		SUB R3,R3,R3
+		ADD R2,R2,R1	; A = A + Q	
+		ADCI R3,R3,#1
+		CMPI R3,#2 
+		BE .fail		; OV
+.nAcc	LSR R0,R0,#1	; M = M >> 1
 		CMPI R0,#0
-		BNE .over
-.sh9	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 10 
-		CMPI R1,#0
-		BE .sh10
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh10	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 11
-		CMPI R1,#0
-		BE .sh11
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh11	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 12
-		CMPI R1,#0
-		BE .sh12
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh12	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6  	; Stage 13
-		CMPI R1,#0
-		BE .sh13
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh13	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6	; Stage 14 
-		CMPI R1,#0
-		BE .sh14
-		ADD R4,R4,R3	
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh14	LSL R3,R3,#1
-		LSR R2,R2,#1
-		AND R1,R2,R6 	; Stage 15
-		CMPI R1,#0
-		BE .sh15
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh15	LSL R3,R3,#1
-		LSR R2,R2,#1	
-		AND R1,R2,R6  	; Stage 16 
-		CMPI R1,#0
-		BE .sh16
-		ADD R4,R4,R3
-		ADCI R0,R5,#0
-		CMPI R0,#0
-		BNE .over
-.sh16	STW R4,[SP,#7]	; Res on stack frame                                                                                         
+		BE .done
+		AND R5,R4,R1
+		CMPI R5,#0
+		BNE .fail		
+		LSL R1,R1,#1	; Q = Q << 1
+		BR .mloop
+.done	STW R2,[SP,#7]	; Res on stack frame                                                                                         
 		POP R6
 		POP R5
 		POP R4
@@ -181,13 +95,6 @@
 		POP R1
 		POP R0
 		RET
-.over	SUB R4,R4,R4
-		STW R4,[SP,#7]	; Res on stack frame                                                                                         
-		POP R6
-		POP R5
-		POP R4
-		POP R3
-		POP R2
-		POP R1
-		POP R0
-		RET
+.fail	SUB R2,R2,R2	; OV - RET 0
+		BR .done
+

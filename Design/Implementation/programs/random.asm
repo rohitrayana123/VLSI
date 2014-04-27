@@ -1,9 +1,27 @@
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0	
 		LUI 	SP,#7		; Init SP
 		LLI 	SP,#208
 		LUI 	R0,#8		; SW Address in R0
 		LLI 	R0,#0
 		LDW 	R1,[R0,#0]	; Read switches into R1	
-		ADDIB	R0,#1		; Address of LEDS in R0
+		ADDIB	R0,#1		; Address of LEDS in R0	
 		PUSH	R1
 .reset	SUB 	R4,R4,R4	; Reset Loop counter
 .loop	BWL 	.rand		 					
