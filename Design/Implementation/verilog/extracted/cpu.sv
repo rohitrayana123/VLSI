@@ -37,6 +37,23 @@ assign sst = {
 ~\control_0/stateSub[0] };
 assign stateSub = stateSub_t'(sst);
 
+wire [15:0] Ir;
+assign Ir = { \datapath_0/Ir[15] ,
+\datapath_0/Ir[14] ,
+\datapath_0/Ir[13] ,
+\datapath_0/Ir[12] ,
+\datapath_0/Ir[11] ,
+\datapath_0/Ir[10] ,
+\datapath_0/Ir[9] ,
+\datapath_0/Ir[8] ,
+\datapath_0/Ir[7] ,
+\datapath_0/Ir[6] ,
+\datapath_0/Ir[5] ,
+\datapath_0/Ir[4] ,
+\datapath_0/Ir[3] ,
+\datapath_0/Ir[2] ,
+\datapath_0/Ir[1] ,
+\datapath_0/Ir[0] };
 wire [15:0] Pc;
 assign Pc = { \datapath_0/Datapath_slice_0[15]/Pc ,
 \datapath_0/Datapath_slice_0[14]/Pc ,

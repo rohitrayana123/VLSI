@@ -17,6 +17,7 @@
 //         $finish;
 //      end
 
+`ifdef behavioural
 
 int encount; 
 always @(negedge Clock)
@@ -47,7 +48,7 @@ begin
 		
 			if(CPU.CPU_core.PcEn) 
 				$display("Pc driving bus");
-			
+		
 			if(CPU.CPU_core.LrEn) 
 				$display("Lr driving bus");
 		
@@ -60,9 +61,15 @@ begin
 	end
 	assert (CPU.CPU_core.MemEn == CPU.CPU_core.ENB) else begin $display("MemEn and ENB not asserted together");end
 end
-
+`endif
 logic [15:0] sysir;
+`ifdef extracted
+assign sysir = CPU.Ir;
+`elif crosssim
+assign sysir = CPU.CPU_core.Ir;
+`else
 assign sysir = CPU.CPU_core.datapath.Ir;
+`endif
 logic [30:0][7:0] Dissembly;
 assign Dissembly = disassemble(sysir);
 
