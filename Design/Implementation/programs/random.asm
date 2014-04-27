@@ -29,7 +29,7 @@
 		BE 		.write
 		ADDIB 	R4,#1		; INC loop counter
 		BR	 	.loop
-.write	LDW 	R1,[SP,#0]	; No POP as re-run
+.write	LDW 	R1,[SP,#0]	; No pop as re-run
 		STW 	R1,[R0,#0]	; Result on LEDS
 		BR 		.reset
 .rand 	PUSH 	R0			; LFSR Sim
@@ -37,7 +37,7 @@
 		PUSH 	R2
 		LDW		R0,[SP,#3]	; Last reg value
 		LSL 	R1,R0,#2	; Shift Bit 4 <- 2
-		XOR 	R1,R0,R1	; XOR Gate
+		XOR 	R1,R0,R1	; xor Gate
 		LSR 	R0,R0,#1	; Shifted reg
 		LUI		R2,#0
 		LLI		R2,#8
@@ -46,7 +46,7 @@
 		BNE 	.done
 		LUI		R1,#128
 		LLI		R1,#0
-		OR 		R0,R0,R1	; OR with 0x8000
+		OR 		R0,R0,R1	; or with 0x8000
 .done	STW		R0,[SP,#3]
 		POP		R2
 		POP		R1
