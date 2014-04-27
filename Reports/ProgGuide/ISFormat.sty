@@ -208,7 +208,11 @@
 		\if U#4
 			V $\leftarrow$& UNPREDICTABLE \\
 		\else
-			V $\leftarrow$& V \\
+			\if 0#4
+				V $\leftarrow$& 0 \\
+			\else
+				V $\leftarrow$& V \\
+			\fi
 		\fi
 	\fi
 	\if C#3
@@ -218,7 +222,11 @@
 		\if U#3
 			C $\leftarrow$& UNPREDICTABLE \\\\\\
 		\else
-			C $\leftarrow$& C \\\\\\
+			\if 0#3
+				C $\leftarrow$& 0 \\\\\\
+			\else
+				C $\leftarrow$& C \\\\\\
+			\fi
 		\fi
 	\fi
 	\end{tabular}
@@ -234,9 +242,4 @@
 	\end{minipage}
 	\\\\
 }
-\newcommand{\Ispecial}[1]
-{
-	#1
-}
-
 \endinput

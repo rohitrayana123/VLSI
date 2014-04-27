@@ -91,19 +91,16 @@ The complete instruction set architecture includes a number of instructions for 
 \begin{tabular}{|c|l|}
 	\hline
 	{\bf Symbol} & \multicolumn{1}{c|}{\bf Meaning} \\\hline
-	$\leftarrow$, $\rightarrow$ & Assignment \\\hline
+	$\leftarrow$ & Assignment \\\hline
 	Result[{\itshape x}] & Bit {\itshape x} of result \\\hline
 	Ra[{\itshape x} : {\itshape y}] & Bit range from {\itshape x} to {\itshape y} of register Ra \\\hline
-	$+Ra$ & Positive value in Register Ra \\\hline
-	$-Ra$ & Negative value in Register Ra \\\hline
-	\textless & Numerically greater than \\\hline
-	\textgreater & Numerically less than \\\hline
+	\textless & Numerically less than \\\hline
+	\textgreater & Numerically greater than \\\hline
 	\textless\textless & Logical shift left \\\hline
 	\textgreater\textgreater & Logical shift right \\\hline
 	\textgreater\textgreater\textgreater & arithmetic shift right \\\hline
 	Mem[{\itshape val}] & Data at memory location with address {\itshape val} \\\hline
 	\{{\itshape x}, {\itshape y}\} & Contatenation of {\itshape x} and {\itshape y} to form a 16-bit value \\\hline
-	({\itshape cond})? & Operation performed if {\itshape cond} evaluates to true \\\hline
 	! & Bitwise Negation \\\hline
 \end{tabular}
 }
@@ -147,7 +144,7 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Negate Word}{NEG}
 \Iformat[b]{A}{11010}
 \Isyntax{NEG Rd, Ra}{NEG R5, R3}
-\Ioperation{Rd $\leftarrow$}{0 - Ra}{C}{V}{b}{0}{N}{Z}
+\Ioperation{Rd $\leftarrow$}{0 - Ra}{0}{0}{b}{0}{N}{Z}
 \Idesc{The 16-bit word in GPR[Ra] is added to the 16-bit word in GPR[Rb] and the result is placed into GPR[Rd]. \\\\ Addressing Mode: Register-Register.}
 \newpage
 \Imnemonic{Subtract Word}{SUB}
