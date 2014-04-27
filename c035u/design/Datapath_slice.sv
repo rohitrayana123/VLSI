@@ -57,7 +57,9 @@ module Datapath_slice(
 	input SUB ,
 	input WdSel ,
 	input XOR ,
-	input ZeroA 
+	input ZeroA, 
+	input Clock,
+	input nReset 
 	);
 
 timeunit 1ns;
@@ -69,8 +71,25 @@ wire Pc ;
 wire Rd1 ;
 wire Rd2 ;
 
+`include "Datapath_slice.vnet"
+
+wire [7:0] Regs ;
+wire Reg7 ;
+assign Reg7 = ~ \regBlock_slice_0/scanreg_7/nQ ;
+assign Regs = { \regBlock_slice_0/Reg0 ,
+		\regBlock_slice_0/Reg1 ,
+		\regBlock_slice_0/Reg2 ,
+		\regBlock_slice_0/Reg3 ,
+		\regBlock_slice_0/Reg4 ,
+		\regBlock_slice_0/Reg5 ,
+		\regBlock_slice_0/Reg6 ,
+		Reg7 };
+//logic Clock ;
+//assign Clock = \mux2_3/Clock ;
+//logic nReset = \mux2_3/nReset ;
+
 // include netlist information from Datapath_slice.vnet
 
-`include "Datapath_slice.vnet"
+
 
 endmodule
