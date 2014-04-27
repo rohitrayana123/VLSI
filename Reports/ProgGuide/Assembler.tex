@@ -18,9 +18,8 @@ Each instruction must be formatted using the following syntax, here ``[\dots]'' 
 
 \noindent Accepted general purpose register values are: R0, R1, R2, R3, R4, R5, R6, R7, SP. These can be upper or lower case and SP is equivalently evaluated to R7.\\
 
-\noindent Branch instructions can take either a symbolic or numeric value. 
-Where a numeric must be relative and between -32 and 31 for a JMP instruction, or between -128 and 127 for any other branch type. 
-If the branch exceeds the accepted range, the assembler will flag an error message. \\
+\noindent Branch instructions take a symbolic reference to the destination. 
+Each type of branch supports moving up to 127 lines forward, or 128 lines backwards. But if a branch is over this limitation, the assembler will automatically create additional instructions to enable greater distances. Each additional branch added will cause two more lines of code to be added to the outputted file. \\
 
 \noindent All label names must begin with a `.' while .ISR/.isr and .define are special cases used for the interrupt service routine and variable definitions respectively. \\
 
@@ -28,8 +27,7 @@ If the branch exceeds the accepted range, the assembler will flag an error messa
 \newpage
 \noindent {\bf Special Case Label}
 
-\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a `RETI' instruction.% and be no longer than 126 lines of code. 
-Branches may occur within the ISR, but are not allowed into this subroutine with the exception of a return from a separate subroutine.\\
+\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a `RETI' instruction. Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. As a result of the positioning of the ISR, any stack initialization must occur within the first 10 lines of main program code since jumping over the ISR requires use of the stack. If not initialized, the default address of the stack pointer is 2047. \\
 
 \subsection{Assembler Directives}
 %There is one supported assembler directive  for assigning meaningful names to each of the general purpose registers. 
