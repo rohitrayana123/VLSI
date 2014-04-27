@@ -96,69 +96,69 @@
 		LLI R0,#19
 		JMP R0,#0
 .addi	SUB R0,R0,R0
-		ADDI R0,R0,#8	; R0
-		ADDI R1,R0,#8
-		ADDI R2,R0,#8
-		ADDI R3,R0,#8
-		ADDI R4,R0,#8
-		ADDI R5,R0,#8
+		ADDI R7,R0,#8	; R0
 		ADDI R6,R0,#8
-		ADDI R7,R0,#8
-		ADDI R0,R1,#8	; R1
-		ADDI R1,R1,#8
-		ADDI R2,R1,#8
-		ADDI R3,R1,#8
-		ADDI R4,R1,#8
-		ADDI R5,R1,#8
+		ADDI R5,R0,#8
+		ADDI R4,R0,#8
+		ADDI R3,R0,#8
+		ADDI R2,R0,#8
+		ADDI R1,R0,#8
+		ADDI R0,R0,#8
+		ADDI R7,R1,#8	; R1
 		ADDI R6,R1,#8
-		ADDI R7,R1,#8
-		ADDI R0,R2,#8	; R2
-		ADDI R1,R2,#8
-		ADDI R2,R2,#8
-		ADDI R3,R2,#8
-		ADDI R4,R2,#8
-		ADDI R5,R2,#8
+		ADDI R5,R1,#8
+		ADDI R4,R1,#8
+		ADDI R3,R1,#8
+		ADDI R2,R1,#8
+		ADDI R0,R1,#8
+		ADDI R1,R1,#8
+		ADDI R7,R2,#8	; R2
 		ADDI R6,R2,#8
-		ADDI R7,R2,#8
-		ADDI R0,R3,#8	; R3
-		ADDI R1,R3,#8
-		ADDI R2,R3,#8
-		ADDI R3,R3,#8
-		ADDI R4,R3,#8
-		ADDI R5,R3,#8
+		ADDI R5,R2,#8
+		ADDI R4,R2,#8
+		ADDI R3,R2,#8
+		ADDI R1,R2,#8
+		ADDI R0,R2,#8
+		ADDI R2,R2,#8
+		ADDI R7,R3,#8	; R3
 		ADDI R6,R3,#8
-		ADDI R7,R3,#8
-		ADDI R0,R4,#8	; R4
-		ADDI R1,R4,#8
-		ADDI R2,R4,#8
-		ADDI R3,R4,#8
-		ADDI R4,R4,#8
-		ADDI R5,R4,#8
+		ADDI R5,R3,#8
+		ADDI R4,R3,#8
+		ADDI R2,R3,#8
+		ADDI R1,R3,#8
+		ADDI R0,R3,#8
+		ADDI R3,R3,#8
+		ADDI R7,R4,#8	; R4
 		ADDI R6,R4,#8
-		ADDI R7,R4,#8
-		ADDI R0,R5,#8	; R5
-		ADDI R1,R5,#8
-		ADDI R2,R5,#8
-		ADDI R3,R5,#8
+		ADDI R5,R4,#8
+		ADDI R3,R4,#8
+		ADDI R2,R4,#8
+		ADDI R1,R4,#8
+		ADDI R0,R4,#8
+		ADDI R4,R4,#8
+		ADDI R7,R5,#8	; R5
+		ADDI R6,R5,#8
 		ADDI R4,R5,#8
+		ADDI R3,R5,#8
+		ADDI R2,R5,#8
+		ADDI R1,R5,#8
+		ADDI R0,R5,#8	; R6
 		ADDI R5,R5,#8
-		ADDI R6,R5,#8	; R6
-		ADDI R7,R5,#8
-		ADDI R0,R6,#8
-		ADDI R1,R6,#8
-		ADDI R2,R6,#8
-		ADDI R3,R6,#8
-		ADDI R4,R6,#8
-		ADDI R5,R6,#8
-		ADDI R6,R6,#8
 		ADDI R7,R6,#8
-		ADDI R0,R7,#8	; R7
-		ADDI R1,R7,#8
-		ADDI R2,R7,#8
-		ADDI R3,R7,#8
-		ADDI R4,R7,#8
+		ADDI R5,R6,#8
+		ADDI R4,R6,#8
+		ADDI R3,R6,#8
+		ADDI R2,R6,#8
+		ADDI R1,R6,#8
+		ADDI R0,R6,#8
+		ADDI R6,R6,#8
+		ADDI R6,R7,#8	; R7
 		ADDI R5,R7,#8
-		ADDI R6,R7,#8
+		ADDI R4,R7,#8
+		ADDI R3,R7,#8
+		ADDI R2,R7,#8
+		ADDI R1,R7,#8
+		ADDI R0,R7,#8
 		ADDI R7,R7,#8
 		CMP R0,R1		; Make sure all regs are the same
 		BNE .Faddi
@@ -221,13 +221,136 @@
 .adc	LUI R0,#255
 		LLI R0,#255
 		LUI R1,#0
-		LLI R1,#1
-		ADDIB R0,#1
-		ADC R1,R1,R1
-		BR .neg
+		LLI R1,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R1,R1,R1	; R1 = R1 + R1 + C
+		CMPI R1,#3
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R2,#0
+		LLI R2,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R2,R2,R2	; R2 = R2 + R2 + C
+		CMPI R2,#3
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R3,#0
+		LLI R3,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R3,R3,R3	; R3 = R3 + R3 + C
+		CMPI R3,#3	
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R4,#0
+		LLI R4,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R4,R4,R4	; R4 = R4 + R4 + C
+		CMPI R4,#3
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R5,#0
+		LLI R5,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R5,R5,R5	; R5 = R5 + R5 + C
+		CMPI R5,#3
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R5,#0
+		LLI R5,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R5,R5,R5	; R5 = R5 + R5 + C
+		CMPI R5,#3
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R6,#0
+		LLI R6,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R6,R6,R6	; R6 = R6 + R6 + C
+		CMPI R6,#3
+		BNE .Fadc
+		LUI R0,#255
+		LLI R0,#255
+		LUI R7,#0
+		LLI R7,#1		
+		ADDIB R0,#1		; C = 1
+		ADC R7,R7,R7	; R7 = R7 + R7 + C
+		CMPI R7,#3
+		BNE .Fadc
+		LUI R1,#255
+		LLI R1,#255
+		LUI R0,#0
+		LLI R0,#1		
+		ADDIB R1,#1		; C = 1
+		ADC R0,R0,R0	; R3 = R3 + R3 + C
+		CMPI R0,#3
+		BE .adci
 .Fadc	SUB R0,R0,R0
 		JMP R0,#3
-.neg	LUI R0,#170
+.adci	SUB R0,R0,R0
+		LUI R1,#255
+		LLI R1,#255		
+		ADDIB R1,#1		; C = 1
+		ADCI R0,R0,#1	; R0 = R0 + 1 + C
+		CMPI R0,#2
+		BNE .Fadci
+		SUB R1,R1,R1
+		LUI R2,#255
+		LLI R2,#255		
+		ADDIB R2,#1		; C = 1
+		ADCI R1,R1,#1	; R0 = R0 + 1 + C
+		CMPI R1,#2
+		BNE .Fadci
+		SUB R2,R2,R2
+		LUI R3,#255
+		LLI R3,#255		
+		ADDIB R3,#1		; C = 1
+		ADCI R2,R2,#1	; R0 = R0 + 1 + C
+		CMPI R2,#2
+		BNE .Fadci
+		SUB R3,R3,R3
+		LUI R4,#255
+		LLI R4,#255		
+		ADDIB R4,#1		; C = 1
+		ADCI R3,R3,#1	; R0 = R0 + 1 + C
+		CMPI R3,#2
+		BNE .Fadci
+		SUB R4,R4,R4
+		LUI R5,#255
+		LLI R5,#255		
+		ADDIB R5,#1		; C = 1
+		ADCI R4,R4,#1	; R0 = R0 + 1 + C
+		CMPI R4,#2
+		BNE .Fadci
+		SUB R5,R5,R5
+		LUI R6,#255
+		LLI R6,#255		
+		ADDIB R6,#1		; C = 1
+		ADCI R5,R5,#1	; R0 = R0 + 1 + C
+		CMPI R5,#2
+		BNE .Fadci
+		SUB R6,R6,R6
+		LUI R7,#255
+		LLI R7,#255		
+		ADDIB R7,#1		; C = 1
+		ADCI R6,R6,#1	; R0 = R0 + 1 + C
+		CMPI R6,#2
+		BNE .Fadci
+		SUB R7,R7,R7
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		ADCI R7,R7,#1	; R0 = R0 + 1 + C
+		CMPI R7,#2
+		BE .neg
+.Fadci	SUB R0,R0,R0
+		JMP R0,#3
+.neg	LUI R0,#0
 		LLI R0,#170
 		NEG R7,R0
 		NEG R6,R0
@@ -251,11 +374,67 @@
 		BNE .Fneg
 		CMP R6,R7
 		BNE .Fneg
-		LUI R0,#0
-		LLI R0,#127
-		CMP R0,R1		; Make sure all regs contain 0x00EF
+		LUI R0,#255
+		LLI R0,#86
+		CMP R0,R1		; Make sure all regs contain 0xFF56
 		BNE .Fneg
 		BR .sub
+		LUI R1,#0
+		LLI R1,#170
+		NEG R7,R1
+		NEG R6,R1
+		NEG R5,R1
+		NEG R4,R1
+		NEG R3,R1
+		NEG R2,R1
+		NEG R0,R1
+		NEG R1,R1
+		CMP R0,R1		; Make sure all regs are the same
+		BNE .Fneg
+		CMP R1,R2
+		BNE .Fneg		
+		CMP R2,R3
+		BNE .Fneg
+		CMP R2,R3
+		BNE .Fneg
+		CMP R4,R5
+		BNE .Fneg
+		CMP R5,R6
+		BNE .Fneg
+		CMP R6,R7
+		BNE .Fneg
+		LUI R0,#255
+		LLI R0,#86
+		CMP R0,R1		; Make sure all regs contain 0xFF56
+		BNE .Fneg
+		LUI R2,#0
+		LLI R2,#170
+		NEG R7,R2
+		NEG R6,R2
+		NEG R5,R2
+		NEG R4,R2
+		NEG R3,R2
+		NEG R0,R2
+		NEG R1,R2
+		NEG R2,R2
+		CMP R0,R1		; Make sure all regs are the same
+		BNE .Fneg
+		CMP R1,R2
+		BNE .Fneg		
+		CMP R2,R3
+		BNE .Fneg
+		CMP R2,R3
+		BNE .Fneg
+		CMP R4,R5
+		BNE .Fneg
+		CMP R5,R6
+		BNE .Fneg
+		CMP R6,R7
+		BNE .Fneg
+		LUI R0,#255
+		LLI R0,#86
+		CMP R0,R1		; Make sure all regs contain 0xFF56
+		BNE .Fneg
 .Fneg	SUB R0,R0,R0
 		JMP R0,#3
 .sub	LUI R0,#255
