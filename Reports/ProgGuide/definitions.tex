@@ -46,10 +46,16 @@
   stringstyle=\color{mymauve},     % string literal style
   keywordstyle=\color{blue}      % keyword style
 }
+\lstdefinelanguage{samurai}{
+	keywords={ADD,ADDI,ADDIB,ADC,ADCI,NEG,SUB,SUBIB,SUC,SUCI,CMP,CMPI,AND,OR,XOR,NOT,NAND,NOR,LSL,LSR,ASR,LDW,STW,LUI,LLI,BR,BNE,BE,BLT,BGE,BWL,RET,JMP,PUSH,POP,RETI,ENAI,DISI,STF,LDF},         % if you want to add more keywords to the se
+	comment=[l]{;}
+}
+
+
 \lstdefinestyle{asm} {
-  otherkeywords={ADD,ADDI,ADDIB,ADC,ADCI,NEG,SUB,SUBIB,SUC,SUCI,CMP,CMPI,AND,OR,XOR,NOT,NAND,NOR,LSL,LSR,ASR,LDW,STW,LUI,LLI,BR,BNE,BE,BLT,BGE,BWL,RET,JMP,PUSH,POP,RETI,ENAI,DISI,STF,LDF},            % if you want to add more keywords to the set
+  %otherkeywords={ADD,ADDI,ADDIB,ADC,ADCI,NEG,SUB,SUBIB,SUC,SUCI,CMP,CMPI,AND,OR,XOR,NOT,NAND,NOR,LSL,LSR,ASR,LDW,STW,LUI,LLI,BR,BNE,BE,BLT,BGE,BWL,RET,JMP,PUSH,POP,RETI,ENAI,DISI,STF,LDF},            % if you want to add more keywords to the set
   keywordstyle=\color{blue},       % keyword style
-  language={[x86masm]Assembler},                % the language of the code
+  language={samurai},                % the language of the code
 	tabsize=4
 }
 
