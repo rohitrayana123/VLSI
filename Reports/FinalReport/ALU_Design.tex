@@ -5,16 +5,70 @@
 
 
 \section{Arithmetic Logic Unit}
+\todo[color=cyan, inline]{Design of whole module, including circuit diagram}
+\todo[color=cyan, inline]{Use of hierarchy / blocks - i.e. bit sliced, decoder}
+\todo[color=cyan, inline]{Design of slice}
+\todo[color=cyan, inline]{Design of decoder}
+\todo[color=cyan, inline]{Design of block}
+\todo[color=cyan, inline]{Layout in silicon}
+
+The arithmetic logic unit (ALU) is the central unit for performing calculations within the datapath. Most instructions use the ALU as part of their operation and as such this module needs to interpret every instruction and perform the necessary function. The range of functions needed fall into one of four types: arithmetic, logic, shifting and load lower. With the last type being a special case for the LLI instruction. Arithmetic operations are centralized around a full adder with additional gates for subtraction, setting the first input to zero and flag calculations. The logic unit consists of one gate corresponding to each of the full set of logic instructions supported. While shifts are performed using a barrel shifter to support up to 15-bits in one clock cycle. Finally, the LLI module concatenates the upper byte of the destination register with the provided 8-bit immediate value. The breakdown of the ALU is illustrated in Figure~\ref{fig:abstractALU}, with the output of each section connected to an internal bus through a number of tri-state gates. 
+
+\begin{figure}[h]
+	\missingfigure{Abstract ALU Breakdown}
+	\caption{ALU Separated into Sub-modules}
+	\label{fig:abstractALU}
+\end{figure}
+
+This design then needed to be bit-sliced to simplify the datapath and promote hierarchical construction. It was decided to add an additional input to the module for the 4-bit immediate value required to define the shifting amount. Otherwise the lowest four bits of the ALU will each need a different routing to each segment, reducing how much of each slice could be identically duplicated. 
+
+Initial design of the ALU module was based upon the planned datapath layout and the input/output connections it showed, as seen in Figure~\ref{fig:BasicALUSym}. From this it was seen that there may be some difficulty with interpreting the opcodes provided. Since each slice would have to individually interpret the opcode, using much more space than is necessary due to replicated hardware. Observations showed that different groups of instructions would perform the same operation within the ALU. As such, it was decided to use a separate decoder to interpret the opcodes and send control lines to the ALU for the specific functions to be performed. 
+
+\begin{figure}[h]
+	\missingfigure{Basic top level view of ALU}
+	\caption{Initial Top-level View of ALU Module}
+	\label{fig:Basic ALUSym}
+\end{figure}
+
+\subsection{ALU Slice}
+The most beneficial bit slice would be one that performs all the functions required for one bit and as such can be replicated to produce a 16-bit datapath. As such design focussed upon this idea, with considerations towards the overall size of the ALU once built. The arithmetic section was simple to bitslice since the full adder and input selection gates would be duplicated for each bit anyway. While the flags required only one OR gate for the Z flag and the sum, carry in and carry out signals to be available at the top of the slice. Since a decoder is positioned at the top, additional gates needed for flag calculation can be implemented once within the decoder. This is shown in Figure~\ref{fig:Arithslice}. Bit slicing the logic section was just one of each logic gate followed by a tri-state buffer in the slice, shown in Figure~\ref{fig:LogicSlice}. 
+
+\begin{figure}[h]
+	\missingfigure{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
+	\caption{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
+	\label{fig:ArithSlice}
+\end{figure}
+
+\begin{figure}[h]
+	\missingfigure{Bitsliced Ciruit Diagram for Logic Section of ALU}
+	\caption{Bitsliced Ciruit Diagram for Logic Section of ALU}
+	\label{fig:LogicSlice}
+\end{figure}
+
+Implementing shifting capabilities into individual bits required few logic gates since it is a wire-dominated circuit, but each wire needed to be lined up correctly between slices. This results from this slice section having more dependency on the neighbouring slices than both arithmetic and logic functions. Since there is no obvious way of integrating them into the same circuitry, left and right shifting have separate hardware. With the ability to select between a zero and the current operand's sign to shift into a right shift operation. Implementation of this section is shown in figure~\ref{fig:ShiftSlice}. 
+
+\begin{figure}[h]
+	\missingfigure{Bitsliced Ciruit Diagram for Shift Section of ALU}
+	\caption{Bitsliced Ciruit Diagram for Shift Section of ALU}
+	\label{fig:ShiftSlice}
+\end{figure}
+
+Every instruction can be carried out using one of the previous sections, with the exception of LUI and LLI. Loading an upper immediate value involves concatenating the 8-bit value with 8 zero bits. This is equivalent to shifting the second operand by 8-bits, as such it can be implemented with an additional multiplexor before the shifting section to select between each input operand. This is shown in Figure~\ref{fig:LUISlice}. Loading a lower immediate involves concatenating the existing high byte of the destination register with the value in the instruction. However there is no way of separating this into 16 identical slices. As such two versions of the slice were designed, one which passes through the upper byte with no change, and one which selects between the lower byte of the input register value and the immediate value. These form modules which are separate to the main slice, as shown in Figure~\ref{fig:LLISlices}, therefore LLI functionality is not part of the main ALU. 
+
+\begin{figure}[h]
+	\missingfigure{Bitsliced Ciruit Diagram for LUI Section of ALU, could form part of previou figure}
+	\caption{Bitsliced Ciruit Diagram for LUI Section of ALU}
+	\label{fig:LUISlice}
+\end{figure}
+
+\begin{figure}[h]
+	\missingfigure{Bitsliced Ciruit Diagram for LLI Modules}
+	\caption{Bitsliced Ciruit Diagram for LLI Modules}
+	\label{fig:LLISlices}
+\end{figure}
+
+\subsection{ALU Decoder}
 
 
-Design of whole module, including circuit diagram
+\subsection{ALU Block}
 
-Use of hierarchy / blocks - i.e. bit sliced, decoder
-
-Design of slice,
-
-Design of decoder,
-
-Design of block,
-
-Layout in silicon
