@@ -4,8 +4,8 @@
 // The following line indicates that a file "monitor.sv" exists and contains
 // custom monitoring inforamtion
 //
-//`define special_monitor
-
+`define special_monitor
+`define extracted
 // The following line indicates that a file "stimulus.sv" exists and contains
 // custom stimulus inforamtion
 //
