@@ -1,7 +1,7 @@
 %  Simulation.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:53 GMT
-%  <+Last Edited: Sun 27 Apr 2014 14:58:45 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 27 Apr 2014 15:41:59 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Simulation}
 
@@ -22,7 +22,7 @@ It is run from the terminal in the directory \texttt{~/design/fcde/verilog}.
 This supports running simulations of a full verilog model, cross simulation and a fully extracted simulation. 
 Usage is as follows:\\
 \begin{center}
-./simulate type program [definitions] 
+\texttt{./simulate type program [definitions]}
 \end{center}
 
 The `type' can be one of the following: \textit{behavioural, mixed, extracted}.
@@ -39,24 +39,29 @@ An example serial data hex file is shown in listing~\ref{lst:serialdata}.
 Below is a complete list of commands to run all programs on all versions of the processor.
 `Number' is a user defined decimal value to set the switches.
 \begin{itemize}
-\item ./assembler/assemble.py programs/multiply.asm \\ ./simulate behavioural programs/multiply.hex +define+switch\_value=number
-\item ./assembler/assemble.py programs/multiply.asm \\ ./simulate mixed programs/multiply.hex +define+switch\_value=number
-\item ./assembler/assemble.py programs/multiply.asm \\ ./simulate extracted programs/multiply.hex +define+switch\_value=number\\
+\item \texttt{./assembler/assemble.py programs/multiply.asm \\ ./simulate behavioural programs/multiply.hex +define+switch\_value=number}
+\item \texttt{./assembler/assemble.py programs/multiply.asm \\ ./simulate mixed programs/multiply.hex +define+switch\_value=number}
+\item \texttt{./assembler/assemble.py programs/multiply.asm \\ ./simulate extracted programs/multiply.hex +define+switch\_value=number}\\
 
-\item ./assembler/assemble.py programs/random.asm \\ ./simulate behavioural programs/random.hex +define+switch\_value=number
-\item ./assembler/assemble.py programs/random.asm \\ ./simulate mixed programs/random.hex +define+switch\_value=number
-\item ./assembler/assemble.py programs/random.asm \\ ./simulate extracted programs/random.hex +define+switch\_value=number\\
+\item \texttt{./assembler/assemble.py programs/random.asm \\ ./simulate behavioural programs/random.hex +define+switch\_value=number}
+\item \texttt{./assembler/assemble.py programs/random.asm \\ ./simulate mixed programs/random.hex +define+switch\_value=number}
+\item \texttt{./assembler/assemble.py programs/random.asm \\ ./simulate extracted programs/random.hex +define+switch\_value=number}\\
 
-\item ./assembler/assemble.py programs/factorial.asm \\ ./simulate behavioural programs/factorial.hex +define+switch\_value=number
-\item ./assembler/assemble.py programs/factorial.asm \\ ./simulate mixed programs/factorial.hex +define+switch\_value=number
-\item ./assembler/assemble.py programs/factorial.asm \\ ./simulate extracted programs/factorial.hex +define+switch\_value=number\\
+\item \texttt{./assembler/assemble.py programs/factorial.asm \\ ./simulate behavioural programs/factorial.hex +define+switch\_value=number}
+\item \texttt{./assembler/assemble.py programs/factorial.asm \\ ./simulate mixed programs/factorial.hex +define+switch\_value=number}
+\item \texttt{./assembler/assemble.py programs/factorial.asm \\ ./simulate extracted programs/factorial.hex +define+switch\_value=number}\\
 
-\item ./assembler/assemble.py programs/interrupt.asm \\ ./simulate behavioural programs/interrupt.hex programs/serial\_data.hex
-\item ./assembler/assemble.py programs/interrupt.asm \\ ./simulate mixed programs/interrupt.hex programs/serial\_data.hex
-\item ./assembler/assemble.py programs/interrupt.asm \\ ./simulate extracted programs/interrupt.hex programs/serial\_data.hex
+\item \texttt{./assembler/assemble.py programs/interrupt.asm \\ ./simulate behavioural programs/interrupt.hex programs/serial\_data.hex}
+\item \texttt{./assembler/assemble.py programs/interrupt.asm \\ ./simulate mixed programs/interrupt.hex programs/serial\_data.hex}
+\item \texttt{./assembler/assemble.py programs/interrupt.asm \\ ./simulate extracted programs/interrupt.hex programs/serial\_data.hex}
 \end{itemize}
 
-\todo[inline]{how to run scan path sim too}
+%\todo[inline]{how to run scan path sim too}
+
+A scan path simulation can also be run.
+This is done by running \texttt{ncverilog -sv +gui +ncaccess+r stimulus.sv  opcodes.svh cpu.sv} for a GUI or \texttt{ncverilog -sv stimulus.sv  opcodes.svh cpu.sv -exit} for a command line simulation.
+This test pulses a signal on the SDI line, and verifies a pulse is seen on the output. 
+The clock cycles, and therefore the number of registers, are counted and reported upon success of the simulation.
 
 %\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
 
