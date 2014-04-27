@@ -14,10 +14,9 @@ In designing the instruction set architecture (ISA) emphasis was put on creating
 
 Since a 16-bit microprocessor was to be designed, it was decided to base the system on the ARM Thumb architecture. This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. However it included a number of operations which take advantage of the ARM's 32-bit datapath, so any high register operations were removed. Change of state, sign extension and debugging instructions, among others, were also removed for simplification or because they were not necessary. This produced the original ISA made up of instructions 1-4, 6-10, 12-16, 20-24, 27-32, 35 and 36 as noted in the summary table in Appendix~\ref{chap:AppISS}. While instructions 5 and 11 were added to support use of carry flag with an immediate value. 17, 18 and 19 are included to form a complete logic set. 25 and 26 are for loading an initial value to any general purpose register. Instruction 33 is included from the SPARC ISA for returning from a procedure. Instruction 34 enables a control jump to anywhere in $2^{16}$ memory locations. While instructions 37-41 were added for support of a single interrupt.
 
-It was decided to use up to 3 operands. This allows greater flexibility with the instructions available and reduces the amount of memory required to perform data processing operations. The number of instructions and their groupings determined the requirement of having 6-bits for the Opcode field. As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be referenced in the remaining 10 bits. With the option of expanding the third operand to a 5 bit immediate value. This benefits from how common it is that a small immediate value is used more than a larger one. 
+It was decided to use up to 3 operands. This allows greater flexibility with the instructions available and reduces the amount of memory required to perform data processing operations. The number of instructions and their groupings determined the requirement of having 6-bits for the Opcode field. As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be referenced in the remaining 10 bits. With the option of expanding the third operand to a 5 bit immediate value. This benefits from how common it is that a small immediate value is used more than a larger one. There was also support added for byte sized operations with two operand formatting since this is a standard length for small binary values. 
 
-Both control transfer and interrupt operations, with one exception, do not use any registers. This meant the free space could be used for further definitions, leaving only one opcode being needed for each. A 3-bit condition field allows a sufficient quantity of branching operations to be supported, as well as moving control forward 127 lines or backwards 128 lines. However since there is a limitation on the distance, it was deemed necessary to include the instruction ``JMP'' which takes a register address for transferring to any position in memory. 
-
+Both control transfer and interrupt operations, with one exception, do not use any registers. This meant the free space could be used for further definitions, leaving only one opcode being needed for each. A 3-bit condition field allows a sufficient quantity of branching operations to be supported, leaving 8 bits to define the distance to move forwards or backwards. However since there is a limitation on the distance, it was deemed necessary to include the instruction ``JMP'' which takes a register address for transferring to any position in memory. 
 
 \newcolumntype{B}{c}
 \begin{table}[h]
@@ -48,8 +47,84 @@ Both control transfer and interrupt operations, with one exception, do not use a
 \end{tabular}
 }
 \caption{General Instruction Formatting}
-\label{tab:Thumb}
+\label{tab:GIF}
 \end{table}
 
-To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:Thumb}. Which was adapted to create all other types of formatting, and reordered to ensure immediate values were always on the far right of the instruction. This was to make sign extension of immediate values in the datapath easier since they are always in the same location in the instruction. 
+To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:GIF}. Which was adapted to create all other types of formatting, and reordered to ensure immediate values were always on the far right of the instruction. This was to make sign extension of immediate values in the datapath easier since they are always in the same location in the instruction. It was also necessary to align all the destination and source registers to maintain consistency between instructions, aiding datapath simplicity. 
+
+Allocation of opcodes was done using k-map design with the arrangement designated according to the operation needing to be performed within the ALU module. This was because this allocation would have the greatest effect on the amount of logic needed for the ALU decoder. With the resultant mapping shown in Table~\ref{tab:OpKmap}. 
+
+%counter for counting nodes needed for circling
+\newcounter{nodecount}
+%Command for making new node and naming according to counter
+\newcommand\tabnode[1]{\addtocounter{nodecount}{1} \tikz \node (\arabic{nodecount}) {#1};}
+
+% Some options common to all the nodes and paths
+\tikzstyle{every picture}+=[remember picture,baseline]
+\tikzstyle{every node}+=[inner sep=0pt,anchor=base,
+minimum width=1.2cm,align=center,text depth=.25ex,outer sep=1.5pt]
+\tikzstyle{every path}+=[thick, rounded corners]
+
+%custom colouring
+\newcommand{\darkercolor}[3]{% Reference Color, Percentage, New Color Name
+    \colorlet{#3}{#1!#2!black}
+}
+\darkercolor{green}{60}{darkgreen}
+
+
+\begin{table}[h]
+\begin{minipage}[b]{1 \linewidth}
+\def\arraystretch{1.5}
+\centering
+\footnotesize
+	\begin{tabular}{l|c|c|c|c|c}
+		\multicolumn{1}{l}{} & \multicolumn{1}{c}{00} & \multicolumn{1}{c}{01} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{10} \\
+		\cline{2-5}
+		000 & \tabnode{LDW} & \tabnode{STW} & \tabnode{NOP} & \tabnode{AND} & \\  
+		001 & \tabnode{POP} & \tabnode{PUSH} & \tabnode{`F'} & \tabnode{OR} & \\
+		011 & \tabnode{ADDIB} & \tabnode{SUBIB} & \tabnode{\cellcolor{gray}} & \tabnode{XOR} & \\
+		010 & \tabnode{ADD} & \tabnode{SUB} & \tabnode{NEG} & \tabnode{NOT} & \\
+		110 & \tabnode{ADDI} & \tabnode{SUBI} & \tabnode{`D'} & \tabnode{NAND} & \\
+		111 & \tabnode{CMP} & \tabnode{CMPI} & \tabnode{LSL} & \tabnode{NOR} & \\
+		101 & \tabnode{ADCI} & \tabnode{SUBI} & \tabnode{LSR} & \tabnode{LLI} & \textcolor{blue}{$\bullet$ FAOut} \\
+		100 & \tabnode{ADC} & \tabnode{SUC} & \tabnode{ASR} & \tabnode{LUI} & \textcolor{red}{$\bullet$ ShOut}\\
+		\cline{2-5}
+	\end{tabular}
+	\caption{Opcode Assignment K-Map A}
+	\label{tab:OpKmapA}
+\end{minipage}
+\begin{minipage}[b]{1 \linewidth}
+\def\arraystretch{1.5}
+\centering
+\footnotesize
+	\begin{tabular}{l|c|c|c|c|c}
+		\multicolumn{1}{l}{} & \multicolumn{1}{c}{00} & \multicolumn{1}{c}{01} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{10} \\
+		\cline{2-5}
+		000 & \tabnode{LDW} & \tabnode{STW} & \tabnode{NOP} & \tabnode{AND} & \\  
+		001 & \tabnode{POP} & \tabnode{PUSH} & \tabnode{`F'} & \tabnode{OR} & \\
+		011 & \tabnode{ADDIB} & \tabnode{SUBIB} & \tabnode{\cellcolor{gray}} & \tabnode{XOR} & \\
+		010 & \tabnode{ADD} & \tabnode{SUB} & \tabnode{NEG} & \tabnode{NOT} & \\
+		110 & \tabnode{ADDI} & \tabnode{SUBI} & \tabnode{`D'} & \tabnode{NAND} & \\
+		111 & \tabnode{CMP} & \tabnode{CMPI} & \tabnode{LSL} & \tabnode{NOR} & \\
+		101 & \tabnode{ADCI} & \tabnode{SUBI} & \tabnode{LSR} & \tabnode{LLI} & \textcolor{darkgreen}{$\bullet$ SUB} \\
+		100 & \tabnode{ADC} & \tabnode{SUC} & \tabnode{ASR} & \tabnode{LUI} & \textcolor{orange}{$\bullet$ ShR} \\
+		\cline{2-5}
+	\end{tabular}
+	\caption{Opcode Assignment K-Map B}
+	\label{tab:OpKmapB}
+\end{minipage}
+
+\begin{tikzpicture}[overlay]
+	%Define path of circles
+	\draw [blue](1.north west) -- (2.north east) -- (30.south east) -- (29.south west) -- cycle;
+	\draw [blue](14.north west) -- (15.north east) -- (19.south east) -- (18.south west) -- cycle;
+	\draw [red](3.north west) -- (3.north east) -- (7.south east) -- (7.south west) -- cycle;
+	\draw [red](23.north west) -- (23.north east) -- (27.south east) -- (27.south west) -- cycle;
+	\draw [red](27.north west) -- (28.north east) -- (32.south east) -- (31.south west) -- cycle;
+	\draw [darkgreen](38.north west) -- (38.north east) -- (62.south east) -- (62.south west) -- cycle;
+	\draw [darkgreen](46.north west) -- (47.north east) -- (47.south east) -- (46.south west) -- cycle;
+	\draw [darkgreen](53.north west) -- (54.north east) -- (54.south east) -- (53.south west) -- cycle;
+	\draw [orange](59.north west) -- (59.north east) -- (63.south east) -- (63.south west) -- cycle;
+\end{tikzpicture}
+\end{table}
 
