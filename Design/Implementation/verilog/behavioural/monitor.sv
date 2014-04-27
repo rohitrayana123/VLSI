@@ -65,7 +65,7 @@ end
 logic [15:0] sysir;
 `ifdef extracted
 assign sysir = CPU.Ir;
-`elif crosssim
+`elsif crosssim
 assign sysir = CPU.CPU_core.Ir;
 `else
 assign sysir = CPU.CPU_core.datapath.Ir;
