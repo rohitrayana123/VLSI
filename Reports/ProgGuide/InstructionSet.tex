@@ -73,7 +73,7 @@ The complete instruction set architecture includes a number of instructions for 
 	\text{Rd:}& \text{ Destination Register} \\
 	\text{Ra:}& \text{ Source register 1} \\
 	\text{Rb:}& \text{ Source register 2} \\
-	\text{immX:}& \text{ Immediate value of length X} \\
+	\text{immN:}& \text{ Immediate value of length N} \\
 	\text{Cond.:}& \text{ Branching condition code as defined for branch instructions} \\
 	\text{ICond.:}& \text{ Interrupt instruction code as defined for interrupt instructions} \\
 	\text{LS:}& \text{ 0=Load Data, 1=Store Data} \\
@@ -333,14 +333,14 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Push From Stack}{PUSH}
 \Iformat{E}{1L0}
 \Isyntax[M]{PUSH Ra}{PUSH R3}
-\Isyntax[F]{PUSH RL}{PUSH RL}
+\Isyntax[F]{PUSH LR}{PUSH LR}
 \Ioperation{F}{~Mem[R7] $\leftarrow$ reg; R7 $\leftarrow$ R7 - 1}{n}{n}{0}{0}{n}{n}
 \Idesc{`reg' corresponds to either a GPR or the link register, the contents of which are stored to the stack using the address stored in the stack pointer (R7). Then Decrement the stack pointer by one. \\\\Addressing Modes: Register-Indirect, Postdecrement.}
 \newpage
 \Imnemonic{Pop From Stack}{POP}
 \Iformat{E}{0L}
 \Isyntax[M]{POP Ra}{POP R3}
-\Isyntax[F]{POP RL}{POP RL}
+\Isyntax[F]{POP LR}{POP LR}
 \Ioperation{R7 $\leftarrow$}{R7 + 1; Mem[R7] $\leftarrow$ reg;}{n}{n}{0}{0}{n}{n}
 \Idesc{Increment the stack pointer by one. Then `reg' corresponds to either a GPR or the link register, the contents of which are retrieved from the stack using the address stored in the stack pointer (R7). \\\\Addressing Modes: Register-Indirect, Preincrement.}
 \newpage
