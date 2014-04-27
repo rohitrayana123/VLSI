@@ -19,50 +19,22 @@ set wave_signal_list {
   system.RnW
   system.Address
   system.Data
-  system.cpu.Data_in
-  system.cpu.Data_out
-  system.cpu.CPU_core.MemEn
-  system.cpu.ENB
-  system.cpu.CPU_core.datapath.SysBus
-  system.cpu.CPU_core.control.state
-  system.cpu.CPU_core.control.fetchSub
-  system.cpu.CPU_core.control.Opcode
-  system.cpu.CPU_core.ImmSel
-  system.cpu.CPU_core.CFlag
-  system.cpu.CPU_core.Flags
-  system.cpu.CPU_core.control.StatusReg
-  system.cpu.CPU_core.control.StatusRegWe
-  system.cpu.CPU_core.Op1Sel
-  system.cpu.CPU_core.datapath.a.Op1
-  system.cpu.CPU_core.Op2Sel
-  system.cpu.CPU_core.datapath.a.Op2
-  system.cpu.CPU_core.AluOp
-  system.cpu.CPU_core.datapath.a.Result
-  system.cpu.CPU_core.AluEn
-  system.cpu.CPU_core.AluWe
-  system.cpu.CPU_core.datapath.Reg_ALUOUT.DataOut
-  system.cpu.CPU_core.IrWe
-  system.cpu.CPU_core.datapath.Reg_IR.DataOut
-  system.cpu.CPU_core.LrEn
-  system.cpu.CPU_core.LrSel
-  system.cpu.CPU_core.LrWe
-  system.cpu.CPU_core.datapath.Reg_LR.DataOut
-  system.cpu.CPU_core.PcWe
-  system.cpu.CPU_core.PcEn
-  system.cpu.CPU_core.datapath.Reg_PC.DataOut
-  system.cpu.CPU_core.Rs1Sel
-  system.cpu.CPU_core.SpEn
-  system.cpu.CPU_core.SpWe
-  system.cpu.CPU_core.datapath.Reg_SP.Dataout
-  system.cpu.CPU_core.WdSel
-  system.cpu.CPU_core.datapath.regBlock.Rs1
-  system.cpu.CPU_core.datapath.regBlock.Rs2
-  system.cpu.CPU_core.datapath.regBlock.regs
-  system.cpu.CPU_core.datapath.regBlock.Rd1
-  system.cpu.CPU_core.datapath.regBlock.Rd2
-  system.cpu.CPU_core.RegWe
-  system.cpu.CPU_core.datapath.regBlock.Rw
-  system.cpu.CPU_core.datapath.regBlock.WData
+  system.CPU.Op
+  system.CPU.state
+  system.CPU.stateSub
+  system.CPU.Ir
+  system.CPU.Pc
+  system.CPU.Operand1
+  system.CPU.Operand2
+  system.CPU.reg0
+  system.CPU.reg1
+  system.CPU.reg2
+  system.CPU.reg3
+  system.CPU.reg4
+  system.CPU.reg5
+  system.CPU.reg6
+  system.CPU.reg7
+  system.Dissembly
   system.RAM.Data_stored
 }
 
