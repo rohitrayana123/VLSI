@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 11:53:20 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 28 Apr 2014 12:57:04 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -118,7 +118,8 @@ def RunSim(options):
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 		cmd.append('+define+data_file=\\\"%s\\\"' % os.path.join(programs,"serial_data.hex"))	# Only use if enabled by program
 		# Hard code for bim
-		cmd.append('+define+switch_value=2569')
+	if options.switches:
+		cmd.append('+define+switch_value=%s' % options.switches)
 	cmd.append("+define+%s" % options.type)
 	#print the command
 	print " ".join(cmd)
@@ -155,6 +156,7 @@ if "__main__" == __name__:
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
+	parser.add_option("-s", "--switches", dest="switches", help="Value of switches to pass to the simulation")
 	parser.add_option("-d", action="store_true", dest="debug", default=False, help="Make, but don't execute, the command")
 	parser.add_option("-l", action="store_true", dest="legacy", default=True, help="Run in legacy mode")
 	parser.add_option("-i", action="store_false", dest="legacy", help="Run in fcde structure")
