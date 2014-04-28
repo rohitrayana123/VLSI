@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 07 Apr 2014 17:04:52 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 28 Apr 2014 10:24:08 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -19,17 +19,22 @@ from subprocess import call
 
 def RunSim(options):
 	print "Running sim..."
-	home = os.path.expanduser("~/VLSI")
-	behave = os.path.join(home, "Design/Implementation/verilog/behavioural")
-	mixed = os.path.join(home, "Design/Implementation/verilog/mixed")
-	system = os.path.join(home, "Design/Implementation/verilog/system")
-	stim = os.path.join(home, "Design/Implementation/verification")
-	programs = os.path.join(home, "Design/Implementation/programs")
-	magic = os.path.join(home, "Design/Implementation/magic/c035u/%s" % options.module)
-	datapathmag = os.path.join(home, "Design/Implementation/magic/c035u/Datapath/")
-	fcdecells = os.path.join(home,"Design/Implementation/verilog")
-	gate = os.path.join(home,"Design/Implementation/verilog/gate_level")
-
+	if options.legacy:
+		home = os.path.expanduser("~/VLSI")
+		verilog = os.path.join(home, "Design/Implementation/verilog")
+		stim = os.path.join(home, "Design/Implementation/verification")
+		programs = os.path.join(home, "Design/Implementation/programs")
+		magic = os.path.join(home, "c035u/design")
+		fcdecells = os.path.join(home,"c035u/cell_lib")
+		assembler = os.path.join(home,"bin/assemble.py")
+	else:
+		home = os.path.expanduser("~/design/fcde")
+		verilog = os.path.join(home, "verilog")
+		stim = os.path.join(os.path.expanduser("~/VLSI"), "Design/Implementation/verification")
+		programs = os.path.join(home, verilog, "programs")
+		magic = os.path.join(home, "magic/design")
+		assembler = os.path.join(verilog,"assembler/assemble.py")
+		fcdecells = os.path.join(home,"magic/cell_lib")
 	#@todo Check files exist
 
 	#piece together the command
@@ -53,81 +58,70 @@ def RunSim(options):
 		cmd.append("-exit")
 	#library
 	cmd.append("+libext+.sv")
-	cmd.append("-y")
-	if options.magic:
-		cmd.append(magic)
-		cmd.append("+incdir+%s" % magic)
-	elif options.mixed:
-		cmd.append(mixed)
-		cmd.append("+incdir+%s" % mixed)
-		cmd.append("+define+crosssim")
-	elif options.gate:
-		cmd.append(gate)
-		#cmd.append("%s/options.sv" % gate)
-		cmd.append("+incdir+%s" % gate)
+	if None == options.type:
+		options.type = "behavioural" #default 
+
+        if options.module:
+                print "Running a module simulation"
+                #want the verification stim file, opcodes and module.sv
+                if options.type == "magic":
+                        print "Running a magic sim"
+                        #extract the module
+			#get current dir
+			cwd = os.getcwd()
+			#move to magic dir
+			os.chdir(magic)
+			#extract
+			extfile = open("extract.sh", "w")
+			extfile.write("magic -d null %s << EOF\n:extract\n:quit\nEOF" % options.module)
+			extfile.close()
+			call(["sh", "extract.sh"])
+			#ext2svmod
+			call(["ext2svmod",options.module])
+			#return to old dir
+			os.chdir(cwd)
+			cmd.append("-y")
+                        cmd.append(os.path.join(magic))
+                        cmd.append("+incdir+%s" % magic)
+                else:   
+			cmd.append("-y")
+                        cmd.append(os.path.join(verilog, options.type))
+                        cmd.append("+incdir+%s" % os.path.join(verilog, options.type))
+		cmd.append(os.path.join(verilog,"behavioural","opcodes.svh"))
+                #top level stim file
+                cmd.append(os.path.join(stim, "%s_stim.sv" % options.module))
+
 	else:
-		cmd.append(behave)
-		cmd.append("+incdir+%s" % behave)
+		print "Running a system simulation"
+		#@todo if extracted or mixed, extract the magic design
+		cmd.append("-y")
+		cmd.append(os.path.join(verilog, options.type))
+		cmd.append("+incdir+%s" % os.path.join(verilog, options.type))
 
-
-
-	cmd.append("-y")
-	cmd.append(system)
-	cmd.append("+incdir+%s" % system)
-	# opcodes comes before stim file
-	cmd.append(behave+"/opcodes.svh")
-	#top level stim file
-	if (None != options.module): #use the stim file
-		#cmd.append("-v")
-
-		# AJR - Not ideal, just a hack job until we agree on a better way to deal with code in module sims
-		cmd.append(os.path.join(stim, options.module+"_stim.sv"))
-		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, "all.hex"))	# All commands
-		if os.path.exists(os.path.join(programs, "all.asm")): #found us some assembler - compile it!
-			print("Invoking compiler...")
-			asmb = os.path.join(programs, "all")
-			print asmb
-			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
-
-	else: #running a system program
+		cmd.append("-y")
+		system = os.path.join(verilog, "system")
+		cmd.append(system)
+		cmd.append("+incdir+%s" % system)
+		# opcodes comes before stim file
+		cmd.append(os.path.join(verilog,"behavioural","opcodes.svh"))
+		#top level stim file
+	
 		#cmd.append("-v")
 		cmd.append(os.path.join(system, "system.sv"))
 		programfile, fileExtension = os.path.splitext(options.program)
 		if os.path.exists(os.path.join(programs, programfile+".asm")): #found us some assembler - compile it!
-			print("Invoking compiler...")
+			print("Invoking assembler...")
 			asmb = os.path.join(programs, programfile)
 			print asmb
-			call(["python", os.path.join(home, "bin/assemble.py"), asmb])
-
+			call(["python", os.path.join(verilog, "programs/assemble.py"), asmb])
+	
 		cmd.append('+define+prog_file=\\\"%s\\\"' % os.path.join(programs, programfile+".hex"))
 		cmd.append('+define+data_file=\\\"%s\\\"' % os.path.join(programs,"serial_data.hex"))	# Only use if enabled by program
-	# Hard code for bim
-	cmd.append('+define+switch_value=2569')
-
-	#opcodes.svh
-	#cmd.append(behave+"/opcodes.svh") # will work here but not first time
-
+		# Hard code for bim
+		cmd.append('+define+switch_value=2569')
 	#print the command
 	print " ".join(cmd)
 	#run the command
-#	if options.magic or options.mixed: #need to run the extraction
-#
-#		cwd = os.getcwd()
-#		if options.magic:
-#			magicsim.write("magic -d null %s < magicext\n" % options.module)
-#		if options.mixed:
-#			magicrc = open("magicext", 'w')
-#			magicrc.write(":extract\n:quit\n")
-#			magicrc.close()
-#			magicsim = open("magicsim", 'w')
-#			os.chdir(datapathmag)
-#			magicsim.write("magic -d null datapath < magicext\n")
-#			magicsim.write("ext2svmod datapath")
-#		magicsim.close()
-#		cmdmag = ["bash", "magicsim" ]
-#		call(cmdmag)
-#		os.chdir(cwd)
-#		print(cmdmag)
 	if options.debug == False:
 		call(cmd)
 	pass
@@ -136,33 +130,34 @@ def RunSim(options):
 
 if "__main__" == __name__:
 	''' Run Sim V2.0 '''
-	print "Run Sim V2.0"
 
 	#some global things
 	#parse the options
 	#interactive mode?
-	parser = OptionParser(usage="sim.py [-m module.sv / -p program.hex ] -g -M")
+	parser = OptionParser(usage="sim.py [-t type] [-m module.sv / -p program.hex ] -g ", version="3")
 	#@todo - auto invoke the assembler if assembly is given?
 	parser.add_option("-m", "--module", dest="module",
                   help="module to simulate - should not be defined if program is")
 
-	parser.add_option("-M", "--magic", dest="magic", action="store_true", default=False,
-                  help="runs the simulation using the magic layout.")
+	parser.add_option("-t", "--type", dest="type", help="Type of simulation to run, e.g. behavioural (default), mixed, extracted, magic")
+	#parser.add_option("-M", "--magic", dest="magic", action="store_true", default=False,
+        #          help="runs the simulation using the magic layout.")
 
-	parser.add_option("-c", "--mixed", dest="mixed", action="store_true", default=False,
-                  help="runs the cross simulation.")
+	#parser.add_option("-c", "--mixed", dest="mixed", action="store_true", default=False,
+        #          help="runs the cross simulation.")
 
 	parser.add_option("-p", "--prog", dest="program",
                   help="program to run (hex file) should not be defined if module is")
 
-	parser.add_option("-G","--gate",  dest="gate", action="store_true", default=False,
-				help="Run a gate level sim.")
+	#parser.add_option("-G","--gate",  dest="gate", action="store_true", default=False,
+	#			help="Run a gate level sim.")
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
 	parser.add_option("-d", action="store_true", dest="debug", default=False, help="Make, but don't execute, the command")
+	parser.add_option("-l", action="store_true", dest="legacy", default=True, help="Run in legacy mode")
+	parser.add_option("-i", action="store_false", dest="legacy", help="Run in fcde structure")
 	(options, args) = parser.parse_args()
-
 	#want either a module or program to be able to run
 	if (None == options.module ) and ( None == options.program ):
 		parser.print_help()
