@@ -1,7 +1,7 @@
 %  Assembler.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:13 GMT
-%  <+Last Edited: Mon 28 Apr 2014 20:12:48 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 28 Apr 2014 20:15:46 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Assembler}
 The current instruction set architecture includes an assembler for converting assembly language into hexadecimal. 
@@ -63,44 +63,7 @@ The output file can also be a relative or absolute path to a different directory
 The full usage for the script is seen in listing~\ref{lst:assemblerusage}. 
 This includes the basic rules for writing the assembly language and a version log. 
 
-\begin{lstlisting}[label=lst:assemblerusage,caption={Assembler help prompt}]
-$> assemble.py 
-Usage: assemble.py [-o outfile] input
-
----Team R4 Assembler Help---
-------Version: 
- 1 (CMPI addition onwards)
- 2 (Changed to final ISA, added special case I's and error checking
- 3 (Ajr changes - Hex output added, bug fix)
- 4 (Added SP symbol)
- 5 (NOP support added, help added) UNTESTED
- 6 (Interrupt support added [ENAI, DISI, RETI])
- 7 (Checks for duplicate Labels)
- 8 (Support for any ISR location & automated startup code entry)
- 9 (Support for .define)
- 10 (Changed usage)
- Current is most recent iteration
-Commenting uses : or ;
-Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)
-                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP
-Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
-Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP
-Branching: Symbolic and Numeric supported
-
-Notes:
- Input files are assumed to end with a .asm extension
- Immediate value sizes are checked
- Instruction-less lines allowed
- .ISR may be located anywhere in file
- .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions
-
-
-Options:
-  -h, --help            show this help message and exit
-  -o FILE, --output=FILE
-                        output file for the assembled output
-
-\end{lstlisting}
+\lstinputlisting[label=lst:assemblerusage,caption={Assembler help prompt}]{asmhelp.txt}
 
 \newpage
 \subsection{Error Messages}
