@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 11:25:12 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 28 Apr 2014 11:53:20 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -77,7 +77,7 @@ def RunSim(options):
 			extfile.close()
 			call(["sh", "extract.sh"])
 			#ext2svmod
-			call(["ext2svmod",options.module])
+			call(["ext2svmod","-f",options.module])
 			#return to old dir
 			os.chdir(cwd)
 			cmd.append("-y")
