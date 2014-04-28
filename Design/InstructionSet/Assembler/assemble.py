@@ -48,7 +48,6 @@ def OpType(value):	#Determine instruction format type
 		return "A2"
 	else:
 		print 'ERROR1: Unrecognised Mneumonic'
-		print value
 		sys.exit()
 
 def regcode(value):	#Get binary equivalent of register name
