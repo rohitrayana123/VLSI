@@ -335,44 +335,41 @@ if "__main__" == __name__:
 		else:
 			if (ISRcalc == 1):				#Count length of ISR
 				ISRLines = ISRLines + 1
-	if ISR != 1:
-		print "No ISR Found"	
-
 	#Extract ISR
 	ISR = []
 	for i in range(ISRlen):
 		ISR.append(SEGMLINES.pop(ISRloc))
 	for i in range(ISRlen):
 		print "      asm file line", ISRloc + i, ISR[i]
+	if ISR != 1:
+		print "No ISR Found"
+		ISR.insert(0, ['RETI'])
+		ISRlen = 1
+
 	#ISR.insert(0, ['numBR', str(ISRlen+1)])			#Add unconditional branch over ISR
 	SPInit = 0							#Check if SP has been initialised
 	for l in SEGMLINES[0:10]:
 		if (l[0] == 'LUI'):
 			if (l[1] == 'R7'):
-				SPInit += 1;
+				SPInit += 1
 		elif (l[0] == 'LLI'):
 			if (l[1] == 'R7'):
-				SPInit += 1;
+				SPInit += 1
 		elif l[0].startswith('.'):
 			if (l[1] == 'LUI'):
 				if (l[2] == 'R7'):
-					SPInit += 1;
+					SPInit += 1
 			elif (l[1] == 'LUI'):
 				if (l[2] == 'R7'):
-					SPInit += 1;
+					SPInit += 1
 	tempsplit = (ISRlen+1)//256
+	ISR.insert(0, ['JMP', 'R0', '15'])#15 is position of this line in memory
+	ISR.insert(0, ['LLI', 'R0', str(ISRlen+1 - tempsplit*256)])
+	ISR.insert(0, ['LUI', 'R0', str(tempsplit)])
+	ISR.insert(0, ['PUSH', 'R0'])
 	if SPInit < 2:#SP has not been setup so add initialization code
-		ISR.insert(0, ['LUI', 'R7', '7'])
-		ISR.insert(1, ['LLI', 'R7', '255'])
-		ISR.insert(2, ['PUSH', 'R0'])
-		ISR.insert(3, ['LUI', 'R0', str(tempsplit)])
-		ISR.insert(4, ['LLI', 'R0', str(ISRlen+1 - tempsplit*256)])
-		ISR.insert(5, ['JMP', 'R0', '15'])
-	else:
-		ISR.insert(0, ['PUSH', 'R0'])
-		ISR.insert(1, ['LUI', 'R0', str(tempsplit)])
-		ISR.insert(2, ['LLI', 'R0', str(ISRlen+1 - tempsplit*256)])
-		ISR.insert(3, ['JMP', 'R0', '15'])
+		ISR.insert(0, ['LUI', 'R7', '0'])
+		ISR.insert(1, ['LLI', 'R7', '0'])
 	
 	ISR.append(['POP', 'R0'])
 	if SPInit < 2:
@@ -428,6 +425,10 @@ if "__main__" == __name__:
 		else:
 			finish = 2
 	SEGMLINES = newSEGMLINES[:]
+	if SPInit < 2:			#Set stack pointer to first memory location after program
+		templen = (len(SEGMLINES))//256
+		SEGMLINES[10] = ['LUI', 'R7', str(templen)]
+		SEGMLINES[11] = ['LLI', 'R7', str(len(SEGMLINES) - templen*256)]
 	
 	print 'Program File After Preprocessing'
 	for i, s in enumerate(SEGMLINES):
