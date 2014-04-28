@@ -8,8 +8,9 @@
 The complete instruction set architecture includes a number of instructions for performing calculations on data, memory access, transfer of control within a program and interrupt handling.
 %\todo{HSL - this is a bit too short. Surely there is more to say about it?} 
 %\todo[inline]{HSL - this doesn't sound right. Maybe "transfer of program flow". Not sure on the use of the word "control" but i know it is the technical term}
-\vspace{\baselineskip}
-\noindent All instructions implemented by this architecture fall into one of 6 groups, categorized as follows:
+
+
+All instructions implemented by this architecture fall into one of 6 groups, categorized as follows:
 \begin{itemize}
 	\item Data Manipulation - Arithmetic, Logical, Shifting
 	\item Byte Immediate - Arithmetic, Byte Load
@@ -19,8 +20,8 @@ The complete instruction set architecture includes a number of instructions for 
 	\item Interrupts - Enabling, Status Storage, Returning
 \end{itemize}
 
-\vspace{\baselineskip}
-\noindent There is only one addressing mode associated with each instruction, generally following these groupings:
+
+ There is only one addressing mode associated with each instruction, generally following these groupings:
 \begin{itemize}
 	\item Data Manipulation - Register-Register, Register-Immediate
 	\item Byte Immediate - Register-Immediate
@@ -29,7 +30,7 @@ The complete instruction set architecture includes a number of instructions for 
 	\item Stack Operations - Register-Indirect Preincrement/Postdecrement
 	\item Interrupts - Register-Indirect Preincrement/Postdecrement
 \end{itemize}
-\vspace{\baselineskip}
+
 
 \newpage
 
@@ -68,7 +69,7 @@ The complete instruction set architecture includes a number of instructions for 
 
 \begingroup
 \setlength{\abovedisplayskip}{0pt}
-\noindent{\bf Instruction Field Definitions} \\
+{\bf Instruction Field Definitions} \\
 \begin{alignat*}{2}
 	\text{Opcode:}& \text{ Operation code as defined for each instruction} \\
 	\text{Rd:}& \text{ Destination Register} \\
@@ -84,7 +85,7 @@ The complete instruction set architecture includes a number of instructions for 
 \endgroup
 
 \newpage
-\noindent{\bf Pseudocode Notation}
+{\bf Pseudocode Notation}
 \begin{table}[h]
 \centering
 \footnotesize
