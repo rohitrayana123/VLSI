@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 10:24:08 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 28 Apr 2014 10:43:18 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -39,6 +39,8 @@ def RunSim(options):
 
 	#piece together the command
 	#starting poitn
+	if None == options.type:
+		options.type = "behavioural" #default 
 	cmd = ["ncverilog", "-sv"]
 	#to gui or not to gui?
 	if options.gui: #run with a gui
@@ -52,14 +54,12 @@ def RunSim(options):
 			if ( os.path.exists(tclpath)):
 				cmd.append("+tcl+%s" % tclpath)
 		else: #running system
-			tclpath = os.path.join(stim, "system.tcl")
+			tclpath = os.path.join(verilog, options.type, "system.tcl")
 			cmd.append("+tcl+%s" % tclpath)
 	else:
 		cmd.append("-exit")
 	#library
 	cmd.append("+libext+.sv")
-	if None == options.type:
-		options.type = "behavioural" #default 
 
         if options.module:
                 print "Running a module simulation"
