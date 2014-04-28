@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 12:57:04 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 28 Apr 2014 13:07:35 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -17,7 +17,7 @@ from subprocess import call
 
 
 
-def RunSim(options):
+def RunSim(options, args = None):
 	print "Running sim..."
 	if options.legacy:
 		home = os.path.expanduser("~/VLSI")
@@ -121,6 +121,7 @@ def RunSim(options):
 	if options.switches:
 		cmd.append('+define+switch_value=%s' % options.switches)
 	cmd.append("+define+%s" % options.type)
+	cmd = cmd + args;
 	#print the command
 	print " ".join(cmd)
 	#run the command
@@ -136,7 +137,7 @@ if "__main__" == __name__:
 	#some global things
 	#parse the options
 	#interactive mode?
-	parser = OptionParser(usage="sim.py [-t type] [-m module.sv / -p program.hex ] -g ", version="3")
+	parser = OptionParser(usage="sim.py [-t type] [-m module.sv / -p program.hex ] [ -s switchvalue ] [ -gd ] arguments", version="3", description="trailing arguments are given to the simulator directly")
 	#@todo - auto invoke the assembler if assembly is given?
 	parser.add_option("-m", "--module", dest="module",
                   help="module to simulate - should not be defined if program is")
@@ -168,7 +169,7 @@ if "__main__" == __name__:
 		print("Cannot specify both program and module")
 		parser.print_help()
 	else:
-		RunSim(options)
+		RunSim(options, args)
 
 
 
