@@ -219,7 +219,7 @@ if "__main__" == __name__:
 	
 	assemfile = args[0]		#filename only
 	#Determine input/output file paths
-	print '--------Converting File %s.py--------\n' % assemfile
+	print '--------Converting File %s.asm--------\n' % assemfile
 	if assemfile.endswith(".asm"):
 		INPUTFILE = assemfile
 		OUTPUTFILE = assemfile[:-len(".asm")] + ".mc"
@@ -341,41 +341,48 @@ if "__main__" == __name__:
 		ISR.append(SEGMLINES.pop(ISRloc))
 	for i in range(ISRlen):
 		print "      asm file line", ISRloc + i, ISR[i]
-	if ISR < 1:
+	if ISRlen < 1:
 		print "No ISR Found"
 		ISR.insert(0, ['RETI'])
 		ISRlen = 1
-
-	#ISR.insert(0, ['numBR', str(ISRlen+1)])			#Add unconditional branch over ISR
-	SPInit = 0							#Check if SP has been initialised
-	for l in SEGMLINES[0:10]:
-		if (l[0] == 'LUI'):
-			if (l[1] == 'R7'):
-				SPInit += 1
-		elif (l[0] == 'LLI'):
-			if (l[1] == 'R7'):
-				SPInit += 1
-		elif l[0].startswith('.'):
-			if (l[1] == 'LUI'):
-				if (l[2] == 'R7'):
-					SPInit += 1
-			elif (l[1] == 'LUI'):
-				if (l[2] == 'R7'):
-					SPInit += 1
-	tempsplit = (ISRlen+1)//256
-	ISR.insert(0, ['JMP', 'R0', '15'])#15 is position of this line in memory
-	ISR.insert(0, ['LLI', 'R0', str(ISRlen+1 - tempsplit*256)])
+	#Add code for setting up and performing jump over isr for normal program flow
+	tempsplit = (ISRlen+16)//256
+	ISR.insert(0, ['ADDIB', 'R0', '0'])#Intentionally left blank for temporary conext saving
+	ISR.insert(0, ['JMP', 'R0', '0'])#instruction location 16
+	ISR.insert(0, ['LLI', 'R0', str(ISRlen+16 - tempsplit*256)])
 	ISR.insert(0, ['LUI', 'R0', str(tempsplit)])
-	ISR.insert(0, ['PUSH', 'R0'])
-	if SPInit < 2:#SP has not been setup so add initialization code
-		ISR.insert(0, ['LUI', 'R7', '0'])
-		ISR.insert(1, ['LLI', 'R7', '0'])
-	
-	ISR.append(['POP', 'R0'])
-	if SPInit < 2:
-		SEGMLINES[10:1] = ISR						#Insert ISR into location 16 in memory (10 used due to setup code w SP setup)
-	else:
-		SEGMLINES[12:1] = ISR						#Insert ISR into location 16 in memory (12 used due to setup code w/o SP setup)
+	#ISR.insert(0, ['PUSH', 'R0'])
+	full = [None] * 8
+	for i, l in enumerate(SEGMLINES):#Find unused register
+		if i < 11:
+			for p in l:
+				if p in ['R7','SP']:
+					full[7] = 1;
+				elif p == 'R6':
+					full[6] = 1
+				elif p == 'R5':
+					full[5] = 1
+				elif p == 'R4':
+					full[4] = 1
+				elif p == 'R3':
+					full[3] = 1
+				elif p == 'R2':
+					full[2] = 1
+				elif p == 'R1':
+					full[1] = 1
+				elif p == 'R0':
+					full[0] = 1
+	empty = -1
+	for i, r in enumerate(full):
+		if r == None:
+			empty = i
+			break
+	if empty == -1:
+		print "ERROR:Unused register not found"
+		sys.exit()
+	ISR.insert(0, ['STW', 'R0', 'R' + str(empty), '15'])
+	ISR.append(['LDW', 'R0', 'R' + str(empty), '15'])
+	SEGMLINES[11:1] = ISR #Insert ISR into location 16 in memory (11 accounts for jump over)
 	#print ISR
 	#Create link table, ignoring ISR
 	print '--------Creating Link Table----------'
@@ -386,7 +393,6 @@ if "__main__" == __name__:
 				sys.exit()
 			LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 			SEGMLINES[i].remove(line[0])			#remove label from instruction
-			#SEGMLINES[i].remove(line[0]) 			#remove empty element from seperation bug
 	#Check for out-of-range branching
 	finish = 0
 	autoCount = 0
@@ -425,10 +431,6 @@ if "__main__" == __name__:
 		else:
 			finish = 2
 	SEGMLINES = newSEGMLINES[:]
-	if SPInit < 2:			#Set stack pointer to first memory location after program
-		templen = (len(SEGMLINES))//256
-		SEGMLINES[10] = ['LUI', 'R7', str(templen)]
-		SEGMLINES[11] = ['LLI', 'R7', str(len(SEGMLINES) - templen*256)]
 	
 	print 'Program File After Preprocessing'
 	for i, s in enumerate(SEGMLINES):
