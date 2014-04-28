@@ -17,7 +17,7 @@ logic Test ;
 wire [15:0] Imm ;
 wire [15:0] Ir ;
 
-Ir instance1(
+IR instance1(
 	.Imm ( Imm ),
 	.Ir ( Ir ),
 	.Clock ( Clock ),
