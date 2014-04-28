@@ -1,17 +1,19 @@
 %  Assembler.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:13 GMT
-%  <+Last Edited: Sun 27 Apr 2014 16:10:49 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 28 Apr 2014 17:18:18 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Assembler}
-The current instruction set architecture includes an assembler for converting assembly language into hex. This chapter outlines the required formatting and available features of this assembler. 
+The current instruction set architecture includes an assembler for converting assembly language into hexadecimal. 
+This chapter outlines the required formatting and available features of this assembler. 
 
 \subsection{Instruction Formatting}
-Each instruction must be formatted using the following syntax, here ``[\dots]'' indicates an optional field:
+Each instruction must be formatted using the following syntax. 
+Here ``[\dots]'' indicates an optional field:
 
 \begin{center}\texttt{[.LABELNAME] MNEMONIC, OPERANDS, ..., :[COMMENTS]}\end{center}
-
-\begin{center}eg. \texttt{.loop ADDI, R5, R3, \#5 :Add 5 to R3}
+For example:
+\begin{center}\texttt{.loop ADDI, R5, R3, \#5 :Add 5 to R3}
 \end{center}
 
 \noindent Comments may be added by preceding them with either : or ;\\
@@ -21,13 +23,15 @@ Each instruction must be formatted using the following syntax, here ``[\dots]'' 
 \noindent Branch instructions take a symbolic reference to the destination. 
 Each type of branch supports moving up to 127 lines forward, or 128 lines backwards. But if a branch is over this limitation, the assembler will automatically create additional instructions to enable greater distances. Each additional branch added will cause two more lines of code to be added to the outputted file. \\
 
-\noindent All label names must begin with a `.' while .ISR/.isr and .define are special cases used for the interrupt service routine and variable definitions respectively. \\
+\noindent All label names must begin with a `.' while \texttt{.ISR}/\texttt{.isr} and \texttt{.define} are special cases used for the interrupt service routine and variable definitions respectively. \\
 
 \noindent Instruction-less or comments only lines are allowed within the assembly file. \\
 \newpage
 \noindent {\bf Special Case Label}
 
-\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a `RETI' instruction. Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. As a result of the positioning of the ISR, any stack initialization must occur within the first 10 lines of main program code since jumping over the ISR requires use of the stack. If not initialized, the default address of the stack pointer is 2047. \\
+\noindent The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a `RETI' instruction. 
+Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. 
+%As a result of the positioning of the ISR, any stack initialization must occur within the first 10 lines of main program code since jumping over the ISR requires use of the stack. If not initialized, the default address of the stack pointer is 2047. \\
 
 \subsection{Assembler Directives}
 %There is one supported assembler directive  for assigning meaningful names to each of the general purpose registers. 

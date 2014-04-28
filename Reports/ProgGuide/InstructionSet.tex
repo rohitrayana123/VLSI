@@ -5,8 +5,9 @@
 \newpage
 \section{Instruction Set}
 
-The complete instruction set architecture includes a number of instructions for performing calculations on data, memory access, transfer of control within a program and interrupt handling.\todo{HSL - this is a bit too short. Surely there is more to say about it?} 
-\todo[inline]{HSL - this doesn't sound right. Maybe "transfer of program flow". Not sure on the use of the word "control" but i know it is the technical term}
+The complete instruction set architecture includes a number of instructions for performing calculations on data, memory access, transfer of control within a program and interrupt handling.
+%\todo{HSL - this is a bit too short. Surely there is more to say about it?} 
+%\todo[inline]{HSL - this doesn't sound right. Maybe "transfer of program flow". Not sure on the use of the word "control" but i know it is the technical term}
 \vspace{\baselineskip}
 \noindent All instructions implemented by this architecture fall into one of 6 groups, categorized as follows:
 \begin{itemize}
@@ -73,7 +74,7 @@ The complete instruction set architecture includes a number of instructions for 
 	\text{Rd:}& \text{ Destination Register} \\
 	\text{Ra:}& \text{ Source register 1} \\
 	\text{Rb:}& \text{ Source register 2} \\
-	\text{immN:}& \text{ Immediate value of length N} \\
+	\text{imm\textit{N}:}& \text{ Immediate value of length \textit{N}} \\
 	\text{Cond.:}& \text{ Branching condition code as defined for branch instructions} \\
 	\text{ICond.:}& \text{ Interrupt instruction code as defined for interrupt instructions} \\
 	\text{LS:}& \text{ 0=Load Data, 1=Store Data} \\
@@ -98,7 +99,7 @@ The complete instruction set architecture includes a number of instructions for 
 	\textgreater & Numerically greater than \\\hline
 	\textless\textless & Logical shift left \\\hline
 	\textgreater\textgreater & Logical shift right \\\hline
-	\textgreater\textgreater\textgreater & arithmetic shift right \\\hline
+	\textgreater\textgreater\textgreater & Arithmetic shift right \\\hline
 	Mem[{\itshape val}] & Data at memory location with address {\itshape val} \\\hline
 	\{{\itshape x}, {\itshape y}\} & Contatenation of {\itshape x} and {\itshape y} to form a 16-bit value \\\hline
 	! & Bitwise Negation \\\hline
