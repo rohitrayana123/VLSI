@@ -27,11 +27,11 @@ Initial design of the ALU module was based upon the planned datapath layout and 
 \begin{figure}[h]
 	\missingfigure{Basic top level view of ALU}
 	\caption{Initial Top-level View of ALU Module}
-	\label{fig:Basic ALUSym}
+	\label{fig:BasicALUSym}
 \end{figure}
 
 \subsection{ALU Slice}
-The most beneficial bit slice would be one that performs all the functions required for one bit and as such can be replicated to produce a 16-bit datapath. As such design focussed upon this idea, with considerations towards the overall size of the ALU once built. The arithmetic section was simple to bitslice since the full adder and input selection gates would be duplicated for each bit anyway. While the flags required only one OR gate for the Z flag and the sum, carry in and carry out signals to be available at the top of the slice. Since a decoder is positioned at the top, additional gates needed for flag calculation can be implemented once within the decoder. This is shown in Figure~\ref{fig:Arithslice}. Bit slicing the logic section was just one of each logic gate followed by a tri-state buffer in the slice, shown in Figure~\ref{fig:LogicSlice}. 
+The most beneficial bit slice would be one that performs all the functions required for one bit and as such can be replicated to produce a 16-bit datapath. As such design focussed upon this idea, with considerations towards the overall size of the ALU once built. The arithmetic section was simple to bitslice since the full adder and input selection gates would be duplicated for each bit anyway. While the flags required only one OR gate for the Z flag and the sum, carry in and carry out signals to be available at the top of the slice. Since a decoder is positioned at the top, additional gates needed for flag calculation can be implemented once within the decoder. This is shown in Figure~\ref{fig:ArithSlice}. Bit slicing the logic section was just one of each logic gate followed by a tri-state buffer in the slice, shown in Figure~\ref{fig:LogicSlice}. 
 
 \begin{figure}[h]
 	\missingfigure{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
