@@ -1,3 +1,19 @@
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
+		ADDIB R0,#0
 		BR .add			
 		LUI R0, #255	; PASS - LINE 1 - 0xFFFF is pass code
 		BR .leds
@@ -93,7 +109,7 @@
 		BNE .Fadd
 		BR .addi
 .Fadd	LUI R0,#0
-		LLI R0,#19
+		LLI R0,#26
 		JMP R0,#0
 .addi	SUB R0,R0,R0
 		ADDI R7,R0,#8	; R0
@@ -180,7 +196,8 @@
 		BNE .Faddi
 		BR .addib
 .Faddi 	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .addib	SUB R0,R0,R0
 		ADDIB R0,#127
 		SUB R1,R1,R1
@@ -217,7 +234,8 @@
 		BNE .Faddib
 		BR .adc
 .Faddib SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .adc	LUI R0,#255
 		LLI R0,#255
 		LUI R1,#0
@@ -291,7 +309,8 @@
 		CMPI R0,#3
 		BE .adci
 .Fadc	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .adci	SUB R0,R0,R0
 		LUI R1,#255
 		LLI R1,#255		
@@ -349,7 +368,8 @@
 		CMPI R7,#2
 		BE .neg
 .Fadci	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .neg	LUI R0,#0
 		LLI R0,#170
 		NEG R7,R0
@@ -378,7 +398,6 @@
 		LLI R0,#86
 		CMP R0,R1		; Make sure all regs contain 0xFF56
 		BNE .Fneg
-		BR .sub
 		LUI R1,#0
 		LLI R1,#170
 		NEG R7,R1
@@ -434,9 +453,10 @@
 		LUI R0,#255
 		LLI R0,#86
 		CMP R0,R1		; Make sure all regs contain 0xFF56
-		BNE .Fneg
+		BE .sub
 .Fneg	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .sub	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -474,7 +494,8 @@
 		BNE .Fsub
 		BR .subi
 .Fsub	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .subi	SUB R0,R0,R0
 		SUBI R1,R0,#0
 		SUBI R2,R0,#0
@@ -503,7 +524,8 @@
 		BNE .Fsubi
 		BR .subib
 .Fsubi	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .subib	LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -541,7 +563,8 @@
 		BNE .Fsubib
 		BR .suc
 .Fsubib	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .suc	LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -579,7 +602,8 @@
 		BNE .Fsuc
 		BR .suci
 .Fsuc	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .suci	LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -617,7 +641,8 @@
 		BNE .Fsuci
 		BR .cmp
 .Fsuci	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .cmp	LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -655,7 +680,8 @@
 		BNE .Fcmp
 		BR .cmpi
 .Fcmp	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .cmpi	LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -693,7 +719,8 @@
 		BNE .Fcmpi
 		BR .and
 .Fcmpi	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .and	LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -731,7 +758,8 @@
 		BNE .Fand
 		BR .or
 .Fand	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .or		LUI R0,#255
 		LLI R0,#255
 		SUBI R1,R0,#0
@@ -769,7 +797,8 @@
 		BNE .For
 		BR .xor
 .For	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .xor	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -777,7 +806,8 @@
 		BNE .Fxor
 		BR .cmpi
 .Fxor	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .not	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -785,7 +815,8 @@
 		BNE .Fnot
 		BR .nand
 .Fnot	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .nand	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -793,7 +824,8 @@
 		BNE .Fnand
 		BR .nor
 .Fnand	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .nor	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -801,7 +833,8 @@
 		BNE .Fnor
 		BR .lsl
 .Fnor	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .lsl	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -809,7 +842,8 @@
 		BNE .Flsl
 		BR .lsr
 .Flsl	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .lsr	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
@@ -817,7 +851,8 @@
 		BNE .Flsr
 		BR .asr
 .Flsr	SUB R0,R0,R0
-		JMP R0,#3
+		ADDIB R0,#26
+		JMP R0,#0
 .asr	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
