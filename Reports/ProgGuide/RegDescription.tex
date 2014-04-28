@@ -1,8 +1,33 @@
 %  RegDescription.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:12:06 GMT
-%  <+Last Edited: Thu 27 Mar 2014 10:12:20 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+%  <+Last Edited: Mon 28 Apr 2014 13:11:45 BST by hl13g10 on octopus +>
 
 \section{Register Description}
-Lorem Ipsum\dots
+
+The processor consists of 16bit program counter and 8 general purpose registers of 16 bit each in the register file, 16 bit instruction register along with the Link register and AluOut. 
+
+\paragraph{Register File}
+The 8x16 register file has two read ports and one write ports. 
+The read port takes 3-bit address inputs, RS1 and RS2, each specifying one of the 8 GPRs as source operands. 
+They read the 16 bit register values onto read data outputs RD1 and RD2. 
+The write port takes a 3 bit address input Rw, a 16 bit input, WD. 
+The output ports of the register file serve as inputs A and B of the ALU if selected by the two multiplexers. 
+By convention, register R7 is used to store the stack pointer.
+
+\paragraph{Link Register} 
+The Link Register is used to store the return address of the caller function. 
+However, it is not a part of the General Purpose register file. 
+For example, in this processor the RET instruction performs unconditional branch to the address which is stored in the link register (LR).
+
+\paragraph{Program Counter} 
+The Program Counter (PC) is a 16bit register wherein the output of the PC points to the current instruction and the input of the PC shows the address of the next instruction. 
+The branch instructions make use of the PC. 
+
+\paragraph{Instruction Register} 
+The instruction register of 16 bit is also a storage element that has a single read port. 
+It takes a 16-bit instruction address input and reads the 16-bit data or instruction from that address onto the read data output (Rd). 
+
+\paragraph{AluOut} 
+It is a 16 bit register, AluOut stores the output of the operations performed in the ALU.
 
