@@ -341,7 +341,7 @@ if "__main__" == __name__:
 		ISR.append(SEGMLINES.pop(ISRloc))
 	for i in range(ISRlen):
 		print "      asm file line", ISRloc + i, ISR[i]
-	if ISR != 1:
+	if ISR < 1:
 		print "No ISR Found"
 		ISR.insert(0, ['RETI'])
 		ISRlen = 1
