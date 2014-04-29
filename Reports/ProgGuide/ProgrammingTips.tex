@@ -5,7 +5,7 @@
 
 \section{Programming Tips}
 %Lorem Ipsum\dots
-\todo[inline]{Programmg Tips section needs starting and completing}
+\todo[inline]{Programmg Tips section needs completing}
 
 %Outline of what to include (in no particular order):
 %\begin{enumerate}
@@ -63,7 +63,7 @@ $i$ is then incremented and the program jumps to the start of the loop.
 
 
 \subsection{Stack Pointer Usage}
-
+\todo[inline]{HSL: @ashleyjr - please follow similar structure to other two parts for the stack pointer and sub routine call sections.}
 
 
 \subsection{Sub routine calling convention}
@@ -82,7 +82,12 @@ The stack pointer should be set up before interrupts are enabled in the program.
 
 %When the ISR is triggered
 The nIRQ signal to the \samurai{} processor is an active low, level triggered signal.
-If the interrupt occurs during an instruction, the instruction is completed before the Interrupt Service Routine is entered.
+If the interrupt occurs during an instruction, the instruction is completed before the Interrupt Service Routine (ISR) is entered.
+The peripheral should hold the nIRQ signal low until it has been cleared by the processor.
+The maximum number of clock cycles taken from the nIRQ signal going low until the start of the first instruction in the ISR is started is \todo{insert max time here}.
+This is assuming no latency on a memory access cycles if the previous instruction is a load word. 
+\todo[inline]{Maximum time before ISR is entered.}
+
 Before the ISR is started, the Program Counter value is stored to the stack. 
 Also, interrupts are automatically disabled once an interrupt is triggered to prevent the processor being continually interrupted.
 Interrupts must be re-enabled before the ISR is completed by the ENAI instruction.
@@ -120,9 +125,8 @@ This structure should be followed for the ISR.
 
 \lstinputlisting[style=asm,label=lst:exampleisr,caption={Example outline for the Interrupt Service Routine}]{pseudocode/exampleisr.asm}
 
-\todo[inline]{If the asm supports errors about the required instructions, mention this here}
-\todo[inline]{give minimum pulse time for the nIRQ to be held to guarentee entering the ISR}
-\todo[inline]{check ISR references. Make the first in full and acronym then on}
-
+\todo[inline]{If the assembler supports errors about the required instructions, mention this here}
+%\todo[inline]{check ISR references. Make the first in full and acronym then on}
+\todo[inline]{any more tips sections?}
 
 
