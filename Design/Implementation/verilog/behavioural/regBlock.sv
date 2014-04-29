@@ -18,13 +18,13 @@ always_ff@(posedge Clock or negedge nReset)
 begin
 	if (!nReset) begin
 		regs[0] = 0;
-		regs[1] = 1;
-		regs[2] = 2;
-		regs[3] = 3;
-		regs[4] = 4;
-		regs[5] = 5;
-		regs[6] = 6;
-		regs[7] = 16'h07FF;
+		regs[1] = 0;
+		regs[2] = 0;
+		regs[3] = 0;
+		regs[4] = 0;
+		regs[5] = 0;
+		regs[6] = 0;
+		regs[7] = 0;
 	end
 		//regs = '{reg_count-1{'{n{0}}}};
 	else
