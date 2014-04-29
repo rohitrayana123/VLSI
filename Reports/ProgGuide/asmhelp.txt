@@ -1,0 +1,37 @@
+Usage: assemble.py [-o outfile] input
+
+---Team R4 Assembler Help---
+------Version: 1 (CMPI addition onwards)
+               2 (Changed to final ISA, added special case I's and error checking
+               3 (Ajr changes - Hex output added, bug fix)
+               4 (Added SP symbol)
+               5 (NOP support added, help added)
+               6 (Interrupt support added [ENAI, DISI, RETI])
+               7 (Checks for duplicate Labels)
+               8 (Support for any ISR location & automated startup code entry)
+               9 (Support for .define)
+              10 (Changed usage)
+		11 (ISR setup shortened, Numeric branching support removed)
+		12 (Branches automatically extended if out of 8-bit range)
+      Current is most recent iteration
+Input Syntax: ./assemble filename
+Commenting uses : or ;
+Labels start with '.': SPECIAL .ISR/.isr-> Interrupt Service Routine)
+                       SPECIAL .define -> define new name for General Purpose Register, .define NAME R0-R7/SP
+Instruction Syntax: .[LABELNAME] MNEUMONIC, OPERANDS, ..., :[COMMENTS]
+Registers: R0, R1, R2, R3, R4, R5, R6, R7==SP
+Branching: Only Symbolic Supported
+
+Notes:
+       Input files are assumed to end with a .asm extension
+       Immediate value sizes are checked
+       Instruction-less lines allowed
+       .ISR may be located anywhere in file
+       .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions
+
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -o FILE, --output=FILE
+                        output file for the assembled output
