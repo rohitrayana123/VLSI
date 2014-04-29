@@ -87,7 +87,7 @@ The \textit{nIRQ} signal to the \samurai{} processor is an active low, level tri
 If the interrupt occurs during an instruction, the instruction is completed before the Interrupt Service Routine (ISR) is entered.
 The peripheral should hold the \textit{nIRQ} signal low until it has been cleared by the processor.
 %The maximum number of clock cycles taken from the nIRQ signal going low until the start of the first instruction in the ISR is started is \todo{insert max time here}.
-This is assuming no latency on a memory access cycles if the previous instruction is a load word. 
+%This is assuming no latency on a memory access cycles if the previous instruction is a load word. 
 \todo[inline,color=green]{Maximum time before ISR is entered.}
 
 Before the ISR is started, the Program Counter value is stored to the stack. 
