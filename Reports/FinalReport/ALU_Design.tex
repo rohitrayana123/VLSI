@@ -9,7 +9,7 @@
 \todo[color=cyan, inline]{Use of hierarchy - implied mention, todo}
 \todo[color=cyan, inline]{Design of slice - initial text done}
 \todo[color=cyan, inline]{Design of decoder - initial text done}
-\todo[color=cyan, inline]{Design of block}
+\todo[color=cyan, inline]{Design of block - initial test done}
 \todo[color=cyan, inline]{Layout in silicon}
 
 The arithmetic logic unit (ALU) is the central unit for performing calculations within the datapath. Most instructions use the ALU as part of their operation and as such this module needs to interpret every instruction and perform the necessary function. The range of functions needed fall into one of four types: arithmetic, logic, shifting and load lower. With the last type being a special case for the LLI instruction. Arithmetic operations are centralized around a full adder with additional gates for subtraction, setting the first input to zero and flag calculations. The logic unit consists of one gate corresponding to each of the full set of logic instructions supported. While shifts are performed using a barrel shifter to support up to 15-bits in one clock cycle. Finally, the LLI module concatenates the upper byte of the destination register with the provided 8-bit immediate value. The breakdown of the ALU is illustrated in Figure~\ref{fig:abstractALU}, with the output of each section connected to an internal bus through a number of tri-state gates. 
@@ -84,7 +84,7 @@ The purpose of a decoder module is to convert any given opcode into a number of 
 		ADD   & 00010 & FAOut &  & 'D'   & 11110 & FAOut \\
 		ADDI  & 00110 & FAOut &  & LSL   & 11111 & ShOut, ShL, \{Sh8-1\} \\
 		CMP   & 00111 & FAOut, SUB &  & LSR   & 11101 & ShOut, ShR, \{Sh8-1\} \\
-		ADCI  & 00101 & FAOut, {\it UseC} &  & ASR   & 11100 & ShOut, ShR, {\it ShInBit}, {\it Sh8-1} \\
+		ADCI  & 00101 & FAOut, {\it UseC} &  & ASR   & 11100 & ShOut, ShR, {\it ShSign}, \{Sh8-1\} \\
 		ADC   & 00100 & FAOut, {\it UseC} &  & AND   & 10000 & AND \\
 		STW   & 01000 & FAOut &  & OR    & 10001 & OR \\
 		PUSH  & 01001 & FAOut, SUB &  & XOR   & 10011 & XOR \\
@@ -125,7 +125,7 @@ By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and
 	%&= \bar{A + \bar{B} + \bar{(p)}} \label{eq:DecSUB3} %(\bar{C}\bar{(c + \bar{E})})
 	&= \overbar{\overbar{A + \bar{B} + \overbar{(\bar{C}\overbar{(C + \bar{E})})}} + \overbar{\overbar{\overbar{(\bar{B} + C + E)}\overbar{(A + \bar{C} + \bar{E})}} + \bar{D}}} \label{eq:DecSUB3}
 \end{align}
-\todo[inline]{are all final equations needed? they will use lots of space like last line of above}
+\todo[inline]{are all final equations needed as above?}
 
 \begin{figure}[h]
 	\missingfigure{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
