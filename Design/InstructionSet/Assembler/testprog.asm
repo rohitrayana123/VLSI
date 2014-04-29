@@ -20,7 +20,7 @@
 .calcr1		ADD R1, R1, R2	:R1 = R1 + R2
 		LLI t, #1	:t = 1
 		SUBI R6, n, #10:R6 = n - 10
-		NEG R6		:R6 = (10 - n)
+		NEG R6, n	:R6 = (10 - n)
 		STW R1, [R6, 1]	:Store R1
 		BR .loop
 .calcr2		ADD R2, R1, R2	:R2 = R1 + R2
@@ -31,7 +31,7 @@
 		ADDI R6, R6, #1	:Filling Code that does nothing useful
 .goingup	BR .goingup
 .start		ADDI R6, R6, #1
-		ADDI R6, R6, #2
+		ADD R6, R6, #2
 		ADDI R6, R6, #3
 		ADDI R6, R6, #4
 		ADDI R6, R6, #5
