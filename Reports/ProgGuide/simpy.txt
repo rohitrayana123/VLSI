@@ -1,0 +1,21 @@
+Usage: sim.py [-t type] [-m module.sv / -p program.asm ] [ -s switchvalue ] [ -gdS ] [+define+extra_definitions]
+
+trailing arguments are given to the simulator directly
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -m MODULE, --module=MODULE
+                        module to simulate - should not be defined if program
+                        is
+  -t TYPE, --type=TYPE  Type of simulation to run, e.g. behavioural (default),
+                        mixed, extracted, magic
+  -p PROGRAM, --prog=PROGRAM
+                        program to run should not be defined if module is. Hex
+                        or ASM can be passed. ASM files will be assembled
+                        before running the simulator.
+  -g, --gui             Run the simulation with a GUI
+  -s SWITCHES, --switches=SWITCHES
+                        Value of switches to pass to the simulation
+  -d                    Make, but don't execute, the command
+  -S, --scanpath        Run the scan path simulation
