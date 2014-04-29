@@ -4,17 +4,17 @@
 %  <+Last Edited: Sat 05 Apr 2014 by mw20g10
 
 \section{Programming Tips}
-Lorem Ipsum\dots
+%Lorem Ipsum\dots
 \todo[inline]{Programmg Tips section needs starting and completing}
 
-Outline of what to include (in no particular order):
-\begin{enumerate}
-\item Stack pointer usage
-\item ISR usage - disabled automatically, first instruction should be STF. Final two LDF and RETI.
-\item Sub routine calls and stack frames
-\item General branching (use of CMP)
-\item Any other tips
-\end{enumerate}
+%Outline of what to include (in no particular order):
+%\begin{enumerate}
+%\item Stack pointer usage
+%\item ISR usage - disabled automatically, first instruction should be STF. Final two LDF and RETI.
+%\item Sub routine calls and stack frames
+%\item General branching (use of CMP)
+%\item Any other tips
+%\end{enumerate}
 
 
 This section gives hints and tips about programming for the \samurai{} processor. 
@@ -43,26 +43,52 @@ On reset, interrupts are disabled on the \samurai{} processor.
 Two instructions are used to enable and disable interrupts, ENAI, DISI.
 These set or clear an internal flag with in the control unit. 
 It is not accessible to the user for reading or branching on it's value.
-
+The use of interrupts requires the use of R7 as the stack pointer. 
+The stack pointer should be set up before interrupts are enabled in the program.
 
 %When the ISR is triggered
-The nIRQ signal to the processor is an active low, level triggered signal.
+The nIRQ signal to the \samurai{} processor is an active low, level triggered signal.
 If the interrupt occurs during an instruction, the instruction is completed before the Interrupt Service Routine is entered.
 Before the ISR is started, the Program Counter value is stored to the stack. 
 Also, interrupts are automatically disabled once an interrupt is triggered to prevent the processor being continually interrupted.
+Interrupts must be re-enabled before the ISR is completed by the ENAI instruction.
 The first instruction in the ISR \textbf{must be} the store flags instruction (STF). 
 The final two instructions in the ISR \textbf{must be} load flags (LDF) and return from interrupt (RETI). 
+The user is responsible for saving all the registers and restoring them before returning. 
+
+Nested interrupts are supported on the \samurai{} if required. 
+The initial interrupt must first be cleared. 
+Interrupts can then be re-enabled. 
+If a new interrupt occurs, the ISR is run. 
+Once the second ISR is completed, the program flow is returned to where it was before hand and the first ISR run is then complete.
+
+The ISR can also conduct a function call. 
+However, this is not recommended as the ISR should be short in length.
+
+The general outline for the ISR is:
+\begin{enumerate}
+\item Store Flags
+\item Push registers to stack
+\item Clear interrupt source
+\item Enable interrupts
+\item Process data
+\item Restore registers
+\item Load Flags
+\item Return from Interrupt
+\end{enumerate}
+
+\todo[inline]{repetition here with next section}
+The ISR is implemented by using the ``.isr'' or ``.ISR'' label. 
+It can be placed anywhere in the code and be any length.
+A general outline in assembly language is shown in listing~\ref{lst:exampleisr}. 
+This structure should be followed for the ISR.
+
+
+\lstinputlisting[style=asm,label=lst:exampleisr,caption={Example outline for the Interrupt Service Routine}]{pseudocode/exampleisr.asm}
 
 \todo[inline]{If the asm supports errors about the required instructions, mention this here}
 \todo[inline]{give minimum pulse time for the nIRQ to be held to guarentee entering the ISR}
-
-
 \todo[inline]{check ISR references. Make the first in full and acronym then on}
 
 
-ISR label
-
-Compulsory instructions for the ISR
-
-example outline
 
