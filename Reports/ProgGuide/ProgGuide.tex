@@ -1,9 +1,9 @@
 %  ProgGuide.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:09:06 GMT
-%  <+Last Edited: Fri 25 Apr 2014 13:23:07 BST by hl13g10 on octopus +>
+%  <+Last Edited: Mon 28 Apr 2014 22:54:26 BST by seblovett on seblovett-Ubuntu +>
 
-\documentclass[12pt]{article}
+\documentclass[twoside,12pt]{article}
 
 %\usepackage[nodayofweek]{datetime}
 \usepackage{ISFormat}
@@ -12,22 +12,36 @@
 \usepackage[nodayofweek]{datetime}
 \usepackage{listings}
 \usepackage{graphicx}
-\graphicspath{{Figures/}}
-\author{Team R4}
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\cleardoublepage}
+\usepackage[all]{background}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{changepage}
 
-\title{ELEC6027 - VLSI Design Project : Programmers Guide}
+\graphicspath{{Figures/}}
+\author{Team R4\\
+Henry Lovett (hl13g10)\\ 
+Ashey J. Robinson (ajr2g10)\\
+Martin Wearn (mw20g10)\\
+Anusha R. Reddy (arr1g13)\\ \\
+Course Tutor: Mr B. Iain McNally\\ \\}
+
+\title{ELEC6027 - VLSI Design Project \\ Programmers Guide}
 
 \begin{document}
 \maketitle
-\newpage
+\thispagestyle{empty}
 \input{definitions.tex}%import some definitions
-
+\clearpage
 \listoftodos
 %\begin{abstract}
 %Abstract
 %\end{abstract}
+\cleardoublepage
 \tableofcontents
-\newpage
+\cleardoublepage
 \input{Introduction.tex}
 \input{Architecture.tex}
 \input{RegDescription.tex}
@@ -35,7 +49,8 @@
 \input{ProgrammingTips.tex}
 \input{Assembler.tex}
 \input{Programs.tex}
-\input{Simulation.tex}
+%\input{Simulation.tex}
+\input{Simulation_SimPy.tex}
 \newpage
 \appendix
 \input{CodeListings.tex}

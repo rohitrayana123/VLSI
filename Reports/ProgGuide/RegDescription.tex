@@ -1,8 +1,41 @@
 %  RegDescription.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:12:06 GMT
-%  <+Last Edited: Thu 27 Mar 2014 10:12:20 GMT by hl13g10 on hind.ecs.soton.ac.uk +>
+%  <+Last Edited: Mon 28 Apr 2014 21:24:47 BST by seblovett on seblovett-Ubuntu +>
 
-\section{Register Description}
-Lorem Ipsum\dots
+\subsection{Register Description}
 
+The \samurai{} processor has twelve registers in total, all are 16 bits wide.
+These is a program counter, instruction register, link register, ALU output register and 8 general purpose registers.
+Each register is described below, along with any conventions.  
+
+\paragraph{General Purpose Registers}
+The register block consists of eight General Purpose Registers (GPRs). 
+There is no dummy register. 
+By convention, Register 7 is used as the stack pointer. 
+It is used by stack and interrupt instructions such as push, pop, store and load flags and return from interrupt.  
+
+
+\paragraph{Link Register} 
+The Link Register is used to store the return address of the caller function. 
+However, it is not a part of the General Purpose register file. 
+The link register is used by the branch with link and return from subroutine instructions. 
+In these, the program counter is stored to or set by the link register. 
+The link register can also be pushed or popped to/from the stack.
+%For example, in this processor the RET instruction performs unconditional branch to the address which is stored in the link register (LR).
+
+\paragraph{Program Counter} 
+The program counter is used to access the current instruction. 
+It can be set by the result of an ALU operation, the link register, a value on the stack or a predefined constant used for interrupts.
+Branch instructions are the main modifier of the program counter.
+By default, all instructions increment the Program Counter by one to progress the operation of the program. 
+This is not an addressable register and it's functionality is utilised by the control unit only. 
+
+\paragraph{Instruction Register} 
+The instruction register contains the currently executed instruction. 
+This can only be set from the main memory by use of the Program Counter as the address to main memory.
+It is not addressable and it's function is utilised by the control unit.
+
+\paragraph{AluOut} 
+The AluOut register is used to hold a value on the output of the Alu. 
+It is used by memory access instructions and is not addressable. 

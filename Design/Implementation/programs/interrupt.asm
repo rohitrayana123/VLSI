@@ -31,8 +31,7 @@
 		STW 	R1,[R0,#0]	; Store 0x001 @ 0xA001
 		ENAI
 		BR 		.main
-.isr  	DISI
-		STF					; Keep flags
+.isr  	STF					; Keep flags, disable auto
 		PUSH 	R0			; Save only this for now
 		LUI 	R0,#160
 		LLI 	R0,#0

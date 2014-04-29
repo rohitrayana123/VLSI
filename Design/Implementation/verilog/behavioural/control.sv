@@ -298,8 +298,8 @@ always_comb begin
                         end
                   		SUBIB:begin
    		                	PcEn = 1; 
-                           	Op1Sel = Op1Rd1;
-                           	Rs1Sel = Rs1Rd;
+                           	Op1Sel = Op1Rd1;	
+							Rs1Sel = Rs1Rd;
                            	RegWe = 1;
                            	PcWe = 1;
 							StatusRegWe = 1;
@@ -308,14 +308,16 @@ always_comb begin
                   		SUC:begin
 		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
+							Op2Sel = Op2Rd2;
                            	RegWe = 1;
                            	PcWe = 1;
 							StatusRegWe = 1;
                            	PcSel = Pc1;
-                    	end
+						end
                   		SUCI:begin
    		                	PcEn = 1;  
                            	Op1Sel = Op1Rd1;
+							ImmSel = ImmShort;
                            	RegWe = 1;
                            	PcWe = 1;
 							StatusRegWe = 1;
@@ -393,7 +395,8 @@ always_comb begin
                   		LSL:begin
    		                	PcEn = 1;  
 							ImmSel = ImmShort;
-                           	Op1Sel = Op1Rd1;Op2Sel = Op2Imm;
+                           	Op1Sel = Op1Rd1;
+							Op2Sel = Op2Imm;
                            	RegWe = 1;
                            	PcWe = 1;
 							StatusRegWe = 1;

@@ -1,0 +1,117 @@
+%  Simulation.tex
+%  Document created by seblovett on hind.ecs.soton.ac.uk
+%  Date created: Thu 27 Mar 2014 10:13:53 GMT
+%  <+Last Edited: Mon 28 Apr 2014 20:08:52 BST by seblovett on seblovett-Ubuntu +>
+
+\section{Simulation}
+
+\subsection{Running the simulations}
+\todo[inline]{A register window could also be done for this section too}
+
+%How to run for each of the behavioural, extracted and mixed
+
+%What it does:
+
+%Invokes assembler (if app) and simulation from anywhere. 
+A python script, sim.py, was written to automatically invoke the assembler and simulator. 
+The passed program is only assembled if the file exists with an extension of \texttt{.asm}. 
+This allows for raw hex to be passed to the simulator where necessary. 
+If a \texttt{.hex} file is passed, and a \texttt{.asm} file exists of the same name, the assembler will be invoked. 
+The sim.py script is designed to be put on the user's path, allowing for the invocation of the assembler and simulator from anywhere. 
+
+The usage for the script is:
+\begin{center}
+\texttt{sim.py [-t type] [-m module.sv / -p program.asm ] [ -s switchvalue ] [ -gdS ] [+define+extra\_definitions]}
+\end{center}
+
+%Supports all simualtions
+All simulation types are supported. 
+As well as full system simulations, the sim.py script also allows for other testbenches to be run.
+All stimulus files are maintained in a directory and the testbenches can be run on verilog or magic modules. 
+Where a Magic design is to be simulated, the script automatically extracts the netlist. 
+This is done to prevent the Magic design and netlist being inconsistent. 
+%Allows test benches to be run on both verilog and Magic modules. 
+
+%Usage
+The sim.py script provides a help prompt when run with \texttt{-h} or \texttt{--help} arguments. 
+The help prompt is also displayed when incorrect arguments are supplied. 
+The full help prompt is show in listing~\ref{lsg:simpyhelp}. 
+
+By default, the graphical user interface is not invoked. 
+This can be done with the \texttt{-g} or \texttt{--gui} tags. 
+A debug option, \texttt{-d}, exists when the user wants to get the majority of the simulation command, but modify it slightly. 
+
+The program and module options should never be defined at the same time. 
+One of them, however, should be. 
+The program option is assembled, if necessary, and defined in the simulation command. 
+The module option checks for the testbench file (identified by <module>\_stim.sv) within the verification folder. 
+The testbench is then used as the top level module. 
+
+The type of simulation can be any of the folders in the verilog directory, for example \textit{behavioural}, \textit{mixed} or \textit{extracted}. 
+A special type, \textit{magic} can be used.
+When this is done so, the magic folder, \texttt{~/design/fcde/magic/design}, is checked for the module given. 
+Type \textit{magic} and a program is equivalent to an extracted type simulation and is treated as such. 
+The type is also given as a definition to the simulator, allowing reuse of test benches. 
+
+The value of the switches can be easily defined by using the \texttt{-s} tag. 
+The value given after this option is then passed to the simulator as a definition. 
+If other definitions are required (for example, the serial data file), they can be defined, in full, in the trailing arguments. 
+All trailing arguments are appended to the simulation command, allowing for the user to customise the invocation beyond the scope of the script. 
+
+A scan path simulation can also be run.
+This is done by running \texttt{./sim.py -S} and allows the same use described above for invoking the GUI.
+If the \texttt{-S} option is defined, any program or module also given is ignored.
+The scan path test pulses a signal on the SDI line, and verifies a pulse is seen on the output. 
+The clock cycles, and therefore the number of registers, are counted and reported upon success of the simulation.
+
+
+\lstinputlisting[label=lst:simpyhelp,caption={Help prompt for the sim.py script.}]{simpy.txt}
+
+
+
+\subsection{Serial Data}
+
+The serial data file used is located in the programs directory. 
+This is a hex file with white space separated values of the form ``time data''. 
+The data is then sent at the time to the processor by the serial module. 
+An example serial data hex file is shown in listing~\ref{lst:serialdata}.
+
+\lstinputlisting[label=lst:serialdata,caption={Example serial data file}]{../../Design/Implementation/programs/serial_data.hex}
+
+
+%\todo[inline]{how to run scan path sim too}
+
+
+%\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
+
+\subsection{Run Time}
+The number of clock cycles for each program to fully run is shown in table~\ref{tab:runtimes}. 
+Factorial run time is given for an input of 8 and is the worst case. 
+Interrupt is dependant on the serial data input and the time is given for the serial data file mentioned above.
+
+\begin{table}
+\centering
+\caption{Clock cycles required for each program to run\todo[inline]{Make these more accurate when AJR has finished playing around}}
+\label{tab:runtimes}
+\begin{tabular}{|c|c|}
+Program & Clock Cycles \\ \hline
+Multiply	& 900	\\
+Factorial	& 6000	\\
+Random		& 	\\
+Interrupt	& 30000	\\ \hline
+\end{tabular}
+\end{table}
+
+%\todo[inline]{and TCL?}
+\subsection{Simulation}
+
+A dissembler is also implemented in System Verilog to aid debugging.
+It is an ASCII formatted array implemented at the top level of the simulation. 
+It is capable of reading the instruction register with in the design, and reconstructing the assembly language of the instruction and is supported in behavioural, mixed and extracted simulations.
+It will show the opcode, register addresses and immediate values.
+It is automatically included by the TCL script.
+The TCL script also opens a waveform window and adds important signals.
+
+\todo[inline]{Put a screen shot of the waveform window?}
+%\todo[inline]{check that the dissembler works in all the simulations (it doesn't\dots)}
+

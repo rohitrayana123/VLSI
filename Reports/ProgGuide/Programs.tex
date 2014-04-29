@@ -1,9 +1,9 @@
 
 
 \section{Programs}
-Every example program in this section uses R7 as a stack pointer which is initialised to the by the program to 0x07D0 using the LUI and LLI instructions.
-The testbench contains an area of an area of memory with $2048$ locations and memory mapped deices.
-$16$ switches at location $0$x$0800$, $16$ LEDs at location $0$x$0801$ and a serial io device which can be read from location $0$x$A000$ and has a control register at location $0$x$A001$. 
+Every example program in this section uses R7 as a stack pointer which is initialised to the by the program to 0x07D0.% using the LUI and LLI instructions.
+The simulation environment contains an area of an area of memory with $2048$ locations and memory mapped deices.
+There are $16$ switches at location $0$x$0800$, $16$ LEDs at location $0$x$0801$ and a serial io device which can be read from location $0$x$A000$ and has a control register at location $0$x$A001$. 
 
 
 
@@ -13,7 +13,7 @@ $16$ switches at location $0$x$0800$, $16$ LEDs at location $0$x$0801$ and a ser
 The code for the multiply program is held in Appendix~\ref{sec:multiply_appendix} listing~\ref{lst:multiply.asm}.
 A sixteen bit number is read from input switches, split in to lower and upper bytes which are then multiplied.
 The resulting sixteen bit word is written to the LEDs before reaching a terminating loop.
-Equation~\eqref{eqn:multi} formally describes the algorithm disregarding physical limitations.
+Equation~\eqref{eqn:multi} formally describes the algorithm disregarding limitations.
 
 \begin{equation}
 	A = M \times Q = \sum_{i=0}^{\infty} 2^i M_i Q\:\:where\:\:M_i \in \{0,1\}
@@ -22,7 +22,7 @@ Equation~\eqref{eqn:multi} formally describes the algorithm disregarding physica
 
 
 
-The subroutine operation is described using C in listing~\ref{lst:multiply.c}. 
+The subroutine operation is described in listing~\ref{lst:multiply.c}, using C. 
 If the result is greater than or equal to $2^{16}$ the subroutine will fail and return zero.
 The lowest bit of the multiplier controls the accumulator and the overflow check.
 The multiplier is shifted right and the quotient is shifted left at every iteration.
@@ -70,7 +70,7 @@ All contained within an unconditional branch but a loop counter is used control 
 \begin{figure}[ht]
    \centering
     \includegraphics[width = 0.8\textwidth]{LFSR.pdf}
-		\caption{16 Bit Linear Feedback Shift Register. \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
+		\caption{16 Bit Linear Feedback Shift Register.}% \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
    \label{fig:lfsr}
 \end{figure}
 
