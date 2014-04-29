@@ -76,14 +76,14 @@ wire Rd2 ;
 wire [7:0] Regs ;
 wire Reg7 ;
 assign Reg7 = ~ \regBlock_slice_0/scanreg_7/nQ ;
-assign Regs = { \regBlock_slice_0/Reg0 ,
-		\regBlock_slice_0/Reg1 ,
-		\regBlock_slice_0/Reg2 ,
-		\regBlock_slice_0/Reg3 ,
-		\regBlock_slice_0/Reg4 ,
-		\regBlock_slice_0/Reg5 ,
+assign Regs = { Reg7 ,
 		\regBlock_slice_0/Reg6 ,
-		Reg7 };
+		\regBlock_slice_0/Reg5 ,
+		\regBlock_slice_0/Reg4 ,
+		\regBlock_slice_0/Reg3 ,
+		\regBlock_slice_0/Reg2 ,
+		\regBlock_slice_0/Reg1 ,
+		\regBlock_slice_0/Reg0 };
 //logic Clock ;
 //assign Clock = \mux2_3/Clock ;
 //logic nReset = \mux2_3/nReset ;

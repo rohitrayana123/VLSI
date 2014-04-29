@@ -27,6 +27,7 @@ set wave_signal_list {
   Datapath_slice_stim.WdSel
   Datapath_slice_stim.PcIncCout
   Datapath_slice_stim.SysBus
+  Datapath_slice_stim.A
   Datapath_slice_stim.ds.B
   Datapath_slice_stim.ds.Pc
   Datapath_slice_stim.ds.Rd1

@@ -119,13 +119,13 @@ initial
     #500 DR_SysBus = 1;
     #500 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
     //Section B
-    #500 Rw = 8'b11110000; Rs1 = 1; Rs2 = 16;
+    #500 Rw = 8'b00000001; Rs1 = 8'b00000000; Rs2 = 8'b00000000;
     #500 Clock = 1;
     #500 Clock = 0;
     //#500 assert(ds.Regs == ds.WData) else begin $display("ERROR: Regs not written"); errors++; end
-    #500 assert(ds.A == ds.Rd1) else begin $display("ERROR: A, Op1Sel=0"); errors++; end
+    #500 assert(A == ds.Rd1) else begin $display("ERROR: A, Op1Sel=0"); errors++; end
     #500 Op1Sel = 1;
-    #500 assert(ds.A == ds.Pc) else begin $display("ERROR: A, Op1Sel=1"); errors++; end
+    #500 assert(A == ds.Pc) else begin $display("ERROR: A, Op1Sel=1"); errors++; end
 	 assert(ds.B == ds.Imm) else begin $display("ERROR: B, Op2Sel=0"); errors++; end
     #500 Op2Sel = 1;
     #500 assert(ds.B == ds.Rd2) else begin $display("ERROR: B, Op2Sel=1"); errors++; end
