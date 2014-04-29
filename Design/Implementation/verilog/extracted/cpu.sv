@@ -1,3 +1,4 @@
+//Written by Henry Lovett (hl13g10)
 module cpu(
   inout [15:0] Data,
   output wire  nME, ALE, RnW, nOE, SDO,
