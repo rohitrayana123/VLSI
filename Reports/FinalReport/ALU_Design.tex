@@ -68,7 +68,42 @@ Every instruction can be carried out using one of the previous sections, with th
 \end{figure}
 
 \subsection{ALU Decoder}
+The purpose of a decoder module is to convert any given opcode into a number of control signals to set the path of data within the ALU. As such it composed of multiple circuits of purely combinational logic. Table~\ref{tab:contrOuts} shows the mapping of instruction mnemonic to control signals. By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations could be formed as shown in Figure~\ref{fig:ALUDEq}. Where the letters A-E correspond to bits 4-0 of the opcode. 
+\todo[inline]{define meaning of each signal}
 
+\begin{figure}[h]
+	\missingfigure{Control Outputs For Each Available Instruction Mneumonic (TABLE)}
+	\caption{Control Outputs For Each Available Instruction Mnemonic}
+	\label{tab:contrOuts}
+\end{figure}
+
+\begin{figure}[h]
+	\missingfigure{Logic Equations For ALU Decoder Module}
+	\caption{Logic Equations For ALU Decoder Module}
+	\label{fig:ALUDEq}
+\end{figure}
+
+Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. Some potential options for the logic equation for the ``SUB'' signal are shown in Figure~\ref{fig:SUBEqs}. The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. To simplify design, inverters are not considered as both inverted and non-inverted inputs will be made available globally. This equation is not possible to implement due to more than 2 inputs AND gates. The next requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. However if inverted using DeMorgan's law to produce equation 3 it is possible, and uses 8 gates. Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. Also shown are the circuit diagrams for each signal which should occur for more than one opcode. 
+
+\begin{figure}[h]
+	\missingfigure{List of Potential Logic Equations For SUB Signal (TABLE)}
+	\caption{List of Potential Logic Equations For SUB Signal}
+	\label{fig:SUBEqs}
+\end{figure}
+
+\begin{figure}[h]
+	\missingfigure{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
+	\caption{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
+	\label{fig:DecMultiCirs}
+\end{figure}
+
+For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. Since additional logic for flag calculations are implemented in the decoded, the circuit diagram for this portion if also shown in Figure~\ref{fig:GateArray}. 
+
+\begin{figure}[h]
+	\missingfigure{Circuit Diagrams For Gate Array and Flag Overhead Logic}
+	\caption{Circuit Diagrams For Gate Array and Flag Overhead Logic}
+	\label{fig:GateArray}
+\end{figure}
 
 \subsection{ALU Block}
 
