@@ -13,6 +13,7 @@ Usage: assemble.py [-o outfile] input
               10 (Changed usage)
 		11 (ISR setup shortened, Numeric branching support removed)
 		12 (Branches automatically extended if out of 8-bit range)
+		13 (Comments in hexfile)
       Current is most recent iteration
 Input Syntax: ./assemble filename
 Commenting uses : or ;
@@ -28,6 +29,7 @@ Notes:
        Instruction-less lines allowed
        .ISR may be located anywhere in file
        .define may be located anywhere, definition valid from location in file onwards, may replace existing definitions
+	 Error message line numbers are prefixed with f for assembly file and p for preprocessed code 
 
 
 Options:
