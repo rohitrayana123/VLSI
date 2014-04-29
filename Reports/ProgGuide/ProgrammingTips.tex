@@ -58,7 +58,7 @@ $i$ is then incremented and the program jumps to the start of the loop.
 
 \lstinputlisting[style=asm,label=lst:examplefor,caption={Example code for a \textit{for} loop.}]{pseudocode/examplefor.asm}
 %\todo[inline]{For and while loop examples}
-\todo[inline]{would a while loop be good to put in?}
+\todo[inline,color=green]{would a while loop be good to put in?}
 
 
 
@@ -84,9 +84,9 @@ The stack pointer should be set up before interrupts are enabled in the program.
 The nIRQ signal to the \samurai{} processor is an active low, level triggered signal.
 If the interrupt occurs during an instruction, the instruction is completed before the Interrupt Service Routine (ISR) is entered.
 The peripheral should hold the nIRQ signal low until it has been cleared by the processor.
-The maximum number of clock cycles taken from the nIRQ signal going low until the start of the first instruction in the ISR is started is \todo{insert max time here}.
+%The maximum number of clock cycles taken from the nIRQ signal going low until the start of the first instruction in the ISR is started is \todo{insert max time here}.
 This is assuming no latency on a memory access cycles if the previous instruction is a load word. 
-\todo[inline]{Maximum time before ISR is entered.}
+\todo[inline,color=green]{Maximum time before ISR is entered.}
 
 Before the ISR is started, the Program Counter value is stored to the stack. 
 Also, interrupts are automatically disabled once an interrupt is triggered to prevent the processor being continually interrupted.
@@ -116,7 +116,7 @@ The general outline for the ISR is:
 \item Return from Interrupt
 \end{enumerate}
 
-\todo[inline]{repetition here with next section}
+%\todo[inline]{repetition here with next section, this is use, the other is warning it's reserved. Therefore OK}
 The ISR is implemented by using the ``.isr'' or ``.ISR'' label. 
 It can be placed anywhere in the code and be any length.
 A general outline in assembly language is shown in listing~\ref{lst:exampleisr}. 
@@ -125,7 +125,7 @@ This structure should be followed for the ISR.
 
 \lstinputlisting[style=asm,label=lst:exampleisr,caption={Example outline for the Interrupt Service Routine}]{pseudocode/exampleisr.asm}
 
-\todo[inline]{If the assembler supports errors about the required instructions, mention this here}
+\todo[inline,color=green]{If the assembler supports errors about the required instructions, mention this here}
 %\todo[inline]{check ISR references. Make the first in full and acronym then on}
 \todo[inline]{any more tips sections?}
 
