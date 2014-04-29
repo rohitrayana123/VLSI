@@ -15,3 +15,54 @@ Outline of what to include (in no particular order):
 \item General branching (use of CMP)
 \item Any other tips
 \end{enumerate}
+
+
+This section gives hints and tips about programming for the \samurai{} processor. 
+
+\subsection{Branching}
+
+Explanation of the branches available.
+
+use of CMP and CMPI
+
+a little bit of code
+
+
+\subsection{Stack Pointer Usage}
+
+
+
+\subsection{Sub routine calling convention}
+
+
+\subsection{Interrupt Service Routines}
+\todo[inline]{Standardise all references to instructions}
+
+%enabling and disabling interrupts
+On reset, interrupts are disabled on the \samurai{} processor.
+Two instructions are used to enable and disable interrupts, ENAI, DISI.
+These set or clear an internal flag with in the control unit. 
+It is not accessible to the user for reading or branching on it's value.
+
+
+%When the ISR is triggered
+The nIRQ signal to the processor is an active low, level triggered signal.
+If the interrupt occurs during an instruction, the instruction is completed before the Interrupt Service Routine is entered.
+Before the ISR is started, the Program Counter value is stored to the stack. 
+Also, interrupts are automatically disabled once an interrupt is triggered to prevent the processor being continually interrupted.
+The first instruction in the ISR \textbf{must be} the store flags instruction (STF). 
+The final two instructions in the ISR \textbf{must be} load flags (LDF) and return from interrupt (RETI). 
+
+\todo[inline]{If the asm supports errors about the required instructions, mention this here}
+\todo[inline]{give minimum pulse time for the nIRQ to be held to guarentee entering the ISR}
+
+
+\todo[inline]{check ISR references. Make the first in full and acronym then on}
+
+
+ISR label
+
+Compulsory instructions for the ISR
+
+example outline
+
