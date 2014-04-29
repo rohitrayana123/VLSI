@@ -116,21 +116,24 @@ The signal FAOut enables the tri-state buffer of the arithmetic section. SUB inv
 	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \label{eq:DecBasicF}
 \end{align}
 
-By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations have be formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. Where the letters A-E correspond to bits 4-0 of the opcode. Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. Some potential options for the logic equation for the ``SUB'' signal are shown in Figure~\ref{fig:SUBEqs}. The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. To simplify design, inverters are not considered as both inverted and non-inverted inputs will be made available globally. This equation is not possible to implement due to more than 2 inputs AND gates. The next requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. However if inverted using DeMorgan's law to produce equation 3 it is possible, and uses 8 gates. Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. Also shown are the circuit diagrams for each signal which should occur for more than one opcode. 
+By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations have be formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. Where the letters A-E correspond to bits 4-0 of the opcode. Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. Some potential options for the logic equation for the ``SUB'' signal are shown in Equations~\ref{eq:DecSUB1}~and~\ref{eq:DecSUB2}. The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. To simplify design, inverters are not considered towards optimum design as both inverted and non-inverted inputs will be made available globally. This equation is not possible to implement due to AND gates with more than 2 inputs. Equation~\ref{eq:DecSUB2} requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. However if inverted using DeMorgan's law to produce Equation~\ref{eq:DecSUB3} it is possible, and uses 8 smaller gates. Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach is taken for the remaining signals listed in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}, with the final circuit diagrams also shown in Figure~\ref{fig:DecMultiCirs}. 
 
-\begin{figure}[h]
-	\missingfigure{List of Potential Logic Equations For SUB Signal (TABLE)}
-	\caption{List of Potential Logic Equations For SUB Signal}
-	\label{fig:SUBEqs}
-\end{figure}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\begin{align}
+	\text{SUB} &= \bar{A}BC + \bar{A}B\bar{C}E + B\bar{C}D\bar{E} + \bar{A}CDE \label{eq:DecSUB1}\\
+	&= \bar{A}B(C + \bar{C}E) + D(B\bar{C}\bar{E} + \bar{A}CE) \label{eq:DecSUB2}\\
+	%&= \bar{A + \bar{B} + \bar{(p)}} \label{eq:DecSUB3} %(\bar{C}\bar{(c + \bar{E})})
+	&= \overbar{\overbar{A + \bar{B} + \overbar{(\bar{C}\overbar{(C + \bar{E})})}} + \overbar{\overbar{\overbar{(\bar{B} + C + E)}\overbar{(A + \bar{C} + \bar{E})}} + \bar{D}}} \label{eq:DecSUB3}
+\end{align}
+\todo[inline]{are all final equations needed? they will use lots of space like last line of above}
 
 \begin{figure}[h]
 	\missingfigure{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
-	\caption{Circuit Diagrams Output Signals Active For More Than One Opcode}
+	\caption{Circuit Diagrams For Signals Active For More Than One Opcode}
 	\label{fig:DecMultiCirs}
 \end{figure}
 
-For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. Since additional logic for flag calculations are implemented in the decoded, the circuit diagram for this portion if also shown in Figure~\ref{fig:GateArray}. 
+For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. Since additional logic for flag calculations are implemented in the decoder, the circuit diagram for this portion is also shown in Figure~\ref{fig:GateArray}. 
 
 \begin{figure}[h]
 	\missingfigure{Circuit Diagrams For Gate Array and Flag Overhead Logic}
@@ -139,4 +142,10 @@ For the control signals which respond to only one opcode, a gate array was used,
 \end{figure}
 
 \subsection{ALU Block}
+The final hierarchical view of the assembled ALU made up of each part mentioned previously is shown in figure~\ref{fig:ALUAssembled}. ALU slice is duplicated to make up the 16 bits in parallel, LLI high is added to the top byte and LLI low is added to the bottom half. The decoder is added above, with additional wiring to connect together right shifting inputs. While the left shifting inputs at the bottom are tied low. The output to the ALU is available as a direct connection to elsewhere in the datapath, but it is also stored in a register for later transfer onto the system bus. This register forms a part of a separate module to the ALU. 
 
+\begin{figure}[h]
+	\missingfigure{Modular Diagram of Assembled ALU}
+	\caption{Modular Diagram of Assembled ALU}
+	\label{fig:ALUAssembled}
+\end{figure}
