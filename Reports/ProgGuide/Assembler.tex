@@ -67,6 +67,9 @@ This includes the basic rules for writing the assembly language and a version lo
 
 \newpage
 \subsection{Error Messages}
+This is a list of all the error messages produced by the assembler. Each time an error is thrown, the error number, a brief description and the line it occurred on is displayed before exiting. A 'f' corresponds to a line number in the assembly file, and a 'p' corresponds to the pre-processed code list displayed on screen. 
+\todo{Screenshot of error message}
+
 \begin{center}
 	\centering
 	\begin{tabular}{r|p{12cm}}
@@ -86,5 +89,7 @@ This includes the basic rules for writing the assembly language and a version lo
 		ERROR12& Illegal branch to ISR \\
 		ERROR13& Multiple ISRs in file \\
 		ERROR14& Invalid formatting for .define directive \\
+		ERROR15& Could not find empty register in first 10 lines for automated ISR setup \\
+		ERROR16& Instruction does not have enough operands \\
 	\end{tabular}
 \end{center}

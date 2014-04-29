@@ -566,7 +566,7 @@ if "__main__" == __name__:
 				else:
 					MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
 		except IndexError:
-			print 'ERROR16: Insufficient instruction arguments' + ' lineNo: ' + workingline
+			print 'ERROR16: Insufficient instruction operands' + ' lineNo: ' + workingline
 			sys.exit()
 		except Exception, ex:
 			print 'Run-time Error: ' + ex
