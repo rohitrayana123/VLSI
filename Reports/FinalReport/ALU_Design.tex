@@ -5,10 +5,10 @@
 
 
 \section{Arithmetic Logic Unit}
-\todo[color=cyan, inline]{Design of whole module, including circuit diagram}
-\todo[color=cyan, inline]{Use of hierarchy / blocks - i.e. bit sliced, decoder}
-\todo[color=cyan, inline]{Design of slice}
-\todo[color=cyan, inline]{Design of decoder}
+\todo[color=cyan, inline]{Design of whole module - ongoing}
+\todo[color=cyan, inline]{Use of hierarchy - implied mention, todo}
+\todo[color=cyan, inline]{Design of slice - initial text done}
+\todo[color=cyan, inline]{Design of decoder - initial text done}
 \todo[color=cyan, inline]{Design of block}
 \todo[color=cyan, inline]{Layout in silicon}
 
@@ -68,22 +68,55 @@ Every instruction can be carried out using one of the previous sections, with th
 \end{figure}
 
 \subsection{ALU Decoder}
-The purpose of a decoder module is to convert any given opcode into a number of control signals to set the path of data within the ALU. As such it composed of multiple circuits of purely combinational logic. Table~\ref{tab:contrOuts} shows the mapping of instruction mnemonic to control signals. By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations could be formed as shown in Figure~\ref{fig:ALUDEq}. Where the letters A-E correspond to bits 4-0 of the opcode. 
-\todo[inline]{define meaning of each signal}
+The purpose of a decoder module is to convert any given opcode into a number of signals to control the path of data within the ALU. As such it is composed of multiple circuits of purely combinational logic. Table~\ref{tab:contrOuts} shows the necessary control signals for each mnemonic.
 
-\begin{figure}[h]
-	\missingfigure{Control Outputs For Each Available Instruction Mneumonic (TABLE)}
+
+\begin{table}[h]
+	\centering
+	\footnotesize
+	\makebox[\linewidth]{
+	\begin{tabular}{|r|l|l|c|r|l|l|}
+		\multicolumn{2}{c}{Instruction} & \multicolumn{1}{c}{Decoder Outputs} & \multicolumn{1}{c}{\hspace{0.5cm}} & \multicolumn{2}{c}{Instruction} & \multicolumn{1}{c}{Decoder Outputs} \\
+		\cline{1-3} \cline{5-7} 
+		LDW   & 00000 & FAOut &  & NOP   & 11000 & ShOut \\
+		POP   & 00001 & FAOut &  & 'F'   & 11001 & ShOut \\
+		ADDIB & 00011 & FAOut &  & NEG   & 11010 & FAOut, SUB, ZeroA \\
+		ADD   & 00010 & FAOut &  & 'D'   & 11110 & FAOut \\
+		ADDI  & 00110 & FAOut &  & LSL   & 11111 & ShOut, ShL, \{Sh8-1\} \\
+		CMP   & 00111 & FAOut, SUB &  & LSR   & 11101 & ShOut, ShR, \{Sh8-1\} \\
+		ADCI  & 00101 & FAOut, {\it UseC} &  & ASR   & 11100 & ShOut, ShR, {\it ShInBit}, {\it Sh8-1} \\
+		ADC   & 00100 & FAOut, {\it UseC} &  & AND   & 10000 & AND \\
+		STW   & 01000 & FAOut &  & OR    & 10001 & OR \\
+		PUSH  & 01001 & FAOut, SUB &  & XOR   & 10011 & XOR \\
+		SUBIB & 01011 & FAOut, SUB &  & NOT   & 10010 & NOT \\
+		SUB   & 01010 & FAOut, SUB &  & NAND  & 10110 & NAND \\
+		SUBI  & 01110 & FAOut, SUB &  & NOR   & 10111 & NOR \\
+		CMPI  & 01111 & FAOut, SUB &  & LLI   & 10101 & ShOut, LLI \\
+		SUCI  & 01101 & FAOut, SUB, {\it UseC} &  & LUI   & 10100 & ShOut, ShR, ShB, Sh8 \\
+		SUC   & 01100 & FAOut, SUB, {\it UseC} &  & & 11011 & ShOut \\
+		\cline{1-3} \cline{5-7}
+	\end{tabular}
+	}
 	\caption{Control Outputs For Each Available Instruction Mnemonic}
 	\label{tab:contrOuts}
-\end{figure}
+\end{table}
+\todo[inline]{check what 11011 does}
 
-\begin{figure}[h]
-	\missingfigure{Logic Equations For ALU Decoder Module}
-	\caption{Logic Equations For ALU Decoder Module}
-	\label{fig:ALUDEq}
-\end{figure}
+The signal FAOut enables the tri-state buffer of the arithmetic section. SUB inverts the second input and flags for a subtraction operation and ZeroA sets the first input to zero. The logic tri-states are controlled by the signals AND, OR, XOR, NOT, NAND and NOR for the relevant logic operations. The signal ShOut enables the tri-state for the shifting section and if used with nothing else active has the effect of no operation being performed on data. ShL and ShR switch between left and right shifting while ShB switches between using the first (A) or second (B) input to shift. Signals Sh8, Sh4, Sh2 and Sh1 enable each section of the barrel shifter and during normal shifting operations are dependent upon the 4-bit immediate input to decoder. Sh8 is always set during a LUI instruction since it will always shift by 8 bits. Signal LLI activates the LLI module after no operation is performed within main ALU. While UseC and ShInBit are internal signals indicating use of the carry flag from previous instruction and the bit to shift in respectively. The one unused opcode is set to perform no operation on data to prevent unpredictable behaviour. 
 
-Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. Some potential options for the logic equation for the ``SUB'' signal are shown in Figure~\ref{fig:SUBEqs}. The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. To simplify design, inverters are not considered as both inverted and non-inverted inputs will be made available globally. This equation is not possible to implement due to more than 2 inputs AND gates. The next requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. However if inverted using DeMorgan's law to produce equation 3 it is possible, and uses 8 gates. Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. Also shown are the circuit diagrams for each signal which should occur for more than one opcode. 
+\begin{align}
+	\text{FAOut} &= \bar{A} + BD\bar{E} \label{eq:DecBasicS}\\
+	\text{SUB} &= \bar{A}BC + \bar{A}B\bar{C}E + B\bar{C}D\bar{E} + \bar{A}CDE \\
+	\text{ShOut} &= AC\bar{D} + ABCE + AB\bar{C}\bar{D} \\
+	\text{ShR} &= AC\bar{D}\bar{E} + ABC\bar{D} \\
+	\text{UseC} &= \bar{A}C\bar{D} \\
+	\text{Sh1} &= (ABCE + ABC\bar{D})imm[0] \\
+	\text{Sh2} &= (ABCE + ABC\bar{D})imm[1] \\
+	\text{Sh4} &= (ABCE + ABC\bar{D})imm[2] \\
+	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \label{eq:DecBasicF}
+\end{align}
+
+By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations have be formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. Where the letters A-E correspond to bits 4-0 of the opcode. Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. Some potential options for the logic equation for the ``SUB'' signal are shown in Figure~\ref{fig:SUBEqs}. The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. To simplify design, inverters are not considered as both inverted and non-inverted inputs will be made available globally. This equation is not possible to implement due to more than 2 inputs AND gates. The next requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. However if inverted using DeMorgan's law to produce equation 3 it is possible, and uses 8 gates. Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. Also shown are the circuit diagrams for each signal which should occur for more than one opcode. 
 
 \begin{figure}[h]
 	\missingfigure{List of Potential Logic Equations For SUB Signal (TABLE)}
@@ -93,7 +126,7 @@ Refining these equations for implementation considered the set of logic gates av
 
 \begin{figure}[h]
 	\missingfigure{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
-	\caption{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
+	\caption{Circuit Diagrams Output Signals Active For More Than One Opcode}
 	\label{fig:DecMultiCirs}
 \end{figure}
 
