@@ -2,26 +2,22 @@
 // created by ext2svmod 5.5
 
 module ALUSlice(
-	output ALU_Out ,
 	output COut ,
-	output LLI_In ,
 	output nZ ,
 	output Sh1_L_Out ,
 	output Sh1_R_Out ,
 	output Sh2A_L ,
 	output Sh2Z_R ,
-	output Sh4A_L ,
-	output Sh4Z_R ,
-	output Sh8A_L ,
+	output Sh4Y_R ,
+	output Sh4Z_L ,
+	output Sh8Z_L ,
 	output Sh8Z_R ,
 	output Sum ,
 	input A ,
-	input ALUEnable ,
 	input AND ,
 	input B ,
 	input CIn_Slice ,
 	input FAOut ,
-	input LLI_Out ,
 	input NAND ,
 	input NOR ,
 	input NOT ,
@@ -37,8 +33,8 @@ module ALUSlice(
 	input Sh4C_R ,
 	input Sh4D_L ,
 	input Sh8 ,
-	input Sh8D_R ,
-	input Sh8E_L ,
+	input Sh8H_L ,
+	input Sh8H_R ,
 	input ShB ,
 	input ShL ,
 	input ShOut ,
@@ -57,5 +53,8 @@ wire FA_2 ;
 // include netlist information from ALUSlice.vnet
 
 `include "ALUSlice.vnet"
+
+wire LLI_In;
+assign LLI_In = Sum;
 
 endmodule
