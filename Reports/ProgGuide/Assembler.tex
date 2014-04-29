@@ -1,7 +1,7 @@
 %  Assembler.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:13 GMT
-%  <+Last Edited: Tue 29 Apr 2014 18:57:37 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Tue 29 Apr 2014 19:11:53 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Assembler}\label{sect:assembler}
 The current instruction set architecture includes an assembler for converting assembly language into hexadecimal. 
@@ -29,7 +29,7 @@ Each type of branch supports moving up to 127 lines forward, or 128 lines backwa
 \newpage
  {\bf Special Case Label}
 
- The .ISR/.isr label is reserved for the Interrupt Service Routine and may be located anywhere within the file but must finish with a `RETI' instruction. 
+ The .ISR/.isr label is reserved for the Interrupt Service Routine and may be located anywhere within the file but must finish with a \textbf{RETI} instruction. 
 Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. 
 %As a result of the positioning of the ISR, any stack initialization must occur within the first 10 lines of main program code since jumping over the ISR requires use of the stack. If not initialized, the default address of the stack pointer is 2047. \\
 

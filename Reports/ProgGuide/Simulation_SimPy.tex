@@ -1,7 +1,7 @@
 %  Simulation.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:53 GMT
-%  <+Last Edited: Tue 29 Apr 2014 18:57:00 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Tue 29 Apr 2014 19:13:51 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Simulation}
 
@@ -35,7 +35,7 @@ This is done to prevent the Magic design and netlist being inconsistent.
 %Usage
 The sim.py script provides a help prompt when run with \texttt{-h} or \texttt{--help} arguments. 
 The help prompt is also displayed when incorrect arguments are supplied. 
-The full help prompt is show in listing~\ref{lsg:simpyhelp}. 
+The full help prompt is show in listing~\ref{lst:simpyhelp}. 
 
 By default, the graphical user interface is not invoked. 
 This can be done with the \texttt{-g} or \texttt{--gui} tags. 
@@ -72,7 +72,8 @@ The clock cycles, and therefore the number of registers, are counted and reporte
 \subsection{Serial Data}
 
 The serial data file used is located in the programs directory. 
-This is a hex file with white space separated values of the form ``time data''. 
+This is a hex file with white space separated values of the form \textit{``time data''}.
+Both values are given as hexadecimal numbers. 
 The data is then sent at the time to the processor by the serial module. 
 An example serial data hex file is shown in listing~\ref{lst:serialdata}.
 

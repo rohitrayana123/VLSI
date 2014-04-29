@@ -74,7 +74,7 @@ All contained within an unconditional branch but a loop counter is used control 
    \label{fig:lfsr}
 \end{figure}
 
-A two input XOR gate is simulated using the XOR operation along with shifting to compare bits in different locations.
+A two input \texttt{XOR} gate is simulated using the \textbf{XOR} operation along with shifting to compare bits in different locations.
 Bits $2$ and $4$ are used as inputs so a logical shift left by two is used to align them at the bit $4$ position. 
 Masking the output value is used feedback to the top bit.
 This is described using C in listing~\ref{lst:random.c}. 
