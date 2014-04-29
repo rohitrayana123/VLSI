@@ -557,33 +557,49 @@
 		BNE .Fsubib
 		CMP R6,R7
 		BNE .Fsubib
-		LUI R0,#0
-		LLI R0,#0
+		LUI R0,#255
+		LLI R0,#128
 		CMP R0,R1		; Make sure all regs contain 0x0000
 		BNE .Fsubib
 		BR .suc
 .Fsubib	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.suc	LUI R0,#255
-		LLI R0,#255
-		SUBI R1,R0,#0
-		SUBI R2,R0,#0
-		SUBI R3,R0,#0
-		SUBI R4,R0,#0
-		SUBI R5,R0,#0
-		SUBI R6,R0,#0
-		SUBI R7,R0,#0
-		SUBIB R0,#127
-		SUBIB R1,#127
-		SUBIB R2,#127
-		SUBIB R3,#127
-		SUBIB R4,#127
-		SUBIB R5,#127
-		SUBIB R6,#127
-		SUBIB R7,#127
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fsuc
+.suc	SUB R1,R1,R1
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R1,R1,R1	; R = R - R - C
+		SUB R2,R2,R2
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R2,R2,R2	; R = R - R - C
+		SUB R3,R3,R3
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R3,R3,R3	; R = R - R - C
+		SUB R4,R4,R4
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R4,R4,R4	; R = R - R - C
+		SUB R5,R5,R5
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R5,R5,R5	; R = R - R - C
+		SUB R6,R6,R6
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R6,R6,R6	; R = R - R - C
+		SUB R7,R7,R7
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUC R7,R7,R7	; R = R - R - CC	
 		CMP R1,R2
 		BNE .Fsuc		
 		CMP R2,R3
@@ -596,33 +612,56 @@
 		BNE .Fsuc
 		CMP R6,R7
 		BNE .Fsuc
-		LUI R0,#0
-		LLI R0,#0
+		LUI R0,#255		; -1
+		LLI R0,#255
 		CMP R0,R1		; Make sure all regs contain 0x0000
 		BNE .Fsuc
 		BR .suci
 .Fsuc	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.suci	LUI R0,#255
-		LLI R0,#255
-		SUBI R1,R0,#0
-		SUBI R2,R0,#0
-		SUBI R3,R0,#0
-		SUBI R4,R0,#0
-		SUBI R5,R0,#0
-		SUBI R6,R0,#0
-		SUBI R7,R0,#0
-		SUBIB R0,#127
-		SUBIB R1,#127
-		SUBIB R2,#127
-		SUBIB R3,#127
-		SUBIB R4,#127
-		SUBIB R5,#127
-		SUBIB R6,#127
-		SUBIB R7,#127
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fsuci
+.suci	SUB R1,R1,R1
+		ADDIB R1,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R1,R1,#10	; R = R - R - C
+		SUB R2,R2,R2
+		ADDIB R2,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R2,R2,#10	; R = R - R - C
+		SUB R3,R3,R3
+		ADDIB R3,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R3,R3,#10	; R = R - R - C
+		SUB R4,R4,R4
+		ADDIB R4,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R4,R4,#10	; R = R - R - C
+		SUB R5,R5,R5
+		ADDIB R5,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R5,R5,#10	; R = R - R - C
+		SUB R6,R6,R6
+		ADDIB R6,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R6,R6,#10	; R = R - R - C
+		SUB R7,R7,R7
+		ADDIB R7,#10
+		LUI R0,#255
+		LLI R0,#255		
+		ADDIB R0,#1		; C = 1
+		SUCI R7,R7,#10	; R = R - R - C
 		CMP R1,R2
 		BNE .Fsuci		
 		CMP R2,R3
@@ -635,194 +674,64 @@
 		BNE .Fsuci
 		CMP R6,R7
 		BNE .Fsuci
-		LUI R0,#0
-		LLI R0,#0
+		LUI R0,#255
+		LLI R0,#255
 		CMP R0,R1		; Make sure all regs contain 0x0000
-		BNE .Fsuci
-		BR .cmp
+		BE .and
 .Fsuci	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.cmp	LUI R0,#255
-		LLI R0,#255
-		SUBI R1,R0,#0
-		SUBI R2,R0,#0
-		SUBI R3,R0,#0
-		SUBI R4,R0,#0
-		SUBI R5,R0,#0
-		SUBI R6,R0,#0
-		SUBI R7,R0,#0
-		SUBIB R0,#127
-		SUBIB R1,#127
-		SUBIB R2,#127
-		SUBIB R3,#127
-		SUBIB R4,#127
-		SUBIB R5,#127
-		SUBIB R6,#127
-		SUBIB R7,#127
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fcmp
-		CMP R1,R2
-		BNE .Fcmp		
-		CMP R2,R3
-		BNE .Fcmp
-		CMP R2,R3
-		BNE .Fcmp
-		CMP R4,R5
-		BNE .Fcmp
-		CMP R5,R6
-		BNE .Fcmp
-		CMP R6,R7
-		BNE .Fcmp
-		LUI R0,#0
-		LLI R0,#0
-		CMP R0,R1		; Make sure all regs contain 0x0000
-		BNE .Fcmp
-		BR .cmpi
-.Fcmp	SUB R0,R0,R0
-		ADDIB R0,#26
-		JMP R0,#0
-.cmpi	LUI R0,#255
-		LLI R0,#255
-		SUBI R1,R0,#0
-		SUBI R2,R0,#0
-		SUBI R3,R0,#0
-		SUBI R4,R0,#0
-		SUBI R5,R0,#0
-		SUBI R6,R0,#0
-		SUBI R7,R0,#0
-		SUBIB R0,#127
-		SUBIB R1,#127
-		SUBIB R2,#127
-		SUBIB R3,#127
-		SUBIB R4,#127
-		SUBIB R5,#127
-		SUBIB R6,#127
-		SUBIB R7,#127
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fcmpi
-		CMP R1,R2
-		BNE .Fcmpi		
-		CMP R2,R3
-		BNE .Fcmpi
-		CMP R2,R3
-		BNE .Fcmpi
-		CMP R4,R5
-		BNE .Fcmpi
-		CMP R5,R6
-		BNE .Fcmpi
-		CMP R6,R7
-		BNE .Fcmpi
-		LUI R0,#0
-		LLI R0,#0
-		CMP R0,R1		; Make sure all regs contain 0x0000
-		BNE .Fcmpi
-		BR .and
-.Fcmpi	SUB R0,R0,R0
-		ADDIB R0,#26
-		JMP R0,#0
-.and	LUI R0,#255
-		LLI R0,#255
-		SUBI R1,R0,#0
-		SUBI R2,R0,#0
-		SUBI R3,R0,#0
-		SUBI R4,R0,#0
-		SUBI R5,R0,#0
-		SUBI R6,R0,#0
-		SUBI R7,R0,#0
-		SUBIB R0,#127
-		SUBIB R1,#127
-		SUBIB R2,#127
-		SUBIB R3,#127
-		SUBIB R4,#127
-		SUBIB R5,#127
-		SUBIB R6,#127
-		SUBIB R7,#127
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fand
-		CMP R1,R2
-		BNE .Fand		
-		CMP R2,R3
-		BNE .Fand
-		CMP R2,R3
-		BNE .Fand
-		CMP R4,R5
-		BNE .Fand
-		CMP R5,R6
-		BNE .Fand
-		CMP R6,R7
-		BNE .Fand
-		LUI R0,#0
-		LLI R0,#0
-		CMP R0,R1		; Make sure all regs contain 0x0000
-		BNE .Fand
-		BR .or
+.and	LUI R0,#170
+		LLI R0,#170
+		LUI R1,#85
+		LLI R1,#85
+		AND R2,R1,R0
+		CMPI R2,#0		; Make sure all regs are the same
+		BE .or
 .Fand	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.or		LUI R0,#255
-		LLI R0,#255
-		SUBI R1,R0,#0
-		SUBI R2,R0,#0
-		SUBI R3,R0,#0
-		SUBI R4,R0,#0
-		SUBI R5,R0,#0
-		SUBI R6,R0,#0
-		SUBI R7,R0,#0
-		SUBIB R0,#127
-		SUBIB R1,#127
-		SUBIB R2,#127
-		SUBIB R3,#127
-		SUBIB R4,#127
-		SUBIB R5,#127
-		SUBIB R6,#127
-		SUBIB R7,#127
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .For
-		CMP R1,R2
-		BNE .For		
+.or		LUI R0,#170
+		LLI R0,#170
+		LUI R1,#85
+		LLI R1,#85
+		LUI R2,#255
+		LLI R2,#255
+		OR R3,R1,R0
 		CMP R2,R3
-		BNE .For
-		CMP R2,R3
-		BNE .For
-		CMP R4,R5
-		BNE .For
-		CMP R5,R6
-		BNE .For
-		CMP R6,R7
-		BNE .For
-		LUI R0,#0
-		LLI R0,#0
-		CMP R0,R1		; Make sure all regs contain 0x0000
-		BNE .For
-		BR .xor
+		BE .xor
 .For	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.xor	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fxor
-		BR .cmpi
+.xor	LUI R0,#170
+		LLI R0,#170
+		LUI R1,#85
+		LLI R1,#85
+		LUI R3,#255
+		LLI R3,#255
+		XOR R2,R0,R1
+		CMP R2,R3		; Make sure all regs are the same
+		BE .not
 .Fxor	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
 .not	LUI R0,#255
 		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fnot
-		BR .nand
+		NOT R0,R0
+		CMPI R0,#0		; Make sure all regs are the same
+		BE .nand
 .Fnot	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.nand	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fnand
-		BR .nor
+.nand	LUI R0,#170
+		LLI R0,#170
+		LUI R1,#170
+		LLI R1,#170
+		LUI R3,#85
+		LLI R3,#85
+		NAND R2,R1,R0
+		CMP R2,R3		; Make sure all regs are the same
+		BE .nor
 .Fnand	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
@@ -830,93 +739,243 @@
 		LLI R0,#255
 		ADDI R1,R0,#0
 		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fnor
-		BR .lsl
+		BE .lsl
 .Fnor	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.lsl	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
+.lsl	LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#1
+		LUI R1,#170
+		LLI R1,#170
+		CMP R0,R1
 		BNE .Flsl
-		BR .lsr
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#2
+		LUI R1,#85
+		LLI R1,#84
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#3
+		LUI R1,#170
+		LLI R1,#168
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#4
+		LUI R1,#85
+		LLI R1,#80
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#5
+		LUI R1,#170
+		LLI R1,#160
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#6
+		LUI R1,#85
+		LLI R1,#64
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#7
+		LUI R1,#170
+		LLI R1,#128
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#8
+		LUI R1,#85
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#9
+		LUI R1,#170
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#10
+		LUI R1,#84
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#11
+		LUI R1,#168
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#12
+		LUI R1,#80
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#13
+		LUI R1,#160
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#14
+		LUI R1,#64
+		LLI R1,#0
+		CMP R0,R1
+		BNE .Flsl
+		LUI R0,#85
+		LLI R0,#85
+		LSL R0,R0,#15
+		LUI R1,#128
+		LLI R1,#0
+		CMP R0,R1
+		BE .lsr
 .Flsl	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.lsr	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
+.lsr	LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#1
+		LUI R1,#85
+		LLI R1,#85
+		CMP R0,R1
 		BNE .Flsr
-		BR .asr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#2
+		LUI R1,#42
+		LLI R1,#170
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#3
+		LUI R1,#21
+		LLI R1,#85
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#4
+		LUI R1,#10
+		LLI R1,#170
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#5
+		LUI R1,#5
+		LLI R1,#85
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#6
+		LUI R1,#2
+		LLI R1,#170
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#7
+		LUI R1,#1
+		LLI R1,#85
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#8
+		LUI R1,#0
+		LLI R1,#170
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#9
+		LUI R1,#0
+		LLI R1,#85
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#10
+		LUI R1,#0
+		LLI R1,#42
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#11
+		LUI R1,#0
+		LLI R1,#21
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#12
+		LUI R1,#0
+		LLI R1,#10
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#13
+		LUI R1,#0
+		LLI R1,#5
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#14
+		LUI R1,#0
+		LLI R1,#2
+		CMP R0,R1
+		BNE .Flsr
+		LUI R0,#170
+		LLI R0,#170
+		LSR R0,R0,#15
+		LUI R1,#0
+		LLI R1,#1
+		CMP R0,R1
+		BE .blt
 .Flsr	SUB R0,R0,R0
 		ADDIB R0,#26
 		JMP R0,#0
-.asr	LUI R0,#255
+.blt	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
 		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fasr
-		BR .pass
-.Fasr	SUB R0,R0,R0
-		JMP R0,#3
-.ldw	LUI R0,#255
+		BR .bge
+.Fblt	SUB R0,R0,R0
+		ADDIB R0,#26
+		JMP R0,#0
+.bge	LUI R0,#255
 		LLI R0,#255
 		ADDI R1,R0,#0
 		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fldw
-		BR .stw
-.Fldw	SUB R0,R0,R0
-		JMP R0,#3
-.stw	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fstw
-		BR .lui
-.Fstw	SUB R0,R0,R0
-		JMP R0,#3
-.lui	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Flui
-		BR .lli
-.Flui	SUB R0,R0,R0
-		JMP R0,#3
-.lli	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Flli
-		BR .br
-.Flli	SUB R0,R0,R0
-		JMP R0,#3
-.br		LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fbr
-		BR .bne
-.Fbr	SUB R0,R0,R0
-		JMP R0,#3
-.bne	LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fbne
-		BR .be
-.Fbne	SUB R0,R0,R0
-		JMP R0,#3
-.be		LUI R0,#255
-		LLI R0,#255
-		ADDI R1,R0,#0
-		CMP R0,R1		; Make sure all regs are the same
-		BNE .Fbe
-		BR .pass
-.Fbe	SUB R0,R0,R0
-		JMP R0,#3
+		BE .pass
+.Fbge	SUB R0,R0,R0
+		ADDIB R0,#26
+		JMP R0,#0
 .pass	SUB R0,R0,R0
-		JMP R0,#1
+		ADDIB R0,#23
+		JMP R0,#0
 

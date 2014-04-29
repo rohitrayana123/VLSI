@@ -216,7 +216,7 @@ if "__main__" == __name__:
                   help="output file for the assembled output")
 	#@todo add a verbose and quiet mode?
         (options, args) = parser.parse_args()
-	
+
 	assemfile = args[0]		#filename only
 	#Determine input/output file paths
 	print '--------Converting File %s.asm--------\n' % assemfile
@@ -232,13 +232,13 @@ if "__main__" == __name__:
 		HEXFILE = options.outfile
 	if not os.path.isfile(INPUTFILE):
 		parser.print_help()
-	
+
 	ifile = open(INPUTFILE, 'r')
 	outfile = open(OUTPUTFILE, 'w')
 	hexfile = open(HEXFILE,'w')
-	
+
 	LINES = ifile.readlines()	#Read input file contents
-	
+
 	#Seperate each line into a list of elements
 	print '--------Interpreting Syntax-----------'
 	for line in LINES:
@@ -272,7 +272,7 @@ if "__main__" == __name__:
 		#print pass_two
 		SEGMLINES.append(pass_two)				#create list of lists
 		#print pass_two
-	
+
 	defines = [''] * 10
 	definelines = []
 	#Check for any .defines in file
@@ -310,7 +310,7 @@ if "__main__" == __name__:
 	for d in definelines:
 		SEGMLINES.remove(d)
 	print 'Done'
-	
+
 	#Check each line for a link reference and create link table
 	print '--------Locating ISR----------'
 	ISRLines = 0
@@ -431,21 +431,21 @@ if "__main__" == __name__:
 		else:
 			finish = 2
 	SEGMLINES = newSEGMLINES[:]
-	
+
 	print 'Program File After Preprocessing'
 	for i, s in enumerate(SEGMLINES):
 		if (OpType(s[0]) == 'D2') & (s[0] != 'numBR') & (s[0] != 'RET'):
 			print i, '    ', s, '---->', branch(s[1], i, 0)
 		else:
 			print i, '    ', s
-	
+
 	print 'Link Table'
 	for l in LINKTABLE:
 		print '    ', l
 	#print '    Segmented instruction list:'
 	#for s in SEGMLINES:
 	#	print s
-	
+
 	#Check for over-sized immediate values
 	for i, line in enumerate(SEGMLINES):
 		if line[0] in ('LSL', 'LSR', 'ASR'):
@@ -471,7 +471,7 @@ if "__main__" == __name__:
 			if int(line[2]) > 255:
 				print 'ERROR9: Load Imm8 Out Of Bounds'
 				sys.exit()
-	
+
 	#Convert each element to machine code and concatenate
 	print '--------Converting to machine code-----------'
 	#print 'Converting::',
@@ -530,7 +530,7 @@ if "__main__" == __name__:
 			MC.append(temp)
 		elif OpType(line[0]) == 'A1':				#Data manipulation:Register
 			if (line[0] == 'NEG'):	#NEG
-				MC.append(OpNum(line[0]) + regcode(line[1]) + '000' + '000' + '00')
+				MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + '000' + '00')
 			elif (line[0] == 'CMP'):#CMP
 				MC.append(OpNum(line[0]) + '000' + regcode(line[1]) + regcode(line[2]) + '00')
 			elif (line[0] == 'NOT'):#NOT
@@ -549,14 +549,14 @@ if "__main__" == __name__:
 	#print '    Binary Output:'
 	#for l in MC:
 	#	print l
-	
+
 	# AJR - Do we need binary?
 	##Output result to file
 	#print 'Writing machine code to file %s.mc...\n' % assemfile
 	#for line in MC:
 	#	outfile.write(line + '\n')
 	#
-	
+
 	#Output to hex file too
 	print 'Hex Output:',
 	for line in MC:
@@ -566,5 +566,5 @@ if "__main__" == __name__:
 		print(hexline),
 		hexfile.write(hexline + '\n')
 	print("\n"),
-	
+
 	print '--------Assembly Complete!--------\n'

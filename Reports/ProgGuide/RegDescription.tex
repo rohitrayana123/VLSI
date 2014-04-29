@@ -1,33 +1,41 @@
 %  RegDescription.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:12:06 GMT
-%  <+Last Edited: Mon 28 Apr 2014 13:11:45 BST by hl13g10 on octopus +>
+%  <+Last Edited: Mon 28 Apr 2014 21:24:47 BST by seblovett on seblovett-Ubuntu +>
 
-\section{Register Description}
+\subsection{Register Description}
 
-The processor consists of 16bit program counter and 8 general purpose registers of 16 bit each in the register file, 16 bit instruction register along with the Link register and AluOut. 
+The \samurai{} processor has twelve registers in total, all are 16 bits wide.
+These is a program counter, instruction register, link register, ALU output register and 8 general purpose registers.
+Each register is described below, along with any conventions.  
 
-\paragraph{Register File}
-The 8x16 register file has two read ports and one write ports. 
-The read port takes 3-bit address inputs, RS1 and RS2, each specifying one of the 8 GPRs as source operands. 
-They read the 16 bit register values onto read data outputs RD1 and RD2. 
-The write port takes a 3 bit address input Rw, a 16 bit input, WD. 
-The output ports of the register file serve as inputs A and B of the ALU if selected by the two multiplexers. 
-By convention, register R7 is used to store the stack pointer.
+\paragraph{General Purpose Registers}
+The register block consists of eight General Purpose Registers (GPRs). 
+There is no dummy register. 
+By convention, Register 7 is used as the stack pointer. 
+It is used by stack and interrupt instructions such as push, pop, store and load flags and return from interrupt.  
+
 
 \paragraph{Link Register} 
 The Link Register is used to store the return address of the caller function. 
 However, it is not a part of the General Purpose register file. 
-For example, in this processor the RET instruction performs unconditional branch to the address which is stored in the link register (LR).
+The link register is used by the branch with link and return from subroutine instructions. 
+In these, the program counter is stored to or set by the link register. 
+The link register can also be pushed or popped to/from the stack.
+%For example, in this processor the RET instruction performs unconditional branch to the address which is stored in the link register (LR).
 
 \paragraph{Program Counter} 
-The Program Counter (PC) is a 16bit register wherein the output of the PC points to the current instruction and the input of the PC shows the address of the next instruction. 
-The branch instructions make use of the PC. 
+The program counter is used to access the current instruction. 
+It can be set by the result of an ALU operation, the link register, a value on the stack or a predefined constant used for interrupts.
+Branch instructions are the main modifier of the program counter.
+By default, all instructions increment the Program Counter by one to progress the operation of the program. 
+This is not an addressable register and it's functionality is utilised by the control unit only. 
 
 \paragraph{Instruction Register} 
-The instruction register of 16 bit is also a storage element that has a single read port. 
-It takes a 16-bit instruction address input and reads the 16-bit data or instruction from that address onto the read data output (Rd). 
+The instruction register contains the currently executed instruction. 
+This can only be set from the main memory by use of the Program Counter as the address to main memory.
+It is not addressable and it's function is utilised by the control unit.
 
 \paragraph{AluOut} 
-It is a 16 bit register, AluOut stores the output of the operations performed in the ALU.
-
+The AluOut register is used to hold a value on the output of the Alu. 
+It is used by memory access instructions and is not addressable. 

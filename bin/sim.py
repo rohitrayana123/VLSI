@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 13:07:35 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Mon 28 Apr 2014 20:05:19 BST by seblovett on seblovett-Ubuntu +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -12,7 +12,7 @@
 #	Magic simulations not supported
 #	Won't auto detect file extensions
 import os
-from optparse import OptionParser
+from optparse import OptionParser, SUPPRESS_HELP
 from subprocess import call
 
 
@@ -60,8 +60,11 @@ def RunSim(options, args = None):
 		cmd.append("-exit")
 	#library
 	cmd.append("+libext+.sv")
-
-        if options.module:
+	if options.scanpath:
+		cmd.append("stimulus.sv")
+		cmd.append("opcodes.svh")
+		cmd.append("cpu.sv")
+        elif options.module:
                 print "Running a module simulation"
                 #want the verification stim file, opcodes and module.sv
                 if options.type == "magic":
@@ -137,7 +140,7 @@ if "__main__" == __name__:
 	#some global things
 	#parse the options
 	#interactive mode?
-	parser = OptionParser(usage="sim.py [-t type] [-m module.sv / -p program.hex ] [ -s switchvalue ] [ -gd ] arguments", version="3", description="trailing arguments are given to the simulator directly")
+	parser = OptionParser(usage="sim.py [-t type] [-m module.sv / -p program.asm ] [ -s switchvalue ] [ -gdS ] [+define+extra_definitions]", version="3", description="trailing arguments are given to the simulator directly")
 	#@todo - auto invoke the assembler if assembly is given?
 	parser.add_option("-m", "--module", dest="module",
                   help="module to simulate - should not be defined if program is")
@@ -150,7 +153,7 @@ if "__main__" == __name__:
         #          help="runs the cross simulation.")
 
 	parser.add_option("-p", "--prog", dest="program",
-                  help="program to run (hex file) should not be defined if module is")
+                  help="program to run should not be defined if module is. Hex or ASM can be passed. ASM files will be assembled before running the simulator. ")
 
 	#parser.add_option("-G","--gate",  dest="gate", action="store_true", default=False,
 	#			help="Run a gate level sim.")
@@ -159,18 +162,30 @@ if "__main__" == __name__:
                   help="Run the simulation with a GUI")
 	parser.add_option("-s", "--switches", dest="switches", help="Value of switches to pass to the simulation")
 	parser.add_option("-d", action="store_true", dest="debug", default=False, help="Make, but don't execute, the command")
-	parser.add_option("-l", action="store_true", dest="legacy", default=True, help="Run in legacy mode")
-	parser.add_option("-i", action="store_false", dest="legacy", help="Run in fcde structure")
+	parser.add_option("-S", "--scanpath", action="store_true", dest="scanpath", default=False, help="Run the scan path simulation")
+	parser.add_option("-l", action="store_true", dest="legacy", default=False, help=SUPPRESS_HELP)#"Run in legacy mode")
+	parser.add_option("-i", action="store_false", dest="legacy", help=SUPPRESS_HELP)#"Run in fcde structure")
 	(options, args) = parser.parse_args()
 	#want either a module or program to be able to run
-	if (None == options.module ) and ( None == options.program ):
-		parser.print_help()
-	elif (None != options.module ) and ( None != options.program ):
-		print("Cannot specify both program and module")
-		parser.print_help()
-	else:
+	print options
+	Run = False #assume we're not going to run
+	if options.scanpath:
+		if options.program:
+			print("Given program is ignored")
+		if options.module:
+			print("Given module is ignored")
+		Run = True
+		options.type = "extracted"
+	if options.module and (None == options.program):
+		Run = True
+	if options.program and (None == options.module):
+		Run = True
+	if options.program and (options.type == "magic"):
+		options.type = "extracted"
+	if Run:
 		RunSim(options, args)
-
+	else:
+		parser.print_help()
 
 
 
