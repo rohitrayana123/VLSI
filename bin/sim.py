@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 20:05:19 BST by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Wed 30 Apr 2014 15:34:58 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -28,8 +28,8 @@ def RunSim(options, args = None):
 		fcdecells = os.path.join(home,"c035u/cell_lib")
 		assembler = os.path.join(home,"bin/assemble.py")
 	else:
-		home = os.path.expanduser("~/design/fcde")
-		verilog = os.path.join(home, "verilog")
+		home = os.path.expanduser("..")
+		verilog = os.path.join(home, ".")
 		stim = os.path.join(os.path.expanduser("~/VLSI"), "Design/Implementation/verification")
 		programs = os.path.join(home, verilog, "programs")
 		magic = os.path.join(home, "magic/design")
