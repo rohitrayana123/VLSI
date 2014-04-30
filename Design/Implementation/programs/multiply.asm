@@ -1,21 +1,3 @@
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0	
 		LUI 	SP, #7		; Init SP
 		LLI 	SP, #208
 		LUI 	R3, #8		; SWs addr
