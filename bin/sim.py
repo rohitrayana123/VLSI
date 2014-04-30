@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 20:05:19 BST by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Wed 30 Apr 2014 16:07:22 BST by seblovett on seblovett-Ubuntu +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -20,7 +20,10 @@ from subprocess import call
 def RunSim(options, args = None):
 	print "Running sim..."
 	if options.legacy:
-		home = os.path.expanduser("~/VLSI")
+		if options.home:
+			home = os.path.expanduser(options.home)
+		else:
+			home = os.path.expanduser("~/VLSI")
 		verilog = os.path.join(home, "Design/Implementation/verilog")
 		stim = os.path.join(home, "Design/Implementation/verification")
 		programs = os.path.join(home, "Design/Implementation/programs")
@@ -28,7 +31,10 @@ def RunSim(options, args = None):
 		fcdecells = os.path.join(home,"c035u/cell_lib")
 		assembler = os.path.join(home,"bin/assemble.py")
 	else:
-		home = os.path.expanduser("~/design/fcde")
+		if options.home:
+			home = os.path.expanduser(options.home)
+		else:
+			home = os.path.expanduser("~/design/fcde")
 		verilog = os.path.join(home, "verilog")
 		stim = os.path.join(os.path.expanduser("~/VLSI"), "Design/Implementation/verification")
 		programs = os.path.join(home, verilog, "programs")
@@ -160,6 +166,7 @@ if "__main__" == __name__:
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
+	parser.add_option("-H", "--home", dest="home", help="change the default path to the verilog folder")
 	parser.add_option("-s", "--switches", dest="switches", help="Value of switches to pass to the simulation")
 	parser.add_option("-d", action="store_true", dest="debug", default=False, help="Make, but don't execute, the command")
 	parser.add_option("-S", "--scanpath", action="store_true", dest="scanpath", default=False, help="Run the scan path simulation")
