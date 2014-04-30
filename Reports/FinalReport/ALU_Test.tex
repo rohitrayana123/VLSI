@@ -8,8 +8,19 @@
 \todo[color=cyan, inline]{How it verifies everything - why it is complete}
 \todo[color=cyan, inline]{Show simulation results}
 
+To promote the use of hierarchy within design the ALU is broken down into a number of sub-modules. These have been tested individually to ensure they operate as expected. Then they are combined into a 16-bit ALU without decoder for testing the combination of ALU and LLI slices. As well as more useful shifting tests. 
+
 \subsection{ALU Slice}
+Testing of this module was broken down into the different ALU functions to be performed: arithmetic, logic and shifting. Control inputs which effect the behaviour of arithmetic operations are SUB and ZeroA. As such tests were run to cover every combination of A, B and CIn for addition, subtraction and both with ZeroA enabled. The test results are shown in Figure~\ref{fig:ALUSliceRes}. For subtraction tests, because additional logic for handling subtraction carrys is within the decoder, the outputted response shows inverted Cin and Borrow signals. For both of the last two groupings input A is active during the length of testing, which shows that zero is used when ZeroA is active. Whilst testing logic operations, each gate is tested for its full range of input combinations to show correct operation. The output of these tests are shown in Figure~\ref{fig:ALUSliceRes}. Testing of the shifting capabilities involved setting all inter-slice inputs high with the input A held low. Then for each case of: left, right and left with B input shifting, different immediate signals were set to observe the propagation of bits through the slice. If any of the signals controlling the shifting amount were high, a 1 would be inserted in the relavant position of the shifting output. This is OutLeft for left shifting of OutRight for right shifting as shown in Figure~\ref{fig:ALUSliceRes}.
+
+\begin{figure}[h]
+	\missingfigure{Test Results for ALUSlice}
+	\caption{Test Results for ALUSlice}
+	\label{fig:ALUSliceRes}
+\end{figure}
 
 \subsection{ALU Decoder}
 
+
 \subsection{ALU Block}
+
