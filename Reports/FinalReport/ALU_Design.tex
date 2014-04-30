@@ -115,6 +115,7 @@ The signal FAOut enables the tri-state buffer of the arithmetic section. SUB inv
 	\text{Sh4} &= (ABCE + ABC\bar{D})imm[2] \\
 	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \label{eq:DecBasicF}
 \end{align}
+\todo[inline]{check against implimented}
 
 By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations have be formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. Where the letters A-E correspond to bits 4-0 of the opcode. Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. Some potential options for the logic equation for the ``SUB'' signal are shown in Equations~\ref{eq:DecSUB1}~and~\ref{eq:DecSUB2}. The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. To simplify design, inverters are not considered towards optimum design as both inverted and non-inverted inputs will be made available globally. This equation is not possible to implement due to AND gates with more than 2 inputs. Equation~\ref{eq:DecSUB2} requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. However if inverted using DeMorgan's law to produce Equation~\ref{eq:DecSUB3} it is possible, and uses 8 smaller gates. Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach is taken for the remaining signals listed in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}, with the final circuit diagrams also shown in Figure~\ref{fig:DecMultiCirs}. 
 
@@ -125,6 +126,7 @@ By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and
 	%&= \bar{A + \bar{B} + \bar{(p)}} \label{eq:DecSUB3} %(\bar{C}\bar{(c + \bar{E})})
 	&= \overbar{\overbar{A + \bar{B} + \overbar{(\bar{C}\overbar{(C + \bar{E})})}} + \overbar{\overbar{\overbar{(\bar{B} + C + E)}\overbar{(A + \bar{C} + \bar{E})}} + \bar{D}}} \label{eq:DecSUB3}
 \end{align}
+\todo[inline]{check against implimented}
 \todo[inline]{are all final equations needed as above?}
 
 \begin{figure}[h]
