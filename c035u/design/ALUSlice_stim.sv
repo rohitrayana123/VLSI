@@ -8,7 +8,6 @@ timeunit 1ns;
 timeprecision 10ps;
 
 logic A, B;						//Operand Inputs, and sign output
-//wire ALU_Out; 
 logic SUB, ZeroA, CIn_Slice, nZ_prev, FAOut;		//Arith Inputs
 wire COut, nZ, Sum;					//Arith Outputs
 logic AND, OR, XOR, NOT, NAND, NOR;			//Logic Inputs
@@ -19,7 +18,6 @@ logic Sh8H_R, Sh4C_R, Sh2B_R, Sh1_R_In; 		//Shift inter-bit Right Inputs
 wire Sh8Z_R, Sh4Y_R, Sh2Z_R, Sh1_R_Out; 		//Shift inter-bit Right Outputs
 
 ALUSlice a(
-	//.ALU_Out ( ALU_Out ),
 	.COut ( COut ),
 	.nZ ( nZ ),
 	.Sh1_L_Out ( Sh1_L_Out ),
@@ -71,10 +69,9 @@ task checkArith;
 	assert(COut == (a.FA_1&a.FA_2) | (CIn_Slice&(a.FA_1^a.FA_2)));
 	assert(nZ == nZ_prev | Sum);
 	if (ZeroA == 1)
-		$write("~");
+		$write(" 0 ");
 	else
-		$write(" ");
-	$write("%b ", A);
+		$write(" %b ", A);
 	if (SUB == 1)
 		$write("-");
 	else
@@ -103,6 +100,7 @@ task checkShift;
 	assert(Sh2Z_R == (Sh4 | (~Sh4 & Sh8) | (~Sh4 & ~Sh8 & (A&~ShB) | (B&ShB))));
 	assert(Sh1_R_Out == (Sh2 | (~Sh2 & Sh4) | (~Sh2 & ~Sh4 & Sh8) | (~Sh2 & ~Sh4 & ~Sh8 & (A&~ShB) | (B&ShB))));
     end
+	$display("%b |  %b   %b   %b   | %b%b%b%b ||  %b%b%b%b   || %b%b%b%b", A, ShL, ShR, ShB, Sh8, Sh4, Sh2, Sh1, Sh8Z_L, Sh4Z_L, Sh2A_L, Sh1_L_Out, Sh8Z_R, Sh4Y_R, Sh2Z_R, Sh1_R_Out);
 endtask
 
 //Cell Stimulus
@@ -118,53 +116,115 @@ initial
 	//Arithmetic Testing
     $display("---ARITH TESTS---");
     $display(" A   B   Cin  S  Cout  ::: LLI_In");
-    #50 FAOut = 1;				//Sum == a.LLI_In
+    #50 FAOut = 1;
     #50 checkArith;
     #50 B = 1;
     #50 checkArith;
     #50 A = 1;
     #50 checkArith;
+    #50 B = 0;
+    #50 checkArith;
     #50 CIn_Slice = 1;
     #50 checkArith;
+    #50 A = 0; 
+    #50 checkArith;
+    #50 B = 1;
+    #50 checkArith;
+    #50 A = 1;
+    #50 checkArith;
+    $display("");
+    $display(" A   B  ~Cin  S ~Borrow::: LLI_In");
+    #50 SUB = 1; A = 0; B = 0; CIn_Slice = 0;
+    #50 checkArith;
+    #50 B = 1;
+    #50 checkArith;
+    #50 A = 1;
+    #50 checkArith;
+    #50 B = 0;
+    #50 checkArith;
+    #50 CIn_Slice = 1;
+    #50 checkArith;
+    #50 A = 0; 
+    #50 checkArith;
+    #50 B = 1;
+    #50 checkArith;
+    #50 A = 1;
+    #50 checkArith;
+    $display("");
+    $display(" 0   B  ~Cin  S ~Borrow::: LLI_In");
     #50 ZeroA = 1;
     #50 checkArith;
-    #50 ZeroA = 0; CIn_Slice = 0; SUB = 1;
+    #50 B = 0;
     #50 checkArith;
-    #50 ZeroA = 1; CIn_Slice = 1;
+    #50 CIn_Slice = 0;
+    #50 checkArith;
+    #50 B = 1;
+    #50 checkArith;
+    $display("");
+    $display(" 0   B   Cin  S  Cout  ::: LLI_In");
+    #50 SUB = 0; CIn_Slice = 1; A = 1; B = 1;
+    #50 checkArith;
+    #50 B = 0;
+    #50 checkArith;
+    #50 CIn_Slice = 0;
+    #50 checkArith;
+    #50 B = 1;
     #50 checkArith;
 
 	//Logic Testing
     $display("---LOGICAL TESTS---");
-    $display(" A   B   a.LLI_In");
+    $display("  A   B    LLI_In");
     #50 FAOut = 0; AND = 1;
-    #50 assert(a.LLI_In == 1); $display("  %b & %b  = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == (A&B)); $display("  %b & %b  = %b", A, B, a.LLI_In);
     #50 B = 0; 
-    #50 assert(a.LLI_In == 0); $display("  %b & %b  = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == (A&B)); $display("  %b & %b  = %b", A, B, a.LLI_In);
+    #50 A = 0;
+    #50 assert(a.LLI_In == (A&B)); $display("  %b & %b  = %b", A, B, a.LLI_In);
+    #50 B = 1;
+    #50 assert(a.LLI_In == (A&B)); $display("  %b & %b  = %b", A, B, a.LLI_In);
     #50 AND = 0; OR = 1; 
-    #50 assert(a.LLI_In == 1); $display("  %b | %b  = %b", A, B, a.LLI_In);
-    #50 A = 0; 
-    #50 assert(a.LLI_In == 0); $display("  %b | %b  = %b", A, B, a.LLI_In);
-    #50 A = 1; OR = 0; XOR = 1; 
-    #50 assert(a.LLI_In == 1); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
-    #50 B = 1; 
-    #50 assert(a.LLI_In == 0); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
-    #50 XOR = 0; NOT = 1;
-    #50 assert(a.LLI_In == 0); $display("~ %b      = %b", A, a.LLI_In);
-    #50 A = 0; 
-    #50 assert(a.LLI_In == 1); $display("~ %b      = %b", A, a.LLI_In);
-    #50 NOT = 0; NAND = 1;
-    #50 assert(a.LLI_In == 1); $display("~(%b & %b) = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == (A|B)); $display("  %b | %b  = %b", A, B, a.LLI_In);
     #50 A = 1; 
-    #50 assert(a.LLI_In == 0); $display("~(%b & %b) = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == (A|B)); $display("  %b | %b  = %b", A, B, a.LLI_In);
+    #50 B = 0;
+    #50 assert(a.LLI_In == (A|B)); $display("  %b | %b  = %b", A, B, a.LLI_In);
+    #50 A = 0;
+    #50 assert(a.LLI_In == (A|B)); $display("  %b | %b  = %b", A, B, a.LLI_In);
+    #50 OR = 0; XOR = 1; 
+    #50 assert(a.LLI_In == (A^B)); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
+    #50 B = 1; 
+    #50 assert(a.LLI_In == (A^B)); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
+    #50 A = 1;
+    #50 assert(a.LLI_In == (A^B)); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
+    #50 B = 0;
+    #50 assert(a.LLI_In == (A^B)); $display("  %b ^ %b  = %b", A, B, a.LLI_In);
+    #50 XOR = 0; NOT = 1;
+    #50 assert(a.LLI_In == (~A)); $display("~ %b      = %b", A, a.LLI_In);
+    #50 A = 0; 
+    #50 assert(a.LLI_In == (~A)); $display("~ %b      = %b", A, a.LLI_In);
+    #50 NOT = 0; NAND = 1;
+    #50 assert(a.LLI_In == (~(A&B))); $display("~(%b & %b) = %b", A, B, a.LLI_In);
+    #50 A = 1; 
+    #50 assert(a.LLI_In == (~(A&B))); $display("~(%b & %b) = %b", A, B, a.LLI_In);
+    #50 B = 1;
+    #50 assert(a.LLI_In == (~(A&B))); $display("~(%b & %b) = %b", A, B, a.LLI_In);
+    #50 A = 0;
+    #50 assert(a.LLI_In == (~(A&B))); $display("~(%b & %b) = %b", A, B, a.LLI_In);
     #50 NAND = 0; NOR = 1;
-    #50 assert(a.LLI_In == 0); $display("~(%b | %b) = %b", A, B, a.LLI_In);
-    #50 A = 0; B = 0; 
-    #50 assert(a.LLI_In == 1); $display("~(%b | %b) = %b", A, B, a.LLI_In);
+    #50 assert(a.LLI_In == (~(A|B))); $display("~(%b | %b) = %b", A, B, a.LLI_In);
+    #50 B = 0;
+    #50 assert(a.LLI_In == (~(A|B))); $display("~(%b | %b) = %b", A, B, a.LLI_In);
+    #50 A = 1;
+    #50 assert(a.LLI_In == (~(A|B))); $display("~(%b | %b) = %b", A, B, a.LLI_In);
+    #50 B = 1;
+    #50 assert(a.LLI_In == (~(A|B))); $display("~(%b | %b) = %b", A, B, a.LLI_In);
 
 	//Shifting Testing
     $display("---SHIFTING TESTS---");
-    $display("nothing to display...");
-    #50 NOR = 0; ShOut = 1;
+    $display("All shift inputs are held high");
+    $display("A | Control Sigs | imm4 || OutLeft || OutRight");
+    $display("  | ShL ShR ShB  |      ||         ||");
+    #50 NOR = 0; ShOut = 1; A = 0; B = 0;
     #50 assert(a.LLI_In == 0);
     #50 Sh8H_L = 1; Sh4D_L = 1; Sh2C_L = 1; Sh1_L_In = 1; //Feed 1's in inter-bit signals
 	Sh8H_R = 1; Sh4C_R = 1; Sh2B_R = 1; Sh1_R_In = 1;
