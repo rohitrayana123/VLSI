@@ -10,7 +10,7 @@ The complete instruction set architecture includes a number of instructions for 
 %\todo[inline]{HSL - this doesn't sound right. Maybe "transfer of program flow". Not sure on the use of the word "control" but i know it is the technical term}
 
 
-All instructions implemented by this architecture fall into one of 6 groups, categorized as follows:
+All instructions implemented by this architecture fall into one of 6 groups, categorised as follows:
 \begin{itemize}
 	\item Data Manipulation - Arithmetic, Logical, Shifting
 	\item Byte Immediate - Arithmetic, Byte Load
@@ -102,7 +102,7 @@ All instructions implemented by this architecture fall into one of 6 groups, cat
 	\textgreater\textgreater & Logical shift right \\\hline
 	\textgreater\textgreater\textgreater & Arithmetic shift right \\\hline
 	Mem[{\itshape val}] & Data at memory location with address {\itshape val} \\\hline
-	\{{\itshape x}, {\itshape y}\} & Contatenation of {\itshape x} and {\itshape y} to form a 16-bit value \\\hline
+	\{{\itshape x}, {\itshape y}\} & Concatenation of {\itshape x} and {\itshape y} to form a 16-bit value \\\hline
 	! & Bitwise Negation \\\hline
 \end{tabular}
 }
@@ -347,7 +347,7 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Iformat{F}{000}
 \Isyntax{RETI}{RETI}
 \Ioperation{PC $\leftarrow$}{Mem[R7]}{n}{n}{0}{0}{n}{n}
-\Idesc{Restore program counter to its value before interrupt occured, which is stored on the stack, pointed to by the stack pointer (R7). \\\\ Addressing Mode: Register-Indirect.}
+\Idesc{Restore program counter to its value before interrupt occurred, which is stored on the stack, pointed to by the stack pointer (R7). \\\\ Addressing Mode: Register-Indirect.}
 \newpage
 \Imnemonic{Enable Interrupts}{ENAI}
 \Iformat{F}{001}
