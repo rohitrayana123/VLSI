@@ -314,7 +314,7 @@ if "__main__" == __name__:
 			elif (line[2] in ('R7','SP')):
 				defines[7] = line[1]
 			else:
-				print 'ERROR14: Required .define format - .define NAME R0-R7/SP' + ' lineNo: ' + workingline
+				print 'ERROR13: Required .define format - .define NAME R0-R7/SP' + ' lineNo: ' + workingline
 				sys.exit()
 			definelines.append(line)			#remove define from file
 		else:							#Check if line has any current defines
@@ -339,7 +339,7 @@ if "__main__" == __name__:
 	for i, line in enumerate(SEGMLINES):
 		if (line[0] in ('.ISR','.isr')):				#ISR located
 			if ISR == 1:
-				print 'ERROR13: Multiple ISRs Present'
+				print 'ERROR12: Multiple ISRs Present'
 				sys.exit()
 			ISR = 1
 			ISRloc = i
@@ -396,7 +396,7 @@ if "__main__" == __name__:
 			empty = i
 			break
 	if empty == -1:
-		print "ERROR15:Unused register not found"
+		print "ERROR14:Unused register not found"
 		sys.exit()
 	ISR.insert(0, ['STW', 'R0', 'R' + str(empty), '15'])
 	ISR.append(['LDW', 'R0', 'R' + str(empty), '15'])
@@ -407,7 +407,7 @@ if "__main__" == __name__:
 	for i, line in enumerate(SEGMLINES):
 		if line[0].startswith('.'):
 			if (line[0] in (l[0] for l in LINKTABLE)):	#Check if label already exists in linktable
-				print 'ERROR11: Duplicate Symbolic Links (', line[0], ')' + ' lineNo: ' + workingline
+				print 'ERROR10: Duplicate Symbolic Links (', line[0], ')' + ' lineNo: ' + workingline
 				sys.exit()
 			LINKTABLE.append([line[0], i])			#add link consisting of LABEL and line no.
 			SEGMLINES[i].remove(line[0])			#remove label from instruction
@@ -479,15 +479,15 @@ if "__main__" == __name__:
 				sys.exit()
 		elif line[0] in ('CMPI', 'JMP'):
 			if int(line[2]) > 15 or int(line[2]) < -16:
-				print 'ERROR8: Imm5 Out Of Bounds' + ' lineNo: ' + workingline
+				print 'ERROR7: Imm5 Out Of Bounds' + ' lineNo: ' + workingline
 				sys.exit()
 		elif line[0] in ('ADDIB', 'SUBIB'):
 			if int(line[2]) > 127 or int(line[2]) < -128:
-				print 'ERROR9: Arith Imm8 Out Of Bounds' + ' lineNo: ' + workingline
+				print 'ERROR8: Arith Imm8 Out Of Bounds' + ' lineNo: ' + workingline
 				sys.exit()
 		elif line[0] in ('LUI', 'LLI'):
 			if int(line[2]) > 255:
-				print 'ERROR9: Load Imm8 Out Of Bounds' + ' lineNo: ' + workingline
+				print 'ERROR8: Load Imm8 Out Of Bounds' + ' lineNo: ' + workingline
 				sys.exit()
 
 	#Convert each element to machine code and concatenate
@@ -533,7 +533,7 @@ if "__main__" == __name__:
 					MC.append(OpNum('D2') + conditioncode(line[0]) + branch(line[1], i))
 					tempi = branch(line[1], i, 0)
 					if  tempi > 127 or tempi < -128:
-						print 'ERROR10: Imm8 Branch Out Of Bounds' + ' lineNo: ' + workingline
+						print 'ERROR9: Imm8 Branch Out Of Bounds' + ' lineNo: ' + workingline
 						sys.exit()
 			elif OpType(line[0]) == 'C':				#Data transfer
 				temp = '0'
@@ -566,7 +566,7 @@ if "__main__" == __name__:
 				else:
 					MC.append(OpNum(line[0]) + regcode(line[1]) + regcode(line[2]) + ConvertToBin(line[3], 5))
 		except IndexError:
-			print 'ERROR16: Insufficient instruction operands' + ' lineNo: ' + workingline
+			print 'ERROR15: Insufficient instruction operands' + ' lineNo: ' + workingline
 			sys.exit()
 		except Exception, ex:
 			print 'Run-time Error: ' + ex

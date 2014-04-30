@@ -1,6 +1,6 @@
 magic
 tech c035u
-timestamp 1394559787
+timestamp 1398810644
 << metal1 >>
 rect 6911 16721 6945 16731
 rect 6959 16721 6993 16731
@@ -213,11 +213,11 @@ rect 6657 22 6671 36
 rect 1977 0 1991 14
 rect 2169 0 2183 14
 << metal2 >>
-rect 10 357 210 16785
-rect 226 585 238 16785
-rect 250 809 262 16785
-rect 274 546 286 16785
-rect 298 809 310 16785
+rect 10 16536 210 16785
+rect 226 16536 238 16785
+rect 250 16536 262 16785
+rect 274 16536 286 16785
+rect 298 16536 310 16785
 rect 1546 16713 1558 16785
 rect 1810 16713 1822 16785
 rect 1978 16713 1990 16785
@@ -259,7 +259,97 @@ rect 8362 16713 8374 16719
 rect 8650 16713 8662 16785
 rect 8818 16713 8830 16785
 rect 9058 16713 9070 16785
-rect 9298 452 9498 16785
+rect 9298 16536 9498 16785
+rect 10 15494 210 15737
+rect 226 15494 238 15737
+rect 250 15494 262 15737
+rect 274 15494 286 15737
+rect 298 15494 310 15737
+rect 9298 15494 9498 15737
+rect 10 14452 210 14695
+rect 226 14452 238 14695
+rect 250 14452 262 14695
+rect 274 14452 286 14695
+rect 298 14452 310 14695
+rect 9298 14452 9498 14695
+rect 10 13410 210 13653
+rect 226 13410 238 13653
+rect 250 13410 262 13653
+rect 274 13410 286 13653
+rect 298 13410 310 13653
+rect 9298 13410 9498 13653
+rect 10 12368 210 12611
+rect 226 12368 238 12611
+rect 250 12368 262 12611
+rect 274 12368 286 12611
+rect 298 12368 310 12611
+rect 9298 12368 9498 12611
+rect 10 11326 210 11569
+rect 226 11326 238 11569
+rect 250 11326 262 11569
+rect 274 11326 286 11569
+rect 298 11326 310 11569
+rect 9298 11326 9498 11569
+rect 10 10284 210 10527
+rect 226 10284 238 10527
+rect 250 10284 262 10527
+rect 274 10284 286 10527
+rect 298 10284 310 10527
+rect 9298 10284 9498 10527
+rect 10 9242 210 9485
+rect 226 9242 238 9485
+rect 250 9242 262 9485
+rect 274 9242 286 9485
+rect 298 9242 310 9485
+rect 9298 9242 9498 9485
+rect 10 8200 210 8443
+rect 226 8200 238 8443
+rect 250 8200 262 8443
+rect 274 8200 286 8443
+rect 298 8200 310 8443
+rect 9298 8200 9498 8443
+rect 10 7158 210 7401
+rect 226 7158 238 7401
+rect 250 7158 262 7401
+rect 274 7158 286 7401
+rect 298 7158 310 7401
+rect 9298 7158 9498 7401
+rect 10 6116 210 6359
+rect 226 6116 238 6359
+rect 250 6116 262 6359
+rect 274 6116 286 6359
+rect 298 6116 310 6359
+rect 9298 6116 9498 6359
+rect 10 5074 210 5317
+rect 226 5074 238 5317
+rect 250 5074 262 5317
+rect 274 5074 286 5317
+rect 298 5074 310 5317
+rect 9298 5074 9498 5317
+rect 10 4032 210 4275
+rect 226 4032 238 4275
+rect 250 4032 262 4275
+rect 274 4032 286 4275
+rect 298 4032 310 4275
+rect 9298 4032 9498 4275
+rect 10 2990 210 3233
+rect 226 2990 238 3233
+rect 250 2990 262 3233
+rect 274 2990 286 3233
+rect 298 2990 310 3233
+rect 9298 2990 9498 3233
+rect 10 1948 210 2191
+rect 226 1948 238 2191
+rect 250 1948 262 2191
+rect 274 1948 286 2191
+rect 298 1948 310 2191
+rect 9298 1948 9498 2191
+rect 10 906 210 1149
+rect 226 906 238 1149
+rect 250 906 262 1149
+rect 274 906 286 1149
+rect 298 906 310 1149
+rect 9298 906 9498 1149
 rect 1498 36 1510 41
 rect 1978 14 1990 41
 rect 2170 14 2182 41
@@ -284,15 +374,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 15737
 box 0 0 1464 799
 use ALUSlice ALUSlice_15
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 15671
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_7
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_7
+timestamp 1398810244
 transform 1 0 8770 0 1 15671
 box 0 0 192 1042
 use ALUTri ALUTri_15
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 15671
 box 0 0 216 1042
 use rightend rightend_15
@@ -304,15 +394,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 14695
 box 0 0 1464 799
 use ALUSlice ALUSlice_14
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 14629
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_6
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_6
+timestamp 1398810244
 transform 1 0 8770 0 1 14629
 box 0 0 192 1042
 use ALUTri ALUTri_14
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 14629
 box 0 0 216 1042
 use rightend rightend_14
@@ -324,15 +414,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 13653
 box 0 0 1464 799
 use ALUSlice ALUSlice_13
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 13587
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_5
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_5
+timestamp 1398810244
 transform 1 0 8770 0 1 13587
 box 0 0 192 1042
 use ALUTri ALUTri_13
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 13587
 box 0 0 216 1042
 use rightend rightend_13
@@ -344,15 +434,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 12611
 box 0 0 1464 799
 use ALUSlice ALUSlice_12
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 12545
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_4
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_4
+timestamp 1398810244
 transform 1 0 8770 0 1 12545
 box 0 0 192 1042
 use ALUTri ALUTri_12
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 12545
 box 0 0 216 1042
 use rightend rightend_12
@@ -364,15 +454,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 11569
 box 0 0 1464 799
 use ALUSlice ALUSlice_11
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 11503
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_3
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_3
+timestamp 1398810244
 transform 1 0 8770 0 1 11503
 box 0 0 192 1042
 use ALUTri ALUTri_11
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 11503
 box 0 0 216 1042
 use rightend rightend_11
@@ -384,15 +474,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 10527
 box 0 0 1464 799
 use ALUSlice ALUSlice_10
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 10461
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_2
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_2
+timestamp 1398810244
 transform 1 0 8770 0 1 10461
 box 0 0 192 1042
 use ALUTri ALUTri_10
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 10461
 box 0 0 216 1042
 use rightend rightend_10
@@ -404,15 +494,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 9485
 box 0 0 1464 799
 use ALUSlice ALUSlice_9
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 9419
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_1
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_1
+timestamp 1398810244
 transform 1 0 8770 0 1 9419
 box 0 0 192 1042
 use ALUTri ALUTri_9
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 9419
 box 0 0 216 1042
 use rightend rightend_9
@@ -424,15 +514,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 8443
 box 0 0 1464 799
 use ALUSlice ALUSlice_8
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 8377
 box 0 0 7296 1042
-use LLIcell_U LLIcell_U_0
-timestamp 1393855556
+use LLIcell_U_basic LLIcell_U_basic_0
+timestamp 1398810244
 transform 1 0 8770 0 1 8377
 box 0 0 192 1042
 use ALUTri ALUTri_8
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 8377
 box 0 0 216 1042
 use rightend rightend_8
@@ -444,15 +534,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 7401
 box 0 0 1464 799
 use ALUSlice ALUSlice_7
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 7335
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_3
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_7
+timestamp 1398809883
 transform 1 0 8770 0 1 7335
 box 0 0 192 1042
 use ALUTri ALUTri_7
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 7335
 box 0 0 216 1042
 use rightend rightend_7
@@ -464,15 +554,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 6359
 box 0 0 1464 799
 use ALUSlice ALUSlice_6
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 6293
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_7
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_6
+timestamp 1398809883
 transform 1 0 8770 0 1 6293
 box 0 0 192 1042
 use ALUTri ALUTri_6
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 6293
 box 0 0 216 1042
 use rightend rightend_6
@@ -484,15 +574,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 5317
 box 0 0 1464 799
 use ALUSlice ALUSlice_5
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 5251
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_6
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_5
+timestamp 1398809883
 transform 1 0 8770 0 1 5251
 box 0 0 192 1042
 use ALUTri ALUTri_5
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 5251
 box 0 0 216 1042
 use rightend rightend_5
@@ -504,15 +594,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 4275
 box 0 0 1464 799
 use ALUSlice ALUSlice_4
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 4209
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_5
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_4
+timestamp 1398809883
 transform 1 0 8770 0 1 4209
 box 0 0 192 1042
 use ALUTri ALUTri_4
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 4209
 box 0 0 216 1042
 use rightend rightend_4
@@ -524,15 +614,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 3233
 box 0 0 1464 799
 use ALUSlice ALUSlice_3
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 3167
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_4
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_3
+timestamp 1398809883
 transform 1 0 8770 0 1 3167
 box 0 0 192 1042
 use ALUTri ALUTri_3
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 3167
 box 0 0 216 1042
 use rightend rightend_3
@@ -544,15 +634,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 2191
 box 0 0 1464 799
 use ALUSlice ALUSlice_2
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 2125
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_2
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_2
+timestamp 1398809883
 transform 1 0 8770 0 1 2125
 box 0 0 192 1042
 use ALUTri ALUTri_2
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 2125
 box 0 0 216 1042
 use rightend rightend_2
@@ -564,15 +654,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 1149
 box 0 0 1464 799
 use ALUSlice ALUSlice_1
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 1083
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_1
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_1
+timestamp 1398809883
 transform 1 0 8770 0 1 1083
 box 0 0 192 1042
 use ALUTri ALUTri_1
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 1083
 box 0 0 216 1042
 use rightend rightend_1
@@ -584,15 +674,15 @@ timestamp 1386242881
 transform 1 0 10 0 1 107
 box 0 0 1464 799
 use ALUSlice ALUSlice_0
-timestamp 1394559342
+timestamp 1397224710
 transform 1 0 1474 0 1 41
 box 0 0 7296 1042
-use LLIcell_L LLIcell_L_0
-timestamp 1394447900
+use LLIcell_L_basic LLIcell_L_basic_0
+timestamp 1398809883
 transform 1 0 8770 0 1 41
 box 0 0 192 1042
 use ALUTri ALUTri_0
-timestamp 1394559405
+timestamp 1394560081
 transform 1 0 8962 0 1 41
 box 0 0 216 1042
 use rightend rightend_0
@@ -625,7 +715,6 @@ rlabel metal2 298 16785 310 16785 5 nReset
 rlabel metal1 0 911 0 921 3 A[0]
 rlabel metal1 0 933 0 943 3 B[0]
 rlabel metal1 0 1953 0 1963 3 A[1]
-rlabel metal1 0 1975 0 1984 3 B[1]
 rlabel metal1 0 2995 0 3005 3 A[2]
 rlabel metal1 0 3017 0 3027 3 B[2]
 rlabel metal1 0 4059 0 4069 3 B[3]
@@ -680,4 +769,5 @@ rlabel metal2 7690 16785 7702 16785 5 ShSignIn
 rlabel metal2 7474 16785 7486 16785 5 Sh4
 rlabel metal2 6826 16785 6838 16785 5 Sh8
 rlabel metal2 6851 16785 6863 16785 5 ShR
+rlabel metal1 0 1975 0 1985 3 B[1]
 << end >>

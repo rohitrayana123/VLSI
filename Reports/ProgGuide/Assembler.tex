@@ -1,9 +1,9 @@
 %  Assembler.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:13 GMT
-%  <+Last Edited: Mon 28 Apr 2014 20:15:46 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Tue 29 Apr 2014 19:11:53 BST by seblovett on seblovett-Ubuntu +>
 
-\section{Assembler}
+\section{Assembler}\label{sect:assembler}
 The current instruction set architecture includes an assembler for converting assembly language into hexadecimal. 
 This chapter outlines the required formatting and available features of this assembler. 
 
@@ -23,13 +23,13 @@ For example:
  Branch instructions take a symbolic reference to the destination. 
 Each type of branch supports moving up to 127 lines forward, or 128 lines backwards. But if a branch is over this limitation, the assembler will automatically create additional instructions to enable greater distances. Each additional branch added will cause two more lines of code to be added to the outputted file. \\
 
- All label names must begin with a `.' while \texttt{.ISR}/\texttt{.isr} and \texttt{.define} are special cases used for the interrupt service routine and variable definitions respectively. \\
+ All label names must begin with a `.' while \texttt{.ISR}/\texttt{.isr} and \texttt{.define} are special cases used for the ISR and variable definitions respectively. \\
 
  Instruction-less or comments only lines are allowed within the assembly file. \\
 \newpage
  {\bf Special Case Label}
 
- The .ISR/.isr label is reserved for the interrupt service routine and may be located anywhere within the file but must finish with a `RETI' instruction. 
+ The .ISR/.isr label is reserved for the Interrupt Service Routine and may be located anywhere within the file but must finish with a \textbf{RETI} instruction. 
 Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. 
 %As a result of the positioning of the ISR, any stack initialization must occur within the first 10 lines of main program code since jumping over the ISR requires use of the stack. If not initialized, the default address of the stack pointer is 2047. \\
 
@@ -68,28 +68,27 @@ This includes the basic rules for writing the assembly language and a version lo
 \newpage
 \subsection{Error Messages}
 This is a list of all the error messages produced by the assembler. Each time an error is thrown, the error number, a brief description and the line it occurred on is displayed before exiting. A 'f' corresponds to a line number in the assembly file, and a 'p' corresponds to the pre-processed code list displayed on screen. 
-\todo{Screenshot of error message}
+\todo[inline,color=green]{Screenshot of error message}
 
 \begin{center}
 	\centering
 	\begin{tabular}{r|p{12cm}}
 		\multicolumn{1}{c}{\bf Code} & \multicolumn{1}{c}{\bf Description} \\
 		\hline\hline
-		ERROR1& Instruction mneumonic is not recognized \\
-		ERROR2& Register code within instruction is not recognized\\
+		ERROR1& Instruction mnemonic is not recognised \\
+		ERROR2& Register code within instruction is not recognised\\
 		ERROR3& Branch condition code is not recognised\\
 		ERROR4& Attempting to branch to undefined location \\
-		ERROR5& Instruction mneumonic is not recognized \\
+		ERROR5& Instruction mnemonic is not recognised \\
 		ERROR6& Attempting to shift by more than 16 or perform a negative shift \\
-		ERROR7& Magnitude of immediate value for ADDI, ADCI, SUBI, SUCI, LDW or STW is too large\\
-		ERROR8& Magnitude of immediate value for CMPI or JMP is too large \\
-		ERROR9& Magnitude of immediate value for ADDIB, SUBIB, LUI or LLI is too large \\
-		ERROR10& Attempting to jump more than 127 forward or 128 backwards \\
-		ERROR11& Duplicate symbolic link names \\
-		ERROR12& Illegal branch to ISR \\
-		ERROR13& Multiple ISRs in file \\
-		ERROR14& Invalid formatting for .define directive \\
-		ERROR15& Could not find empty register in first 10 lines for automated ISR setup \\
-		ERROR16& Instruction does not have enough operands \\
+		ERROR7& Magnitude of immediate value for ADDI, ADCI, SUBI, SUCI, LDW, STW, CMPI or JMP is too large\\
+		ERROR8& Magnitude of immediate value for ADDIB, SUBIB, LUI or LLI is too large \\
+		ERROR9& Attempting to jump more than 127 forward or 128 backwards \\
+		ERROR10& Duplicate symbolic link names \\
+		ERROR11& Illegal branch to ISR \\
+		ERROR12& Multiple ISRs in file \\
+		ERROR13& Invalid formatting for .define directive \\
+		ERROR14& Could not find empty register in first 10 lines for automated ISR setup \\
+		ERROR15& Instruction does not have enough operands \\
 	\end{tabular}
 \end{center}

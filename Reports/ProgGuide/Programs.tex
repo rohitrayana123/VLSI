@@ -3,7 +3,7 @@
 \section{Programs}
 Every example program in this section uses R7 as a stack pointer which is initialised to the by the program to 0x07D0.% using the LUI and LLI instructions.
 The simulation environment contains an area of an area of memory with $2048$ locations and memory mapped deices.
-There are $16$ switches at location $0$x$0800$, $16$ LEDs at location $0$x$0801$ and a serial io device which can be read from location $0$x$A000$ and has a control register at location $0$x$A001$. 
+There are $16$ switches at location $0$x$0800$, $16$ LEDs at location $0$x$0801$ and a serial I/O device which can be read from location $0$x$A000$ and has a control register at location $0$x$A001$. 
 
 
 
@@ -74,7 +74,7 @@ All contained within an unconditional branch but a loop counter is used control 
    \label{fig:lfsr}
 \end{figure}
 
-A two input XOR gate is simulated using the XOR operation along with shifting to compare bits in different locations.
+A two input \texttt{XOR} gate is simulated using the \textbf{XOR} operation along with shifting to compare bits in different locations.
 Bits $2$ and $4$ are used as inputs so a logical shift left by two is used to align them at the bit $4$ position. 
 Masking the output value is used feedback to the top bit.
 This is described using C in listing~\ref{lst:random.c}. 
