@@ -89,7 +89,7 @@ This subroutine calls another subroutine therefore the first operation should be
 Five register values are saved then the two input parameters are loaded relative to the stack pointer.
 On exit the result is stored at the dummy memory location.
 Once all register values are restored it is crucial the link register is also restored before the \textbf{RET} command is used to return the program to the caller. 
-The caller does one \texbf{POP} followed by two dummy pops to return the stack its initial state.
+The caller does one \textbf{POP} followed by two dummy pops to return the stack its initial state.
 
 Subroutine \emph{two} is called from inside subroutine \emph{one} but because it is a leaf call then the link register does not have to be copied to the stack.
 The input parameter is bidirectional and on exit the result is written to the same place from which it was read.
