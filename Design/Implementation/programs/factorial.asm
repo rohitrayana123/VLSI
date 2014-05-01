@@ -44,10 +44,7 @@
 		PUSH 	i	
 		LDW 	M,[SP,#5]		; Off stack frame
 		LDW 	Q,[SP,#6]  		;                 	                                                                              	
-		LUI		i,#0                                                                                               	
-		LLI		i,#255			; Bottom 8 only
-		AND 	M,M,i			
-		AND		Q,Q,i                                                                                                 	
+		SUB 	A,A,A                                                                                                	
 .mloop	LSL		i,M,#15			; Bit one only
 		CMPI 	i,#0
 		BE 		.nAcc			; M[1] != 1
