@@ -45,8 +45,9 @@ This is a simple implementation and can be extended to large case statements.
 \lstinputlisting[style=asm,label=lst:exampleifelse,caption={Example code for an \textit{if-then-else} operation.}]{pseudocode/exampleifelse.asm}
 \end{minipage}
 
+\subsection{Looping}
 Listing~\ref{lst:examplefor} is an example of how to implement a for loop. 
-Again, definitions are made give the code more meaning. 
+Again, definitions are made to give the code more meaning. 
 Then the \textit{i} variable is initialised to 0 before the loop. 
 Since only greater than or equal, and less than branches are supported, the condition is non-trivial.
 This is done by using a temporary register which is set to $i + 1$. 
@@ -62,11 +63,20 @@ $i$ is then incremented and the program jumps to the start of the loop.
 \lstinputlisting[style=asm,label=lst:examplefor,caption={Example code for a \textit{for} loop.}]{pseudocode/examplefor.asm}
 \end{minipage}
 
+Listing~\ref{lst:examplewhile} describes a \emph{while} loop which doesn't need to be controlled by a loop counter.
+A variable can completely skip the loop if already larger than the threshold or even remain stuck inside the loop if ill-posed which in this case can be achieved with $0$.
+
+
+\begin{minipage}{\linewidth}
+\lstinputlisting[style=asm,label=lst:examplewhile,caption={Example code for a \textit{while} loop.}]{pseudocode/examplewhile.asm}
+\end{minipage}
+
+
 \subsection{Stack Pointer Usage}
 
-The \samurai{} processor uses a full descending stack, example usage is held in listing~\ref{lst:exampleSP.asm}.
+The \samurai{} processor uses a full descending stack, example usage is held in listing~\ref{lst:exampleSP}.
 This means from the initial value the stack pointer is incremented before data is written to memory.
-It is recommended that stack pointer is initialised to $x$ where $x-1$ is the top address in main memory. 
+It is recommended that the stack pointer is initialised to $x$ where $x-1$ is the top address in main memory. 
 A \textbf{PUSH} increments then writes and a \textbf{POP} reads then decrements.
 Relative loads from the stack pointer are possible and discussed at length in section~\ref{sec:subroutine_calls}.
 
@@ -95,20 +105,22 @@ The caller does one \textbf{POP} followed by two dummy pops to return the stack 
 Subroutine \emph{two} is called from inside subroutine \emph{one} but because it is a leaf call then the link register does not have to be copied to the stack.
 The input parameter is bidirectional and on exit the result is written to the same place from which it was read.
 
-\begin{minipage}{\linewidth}
-\lstinputlisting[style=asm,label=lst:exampleSubroutine,caption={Example code for calling subroutines.}]{pseudocode/exampleSubroutine.asm}
-\end{minipage}
 
 \begin{figure}[!htb]
 	\centering
-	\subfigure[Stack state during \emph{one} main matter.]{\includegraphics[width=0.25\textwidth]{Figures/oneStack.pdf}
+	\subfigure[Stack state during subroutine \emph{one} main matter.]{\includegraphics[width=0.25\textwidth]{Figures/oneStack.pdf}
 	\label{fig:stack1}}
-	\subfigure[Stack state during \emph{two} main matter.]{\includegraphics[width=0.3\textwidth]{Figures/twoStack.pdf}
+	\subfigure[Stack state during subroutine \emph{two} main matter.]{\includegraphics[width=0.3\textwidth]{Figures/twoStack.pdf}
 	\label{fig:stack2}}	
 	\caption{Stack growth.}
 	\label{fig:stack}
 \end{figure}
 
+
+
+\newpage
+
+\lstinputlisting[style=asm,label=lst:exampleSubroutine,caption={Example code for calling subroutines.}]{pseudocode/exampleSubroutine.asm}
 
 
 

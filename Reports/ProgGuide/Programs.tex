@@ -79,6 +79,7 @@ All contained within an unconditional branch but a loop counter is used control 
 A two input \texttt{XOR} gate is simulated using the \textbf{XOR} operation along with shifting to compare bits in different locations.
 Bits $2$ and $4$ are used as inputs so a logical shift left by two is used to align them at the bit $4$ position. 
 Masking the output value is used feedback to the top bit.
+A seed can be any value expcept $0$x$0000$ as this will not produce a logical $1$ for feedback therefore remaining stuck in the same state.
 This is described using C in listing~\ref{lst:random.c}. 
 
 \begin{minipage}{\linewidth}
@@ -91,9 +92,15 @@ This is described using C in listing~\ref{lst:random.c}.
 \subsection{Interrupt}
 The code for the interrupt program is held in Appendix~\ref{sec:interrupt_appendix} listing~\ref{lst:interrupt.asm}.
 This is the most complex example and makes use of both the multiply and factorial subroutines in sections~\ref{sec:multiply} and~\ref{sec:factorial} respectively.
-The interrupt services the serial device by writing data to a $4$ byte circular buffer. 
-A main program check to see if data is in the buffer then and if so calculates the factorial writing the result to the LEDs.
+The interrupt services a serial device writing input data to a $4$ byte circular buffer. 
+A main program checks to see if data is in the buffer then and if so calculates the factorial writing the result to the LEDs.
 The buffer is purposefully small to test overflow.
+
+The functionality is explained using in listing~\ref{lst:interrupt.c}.
+Main compares the read and write pointers in loop because only when the two are different does the buffer contain data.
+If the two are different then the read pointer is incremented at which point it will wrap round to the beginning of the buffer.
+The new value for the read pointer is written back to memory and the factorial of the data is calculated.
+
 
 \newpage
 \lstinputlisting[style=C,label=lst:interrupt.c,caption=Serial Device Interrupt Service Request]{pseudocode/interrupt.c}

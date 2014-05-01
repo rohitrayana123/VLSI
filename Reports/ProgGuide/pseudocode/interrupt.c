@@ -3,18 +3,18 @@
 #define WRITE	0x0201
 #define READ	0x0200
 #define SERIAL	0xA000
+#define LEDS	0x0801
 
 isr(){
 	uint16_t data,readPtri,writePtr;
-	asm("DISI");				// critical op
-	data = read(SERIAL);	
+	data = read(SERIAL);		// Don't lose event
 	asm("ENAI");				// nested ints
 	readPtr = read(READ);
 	writePtr = read(WRITE);
 	if(((readPtr-1) == writePtr) 	||
-		(readPtr == BOTTOM)			||
-		(writePtr == (TOP-1))		){
-		asm("RETI");			// full, don't write
+		(readPtr 	== BOTTOM)		||
+		(writePtr 	== (TOP-1))		){
+		return					// full, don't write
 	}
 	if(readPtr == BOTTOM)	
 	write(readPtr,data);		// write to buffer
@@ -25,16 +25,20 @@ isr(){
 		writePtr++;
 	}
 	write(WRITE,writePtr);
-	asm("RETI")
+	return
 }
 
 void main(){
-	uint16_t readPtr,writePtri,data;
+	uint16_t readPtr,writePtr,data;
 	do{
-		readPtr = read(READ);
+		readPtr = read(READ);	// keep checking buffer
 		writePtr = read(WRITE);
 	}while(readPtr == writePtr)
-	data = read(readPtr)
-		
-	fact();
+	data = read(readPtr);		
+	readPtr++;
+	if(readPtr == TOP){
+		readPtr = BOTTOM;
+	}
+	write(READ,readPtr);		// Write new read ptr
+	write(fact(data));
 }
