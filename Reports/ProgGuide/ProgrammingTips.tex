@@ -65,10 +65,19 @@ $i$ is then incremented and the program jumps to the start of the loop.
 
 
 \subsection{Stack Pointer Usage}
-\todo[inline]{HSL: @ashleyjr - please follow similar structure to other two parts for the stack pointer and sub routine call sections.}
 
+
+A full descending stack is used with the \samurai{} processor.
+This means from the initial value the stack pointer is incremented before data is written to memory.
+It is recommended that stack pointer is initialised to $x$ where $x-1$ is the top address in main memory. 
+Relative loads from the stack pointer are possible and discussed at length in section~\ref{sec:subroutine_calls}.
+\lstinputlisting[style=asm,label=lst:exampleSP,caption={Example code for \textbf{SP} usage.}]{pseudocode/exampleSP.asm}
 
 \subsection{Sub routine calling convention}
+\label{sec:subroutine_calls}
+
+Use of a stack frame to pass variables to and from subroutines is recommended when writing assembly for \samurai{}.
+\lstinputlisting[style=asm,label=lst:exampleSubroutine,caption={Example code for calling subroutines.}]{pseudocode/exampleSubroutine.asm}
 
 
 \subsection{Interrupt Service Routines}

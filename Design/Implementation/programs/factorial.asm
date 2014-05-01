@@ -1,21 +1,3 @@
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0	
 		LUI 	R7, #7
 		LLI 	R7, #208
 		LUI 	R0, #8		; Address in R0

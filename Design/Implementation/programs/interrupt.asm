@@ -1,21 +1,3 @@
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0
-		ADDIB R0,#0	
 		DISI				; Reset is off anyway	
 		LUI 	R7, #7
 		LLI 	R7, #208
@@ -30,48 +12,6 @@
 		LLI 	R1,#1		; Data to enable ints
 		STW 	R1,[R0,#0]	; Store 0x001 @ 0xA001
 		ENAI
-		BR 		.main
-.isr  	STF					; Keep flags, disable auto
-		PUSH 	R0			; Save only this for now
-		LUI 	R0,#160
-		LLI 	R0,#0
-		LDW 	R0,[R0,#0]	; R1 contains read serial data
-		ENAI				; Don't miss event
-		PUSH 	R1
-		PUSH 	R2
-		PUSH 	R3
-		PUSH 	R4
-		LUI 	R1,#2
-		LLI 	R1,#0
-		LDW 	R2,[R1,#0]	; R2 contains read ptr
-		ADDI 	R3,R1,#1
-		LDW 	R4,[R3,#0]	; R4 contain the write ptr
-		SUBIB 	R2,#1		; Get out if W == R - 1
-		CMP 	R4,R2
-		BE 		.isrOut
-		ADDIB 	R2,#1
-		LUI 	R1,#2
-		LLI 	R1,#2
-		CMP 	R2,R1
-		BNE 	.write	
-		ADDIB 	R1,#3
-		CMP 	R4,R1
-		BE 		.isrOut
-.write	STW 	R0,[R4,#0]	; Write to buffer
-		ADDIB 	R4,#1
-		LUI 	R1,#2
-		LLI 	R1,#6
-		CMP 	R1,R4
-		BNE 	.wrapW
-		SUBIB 	R4,#4
-.wrapW	STW 	R4,[R3,#0]	; Inc write ptr
-.isrOut	POP 	R4
-		POP 	R3
-		POP 	R2
-		POP 	R1
-		POP 	R0
-		LDF
-		RETI
 .main	LUI 	R0, #2		; Read ptr address in R0
 		LLI 	R0, #0	
 		LDW 	R2,[R0,#0]	; Read ptr in R2
@@ -173,4 +113,45 @@
 		RET
 .fail	SUB 	R2,R2,R2	; OV - ret 0
 		BR 		.done
-	
+.isr  	STF					; Keep flags, disable auto
+		PUSH 	R0			; Save only this for now
+		LUI 	R0,#160
+		LLI 	R0,#0
+		LDW 	R0,[R0,#0]	; R1 contains read serial data
+		ENAI				; Don't miss event
+		PUSH 	R1
+		PUSH 	R2
+		PUSH 	R3
+		PUSH 	R4
+		LUI 	R1,#2
+		LLI 	R1,#0
+		LDW 	R2,[R1,#0]	; R2 contains read ptr
+		ADDI 	R3,R1,#1
+		LDW 	R4,[R3,#0]	; R4 contain the write ptr
+		SUBIB 	R2,#1		; Get out if W == R - 1
+		CMP 	R4,R2
+		BE 		.isrOut
+		ADDIB 	R2,#1
+		LUI 	R1,#2
+		LLI 	R1,#2
+		CMP 	R2,R1
+		BNE 	.write	
+		ADDIB 	R1,#3
+		CMP 	R4,R1
+		BE 		.isrOut
+.write	STW 	R0,[R4,#0]	; Write to buffer
+		ADDIB 	R4,#1
+		LUI 	R1,#2
+		LLI 	R1,#6
+		CMP 	R1,R4
+		BNE 	.wrapW
+		SUBIB 	R4,#4
+.wrapW	STW 	R4,[R3,#0]	; Inc write ptr
+.isrOut	POP 	R4
+		POP 	R3
+		POP 	R2
+		POP 	R1
+		POP 	R0
+		LDF
+		RETI
+
