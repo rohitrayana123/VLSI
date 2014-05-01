@@ -42,7 +42,9 @@ Else, the program falls through and a 1 is loaded to the \textit{b} register.
 The program then takes an unconditional jump to the end of the clause. 
 This is a simple implementation and can be extended to large case statements.
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=asm,label=lst:exampleifelse,caption={Example code for an \textit{if-then-else} operation.}]{pseudocode/exampleifelse.asm}
+\end{minipage}
 
 Listing~\ref{lst:examplefor} is an example of how to implement a for loop. 
 Again, definitions are made give the code more meaning. 
@@ -58,8 +60,10 @@ $i$ is then incremented and the program jumps to the start of the loop.
 
 %\todo[inline]{If then else example}
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=asm,label=lst:examplefor,caption={Example code for a \textit{for} loop.}]{pseudocode/examplefor.asm}
 %\todo[inline]{For and while loop examples}
+\end{minipage}
 \todo[inline,color=green]{would a while loop be good to put in?}
 
 
@@ -71,7 +75,10 @@ This means from the initial value the stack pointer is incremented before data i
 It is recommended that stack pointer is initialised to $x$ where $x-1$ is the top address in main memory. 
 A \textbf{PUSH} increments then writes and a \textbf{POP} reads then decrements.
 Relative loads from the stack pointer are possible and discussed at length in section~\ref{sec:subroutine_calls}.
+
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=asm,label=lst:exampleSP,caption={Example code for \textbf{SP} usage.}]{pseudocode/exampleSP.asm}
+\end{minipage}
 
 \subsection{Sub routine calling convention}
 \label{sec:subroutine_calls}
@@ -94,11 +101,13 @@ The caller does one \textbf{POP} followed by two dummy pops to return the stack 
 Subroutine \emph{two} is called from inside subroutine \emph{one} but because it is a leaf call then the link register does not have to be copied to the stack.
 The input parameter is bidirectional and on exit the result is written to the same place from which it was read.
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=asm,label=lst:exampleSubroutine,caption={Example code for calling subroutines.}]{pseudocode/exampleSubroutine.asm}
+\end{minipage}
 
 \begin{figure}[!htb]
 	\centering
-	\subfigure[Stack state during \emph{one} main matter.]{\includegraphics[width=0.3\textwidth]{Figures/oneStack.pdf}
+	\subfigure[Stack state during \emph{one} main matter.]{\includegraphics[width=0.25\textwidth]{Figures/oneStack.pdf}
 	\label{fig:stack1}}
 	\subfigure[Stack state during \emph{two} main matter.]{\includegraphics[width=0.3\textwidth]{Figures/twoStack.pdf}
 	\label{fig:stack2}}	
