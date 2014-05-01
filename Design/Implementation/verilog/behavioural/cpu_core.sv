@@ -48,7 +48,7 @@ wire FlagListen;
 wire FlagSel;
 assign Opcode = Ir[15:8];
 assign Data_out = SysBus;
-`ifndef crosssim
+`ifndef mixed
 	assign SDO = SDI; // No sim 
 `endif
 control control ( 
@@ -78,7 +78,7 @@ control control (
    	.Flags      (Flags      ),
    	.OpcodeCondIn(Opcode    ),    // Inputs
   	.nWait		(nWait		), 
-   	.SysBus     (SysBus   ),
+   	.SysBus     (SysBus[3:0]   ),
    	.AluWe      (AluWe      ),
    	.AluOR		(AluOR     	),
    	.Clock      (Clock      ),
@@ -89,7 +89,7 @@ control control (
 );
 
 datapath datapath ( 
-`ifdef crosssim
+`ifdef mixed
    .DataOut     (SysBus   ),
 `else
    .SysBus     	(SysBus   ),   // Output
@@ -118,7 +118,7 @@ datapath datapath (
    .StatusReg	(StatusReg),
    .StatusRegEn	(StatusRegEn),
    .AluOR	(AluOR	    ),
-`ifdef crosssim
+`ifdef mixed
    	.Test       (1'b0       ),
    	.SDI		(SDI      	),
 	.SDO 		(SDO		),

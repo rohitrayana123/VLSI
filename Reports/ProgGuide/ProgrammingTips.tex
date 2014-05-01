@@ -66,10 +66,10 @@ $i$ is then incremented and the program jumps to the start of the loop.
 
 \subsection{Stack Pointer Usage}
 
-
-A full descending stack is used with the \samurai{} processor.
+The \samurai{} processor uses a full descending stack, example usage is held in listing~\ref{lst:exampleSP.asm}.
 This means from the initial value the stack pointer is incremented before data is written to memory.
 It is recommended that stack pointer is initialised to $x$ where $x-1$ is the top address in main memory. 
+A \textbf{PUSH} increments then writes and a \textbf{POP} reads then decrements.
 Relative loads from the stack pointer are possible and discussed at length in section~\ref{sec:subroutine_calls}.
 \lstinputlisting[style=asm,label=lst:exampleSP,caption={Example code for \textbf{SP} usage.}]{pseudocode/exampleSP.asm}
 
@@ -77,7 +77,36 @@ Relative loads from the stack pointer are possible and discussed at length in se
 \label{sec:subroutine_calls}
 
 Use of a stack frame to pass variables to and from subroutines is recommended when writing assembly for \samurai{}.
+This improves code reuse and debugging. 
+Example calls for both linked and unlinked subroutines are contained in listing~\ref{lst:exampleSubroutine}
+The stack is explained using figure~\ref{fig:stack} which shows the state during the main matter of each subroutine.
+
+Subroutine \emph{one} requires two input parameters and returns a single result.
+The caller pushes two register values to the stack and a third dummy value is created by decrementing the stack pointer.
+A \textbf{BWL} instruction is used to enter the subroutine.
+The callee now has to save the registers it wishes to work with by storing them on the stack.
+This subroutine calls another subroutine therefore the first operation should be a \textbf{PUSH LR} which places the link register on the stack.
+Five register values are saved then the two input parameters are loaded relative to the stack pointer.
+On exit the result is stored at the dummy memory location.
+Once all register values are restored it is crucial the link register is also restored before the \textbf{RET} command is used to return the program to the caller. 
+The caller does one \textbf{POP} followed by two dummy pops to return the stack its initial state.
+
+Subroutine \emph{two} is called from inside subroutine \emph{one} but because it is a leaf call then the link register does not have to be copied to the stack.
+The input parameter is bidirectional and on exit the result is written to the same place from which it was read.
+
 \lstinputlisting[style=asm,label=lst:exampleSubroutine,caption={Example code for calling subroutines.}]{pseudocode/exampleSubroutine.asm}
+
+\begin{figure}[!htb]
+	\centering
+	\subfigure[Stack state during \emph{one} main matter.]{\includegraphics[width=0.3\textwidth]{Figures/oneStack.pdf}
+	\label{fig:stack1}}
+	\subfigure[Stack state during \emph{two} main matter.]{\includegraphics[width=0.3\textwidth]{Figures/twoStack.pdf}
+	\label{fig:stack2}}	
+	\caption{Stack growth.}
+	\label{fig:stack}
+\end{figure}
+
+
 
 
 \subsection{Interrupt Service Routines}

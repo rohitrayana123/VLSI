@@ -5,7 +5,9 @@
 // custom monitoring inforamtion
 //
 `define special_monitor
+`ifndef behavioural
 `define behavioural
+`endif
 // The following line indicates that a file "stimulus.sv" exists and contains
 // custom stimulus inforamtion
 //
