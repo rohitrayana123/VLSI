@@ -1,0 +1,553 @@
+*** Message Type: info ***
+When: Thu May 01 15:09:02 BST 2014
+SimVision started.
+Version: TOOL:  simvision       10.20-s073
+User: mw20g10
+Host: hind.ecs.soton.ac.uk
+Platform: Linux/x86_64/2.6.18-164.11.1.el5
+Started: Thu May 01 15:09:02 BST 2014
+Command: /opt/cad/soft/cadence/ius/tools.lnx86/simvision/bin/simvision.exe -connect dc:hind.ecs.soton.ac.uk:55846 -nocopyright
+Work Directory: /home/mw20g10/VLSI/GIT/c035u/design
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:03 BST 2014
+Create browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:05 BST 2014
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:05 BST 2014
+Connect to Simulator
+      Design: worklib.datapath_stim:sv
+   Languages: verilog assertion
+   Simulator: NC-Sim
+     Version: TOOL: ncsim   10.20-s073
+        User: mw20g10
+        Host: hind.ecs.soton.ac.uk
+Time Started: Thu May 01 15:09:01 BST 2014
+  Process ID: 15244
+   Directory: /home/mw20g10/VLSI/GIT/c035u/design
+     Command: ncverilog -sv +access+r datapath_stim.sv datapath.sv +gui +tcl+datapath.tcl
+
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:07 BST 2014
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:08 BST 2014
+Create waveform window: "Waves for magic cell datapath"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:10 BST 2014
+Create register window: "GPR Register List"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:09:11 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@171"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject16" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject16"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject16"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:09:11 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@171"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject16" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject16"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject16"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:09:11 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1b7"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject17" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject17"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject17"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:09:11 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1b7"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject17" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject17"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject17"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:09:11 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1b9"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject18" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject18"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject18"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:13 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1b9"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject18" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject18"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject18"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:13 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1bb"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject19" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject19"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject19"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:13 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1bb"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject19" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject19"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject19"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:13 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1bd"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject20" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject20"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject20"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:13 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1bd"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject20" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject20"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject20"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:15 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1bf"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject21" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject21"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject21"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:15 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1bf"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject21" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject21"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject21"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:15 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1c1"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject22" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject22"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject22"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:15 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1c1"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject22" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject22"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject22"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:15 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1c3"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject23" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject23"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject23"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:10:16 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@1c3"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject23" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject23"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject23"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:10:23 BST 2014
+Exit NC-Sim: user
+      Design: worklib.datapath_stim:sv
+   Languages: verilog assertion
+   Simulator: NC-Sim
+     Version: TOOL: ncsim   10.20-s073
+        User: mw20g10
+        Host: hind.ecs.soton.ac.uk
+Time Started: Thu May 01 15:09:01 BST 2014
+  Process ID: 15244
+   Directory: /home/mw20g10/VLSI/GIT/c035u/design
+     Command: ncverilog -sv +access+r datapath_stim.sv datapath.sv +gui +tcl+datapath.tcl
+
+ 
+*** Message Type: info ***
+When: Thu May 01 15:10:24 BST 2014
+SimVision Exit.
+ 
