@@ -64,15 +64,13 @@ If the \texttt{-S} option is defined, any program or module also given is ignore
 The scan path test pulses a signal on the SDI line, and verifies a pulse is seen on the output. 
 The clock cycles, and therefore the number of registers, are counted and reported upon success of the simulation.
 
+\lstinputlisting[label=lst:simpyhelp,caption={Help prompt for the sim.py script.}]{simpy.txt}
+
 Finally, a \texttt{-H} or \texttt{--home} tag exists to override the default expected location. 
 The script expects to be in the assembler directory within the verilog folder. 
 If an absolute path is passed, the script will use this as the base directory with the \textit{behavioural}, \textit{mixed} and \textit{extracted} folders in.
 A relative path can be passed. 
 This should be the path from the folder the script is run from to the verilog directory. 
-
-\lstinputlisting[label=lst:simpyhelp,caption={Help prompt for the sim.py script.}]{simpy.txt}
-
-
 
 \subsection{Serial Data}
 
