@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Mon 28 Apr 2014 20:05:19 BST by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Thu 01 May 2014 15:16:19 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -163,6 +163,9 @@ if "__main__" == __name__:
 
 	#parser.add_option("-G","--gate",  dest="gate", action="store_true", default=False,
 	#			help="Run a gate level sim.")
+	parser.add_option("-H", "--home",
+                  dest="home",
+                  help="Use a custom home directory")
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")
