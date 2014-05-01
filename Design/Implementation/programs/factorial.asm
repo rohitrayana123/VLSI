@@ -1,83 +1,65 @@
-		LUI 	R7, #7
-		LLI 	R7, #208
-		LUI 	R0, #8		; Address in R0
-		LLI 	R0, #1
-.start	SUBIB	R0,#1
-		LDW 	R1,[R0,#0]	; Read switches into R1	
-		PUSH 	R1			; Pass para
-		BWL 	.fact		; Run Subroutine
-		POP 	R3			; Para overwritten with result		
-		ADDIB 	R0,#1
-		STW 	R3,[R0,#0]	; Result on LEDS
-		BR 		.start		;  finish loop
-.fact   PUSH 	R0
-		PUSH 	R1
-		PUSH 	LR
-		LDW 	R1,[SP,#3]  ; Get para	
-		ADDIB 	R1,#0
-		BE 		.retOne     	; 0! = 1
-		SUBI 	R0,R1,#1
-		PUSH 	R0        	; Pass para
+.define SW		R0
+.define LEDS	R1
+.define	data	R3
+		LUI 	SP, #7
+		LLI 	SP, #208
+		LUI 	SW, #8			; Address of switches
+		ADDI	LEDS,SW,#1		; Address of LEDS
+.start	LDW 	data,[SW,#0]	; Read switches into R1	
+		PUSH 	data			; Pass para
+		BWL 	.fact			; Run Subroutine
+		POP 	data			; Para overwritten with result		
+		STW 	data,[LEDS,#0]	; Result on LEDS
+		BR 		.start			; Do it again
+.define Op		R0
+.define min		R1
+.fact   PUSH	LR
+		PUSH 	Op
+		PUSH 	min
+		LDW 	Op,[SP,#3]  ; Get para	
+		CMPI	Op,#0
+		BE 		.retOne    	; 0! = 1
+		SUBI 	min,Op,#1
+		PUSH 	min        	; Pass para
 		BWL 	.fact		; The output remains on the stack
-		PUSH 	R1			; Pass para
+		PUSH 	Op			; Pass para
 		SUBIB 	SP,#1		; Placeholder
 		BWL 	.multi
-		POP 	R1          ; Get res
+		POP 	Op          ; Get res
 		ADDIB 	SP,#2     	; pop x 2
-		STW 	R1,[SP,#3]
-		POP 	LR
-		POP 	R1
-		POP 	R0
+.out	STW 	Op,[SP,#3]
+		POP 	min
+		POP 	Op
+		POP		LR
 		RET
-.retOne ADDIB 	R1,#1    	; Avoid jump checking
-		STW 	R1,[SP,#3]                                                                                                  
-		POP 	LR                                                                                                          
-		POP 	R1                                                                                                          
-		POP 	R0                                                                                                          
-		RET
-.multi  PUSH 	R0
-		PUSH 	R1
-		PUSH 	R2
-		PUSH 	R3
-		PUSH 	R4
-		PUSH 	R5
-		PUSH 	R6
-		LDW 	R0,[SP,#8]	; R0 - Multiplier
-		LDW 	R1,[SP,#9]  ; R1 - Quotient                  	                                                                              	
-		CMP 	R0,R1
-		BLT 	.nSw		; Branch if M < Q
-		ADDI 	R2,R1,#0	; Make M the smallest
-		ADDI 	R1,R0,#0
-		ADDI 	R0,R2,#0
-.nSw	SUB 	R2,R2,R2    ; R2 - Accumulator                                                                                                	
-		ADDI 	R3,R2,#1	; R3 - 0x0001		
-		LUI 	R4,#128		; R4 - 0x8000
-		LLI 	R4,#0
-.mloop	AND 	R6,R0,R3	; R6 - Cmp var  	
-		CMPI 	R6,#1
-		BNE 	.nAcc
-		SUB 	R3,R3,R3
-		ADD 	R2,R2,R1	; A = A + Q	
-		ADCI 	R3,R3,#1
-		CMPI 	R3,#2 
-		BE 		.fail		; OV
-.nAcc	LSR 	R0,R0,#1	; M = M >> 1
-		CMPI 	R0,#0
-		BE 		.done
-		AND 	R5,R4,R1
-		CMPI 	R5,#0
-		BNE 	.fail		
-		LSL 	R1,R1,#1	; Q = Q << 1
+.retOne ADDIB 	Op,#1    	; Make it 1
+		BR .out	
+.define M		R0
+.define Q		R1
+.define A		R2
+.define i		R3
+.multi  PUSH 	M
+		PUSH 	Q
+		PUSH 	A
+		PUSH 	i	
+		LDW 	M,[SP,#5]		; Off stack frame
+		LDW 	Q,[SP,#6]  		;                 	                                                                              	
+		LUI		i,#0                                                                                               	
+		LLI		i,#255			; Bottom 8 only
+		AND 	M,M,i			
+		AND		Q,Q,i                                                                                                 	
+.mloop	LSL		i,M,#15			; Bit one only
+		CMPI 	i,#0
+		BE 		.nAcc			; M[1] != 1
+		ADD 	A,A,Q			; A = A + Q		
+.nAcc	LSR 	M,M,#1			; M = M >> 1
+		CMPI 	M,#0
+		BE 		.done		
+		LSL 	Q,Q,#1			; Q = Q << 1
 		BR 		.mloop
-.done	STW 	R2,[SP,#7]	; Res on stack frame                                                                                         
-		POP 	R6
-		POP 	R5
-		POP 	R4
-		POP 	R3
-		POP 	R2
-		POP 	R1
-		POP 	R0
+.done	STW 	A,[SP,#4]		; Res on stack frame 
+		POP		i
+		POP 	A
+		POP 	Q
+		POP 	M
 		RET
-.fail	SUB 	R2,R2,R2	; OV - ret 0
-		BR 		.done
-	
