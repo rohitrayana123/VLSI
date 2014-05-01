@@ -568,9 +568,6 @@ if "__main__" == __name__:
 		except IndexError:
 			print 'ERROR15: Insufficient instruction operands' + ' lineNo: ' + workingline
 			sys.exit()
-		except Exception, ex:
-			print 'Run-time Error: ' + ex
-			sys.exit()
 
 	# AJR - Do we need binary?
 	##Output result to file
