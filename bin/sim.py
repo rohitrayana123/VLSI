@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Wed 30 Apr 2014 15:34:58 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Thu 01 May 2014 15:16:19 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -20,7 +20,10 @@ from subprocess import call
 def RunSim(options, args = None):
 	print "Running sim..."
 	if options.legacy:
-		home = os.path.expanduser("~/VLSI")
+		if options.home:
+			home = os.path.expanduser(options.home)
+		else:
+			home = os.path.expanduser("~/VLSI")
 		verilog = os.path.join(home, "Design/Implementation/verilog")
 		stim = os.path.join(home, "Design/Implementation/verification")
 		programs = os.path.join(home, "Design/Implementation/programs")
@@ -28,7 +31,10 @@ def RunSim(options, args = None):
 		fcdecells = os.path.join(home,"c035u/cell_lib")
 		assembler = os.path.join(home,"bin/assemble.py")
 	else:
-		home = os.path.expanduser("..")
+		if options.home:
+			home = os.path.expanduser(options.home)
+		else:
+			home = os.path.expanduser("..")
 		verilog = os.path.join(home, ".")
 		stim = os.path.join(os.path.expanduser("~/VLSI"), "Design/Implementation/verification")
 		programs = os.path.join(home, verilog, "programs")
@@ -157,6 +163,9 @@ if "__main__" == __name__:
 
 	#parser.add_option("-G","--gate",  dest="gate", action="store_true", default=False,
 	#			help="Run a gate level sim.")
+	parser.add_option("-H", "--home",
+                  dest="home",
+                  help="Use a custom home directory")
 	parser.add_option("-g", "--gui",
                   action="store_true", dest="gui", default=False,
                   help="Run the simulation with a GUI")

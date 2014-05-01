@@ -29,8 +29,8 @@ Each type of branch supports moving up to 127 lines forward, or 128 lines backwa
 \newpage
  {\bf Special Case Label}
 
- The .ISR/.isr label is reserved for the Interrupt Service Routine and may be located anywhere within the file but must finish with a \textbf{RETI} instruction. 
-Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. 
+ The .ISR/.isr label is reserved for the Interrupt Service Routine and may be located anywhere within the file but must finish with a \textbf{RETI} instruction. There is no restriction on size of the service routine.
+Branches may occur within the ISR, but are not allowed into this service routine with the exception of a return from a separate subroutine. For ISR set-up code to be added successfully, there must be at least one unused register within the first 11 lines of the program file, excluding .define statements and the ISR.
 %As a result of the positioning of the ISR, any stack initialization must occur within the first 10 lines of main program code since jumping over the ISR requires use of the stack. If not initialized, the default address of the stack pointer is 2047. \\
 
 \subsection{Assembler Directives}
@@ -67,8 +67,14 @@ This includes the basic rules for writing the assembly language and a version lo
 
 \newpage
 \subsection{Error Messages}
-This is a list of all the error messages produced by the assembler. Each time an error is thrown, the error number, a brief description and the line it occurred on is displayed before exiting. A 'f' corresponds to a line number in the assembly file, and a 'p' corresponds to the pre-processed code list displayed on screen. 
+This is a list of all the error messages produced by the assembler. Each time an error is thrown, the error number, a brief description and the line it occurred on is displayed before exiting. A 'f' corresponds to a line number in the assembly file, and a 'p' corresponds to the pre-processed code list displayed on screen. Figure~\ref{fig:AssErrorEx} shows an example screen shot of an error message.
 \todo[inline,color=green]{Screenshot of error message}
+
+\begin{figure}[h]
+	\includegraphics{error1screenshot.jpg}
+	\caption{Error1 Example Screen Shot}
+	\label{fig:AssErrorEx}
+\end{figure}
 
 \begin{center}
 	\centering

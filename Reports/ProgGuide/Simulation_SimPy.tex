@@ -1,7 +1,7 @@
 %  Simulation.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:53 GMT
-%  <+Last Edited: Tue 29 Apr 2014 20:43:34 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Wed 30 Apr 2014 16:05:27 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Simulation}
 
@@ -16,8 +16,9 @@
 A python script, sim.py, was written to automatically invoke the assembler and simulator. 
 The passed program is only assembled if the file exists with an extension of \texttt{.asm}. 
 This allows for raw hex to be passed to the simulator where necessary. 
-If a \texttt{.hex} file is passed, and a \texttt{.asm} file exists of the same name, the assembler will be invoked. 
-The sim.py script is designed to be put on the user's path, allowing for the invocation of the assembler and simulator from anywhere. 
+If a \texttt{.hex} file is passed, and a \texttt{.asm} file exists of the same name, the assembler will be invoked.
+The sim.py script is configured to be run from within the assembler directory.
+%The sim.py script is designed to be put on the user's path, allowing for the invocation of the assembler and simulator from anywhere. 
 
 The usage for the script is:
 \begin{center}
@@ -64,6 +65,11 @@ If the \texttt{-S} option is defined, any program or module also given is ignore
 The scan path test pulses a signal on the SDI line, and verifies a pulse is seen on the output. 
 The clock cycles, and therefore the number of registers, are counted and reported upon success of the simulation.
 
+Finally, a \texttt{-H} or \texttt{--home} tag exists to override the default expected location. 
+The script expects to be in the assembler directory within the verilog folder. 
+If an absolute path is passed, the script will use this as the base directory with the \textit{behavioural}, \textit{mixed} and \textit{extracted} folders in.
+A relative path can be passed. 
+This should be the path from the folder the script is run from to the verilog directory. 
 
 \lstinputlisting[label=lst:simpyhelp,caption={Help prompt for the sim.py script.}]{simpy.txt}
 
