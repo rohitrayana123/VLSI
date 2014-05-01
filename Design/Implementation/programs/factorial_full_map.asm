@@ -1,14 +1,15 @@
 		LUI 	R7, #7
 		LLI 	R7, #208
 		LUI 	R0, #128	; Address in R0
-		LLI 	R0, #0
+		LLI 	R0, #1
+.start	SUBIB	R0,#1
 		LDW 	R1,[R0,#0]	; Read switches into R1	
 		PUSH 	R1			; Pass para
 		BWL 	.fact		; Run Subroutine
 		POP 	R3			; Para overwritten with result		
 		ADDIB 	R0,#1
 		STW 	R3,[R0,#0]	; Result on LEDS
-.end 	BR 		.end		;  finish loop
+		BR 		.start		;  finish loop
 .fact   PUSH 	R0
 		PUSH 	R1
 		PUSH 	LR

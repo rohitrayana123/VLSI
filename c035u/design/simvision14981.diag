@@ -1,0 +1,126 @@
+*** Message Type: info ***
+When: Thu May 01 15:07:55 BST 2014
+SimVision started.
+Version: TOOL:  simvision       10.20-s073
+User: mw20g10
+Host: hind.ecs.soton.ac.uk
+Platform: Linux/x86_64/2.6.18-164.11.1.el5
+Started: Thu May 01 15:07:55 BST 2014
+Command: /opt/cad/soft/cadence/ius/tools.lnx86/simvision/bin/simvision.exe -connect dc:hind.ecs.soton.ac.uk:41144 -nocopyright
+Work Directory: /home/mw20g10/VLSI/GIT/c035u/design
+ 
+*** Message Type: info ***
+When: Thu May 01 15:07:56 BST 2014
+Create browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:07:58 BST 2014
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:07:58 BST 2014
+Connect to Simulator
+      Design: worklib.datapath_stim:sv
+   Languages: verilog assertion
+   Simulator: NC-Sim
+     Version: TOOL: ncsim   10.20-s073
+        User: mw20g10
+        Host: hind.ecs.soton.ac.uk
+Time Started: Thu May 01 15:07:54 BST 2014
+  Process ID: 14979
+   Directory: /home/mw20g10/VLSI/GIT/c035u/design
+     Command: ncverilog -sv +access+r datapath_stim.sv datapath.sv +gui +tcl+datapath.tcl
+
+ 
+*** Message Type: info ***
+When: Thu May 01 15:08:00 BST 2014
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:08:01 BST 2014
+Create waveform window: "Waves for magic cell datapath"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:08:03 BST 2014
+Create register window: "GPR Register List"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:08:04 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@171"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject16" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$obj draw $_canvas"
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_add" body line 3)
+    invoked from within
+"_add $db(object)"
+    ("!create" arm line 3)
+    invoked from within
+"switch -- $db(event) {
+        !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !create object drawingObject16"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !create object drawingObject16"
+ 
+*** Message Type: error ***
+When: Thu May 01 15:08:04 BST 2014
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+bad value "%h": should be "", %b, %d, %o, %c, %s, %v, %V, %x, or %?
+    (processing "-radix" option)
+    invoked from within
+".registerWindow0.work.user.sf.rcregisterPage0.canvas create signalvalue 100 30 -font regfont-12 -anchor nw -fill white -radix %h -signal @public@171"
+    ("eval" body line 1)
+    invoked from within
+"eval $canvas create $d_type $d_coords $d_attributes"
+    (object "::drawingObject16" method "::register::DrawingObject::draw" body line 27)
+    invoked from within
+"$db(object) draw $_canvas"
+    ("!modify" arm line 4)
+    invoked from within
+"switch -- $db(event) {
+       !create {
+          # add a new object to the canvas
+       _add $db(object)
+   }
+      !delete {
+          # remove all of the items tagged with..."
+    (object "::.registerWindow0.work.user.sf.rcregisterPage0" method "::RegisterCanvas::_handleEvents" body line 5)
+    invoked from within
+"::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents event !modify object drawingObject16"
+    (in namespace inscope "::RegisterCanvas" script line 1)
+    invoked from within
+"namespace inscope ::RegisterCanvas {::.registerWindow0.work.user.sf.rcregisterPage0 _handleEvents} event !modify object drawingObject16"
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:00 BST 2014
+Exit NC-Sim: user
+      Design: worklib.datapath_stim:sv
+   Languages: verilog assertion
+   Simulator: NC-Sim
+     Version: TOOL: ncsim   10.20-s073
+        User: mw20g10
+        Host: hind.ecs.soton.ac.uk
+Time Started: Thu May 01 15:07:54 BST 2014
+  Process ID: 14979
+   Directory: /home/mw20g10/VLSI/GIT/c035u/design
+     Command: ncverilog -sv +access+r datapath_stim.sv datapath.sv +gui +tcl+datapath.tcl
+
+ 
+*** Message Type: info ***
+When: Thu May 01 15:09:00 BST 2014
+SimVision Exit.
+ 

@@ -51,13 +51,47 @@ set wave_signal_list {
   datapath_stim.d.Pc
   datapath_stim.d.PcPlus1
   datapath_stim.d.WD
+  datapath_stim.d.reg0
 }
-
 # View Results
-#
-window new WaveWindow -name "Waves for magic cell datapath"
-waveform add -using "Waves for magic cell datapath" -signals $wave_signal_list
-waveform xview zoom -using "Waves for magic cell datapath" -outfull
+  window new WaveWindow -name "Waves for magic cell datapath"
+  waveform add -using "Waves for magic cell datapath" -signals $wave_signal_list
+  waveform xview zoom -using "Waves for magic cell datapath" -outfull
 
+#Register window
+  window new RegisterWindow -name "GPR Register List"
+  window geometry "GPR Register List" 460x275+0+500
+  register using "GPR Register List"
+
+#Register window signals
+#  register add datapath_stim.d.reg0
+#  register add datapath_stim.d.reg1
+#  register add datapath_stim.d.reg2
+#  register add datapath_stim.d.reg3
+#  register add datapath_stim.d.reg4
+#  register add datapath_stim.d.reg5
+#  register add datapath_stim.d.reg6
+#  register add datapath_stim.d.reg7
+
+#Signal Values
+  register addtype -type signalvalue -x0 100 -y0 15 -radix %d datapath_stim.d.reg0
+  register addtype -type signalvalue -x0 100 -y0 30 -radix %d datapath_stim.d.reg1
+  register addtype -type signalvalue -x0 100 -y0 45 -radix %d datapath_stim.d.reg2
+  register addtype -type signalvalue -x0 100 -y0 60 -radix %d datapath_stim.d.reg3
+  register addtype -type signalvalue -x0 100 -y0 75 -radix %d datapath_stim.d.reg4
+  register addtype -type signalvalue -x0 100 -y0 90 -radix %d datapath_stim.d.reg5
+  register addtype -type signalvalue -x0 100 -y0 105 -radix %d datapath_stim.d.reg6
+  register addtype -type signalvalue -x0 100 -y0 120 -radix %d datapath_stim.d.reg7
+
+#Shapes and text
+  register addtype -type text -x0 60 -y 15 -text {R0}
+  register addtype -type text -x0 60 -y 30 -text {R1}
+  register addtype -type text -x0 60 -y 45 -text {R2}
+  register addtype -type text -x0 60 -y 60 -text {R3}
+  register addtype -type text -x0 60 -y 75 -text {R4}
+  register addtype -type text -x0 60 -y 90 -text {R5}
+  register addtype -type text -x0 60 -y 105 -text {R6}
+  register addtype -type text -x0 60 -y 120 -text {R7}
+  register addtype -type rectangle -x0 50 -y0 5 -x1 110 -y1 130 -outline green
 }
 

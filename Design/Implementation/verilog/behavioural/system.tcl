@@ -10,6 +10,8 @@ simvision {
 # List of signals to monitor defined here
 #
 set wave_signal_list {
+  system.LEDs
+  system.switches
   system.Clock
   system.nReset
   system.nOE

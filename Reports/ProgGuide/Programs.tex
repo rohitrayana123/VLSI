@@ -30,8 +30,9 @@ An unconditional branch is used to keep the algorithm in a while loop.
 The state of the multiplier is compared at every iteration against zero when the algorithm is finished.
 As size of the multiplier controls the number of iterations a comparison is made on entry to use the smallest operand.
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=C,label=lst:multiply.c,caption=Multiply Subroutine]{pseudocode/multiply.c}
-
+\end{minipage}
 
 
 %The multiply code has also been optimised by unrolling the loop contents and is held in Appendix~\ref{sec:multiply_unrolled_appendix} listing~\ref{lst:multiplyUnroll.asm}.
@@ -51,8 +52,9 @@ The factorial subroutine does no parameter checking but the multiply code does s
 The result is calculated recursively as described using C in listing~\ref{lst:factorial.c}.
 Large values can cause stack overflow the main body of code makes sure inputs, read from the switches, are sufficiently small.
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=C,label=lst:factorial.c,caption=Recursive Factorial Subroutine]{pseudocode/factorial.c}
-
+\end{minipage}
 
 
 
@@ -79,8 +81,9 @@ Bits $2$ and $4$ are used as inputs so a logical shift left by two is used to al
 Masking the output value is used feedback to the top bit.
 This is described using C in listing~\ref{lst:random.c}. 
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=C,label=lst:random.c,caption=Linear Feedback Shift Register Subroutine]{pseudocode/random.c}
-
+\end{minipage}
 
 
 
@@ -92,8 +95,8 @@ The interrupt services the serial device by writing data to a $4$ byte circular 
 A main program check to see if data is in the buffer then and if so calculates the factorial writing the result to the LEDs.
 The buffer is purposefully small to test overflow.
 
-\lstinputlisting[style=C,label=lst:interrupt.c,caption=Serial Device Interrupt Service Request]{pseudocode/interrupt.c}
 
+\lstinputlisting[style=C,label=lst:interrupt.c,caption=Serial Device Interrupt Service Request]{pseudocode/interrupt.c}
 
 
 
