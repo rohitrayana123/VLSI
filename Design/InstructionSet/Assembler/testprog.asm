@@ -31,10 +31,10 @@
 		ADDI R6, R6, #1	:Filling Code that does nothing useful
 .goingup	BR .goingup
 .start		ADDI R6, R6, #1
-		ADD R6, R6, #2
+		ADDI R6, R6, #2
 		ADDI R6, R6, #3
 		ADDI R6, R6, #4
-		ADDI R6, R6, #5
+		ADDX R6, R6, #5
 		ADDI R6, R6, #6
 		ADDI R6, R6, #7
 		ADDI R6, R6, #8
