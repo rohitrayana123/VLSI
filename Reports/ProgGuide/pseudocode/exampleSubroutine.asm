@@ -1,11 +1,11 @@
-		PUSH 	R0			; Op1					; STEM CALLER
+		PUSH 	R0			; Op1				STEM CALLER
 		PUSH 	R1			; Op2
 		SUBIB	SP,#1		; Dummy push
 		BWL 	.one		; Run Subroutine
 		POP 	R0			; Result
 		ADDIB 	SP,#2		; Duummy pop x 2
 		...
-.one	PUSH 	LR		  	; Save link register	; CALLEE/CALLER
+.one	PUSH 	LR		  	; Save LR 			CALLEE/CALLER
 		PUSH 	R0	
 		PUSH 	R1			; Save caller regs
 		PUSH 	R2
@@ -26,7 +26,7 @@
 		POP 	R0
 		POP		LR
 		RET
-.two	PUSH 	R0			; No LR save			; LEAF CALLEE
+.two	PUSH 	R0			; No LR save		LEAF CALLEE
 		LDW		R0,[SP,#1]
 		...	
 		STW		R0,[SP,#1]
