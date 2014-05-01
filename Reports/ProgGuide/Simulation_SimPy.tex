@@ -6,7 +6,6 @@
 \section{Simulation}
 
 \subsection{Running the simulations}
-\todo[color=green,inline]{A register window could also be done for this section too}
 
 %How to run for each of the behavioural, extracted and mixed
 
@@ -79,12 +78,6 @@ An example serial data hex file is shown in listing~\ref{lst:serialdata}.
 
 \lstinputlisting[label=lst:serialdata,caption={Example serial data file}]{../../Design/Implementation/programs/serial_data.hex}
 
-
-%\todo[inline]{how to run scan path sim too}
-
-
-%\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
-
 \subsection{Run Time}
 The number of clock cycles for each program to fully run is shown in table~\ref{tab:runtimes}. 
 Factorial run time is given for an input of 8 and is the worst case. 
@@ -93,7 +86,7 @@ Interrupt is dependant on the serial data input and the time is given for the se
 
 \begin{table}
 \centering
-\caption{Clock cycles required for each program to run}%\todo[inline]{Make these more accurate when AJR has finished playing around}}
+\caption{Clock cycles required for each program to run}
 \label{tab:runtimes}
 \begin{tabular}{|c|c|} \hline
 Program & Clock Cycles \\ \hline
@@ -104,7 +97,6 @@ Interrupt	& 30,000	\\ \hline
 \end{tabular}
 \end{table}
 
-%\todo[inline]{and TCL?}
 \subsection{Simulation}
 
 A dissembler is also implemented in System Verilog to aid debugging.
@@ -113,7 +105,3 @@ It is capable of reading the instruction register with in the design, and recons
 It will show the opcode, register addresses and immediate values.
 It is automatically included by the TCL script.
 The TCL script also opens a waveform window and adds important signals.
-
-\todo[color=green,inline]{Put a screen shot of the waveform window?}
-%\todo[inline]{check that the dissembler works in all the simulations (it doesn't\dots)}
-

@@ -6,11 +6,6 @@
 \section{Simulation}
 
 \subsection{Running the simulations}
-\todo[inline]{A register window could also be done for this section too}
-
-\todo[inline]{Sim.py needs a fair bit of change. If we have time, this could be altered to use Iains dir structure. This section highlights how to use his script and our assembler.}
-
-
 %How to run for each of the behavioural, extracted and mixed
 
 Before the simulator is invoked, the assembler should be run. 
@@ -56,14 +51,10 @@ Below is a complete list of commands to run all programs on all versions of the 
 \item \texttt{./assembler/assemble.py programs/interrupt.asm \\ ./simulate extracted programs/interrupt.hex programs/serial\_data.hex}
 \end{itemize}
 
-%\todo[inline]{how to run scan path sim too}
-
 A scan path simulation can also be run.
 This is done by running \texttt{ncverilog -sv +gui +ncaccess+r stimulus.sv  opcodes.svh cpu.sv} for a GUI or \texttt{ncverilog -sv stimulus.sv  opcodes.svh cpu.sv -exit} for a command line simulation.
 This test pulses a signal on the SDI line, and verifies a pulse is seen on the output. 
 The clock cycles, and therefore the number of registers, are counted and reported upon success of the simulation.
-
-%\todo[inline]{need to mention extracting? i wouldn't say so as it should already be done and that can't really change.}
 
 The number of clock cycles for each program to fully run is shown in table~\ref{tab:runtimes}. 
 Factorial run time is given for an input of 8 and is the worst case. 
@@ -71,7 +62,7 @@ Interrupt is dependant on the serial data input and the time is given for the se
 
 \begin{table}
 \centering
-\caption{Clock cycles required for each program to run\todo[inline]{Make these more accurate when AJR has finished playing around}}
+\caption{Clock cycles required for each program to run}
 \label{tab:runtimes}
 \begin{tabular}{|c|c|}
 Program & Clock Cycles \\ \hline
@@ -82,14 +73,9 @@ Interrupt	& 30000	\\ \hline
 \end{tabular}
 \end{table}
 
-%\todo[inline]{and TCL?}
 A dissembler is also implemented in System Verilog to aid debugging.
 It is an ASCII formatted array implemented at the top level of the simulation. 
 It is capable of reading the instruction register with in the design, and reconstructing the assembly language of the instruction and is supported in behavioural, mixed and extracted simulations.
 It will show the opcode, register addresses and immediate values.
 It is automatically included by the TCL script.
 The TCL script also opens a waveform window and adds important signals.
-
-
-%\todo[inline]{check that the dissembler works in all the simulations (it doesn't\dots)}
-
