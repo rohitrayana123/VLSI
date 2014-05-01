@@ -11,14 +11,14 @@
 		PUSH 	R2
 		PUSH 	R3
 		PUSH 	R4
-		LDW 	R3,[SP,#6]	; R3 - Op2
-		LDW 	R4,[SP,#7]  ; R4 - Op1                  	                                                                              	
+		LDW 	R3,[SP,#7]	; R3 - Op2
+		LDW 	R4,[SP,#8]  ; R4 - Op1                  	                                                                              	
 		...
 		PUSH 	R3	
 		BWL		.two		; Nested subroutine
 		POP		R3			; Pass and return
 		...
-		STW 	R2,[SP,#5]	; Output on frame                                                                                         
+		STW 	R2,[SP,#6]	; Output on frame                                                                                         
 		POP 	R4
 		POP 	R3
 		POP 	R2
