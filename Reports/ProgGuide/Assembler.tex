@@ -1,7 +1,7 @@
 %  Assembler.tex
 %  Document created by seblovett on hind.ecs.soton.ac.uk
 %  Date created: Thu 27 Mar 2014 10:13:13 GMT
-%  <+Last Edited: Tue 29 Apr 2014 19:11:53 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Fri 02 May 2014 11:04:43 BST by hl13g10 on celery +>
 
 \section{Assembler}\label{sect:assembler}
 The current instruction set architecture includes an assembler for converting assembly language into hexadecimal. 
@@ -63,14 +63,24 @@ The output file can also be a relative or absolute path to a different directory
 The full usage for the script is seen in listing~\ref{lst:assemblerusage}. 
 This includes the basic rules for writing the assembly language and a version log. 
 
-\lstinputlisting[label=lst:assemblerusage,caption={Assembler help prompt}]{asmhelp.txt}
+%\lstinputlisting[label=lst:assemblerusage,caption={Assembler help prompt}]{asmhelp.txt}
 
-\newpage
+%\newpage
 \subsection{Error Messages}
-This is a list of all the error messages produced by the assembler. Each time an error is thrown, the error number, a brief description and the line it occurred on is displayed before exiting. A 'f' corresponds to a line number in the assembly file, and a 'p' corresponds to the pre-processed code list displayed on screen. Figure~\ref{fig:AssErrorEx} shows an example screen shot of an error message.
+This is a list of all the error messages produced by the assembler. 
+Each time an error is thrown, the error number, a brief description and the line it occurred on is displayed before exiting. 
+A 'f' corresponds to a line number in the assembly file, and a 'p' corresponds to the pre-processed code list displayed on screen. 
+Figure~\ref{fig:AssErrorEx} shows an example screen shot of an error message.
 
+
+%\begin{figure}
+%	\includegraphics{error1screenshot.jpg}
+%	\caption{Error1 Example Screen Shot}
+%	\label{fig:AssErrorEx}
+%\end{figure}
+\lstinputlisting[label=lst:assemblerusage,caption={Assembler help prompt}]{asmhelp.txt}
 \begin{figure}[h]
-	\includegraphics{error1screenshot.jpg}
+	\includegraphics{Figures/error1screenshot.jpg}
 	\caption{Error1 Example Screen Shot}
 	\label{fig:AssErrorEx}
 \end{figure}
