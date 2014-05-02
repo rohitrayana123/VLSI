@@ -27,8 +27,8 @@ All instructions implemented by this architecture fall into one of 6 groups, cat
 	\item Byte Immediate - Register-Immediate
 	\item Data Transfer - Base Plus Offset
 	\item Control Transfer - PC Relative, Register-Indirect, Base Plus Offset
-	\item Stack Operations - Register-Indirect Preincrement/Postdecrement
-	\item Interrupts - Register-Indirect Preincrement/Postdecrement
+	\item Stack Operations - Register-Indirect Postincrement/Predecrement
+	\item Interrupts - Register-Indirect Postincrement/Predecrement
 \end{itemize}
 
 
@@ -333,15 +333,15 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Iformat{E}{1L0}
 \Isyntax[M]{PUSH Ra}{PUSH R3}
 \Isyntax[F]{PUSH LR}{PUSH LR}
-\Ioperation{F}{~Mem[R7] $\leftarrow$ reg; R7 $\leftarrow$ R7 - 1}{n}{n}{0}{0}{n}{n}
-\Idesc{`reg' corresponds to either a GPR or the link register, the contents of which are stored to the stack using the address stored in the stack pointer (R7). This then Decrements the stack pointer by one. \\\\Addressing Modes: Register-Indirect, Postdecrement.}
+\Ioperation{F}{~R7 $\leftarrow$ R7 - 1: Mem[R7] $\leftarrow$ reg;}{n}{n}{0}{0}{n}{n}
+\Idesc{This instruction first decrements the stack pointer by one. Then `reg' corresponds to either a GPR or the link register, the contents of which are stored to the stack using the address stored in the stack pointer (R7). \\\\Addressing Modes: Register-Indirect, Predecrement.}
 \newpage
 \Imnemonic{Pop From Stack}{POP}
 \Iformat{E}{0L}
 \Isyntax[M]{POP Ra}{POP R3}
 \Isyntax[F]{POP LR}{POP LR}
-\Ioperation{R7 $\leftarrow$}{R7 + 1; Mem[R7] $\leftarrow$ reg;}{n}{n}{0}{0}{n}{n}
-\Idesc{This instruction increments the stack pointer by one. Then `reg' corresponds to either a GPR or the link register, the contents of which are retrieved from the stack using the address stored in the stack pointer (R7). \\\\Addressing Modes: Register-Indirect, Preincrement.}
+\Ioperation{F}{~Mem[R7] $\leftarrow$ reg; R7 $\leftarrow$ R7 + 1}{n}{n}{0}{0}{n}{n}
+\Idesc{`reg' corresponds to either a GPR or the link register, the contents of which are retrieved from the stack using the address stored in the stack pointer (R7). This instruction then increments the stack pointer by one. \\\\Addressing Modes: Register-Indirect, Postincrement.}
 \newpage
 \Imnemonic{Return From Interrupt}{RETI}
 \Iformat{F}{000}
@@ -364,8 +364,8 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 \Imnemonic{Store Status Flags}{STF}
 \Iformat{F}{011}
 \Isyntax{STF}{STF}
-\Ioperation{F}{~Mem[R7] $\leftarrow$ \{12-bit 0, Z, C, V, N\}; R7 $\leftarrow$ R7 - 1;}{n}{n}{0}{0}{n}{n}
-\Idesc{Store contents of status flags to stack using address held in stack pointer (R7). Then decrement the stack pointer (R7) by one. \\\\  Addressing Modes: Register-Indirect, Postdecrement.}
+\Ioperation{F}{~R7 $\leftarrow$ R7 - 1; Mem[R7] $\leftarrow$ \{12-bit 0, Z, C, V, N\} }{n}{n}{0}{0}{n}{n}
+\Idesc{This inctruction decrements the stack pointer (R7) by one. Then stores the contents of status flags to stack using address held in stack pointer (R7). \\\\  Addressing Modes: Register-Indirect, Predecrement.}
 \newpage
 %
 % Instruction 41
@@ -387,5 +387,5 @@ Use of the word UNPREDICTABLE indicates that the resultant flag value after oper
 	\end{tabular}
 	\\\\	
 \endgroup
-\Idesc{Increment the stack pointer (R7) by one. Then load content of status flags with lower 4 bits of value retrieved from stack using address held in stack pointer (R7). \\\\ Addressing Modes: Register-Indirect, Preincrement.}
+\Idesc{Load the content of status flags with lower 4 bits of value retrieved from stack using address held in stack pointer (R7). Then the stack pointer (R7) is incremented by one. \\\\ Addressing Modes: Register-Indirect, Postincrement.}
 \newpage
