@@ -14,6 +14,7 @@ Options:
                         program to run should not be defined if module is. Hex
                         or ASM can be passed. ASM files will be assembled
                         before running the simulator.
+  -H HOME, --home=HOME  Use a custom home directory
   -g, --gui             Run the simulation with a GUI
   -s SWITCHES, --switches=SWITCHES
                         Value of switches to pass to the simulation
