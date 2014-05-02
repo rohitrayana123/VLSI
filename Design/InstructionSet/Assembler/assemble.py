@@ -8,6 +8,7 @@ import sys
 import binascii
 import string
 from optparse import OptionParser
+import struct
 LINES = []
 SEGMLINES = []
 LINKTABLE = []
@@ -363,44 +364,50 @@ if "__main__" == __name__:
 		print "No ISR Found"
 		ISR.insert(0, ['RETI'])
 		ISRlen = 1
-	#Add code for setting up and performing jump over isr for normal program flow
-	tempsplit = (ISRlen+16)//256
-	ISR.insert(0, ['ADDIB', 'R0', '0'])#Intentionally left blank for temporary conext saving
-	ISR.insert(0, ['JMP', 'R0', '0'])#instruction location 16
-	ISR.insert(0, ['LLI', 'R0', str(ISRlen+16 - tempsplit*256)])
-	ISR.insert(0, ['LUI', 'R0', str(tempsplit)])
-	#ISR.insert(0, ['PUSH', 'R0'])
-	full = [None] * 8
-	for i, l in enumerate(SEGMLINES):#Find unused register
-		if i < 11:
-			for p in l:
-				if p in ['R7','SP']:
-					full[7] = 1;
-				elif p == 'R6':
-					full[6] = 1
-				elif p == 'R5':
-					full[5] = 1
-				elif p == 'R4':
-					full[4] = 1
-				elif p == 'R3':
-					full[3] = 1
-				elif p == 'R2':
-					full[2] = 1
-				elif p == 'R1':
-					full[1] = 1
-				elif p == 'R0':
-					full[0] = 1
-	empty = -1
-	for i, r in enumerate(full):
-		if r == None:
-			empty = i
-			break
-	if empty == -1:
-		print "ERROR14:Unused register not found"
-		sys.exit()
-	ISR.insert(0, ['STW', 'R0', 'R' + str(empty), '15'])
-	ISR.append(['LDW', 'R0', 'R' + str(empty), '15'])
-	SEGMLINES[11:1] = ISR #Insert ISR into location 16 in memory (11 accounts for jump over)
+		ISR.insert(0, ['numBR', '2'])
+		SEGMLINES[15:1] = ISR #Insert ISR into location 16 in memory (15 accounts for branch over)
+	else:
+		#Add code for setting up and performing jump over isr for normal program flow
+		tempsplit = (ISRlen+16)//256
+		ISR.insert(0, ['ADDIB', 'R0', '0'])#Intentionally left blank for temporary conext saving
+		ISR.insert(0, ['JMP', 'R0', '0'])#instruction location 16
+		ISR.insert(0, ['LLI', 'R0', str(ISRlen+16 - tempsplit*256)])
+		if tempsplit > 0:
+			ISR.insert(0, ['LUI', 'R0', str(tempsplit)])
+		full = [None] * 8
+		for i, l in enumerate(SEGMLINES):#Find unused register
+			if i < 11:
+				for p in l:
+					if p in ['R7','SP']:
+						full[7] = 1;
+					elif p == 'R6':
+						full[6] = 1
+					elif p == 'R5':
+						full[5] = 1
+					elif p == 'R4':
+						full[4] = 1
+					elif p == 'R3':
+						full[3] = 1
+					elif p == 'R2':
+						full[2] = 1
+					elif p == 'R1':
+						full[1] = 1
+					elif p == 'R0':
+						full[0] = 1
+		empty = -1
+		for i, r in enumerate(full):
+			if r == None:
+				empty = i
+				break
+		if empty == -1:
+			print "ERROR14:Unused register not found"
+			sys.exit()
+		ISR.insert(0, ['STW', 'R0', 'R' + str(empty), '15'])
+		ISR.append(['LDW', 'R0', 'R' + str(empty), '15'])
+		if tempsplit > 0:
+			SEGMLINES[11:1] = ISR #Insert ISR into location 16 in memory (11 accounts for jump over)
+		else:
+			SEGMLINES[12:1] = ISR #Insert ISR into location 16 in memory (12 accounts for jump over)
 	#print ISR
 	#Create link table, ignoring ISR
 	print '--------Creating Link Table----------'
@@ -449,13 +456,20 @@ if "__main__" == __name__:
 		else:
 			finish = 2
 	SEGMLINES = newSEGMLINES[:]
-
+	#Check if ISR jump needs recalculating
+	if ISRlen  > 1:
+		if newSEGMLINES.index(['RETI']) != ISRlen+15:
+			tempsplit = (newSEGMLINES.index(['RETI'])+1)//256
+			newSEGMLINES[12][2] = str(tempsplit)
+			newSEGMLINES[13][2] = str(newSEGMLINES.index(['RETI'])+1 - tempsplit*256)
+	
 	print 'Program File After Preprocessing'
 	for i, s in enumerate(SEGMLINES):
 		if (OpType(s[0]) == 'D2') & (s[0] != 'numBR') & (s[0] != 'RET'):
 			print i, '    ', s, '---->', branch(s[1], i, 0)
 		else:
 			print i, '    ', s
+	
 
 	print 'Link Table'
 	for l in LINKTABLE:
