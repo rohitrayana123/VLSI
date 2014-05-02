@@ -23,12 +23,12 @@ Equation~\eqref{eqn:multi} formally describes the algorithm disregarding limitat
 
 
 The subroutine operation is described in listing~\ref{lst:multiply.c}, using C. 
-If the result is greater than or equal to $2^{16}$ the subroutine will fail and return zero.
+%If the result is greater than or equal to $2^{16}$ the subroutine will fail and return zero.
 The lowest bit of the multiplier controls the accumulator and the overflow check.
 The multiplier is shifted right and the quotient is shifted left at every iteration.
 An unconditional branch is used to keep the algorithm in a while loop. 
 The state of the multiplier is compared at every iteration against zero when the algorithm is finished.
-As size of the multiplier controls the number of iterations a comparison is made on entry to use the smallest operand.
+%As size of the multiplier controls the number of iterations a comparison is made on entry to use the smallest operand.
 
 \begin{minipage}{\linewidth}
 \lstinputlisting[style=C,label=lst:multiply.c,caption=Multiply Subroutine]{pseudocode/multiply.c}
