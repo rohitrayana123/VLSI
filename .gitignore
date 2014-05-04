@@ -56,3 +56,6 @@ magicsim
 *.s#7
 *.s#8
 *.s#9
+
+#ignoring report.pdf
+Reports/FinalReport/Report.pdf
