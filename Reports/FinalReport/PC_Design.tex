@@ -3,17 +3,41 @@
 %  Date created: Thu 17 Apr 2014 15:01:32 BST
 %  <+Last Edited: Thu 17 Apr 2014 15:35:06 BST by seblovett on seblovett-Ubuntu +>
 
-\section{Program Counter}
+\section{Program Counter and Link Register}
 
 
 Design of whole module, including circuit diagram
+The program counter and link register were implemented in one module.
+The module has two load enable registers. 
+The data source logic and an adder for incrementing the program counter is also implemented in this module.
 
-Use of hierarchy / blocks - i.e. bit sliced, decoder
+The program counter sources are:
+\begin{enumerate}
+\item Incremented program counter - for normal sequential operation
+\item Link Register - for returning from a subroutine call
+\item ALU output - for a jump to a register contents
+\item System bus - for returning the program counter from the stack after and interrupt
+\item Interrupt constant - a constant defined for the location of the interrupt service routine in memory.
+\end{enumerate}
 
-Design of slice,
+The link register has two inputs:
+\begin{enumerate}
+\item Incremented program counter - for storing the return address when executing a function call
+\item System Bus - for poping a return address from the stack 
+\end{enumerate}
 
-Design of decoder,
+%Use of hierarchy / blocks - i.e. bit sliced, decoder
+The module is made up of sixteen identical bitslices. 
+All control signals are connected to the controller and so no decoder is needed in this module.
+The circuit diagram is seen in Figure~\ref{fig:pc:circuit}.
+%Design of slice,
+The slice is implemented to match the circuit diagram. 
+Multiplexors are used instead of tristate buffers as there is little wiring involved. 
+It also removes the need for a decoder.
 
-Design of block,
+%Design of block,
+The module is made up of an array of slices. 
+The control signals are propagated throughout the module. 
+
 
 Layout in silicon
