@@ -6,7 +6,7 @@
 \section{Program Counter and Link Register}
 
 
-Design of whole module, including circuit diagram
+%Design of whole module, including circuit diagram
 The program counter and link register were implemented in one module.
 The module has two load enable registers. 
 The data source logic and an adder for incrementing the program counter is also implemented in this module.
@@ -35,9 +35,14 @@ The slice is implemented to match the circuit diagram.
 Multiplexors are used instead of tristate buffers as there is little wiring involved. 
 It also removes the need for a decoder.
 
+\begin{figure}
+\includegraphics[width=\textwidth]{../../eagle/PcBlock/PcBlock_slice.png}
+\caption{Circuit Diagram for Program Counter and Link Register block slice.}
+\label{fig:pc:circuit}
+\end{figure}
+
 %Design of block,
 The module is made up of an array of slices. 
-The control signals are propagated throughout the module. 
+The control signals are propagated throughout the module vertically. 
+The system bus connection is made also and the carry out and the B input to the half adder must be connected between the slices.
 
-
-Layout in silicon
