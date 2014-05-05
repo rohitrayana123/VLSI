@@ -1,49 +1,50 @@
 %  DivisionOfLabour 
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:27:14 BST
-%  <+Last Edited: Thu 17 Apr 2014 16:54:28 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 05 May 2014 12:46:12 BST by seblovett on seblovett-Ubuntu +>
 
 
 \chapter{Division of Labour}
 
 
-\begin{table}
-\begin{tabular}{p{1cm}p{5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}
+\begin{table}[!h]
+\begin{tabular}{p{0.8cm}p{\textwidth-10.2cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}}
      & Task             & \multicolumn{4}{c}{Percentage Effort on task} \\ \hline
      &  \textit{ECSID:}					& hl13g10 & ajr2g10 & mw20g10 & arr1g13 \\ \hline
-1    & Initial Design					& 100	& 0	& 0 	& 0 \\ \hline 
-2    & Verilog Behavioural Model			& 100	& 0	& 0 	& 0 \\ \hline 
-3    & Multiply Program					& 100	& 0	& 0 	& 0 \\ \hline 
-4    & Magic Datapath					& 100	& 0	& 0 	& 0 \\ 
-4.1  & Registers					& 100	& 0	& 0 	& 0 \\  
-4.2  & Program Counter					& 100	& 0	& 0 	& 0 \\  
-4.3  & Instruction Register				& 100	& 0	& 0 	& 0 \\  
-4.4  & ALU						& 100	& 0	& 0 	& 0 \\ \hline 
-5    & Verilog Cross Simulation				& 100	& 0	& 0 	& 0 \\ \hline 
+1    & Initial Design					& 25	& 25	& 25 	& 25 \\ \hline 
+2    & Verilog Behavioural Model			& 50	& 50	& 0 	& 0 \\ \hline 
+2.1  & Interrupts 					& 40	& 40 	& 20 	& 0 \\ 
+3    & Multiply Program					& 0	& 100	& 0 	& 0 \\ \hline 
+4    & Magic Datapath					& 20	& 0	& 60 	& 20 \\ 
+%4.1  & Registers					& 0	& 0	& 0 	& 0 \\  
+%4.2  & Program Counter					& 0	& 0	& 0 	& 0 \\  
+%4.3  & Instruction Register				& 0	& 0	& 0 	& 0 \\  
+%4.4  & ALU						& 0	& 0	& 0 	& 0 \\ \hline 
+5    & Verilog Cross Simulation				& 50	& 50	& 0 	& 0 \\ \hline 
 6    & Control Unit Synthesis				& 100	& 0	& 0 	& 0 \\ \hline 
-7    & Magic Control Unit				& 100	& 0	& 0 	& 0 \\ \hline 
+7    & L-Edit Control Unit				& 100	& 0	& 0 	& 0 \\ \hline 
 8    & Final Floorplanning, Placement and Routing	& 100	& 0	& 0 	& 0 \\ \hline 
-9    & Factorial Program				& 100	& 0	& 0 	& 0 \\ \hline 
-10   & Random Program					& 100	& 0	& 0 	& 0 \\ \hline 
-11   & Interrupt Program				& 100	& 0	& 0 	& 0 \\ \hline 
-11   & Verilog Final Simulations and Cadence DRC	& 100	& 0	& 0 	& 0 \\ \hline 
-12   & Assembler					& 100	& 0	& 0 	& 0 \\ \hline 
-13   & Programmer's Guide Documentation			& 100	& 0	& 0 	& 0 \\ \hline 
-13.1  & Architecture					& 100	& 0	& 0 	& 0 \\  
-13.2  & Assembler					& 100	& 0	& 0 	& 0 \\  
-13.3  & Instruction Set					& 100	& 0	& 0 	& 0 \\  
-13.4  & Programming Tips				& 100	& 0	& 0 	& 0 \\  
-13.5  & Programs					& 100	& 0	& 0 	& 0 \\  
-13.6  & Register Description				& 100	& 0	& 0 	& 0 \\  
-13.7  & Simulation					& 100	& 0	& 0 	& 0 \\ \hline 
-14    & Final Report					& 100	& 0	& 0 	& 0 \\  
-14.1  & Introduction 					& 100	& 0	& 0 	& 0 \\  
-14.2  & Architecture 					& 100	& 0	& 0 	& 0 \\  
-14.3  & Instruction Set 				& 100	& 0	& 0 	& 0 \\  
-14.4  & Implementation 					& 100	& 0	& 0 	& 0 \\  
-14.5  & Testing 					& 100	& 0	& 0 	& 0 \\  
-14.6  & Conclusion 					& 100	& 0	& 0 	& 0 \\  
-14.7  & Project Management 				& 100	& 0	& 0 	& 0 \\ \hline 
-      &  OVERALL EFFORT					& 100	& 0	& 0 	& 0 \\ \hline 
+9    & Factorial Program				& 0	& 100	& 0 	& 0 \\ \hline 
+10   & Random Program					& 0	& 100	& 0 	& 0 \\ \hline 
+11   & Interrupt Program				& 0	& 100	& 0 	& 0 \\ \hline 
+11   & Verilog Final Simulations and Cadence DRC	& 99	& 0	& 1 	& 0 \\ \hline 
+12   & Assembler					& 2.5	& 2.5	& 95 	& 0 \\ \hline 
+13   & Programmer's Guide Documentation			& 30	& 20	& 40 	& 10 \\ \hline 
+%13.1  & Architecture					& 0	& 0	& 0 	& 0 \\  
+%13.2  & Assembler					& 0	& 0	& 0 	& 0 \\  
+%13.3  & Instruction Set					& 0	& 0	& 0 	& 0 \\  
+%13.4  & Programming Tips				& 0	& 0	& 0 	& 0 \\  
+%13.5  & Programs					& 0	& 0	& 0 	& 0 \\  
+%13.6  & Register Description				& 0	& 0	& 0 	& 0 \\  
+%13.7  & Simulation					& 0	& 0	& 0 	& 0 \\ \hline 
+14    & Final Report					& 0	& 0	& 0 	& N/A \\  
+14.1  & Introduction 					& 0	& 0	& 0 	& N/A \\  
+14.2  & Architecture 					& 0	& 0	& 0 	& N/A \\  
+14.3  & Instruction Set 				& 0	& 0	& 0 	& N/A \\  
+14.4  & Implementation 					& 0	& 0	& 0 	& N/A \\  
+14.5  & Testing 					& 0	& 0	& 0 	& N/A \\  
+14.6  & Conclusion 					& 0	& 0	& 0 	& N/A \\  
+14.7  & Project Management 				& 0	& 0	& 0 	& N/A \\ \hline 
+      &  OVERALL EFFORT					& 32.5	& 32.5	& 30 	& 5 \\ \hline 
 \end{tabular}
 \end{table}
