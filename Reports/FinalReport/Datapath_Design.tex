@@ -1,19 +1,46 @@
 %  Datapath_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:02:16 BST
-%  <+Last Edited: Thu 17 Apr 2014 15:35:42 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 05 May 2014 13:59:36 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Datapath}
 
 
 Design of whole module, including circuit diagram
+The datapath consists of arrays of submodules. 
+The interrupt constant is also included in the datapath design.
+The main submodule is the datapath bit slice. 
 
-Use of hierarchy / blocks - i.e. bit sliced, decoder
+The program counter, register and ALU slices are made grouped together into one bitslice.
+This module also implements some multiplexors for the Write Data selection and the ALU operand selection.
+Other signals are extended to the edges or routed to the relevant locations. 
 
-Design of slice,
+A ``seventeenth'' slice is also made. 
+This includes the two decoders for the registers and the ALU.
+The register selection multiplexors are implemented in this module as well.
+An ALU override was also implemented in this slice.
+The series of multiplexors are added to give the controller the ability to conduct an increment / decrement operation. 
+This override was added after the initial design to be able to increment the stack pointer irrespectively of the current operation.
+This was needed to implement the interrupt support to be able to save the Program Counter to the stack.
 
-Design of decoder (slice 17),
+The final module needed is a right end module.
+This has the right cell buffer, along with the ALU output register and tristate buffer.
+It also contains an extra tristate buffer to connect the status register (from the controller) to the system bus to allow the storage of the flags.
+There are two versions of this module: one to output an input signal on the system bus, and one to drive the remaining 12 bits of the system bus with a 0. 
+This module also contains the memory enable tristate buffer.
+
+\todo[inline]{Circuit diagrams for datapath slice and slice17?}
+
+The full datapath is made up of the following modules:
+\begin{enumerate}
+\item Datapath Slice
+\item Instruction Register modules
+\item Left cell buffer
+\item LUI / LLI cells
+\item Right end module
+\item Slice seventeen decoder
+\end{enumerate}
 
 Design of block,
 
