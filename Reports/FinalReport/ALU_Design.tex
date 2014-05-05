@@ -1,7 +1,7 @@
 %  ALU_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:00:33 BST
-%  <+Last Edited: Mon 05 May 2014 11:11:22 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 05 May 2014 11:39:09 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Arithmetic Logic Unit}\label{sect:design:alu}
@@ -39,7 +39,7 @@ From this it was seen that there may be some difficulty with interpreting the op
 Since each slice would have to individually interpret the opcode, using much more space than is necessary due to replicated hardware. 
 Observations showed that different groups of instructions would perform the same operation within the ALU. 
 As such, it was decided to use a separate decoder to interpret the opcodes and send control lines to the ALU for the specific functions to be performed. 
-\inote[inline,color=green]{HSL - @MW - I don't think this aids to any understanding. 
+\todo[inline,color=green]{HSL - @MW - I don't think this aids to any understanding. 
 The final point is key, but could be condensed down into one/two lines and joined with the above. 
 Maybe ``To reduce the bitslice size, all decoding logic was implemented in an extra decoding module.''}
 
