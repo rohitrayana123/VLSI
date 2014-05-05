@@ -1,7 +1,7 @@
 %  Register_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 14:59:55 BST
-%  <+Last Edited: Thu 17 Apr 2014 15:34:12 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 05 May 2014 09:31:04 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Register Block}
 
@@ -60,7 +60,8 @@ However, the write decoder must also use a write enable function.
 This is done by using the same logic functions seen in Table~\ref{tab:reg:decoder}, but the resulting signals are then \texttt{AND}ed with the register write enable signal. 
 
 \begin{figure}
-\missingfigure{Decoder circuit diagram}
+%\missingfigure{Decoder circuit diagram}
+\includegraphics[width=\textwidth]{../../eagle/regBlock/regBlock_decoder.png}
 \caption{Circuit diagram for the register decoder.}
 \label{fig:reg:decoder}
 \end{figure}
