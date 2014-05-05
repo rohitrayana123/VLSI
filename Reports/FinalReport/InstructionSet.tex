@@ -1,7 +1,7 @@
 %  InstructionSet.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 14:54:27 BST
-%  <+Last Edited: Thu 17 Apr 2014 17:34:32 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 05 May 2014 09:20:37 BST by seblovett on seblovett-Ubuntu +>
 
 \chapter{Instruction Set}
 \incomplete{Instruction Set}
@@ -10,16 +10,44 @@
 \todo[color=cyan, inline]{Refer to research (yes, but not sourced)}
 \todo[color=cyan, inline]{ISA novelties (some integrated, no dedicated section)}
 
-In designing the instruction set architecture (ISA) emphasis was put on creating a complete set of basic operations which could be used to implement any program. This gave rise to a RISC based architecture since they have a small number of instructions and are optimized for a smaller chip area. They also promote a simpler datapath since the same length instructions can be bit-sliced into more identical slices. Irregular lengths will cause common fields to be in a different location within the instruction, leading to more complex decoding and potential wasted hardware when executing shorter instructions. 
+In designing the instruction set architecture (ISA), emphasis was put on creating a complete set of basic operations which could be used to implement any program. 
+This gave rise to a RISC based architecture since they have a small number of instructions and are optimized for a smaller chip area. 
+They also promote a simpler datapath since the same length instructions can be bit-sliced into more identical slices. 
+Irregular lengths would cause common fields to be in a different location within the instruction, leading to more complex decoding and potential wasted hardware when executing shorter instructions. 
 \todo[inline]{Expand basic ISA design considerations}
 
-Since a 16-bit microprocessor was to be designed, it was decided to base the system on the ARM Thumb architecture. This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. However it included a number of operations which take advantage of the ARM's 32-bit datapath, so any high register operations were removed. Change of state, sign extension and debugging instructions, among others, were also removed for simplification or because they were not necessary. This produced the original ISA made up of instructions 1-4, 6-10, 12-16, 20-24, 27-32, 35 and 36 as noted in the summary table in Appendix~\ref{chap:AppISS}. While instructions 5 and 11 were added to support use of carry flag with an immediate value. 17, 18 and 19 are included to form a complete logic set. 25 and 26 are for loading an initial value to any general purpose register. Instruction 33 is included from the SPARC ISA for returning from a procedure. Instruction 34 enables a control jump to anywhere in $2^{16}$ memory locations. While instructions 37-41 were added for support of a single interrupt.
+Since a 16-bit microprocessor was to be designed, it was decided to base the system on the ARM Thumb architecture. 
+This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. 
+The full Thumb instruction set was not implemented for simplicity or because they utilised hardware not implemented in our datapath.
+%However it included a number of operations which take advantage of the ARM's 32-bit datapath, so any high register operations were removed. 
+%Change of state, sign extension and debugging instructions, among others, were also removed for simplification or because they were not necessary. 
+This produced the original ISA made up of instructions 1-4, 6-10, 12-16, 20-24, 27-32, 35 and 36 as noted in the summary table in Appendix~\ref{chap:AppISS}. 
+While instructions 5 and 11 were added to support use of carry flag with an immediate value.
+17, 18 and 19 are included to form a complete logic set. 
+25 and 26 are for loading an initial value to any general purpose register. 
+Instruction 33 is included from the SPARC ISA for returning from a procedure. 
+Instruction 34 enables a control jump to anywhere in $2^{16}$ memory locations. 
+While instructions 37-41 were added for support of a single interrupt.
+\todo[inline,color=green]{HSL - I don't think it is necessary to discuss what we didn't include from Thumb. We say it's based on. @MW - can you review my alternate wording. \\
+Also, I don't like the number references to instructions. It makes it not easy reading and makes no sense. I think more of a ``Our instruction set has this\dots'' is better. We are documenting the end design and justifying it, not giving the story of how it was made. }
 
-Within this ISA it was decided to support up to 3 operands. This allows greater flexibility with the instructions available and reduces the amount of memory required to perform data processing operations. The number of instructions and their groupings determined the requirement of having 6-bits for the Opcode field. As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be referenced in the remaining 10 bits. With the option of expanding the third operand to a 5 bit immediate value. This benefits from how common it is that a small immediate value is used more than a larger one. There was also support added for byte sized operations with two operand formatting since this is a standard length for small binary values. 
+Within this ISA it was decided to support up to 3 operands. 
+This allows greater flexibility with the instructions available and reduces the amount of memory required to perform data processing operations. 
+The number of instructions and their groupings determined the requirement of having 6-bits for the Opcode field. 
+As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be referenced in the remaining 10 bits. 
+With the option of expanding the third operand to a 5 bit immediate value. 
+This benefits from how common it is that a small immediate value is used more than a larger one. 
+There was also support added for byte sized operations with two operand formatting since this is a standard length for small binary values. 
+\todo[inline,color=green]{HSL - @MW what remaining 10 bits? we haven't discussed this formats at all}
 
-An important aspect of ISA design is the consideration of how much memory is required to store a particular program. An architecture which requires less space will be desirable since more information can be stored in the same amount of memory. To achieve this a high code density if required. However RISC systems have a lower density than CISC, because the latter is capable of operations such as automatic context saving within the same instruction for performing a procedure call. The density of this system has been improved by using 3 operand instructions to reduce the number of data transfers required. This is illustrated in Figure~\ref{fig:NoOperands} in terms of register transfers required to add two register values and place the result in another register. 
+An important aspect of ISA design is the consideration of how much memory is required to store a particular program. 
+An architecture which requires less space will be desirable since more information can be stored in the same amount of memory. 
+To achieve this a high code density is required. 
+However RISC systems have a lower density than CISC, because the latter is capable of operations such as automatic context saving within the same instruction for performing a procedure call. 
+The density of this system has been improved by using 3 operand instructions to reduce the number of data transfers required. 
+This is illustrated in Figure~\ref{fig:NoOperands} in terms of register transfers required to add two register values and place the result in another register. 
 \todo[inline]{explain multiple shifting support}
-
+\todo[inline,color=green]{HSL - @MW This, again, is more of a story. Should be discussing how we have a high code density, not what has a better/worse code density.}
 \begin{figure}[h]
 \setlength{\tabcolsep}{2pt}
 \centering
@@ -40,7 +68,11 @@ An important aspect of ISA design is the consideration of how much memory is req
 \label{fig:NoOperands}
 \end{figure}
 
-Both control transfer and interrupt operations, with one exception, do not use any registers. This meant the free space could be used for further definitions, leaving only one opcode being needed for each. A 3-bit condition field allows a sufficient quantity of branching operations to be supported, leaving 8 bits to define the distance to move forwards or backwards. However since there is a limitation on the distance, it was deemed necessary to include the instruction ``JMP'' which takes a register address for transferring to any position in memory. 
+Both control transfer and interrupt operations, with one exception, do not use any registers. 
+This meant the free space could be used for further definitions, leaving only one opcode being needed for each. 
+A 3-bit condition field allows a sufficient quantity of branching operations to be supported, leaving 8 bits to define the distance to move forwards or backwards. 
+However since there is a limitation on the distance, it was deemed necessary to include the instruction ``JMP'' which takes a register address for transferring to any position in memory. 
+\todo[inline,color=green]{HSL - @MW again we discuss the bits used, but we haven't got a full picture of this yet.}
 
 \newcolumntype{B}{c}
 \begin{table}[h]
@@ -74,11 +106,22 @@ Both control transfer and interrupt operations, with one exception, do not use a
 \label{tab:GIF}
 \end{table}
 
-The concept of orthogonality in instruction formatting involves the separation of bits into different fields which can each be assigned a value independently. Where each field defines a different aspect of the instruction. To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:GIF}. Which was adapted to create all other types of formatting, and reordered to ensure immediate values were always on the far right of the instruction. This was to make sign extension of immediate values in the datapath easier since they are always in the same location in the instruction. It was also necessary to align all the destination and source registers to maintain consistency between instructions, aiding datapath simplicity. 
+The concept of orthogonality in instruction formatting involves the separation of bits into different fields which can each be assigned a value independently. 
+Where each field defines a different aspect of the instruction. 
+To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:GIF}. 
+Which was adapted to create all other types of formatting, and reordered to ensure immediate values were always on the far right of the instruction. 
+This was to make sign extension of immediate values in the datapath easier since they are always in the same location in the instruction. 
+It was also necessary to align all the destination and source registers to maintain consistency between instructions, aiding datapath simplicity. 
+\todo[inline,color=green]{HSL - @MW This is better as it says ``We have done this because\dots''. However, some of these sentences don't make sense - e.g. should sentences 1 and 2 be one sentence? Please have a read through}
 
-Allocation of opcodes was done using k-map design with the arrangement designated according to the operation needing to be performed within the ALU module. This was because this allocation would have the greatest effect on the amount of logic needed for the ALU decoder. With the resultant mapping shown in Table~\ref{tab:OpKmapA} and Table~\ref{tab:OpKmapB}, with the important groupings highlighting. The four groupings shown correspond to command signals from decoder to ALU which need to be active for more than one instruction. 
+Allocation of opcodes was done using k-map design with the arrangement designated according to the operation needing to be performed within the ALU module. 
+This was because this allocation would have the greatest effect on the amount of logic needed for the ALU decoder. 
+With the resultant mapping shown in Table~\ref{tab:OpKmapA} and Table~\ref{tab:OpKmapB}, with the important groupings highlighting. 
+The four groupings shown correspond to command signals from decoder to ALU which need to be active for more than one instruction. 
+\todo[inline,color=green]{HL - @MW surely this was to minimise logic in the controller too?}
 
-\todo[inline]{Possibly combine Opcode kmap tables into subfigures?}
+
+\todo[inline]{Possibly combine Opcode kmap tables into subtables?}
 %counter for counting nodes needed for circling
 \newcounter{nodecount}
 %Command for making new node and naming according to counter
@@ -153,13 +196,19 @@ minimum width=1.2cm,align=center,text depth=.25ex,outer sep=1.5pt]
 \end{tikzpicture}
 \end{table}
 
-Allocation of Condition codes for control transfer instructions was based upon the type and action of each branch. The aspects considered were: conditional or unconditional, use of link register and flags used. These are summarised in Table~\ref{tab:CondAssign}a. From this, the first bit was set according to whether there was a condition to be checked. Then the second bit was set if the unconditional instruction used the link register, or the conditional instruction checked the zero flag. Since interrupts are only used in the controller, and added as they were deemed necessary, there is no specific ordering to the operations. As shown in Table~\ref{tab:CondAssign}b. 
+Allocation of Condition codes for control transfer instructions was based upon the type and action of each branch. 
+The aspects considered were: conditional or unconditional, use of link register and flags used. 
+These are summarised in Table~\ref{tab:CondAssign:branch}. 
+From this, the first bit was set according to whether there was a condition to be checked. 
+Then the second bit was set if the unconditional instruction used the link register, or the conditional instruction checked the zero flag. 
+Since interrupts are only used in the controller, and added as they were deemed necessary, there is no specific ordering to the operations. 
+The code assignments are shown in Table~\ref{tab:CondAssign:icond}. 
 
 \begin{table}[h!]
 \def\arraystretch{1.2}
 \centering
 \footnotesize
-\subfloat[Cond. Assignment]{%
+\subfloat[Cond. Assignment]{\label{tab:CondAssign:branch}%
 	\hspace{.5cm}
 	\begin{tabular}{l|cccc|c|}
 		\multicolumn{1}{c}{} & \multicolumn{1}{c}{Un} & \multicolumn{1}{c}{LR} & \multicolumn{1}{c}{Z} & \multicolumn{1}{c}{N,V} & \multicolumn{1}{c}{Cond.} \\
@@ -176,7 +225,7 @@ Allocation of Condition codes for control transfer instructions was based upon t
 	\end{tabular}
 	\hspace{.5cm}
 }
-\subfloat[ICond. Assignment]{ %
+\subfloat[ICond. Assignment]{ \label{tab:CondAssign:icond}%
 	\hspace{.5cm}
 	\begin{tabular}{l|c|}
 		\multicolumn{1}{l}{ } & \multicolumn{1}{c}{ICond.} \\
