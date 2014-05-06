@@ -1,7 +1,7 @@
 %  Datapath_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:02:16 BST
-%  <+Last Edited: Mon 05 May 2014 13:59:36 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Tue 06 May 2014 21:36:15 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Datapath}
@@ -42,17 +42,22 @@ The full datapath is made up of the following modules:
 \item Slice seventeen decoder
 \end{enumerate}
 
-%Design of block,
-The block is constructed as seen in Figure~\ref{fig:datapath:block}
-The tie high and tie low cell are used to set the constant address for the interrupt service routine.
-The instruction register output is routed to both the bottom of the module to be connected to the controller and to the top of the datapath for the decoders and register selects.
-The data in and out connections are routed too the right hand side of the datapath module to make an easy connection to the pad ring. 
-The majority of the control signals are available on the bottom of the datapath, although some, such as the ALU override and register select signals, are only available at the top. 
-This was done so that the controller would sit beneath the datapath and require little routing of the control signals.
+All blocks are connected in the main datapath module.
+The instruction register is routed to the decoders at the top of the module and to the bottom to connect to the controller. 
+The system bus outputs and inputs are routed to the right hand side of the module to connect to the pad ring.
+Control signals are made available at the bottom of the design to connect to the controller. 
 
-\begin{figure}
-\includegraphics[width=\textwidth]{../../eagle/Datapath/datapath.png}
-\caption{Module layout to make the full datapath.}
-\label{fig:datapath:block}
-\end{figure}
+%Design of block,
+%The block is constructed as seen in Figure~\ref{fig:datapath:block}
+%The tie high and tie low cell are used to set the constant address for the interrupt service routine.
+%The instruction register output is routed to both the bottom of the module to be connected to the controller and to the top of the datapath for the decoders and register selects.
+%The data in and out connections are routed too the right hand side of the datapath module to make an easy connection to the pad ring. 
+%The majority of the control signals are available on the bottom of the datapath, although some, such as the ALU override and register select signals, are only available at the top. 
+%This was done so that the controller would sit beneath the datapath and require little routing of the control signals.
+%
+%\begin{figure}
+%\includegraphics[width=\textwidth]{../../eagle/Datapath/datapath.png}
+%\caption{Module layout to make the full datapath.}
+%\label{fig:datapath:block}
+%\end{figure}
 
