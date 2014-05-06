@@ -15,7 +15,9 @@ Testing of this module was broken down into the different ALU functions to be pe
 \todo[inline]{check explaination}
 
 \begin{figure}[h]
-	\missingfigure{Test Results for ALUSlice}
+	\centering
+	\includegraphics[scale=0.72]{results/ALUSliceA.png}
+	\includegraphics[scale=0.72]{results/ALUSliceB.png}
 	\caption{Test Results for ALUSlice}
 	\label{fig:ALUSliceRes}
 \end{figure}
@@ -24,14 +26,21 @@ Testing of this module was broken down into the different ALU functions to be pe
 \subsection{ALU Decoder}
 The main testing of the ALU decoder module requires ensuring a correct response to each possible opcode. Secondary testing covers the flag calculation circuitry and the bit to input for right shifting operations. The test results are shown in Figure~\ref{fig:ALUDecoderRes}, where each line indicates what input changed and which control and flag outputs are active as a result. 
 
-Basic tests run through each opcode and ensure the outputted signals are as expected from Table~\ref{tab:contrOuts}. The signal {\bf \it CIn\_Slice} is the carry input to the top ALU slice after CIn has been influenced by UseC and SUB. While the signal {\bf \it ShiftIn} is the bit used for right shifting accounting for the current operation and data sign. The second block of tests are for carry checking, while the third is for shift bit checking. With a final test for correct negation of nZ to Z. \todo[inline]{check against ncverilog}
+Basic tests run through each opcode and ensure the outputted signals are as expected from Table~\ref{tab:contrOuts}. The signal {\bf \it CIn\_Slice} is the carry input to the top ALU slice after CIn has been influenced by UseC and SUB. While the signal {\bf \it ShiftIn} is the bit used for right shifting accounting for the current operation and data sign. Subsequent tests ensure correct flags and shifting signals. 
 
 \begin{figure}[h]
-	\missingfigure{Test Results for ALUDecoder}
+	\centering
+	\includegraphics[scale=0.56]{results/ALUDecoder.png}
 	\caption{Test Results for ALUDecoder}
 	\label{fig:ALUDecoderRes}
 \end{figure}
-\todo[inline]{Moves test start names, possible clarity issue?}
 
 \subsection{ALU Block}
+Testing of 16 connected slices involved a similar approach to an individual slice, but with full 16 bit values. Arithmetic used two random value inputs combined with the possible carry in values. Logic tests are no different. Whilst shifting tests show the correct operation on a given quantity with an equivalent 8-bit left shifting operation for LUI. The LLI module also shows correct concatenation of both inputs. The test results are shown in Figure~\ref{fig:ALUBlockRes}.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.72]{results/ALUBlock.png}
+	\caption{Test Results for 16 Slice Block}
+	\label{fig:ALUBlockRes}
+\end{figure}

@@ -45,15 +45,15 @@
 	32& BWL   & BWL LABEL           & LR $\leftarrow$ PC + 1; PC $\leftarrow$ PC + imm8& - & D & - & 011 \\
 	33& RET   & RET                 & PC $\leftarrow$ LR            & -       & D & -     & 010 \\
 	34& JMP   & JMP Ra, \#imm5      & PC $\leftarrow$ Ra + imm5     & -       & D & -     & 001 \\
-	\multirow{2}{*}{35}& \multirow{2}{*}{PUSH}  & PUSH Ra             & Mem[R7] $\leftarrow$ Ra; R7 $\leftarrow$ R7 - 1;& \multirow{2}{*}{-} & \multirow{2}{*}{E} & \multirow{2}{*}{-} & \multirow{2}{*}{-} \\
-	  &       & PUSH LR             & Mem[R7] $\leftarrow$ RL; R7 $\leftarrow$ R7 - 1;&   &   &   &   \\
-	\multirow{2}{*}{36}& \multirow{2}{*}{POP}   & POP Ra              & R7 $\leftarrow$ R7 + 1; Mem[R7] $\leftarrow$ Ra;& \multirow{2}{*}{-} & \multirow{2}{*}{E} & \multirow{2}{*}{-} & \multirow{2}{*}{-} \\
-	  &       & POP LR              & R7 $\leftarrow$ R7 + 1; Mem[R7] $\leftarrow$ RL;&   &   &   &   \\
+	\multirow{2}{*}{35}& \multirow{2}{*}{PUSH}  & PUSH Ra             & R7 $\leftarrow$ R7 - 1; Mem[R7] $\leftarrow$ Ra; & \multirow{2}{*}{-} & \multirow{2}{*}{E} & \multirow{2}{*}{-} & \multirow{2}{*}{-} \\
+	  &       & PUSH LR             & R7 $\leftarrow$ R7 - 1; Mem[R7] $\leftarrow$ RL; &   &   &   &   \\
+	\multirow{2}{*}{36}& \multirow{2}{*}{POP}   & POP Ra              & Mem[R7] $\leftarrow$ Ra; R7 $\leftarrow$ R7 + 1; & \multirow{2}{*}{-} & \multirow{2}{*}{E} & \multirow{2}{*}{-} & \multirow{2}{*}{-} \\
+	  &       & POP LR              & Mem[R7] $\leftarrow$ RL; R7 $\leftarrow$ R7 + 1; &   &   &   &   \\
 	37& RETI  & RETI                & PC $\leftarrow$ Mem[R7]       & -       & F & -     & 000 \\
 	38& ENAI  & ENAI                & IntEnFlag $\leftarrow$ 1      & -       & F & -     & 001 \\
 	39& DISI  & DISI                & IntEnFlag $\leftarrow$ 0      & -       & F & -     & 010 \\
-	40& STF   & STF                 & Mem[R7] $\leftarrow$ Flags; R7 $\leftarrow$ R7 - 1; & - & F & - & 011 \\
-	41& LDF   & LDF                 & R7 $\leftarrow$ R7 + 1; Mem[R7] $\leftarrow$ Flags; & c,v,n,z & F & - & 100 \\
+	40& STF   & STF                 & R7 $\leftarrow$ R7 - 1; Mem[R7] $\leftarrow$ Flags; & - & F & - & 011 \\
+	41& LDF   & LDF                 & Flags $\leftarrow$ Mem[R7]; R7 $\leftarrow$ R7 + 1; & c,v,n,z & F & - & 100 \\
 	\cline{2-8}
 \end{tabular}
 }
