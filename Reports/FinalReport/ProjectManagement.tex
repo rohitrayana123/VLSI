@@ -1,7 +1,7 @@
 %  ProjectManagement.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:26:37 BST
-%  <+Last Edited: Thu 17 Apr 2014 17:34:55 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Tue 06 May 2014 08:49:11 BST by seblovett on seblovett-Ubuntu +>
 
 \chapter{Project Management}
 \incomplete{Project Management}
@@ -22,16 +22,75 @@ This left the group with three members - AJR, MW and HL.
 Discussions were then undertook as to if the group wanted / needed a fourth member. 
 As the group could not come to a unanimous decision, one for a fourth member, one against and one who was happy either way, Iain's advice for having a fourth member was taken. 
 
-Instead of the original member
-\section{Skill assessment}
+The original member of the group did not wish to rejoin the group.
+Instead, a colleague of the original member was offered to join.
+This formed the group members. 
+
+In the first discussions with the group, HL was appointed as group leader. 
 
 \section{Meetings}
 
+
+\section{Skills Assessment}
+
+A small skills audit was done in the first meeting. 
+The results of this are seen in Table~\ref{tab:pm:skills}.
+It was apparent early on that ARR was not comfortable with a lot of the skills required.
+
+
+\begin{table}
+\centering
+\caption{Skills Audit for Team R4. A 5 means very competent, 1 is not competent.}
+\label{tab:pm:skills}
+\begin{tabular}{l*{4}{p{1cm}}}\hline
+Task 			& HL & MW & AJR & ARR \\ \hline
+Verilog 		& 4  & 4  & 4   & 2   \\
+Magic Layout		& 4  & 4  & 3   & 4   \\
+Assembly Language	& 3  & 3  & 3   & 1   \\
+Processor Design	& 4  & 3  & 4   & 1   \\ 
+Git			& 4  & 3  & 4   & 1   \\ \hline
+\end{tabular}
+\end{table}
+
+
 \section{Work Breakdown}
+
+The skills audit provided the basis for the initial work allocations.
+Preferences were given and the group was roughly broken into two sections: HL and AJR were to pursue the Verilog development, MW and ARR would do the Magic layout.
+Although the work was distributed this way, it was by no means a comprehensive divide.
+ARR and MW were to also write Verilog testbenches, and HL and AJR would be responsible for the synthesis and layout of the control unit.
+The initial breakdown was done to give the team a starting point.
+
+%The milestone responsibilities were also allocated, loosely based on the skills audit.
+
 
 \section{Git}
 Use of Git for revision control and branching (interrupt dev)
 
+HL, MW and AJR all had worked together previously, the use of Git revision control was decided before the group was formed. 
+When ARR joined the group, our file control was discussed, and alternative options were discussed. 
+One idea from ARR was to use DropBox. 
+This was a simple to use system, but would cause issues when multiple people worked on the same files. 
+There was also no log of changes and broken files could have accidentally been integrated. 
+The full recursive revision control with Git helped as if and when a file was committed that didn't work, it was able to be reverted to the previous version.
+Change logs are also used with Git, allowing to see which files have changed, by who and why. 
+
+
+The advantage to using Git was that the work could be branched.
+This was exceptionally useful as the group was looking to implement interrupts.
+The interrupt work could be done concurrently, but seperately, to the normal work flow. 
+If the group hadn't achieved the milestones for the interrupt development, no time would have needed to be spent removing it.
+At the point of success with interrupts, the work done was easily merged into the master branch. 
+
+All group members agreed on the use of Git. 
+HL and MW both spent time with ARR to help her understand the basics to be able to use Git.
+
+
 \section{Github}
 Issue Tracking and task allocation using GitHub
 
+
+
+\section{Reflections}
+
+Thinking about getting everyone to do a paragraph here.
