@@ -1,7 +1,7 @@
 %  Report.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 14:30:25 BST
-%  <+Last Edited: Mon 05 May 2014 12:46:51 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Tue 06 May 2014 20:32:27 BST by seblovett on seblovett-Ubuntu +>
 
 %HSL: when compiling final, remove draft option and comment watermark out
 \documentclass[draft, 12pt, titlepage,twoside]{report}
@@ -29,6 +29,7 @@
 \SetWatermarkScale{4}
 \newcommand{\inote}[1]{\todo[inline]{#1}}
 \newcommand{\incomplete}[1]{\todo[inline,color=red]{INCOMPLETE CHAPTER: #1}}
+\newcommand{\review}[1]{\todo[inline,color=yellow]{Review: #1}}
 %\addtolength{\oddsidemargin}{-.875in}
 %\addtolength{\evensidemargin}{-.875in}
 \usepackage[inner=4cm,outer=3cm]{geometry}
