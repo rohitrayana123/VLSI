@@ -180,3 +180,36 @@ function [3:0][7:0] itoa;
 	  itoa_4(val[3:0])};
 endfunction
 
+
+`ifdef whitenoise
+wire [15:0] PcProbe;
+`ifdef behavioural
+assign PcProbe = system.CPU.CPU_core.datapath.Pc;
+`endif
+`ifdef extracted
+assign PcProbe = system.CPU.Pc;
+integer out;
+wire [8:0][15:0] regs;
+`endif
+always @ (posedge Clock)
+	if (PcProbe >= 16'h07FF)
+	begin
+	`ifdef behavioural
+		$writememh("WN_behavioural.hex",
+system.CPU.CPU_core.datapath.regBlock.regs);
+	`endif
+	`ifdef extracted
+		out = $fopen("WN_ext.hex","w");
+		$fwrite(out, "%h\n", system.CPU.reg0);
+		$fwrite(out, "%h\n", system.CPU.reg1);
+		$fwrite(out, "%h\n", system.CPU.reg2);
+		$fwrite(out, "%h\n", system.CPU.reg3);
+		$fwrite(out, "%h\n", system.CPU.reg4);
+		$fwrite(out, "%h\n", system.CPU.reg5);
+		$fwrite(out, "%h\n", system.CPU.reg6);
+		$fwrite(out, "%h\n", system.CPU.reg7);
+		$fclose(out);
+	`endif
+		$stop;
+	end
+`endif
