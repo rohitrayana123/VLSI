@@ -1,33 +1,73 @@
 \section{Controller}
 
 The controller is a Mealy machine used to sequence operations performed on the datapath.
-Three main states exist to service the fetch, execute and interrupt stages.
-Five sub states are used within the main states to further coordinate operation.
-In practice this is implemented as a five bit word that containing $15$ operational states with $17$ dead states. 
-The division was necessary for optimisation of the unit.
+Figure~\ref{fig:ControlBlock} contains all inputs, outputs and internal registers.
+There are $7$ labelled inputs including two $4$ bit buses and one $8$ bit bus.
+There are $26$ labelled outputs including five $4$ bit buses and one $3$ bit bus.
+Typedefs, defined in a global file, are used for some single bit outputs and all bus outputs to keep decoding consistent in control and the datapath. 
 
 
 \begin{figure}[ht]
    \centering
-    \includegraphics[width = 0.2\textwidth]{MainStateASM.pdf}
-		\caption{ASM chart of contoller main states.}% \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
+    \includegraphics[width = 0.8\textwidth]{ControlPinout.pdf}
+		\caption{Inputs, outputs and internal registers of the control block.}% \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
+   \label{fig:ControlBlock}
+\end{figure}
+
+Three main states exist to service the fetch, execute and interrupt stages.
+Five sub states are used within the main states to further coordinate operation.
+The ASM chart in figure~\ref{fig:MainStateASM} describes state changes using the sub state, opcode and interrupt request signal.   
+When \textbf{nReset} is asserted the machine will return to the first cycle of the fetch state.
+
+
+\begin{figure}[ht]
+   \centering
+    \includegraphics[width = 0.8\textwidth]{MainStateASM.pdf}
+		\caption{ASM chart of controller main states.}% \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
    \label{fig:MainStateASM}
 \end{figure}
 
 
 
-Design of - simple statemachine?
 
-Control signals - description, use of type defs?
 
-Description of main states:
 
-Fetch
 
-Execute
 
-Interrupt
+\subsection{Fetch}
+
+
+
+
+
+\subsection{Execute}
+
+
+
+
+\subsection{Interrupt}
+
 
 Implementation of interrupts (flags, enable\dots)
 
-Synthesis and layout - I/O config, magic vs Ledit maybe?
+
+\subsection{Synthesis}
+
+The controller was synthesised using Cadence Encounter. 
+This provided a gate level netlist which was then used for place and route.
+Both Magic and L-Edit place and route tools were used. 
+
+The Magic place and route had a considerably larger routing channel than L-Edit.
+The cells were all placed in one long row. 
+This was suboptimal as it resulted in a lot of dead space within the floorplan.
+
+The L-Edit place and route provided far better results. 
+The datapath and controller were approximately the same width. 
+The I/Os were able to be positioned around the module to reduce the overall wiring needed in the full floor plan. 
+Most of the datapath control signals were routed to the top of the module to reduce the wiring channel needed between them.
+All the memory access signals were routed to the left of the controller to make easier connections to the pad ring. 
+The controller was also connected to the low nibble of the input data. 
+This was connected at the bottom of the controller to reduce wiring needed. 
+Finally, decoder signals and flag inputs were routed to the right of the control. 
+
+
