@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file runsim.py
 # Date Created: Mon 24 Feb 2014 18:08:33 GMT by seblovett on seblovett-Ubuntu
-# <+Last Edited: Thu 01 May 2014 15:16:19 BST by hl13g10 on hind.ecs.soton.ac.uk +>
+# <+Last Edited: Thu 08 May 2014 18:30:19 BST by seblovett on seblovett-Ubuntu +>
 # @author seblovett
 # @brief to invoke the simulator for various tasks
 # @todo list:
@@ -130,7 +130,8 @@ def RunSim(options, args = None):
 	if options.switches:
 		cmd.append('+define+switch_value=%s' % options.switches)
 	cmd.append("+define+%s" % options.type)
-	cmd = cmd + args;
+	if args:
+		cmd = cmd + args;
 	#print the command
 	print " ".join(cmd)
 	#run the command
