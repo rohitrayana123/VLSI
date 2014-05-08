@@ -5,11 +5,6 @@
 
 
 \section{Arithmetic Logic Unit}\label{sect:design:alu}
-\todo[color=cyan, inline]{Design of whole module - ongoing}
-\todo[color=cyan, inline]{Use of hierarchy - implied mention, todo}
-\todo[color=cyan, inline]{Design of slice - initial text done}
-\todo[color=cyan, inline]{Design of decoder - initial text done}
-\todo[color=cyan, inline]{Design of block - initial test done}
 \todo[color=cyan, inline]{Layout in silicon}
 
 The arithmetic logic unit (ALU) is the central unit for performing calculations within the datapath. 
@@ -20,57 +15,47 @@ Arithmetic operations are centralized around a full adder with additional gates 
 The logic unit consists of one gate corresponding to each of the full set of logic instructions supported. 
 While shifts are performed using a barrel shifter to support up to 15-bits in one clock cycle. 
 Finally, the LLI module concatenates the upper byte of the destination register with the provided 8-bit immediate value. 
-The breakdown of the ALU is illustrated in Figure~\ref{fig:abstractALU}, with the output of each section connected to an internal bus through a number of tri-state gates. 
+The breakdown of the ALU is illustrated in Figure~\ref{fig:ALUModules}, with the output of each section connected to an internal bus through a number of tri-state gates. 
 
 
 \begin{figure}[h]
 	\centering
+	\subfloat[Modular ALU Layout\label{fig:ALUModules}]{
 	\includegraphics[width=3in]{Figures/AbstractALU.png}
-	\caption{ALU Separated into Sub-modules}
-	\label{fig:abstractALU}
+	}
+	\subfloat[Top-Level View of ALU\label{fig:BasicALUSym}]{
+	\includegraphics[width=1.6in]{Figures/ALUTopLevel.png}
+	}
+	\caption{ALU Abstraction}
+	\label{fig:ALUAbsract}
 \end{figure}
 
 This design then needed to be bit-sliced to simplify the datapath and promote hierarchical construction. 
 It was decided to add an additional input to the module for the 4-bit immediate value required to define the shifting amount. 
-Otherwise the lowest four bits of the ALU will each need a different routing to each segment, reducing how much of each slice could be identically duplicated. 
-\todo[inline,color=green]{HSL - @MW tenses change in this. Should be past - ``it was designed in bit slices\dots''}
+Otherwise the lowest four slices of the ALU would each need a different routing to each segment, reducing how much of each slice could be identically duplicated. 
 
-Initial design of the ALU module was based upon the planned datapath layout and the input/output connections it showed, as seen in Figure~\ref{fig:BasicALUSym}. 
+Initial design of the ALU module was based upon the planned datapath layout as shown in Figure~\ref{fig:BasicALUSym}. 
 From this it was seen that there may be some difficulty with interpreting the opcodes provided. 
-Since each slice would have to individually interpret the opcode, using much more space than is necessary due to replicated hardware. 
-Observations showed that different groups of instructions would perform the same operation within the ALU. 
-As such, it was decided to use a separate decoder to interpret the opcodes and send control lines to the ALU for the specific functions to be performed. 
-\todo[inline,color=green]{HSL - @MW - I don't think this aids to any understanding. 
-The final point is key, but could be condensed down into one/two lines and joined with the above. 
-Maybe ``To reduce the bitslice size, all decoding logic was implemented in an extra decoding module.''}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1.5in]{Figures/ALUTopLevel.png}
-	\caption{Initial Top-level View of ALU Module}
-	\label{fig:BasicALUSym}
-\end{figure}
+Each slice would have to individually interpret the opcode, using much more space than is necessary due to replicated hardware. 
+Observations showed that different groups of instructions would perform the same operation within the ALU, therefore a separate decoder module was implemented to reduce required area.
 
 \subsection{ALU Slice}
-%The most beneficial bit slice would be one that performs all the functions required for one bit and as such can be replicated to produce a 16-bit datapath. 
-%As such design focussed upon this idea, with considerations towards the overall size of the ALU once built. 
 The arithmetic section was simple to bitslice since the full adder and input selection gates would be duplicated for each bit anyway. 
 While the flags required only one OR gate for the Z flag and the sum, carry in and carry out signals to be available at the top of the slice. 
 Since a decoder is positioned at the top, additional gates needed for flag calculation can be implemented once within the decoder. 
 This is shown in Figure~\ref{fig:ArithSlice}. 
 Bit slicing the logic section was just one of each logic gate followed by a tri-state buffer in the slice, shown in Figure~\ref{fig:LogicSlice}. 
 
-
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=3in]{Figures/ArithSlice.png}
+	\includegraphics[scale=0.75]{Figures/ArithSlice.png}
 	\caption{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
 	\label{fig:ArithSlice}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=3in]{Figures/LogicSlice.png}
+	\includegraphics[scale=0.75]{Figures/LogicSlice.png}
 	\caption{Bitsliced Ciruit Diagram for Logic Section of ALU}
 	\label{fig:LogicSlice}
 \end{figure}
@@ -83,7 +68,7 @@ Implementation of this section is shown in Figure~\ref{fig:ShiftSlice}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{Figures/ShiftSlice.png}
+	\includegraphics[scale=0.75]{Figures/ShiftSlice.png}
 	\caption{Bitsliced Ciruit Diagram for Shift Section of ALU}
 	\label{fig:ShiftSlice}
 \end{figure}
@@ -94,18 +79,10 @@ This is shown in Figure~\ref{fig:ShiftSlice} as a precurser to standard shifting
 Loading a lower immediate involves concatenating the existing high byte of the destination register with the value in the instruction. 
 However there is no way of separating this into 16 identical slices. 
 As such two versions of the slice were designed, one which passes through the upper byte with no change, and one which selects between the lower byte of the input register value and the immediate value. 
-These form modules which are separate to the main slice, with the lower slice shown in  Figure~\ref{fig:LLISlice}, therefore LLI functionality is not part of the main ALU. 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1.5in]{Figures/LLILSlice.png}
-	\caption{Bitsliced Ciruit Diagram for LLI Modules}
-	\label{fig:LLISlice}
-\end{figure}
+These form modules which are separate to the main slice consisting of either wiring or a multiplexor.
 
 \subsection{ALU Decoder}
 The purpose of a decoder module is to convert any given opcode into a number of signals to control the path of data within the ALU. As such it is composed of multiple circuits of purely combinational logic. Table~\ref{tab:contrOuts} shows the necessary control signals for each mnemonic.
-
 
 \begin{table}[h]
 	\centering
@@ -129,76 +106,67 @@ The purpose of a decoder module is to convert any given opcode into a number of 
 		SUBI  & 01110 & FAOut, SUB &  & NOR   & 10111 & NOR \\
 		CMPI  & 01111 & FAOut, SUB &  & LLI   & 10101 & ShOut, LLI \\
 		SUCI  & 01101 & FAOut, SUB, {\it UseC} &  & LUI   & 10100 & ShOut, ShL, ShB, Sh8 \\
-		SUC   & 01100 & FAOut, SUB, {\it UseC} &  & & 11011 & ShOut \\
+		SUC   & 01100 & FAOut, SUB, {\it UseC} &  & & 11011 & - \\
 		\cline{1-3} \cline{5-7}
 	\end{tabular}
 	}
 	\caption{Control outputs for each available instruction mnemonic}
 	\label{tab:contrOuts}
 \end{table}
-\todo[inline]{check what 11011 does}
 
-The signal FAOut enables the tri-state buffer of the arithmetic section. 
 SUB inverts the second input and flags for a subtraction operation and ZeroA sets the first input to zero. 
-The logic tri-states are controlled by the signals AND, OR, XOR, NOT, NAND and NOR for the relevant logic operations. 
-The signal ShOut enables the tri-state for the shifting section and if used with nothing else active has the effect of no operation being performed on data. 
 ShL and ShR switch between left and right shifting while ShB switches between using the first (A) or second (B) input to shift. 
 Signals Sh8, Sh4, Sh2 and Sh1 enable each section of the barrel shifter and during normal shifting operations are dependent upon the 4-bit immediate input to decoder. 
 Sh8 is set during a LUI instruction since it will always shift by 8 bits. 
-Signal LLI activates the LLI module after no operation is performed within main ALU. 
+Signal LLI activates the LLI module after no operation is performed within the main ALU. 
 While UseC and ShInBit are internal signals indicating use of the carry flag from previous instruction and the bit to shift in respectively. 
-The one unused opcode is set to perform no operation on data to prevent unpredictable behaviour. 
-\todo[inline,color=green]{HSL - @MW can you condense this? It's a bit dry. Maybe say ``Signals FAOut, AND, OR \dots are used to enable relevant tristate buffers to output the result. It uses one hot coding to prevent contention.'' and similar. }
+The remaining signals enable the relevant tri-state buffers to output the result. It uses one hot coding to prevent contention. 
+The one unused opcode does not active any signals to reduce the number of gates within the decoder. 
 
 \begin{align}
 	\text{FAOut} &= \bar{A} + BD\bar{E} \label{eq:DecBasicS}\\
 	\text{SUB} &= \bar{A}BC + \bar{A}B\bar{C}E + B\bar{C}D\bar{E} + \bar{A}CDE \\
-	\text{ShL} &= \\
-	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \label{eq:DecBasicF} \\
+	\text{ShL} &= ABCDE + A\bar{B}C\bar{D}\bar{E} \\
+	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \\
 	\text{Sh4} &= (ABCE + ABC\bar{D})imm[2] \\
 	\text{Sh2} &= (ABCE + ABC\bar{D})imm[1] \\
 	\text{Sh1} &= (ABCE + ABC\bar{D})imm[0] \\
 	\text{ShOut} &= AC\bar{D} + ABCE + AB\bar{C}\bar{D} \\
 	\text{UseC} &= \bar{A}C\bar{D} \\
-	\text{ShR} &= ABC\bar{D}
+	\text{ShR} &= ABC\bar{D} \label{eq:DecBasicF}
 \end{align}
-\todo[inline]{ShL}
 
-By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations have be formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. 
+By using the opcodes and k-map groupings defined in Table~\ref{tab:OpKmaps}, logic equations have been formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. 
 Where the letters A-E correspond to bits 4-0 of the opcode. 
 Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. 
-The possible gates essential to the decoder were: and2, or2, nand2, nand3, nand4, nor2 and nor3. Where each number corresponds to the amount of logic inputs. 
-Since the negated output gates had more possible inputs, as well as being physically smaller, they were more favourable to use. 
+Since the negated output gates could have more inputs, as well as being physically smaller, they were more favourable to use. 
 Some potential options for the logic equation for the ``SUB'' signal are shown in Equations~\ref{eq:DecSUB1}~and~\ref{eq:DecSUB2}. 
-The first one, taken from the k-map, requires 1 and3, 4 and4's, 1 or4 and 3 inverters. 
-To simplify design, inverters are not considered towards optimum design as both inverted and non-inverted inputs will be made available globally. 
-This equation is not possible to implement due to AND gates with more than 2 inputs. 
-Equation~\ref{eq:DecSUB2} requires 2 and2's, 3 and3's, and 3 or2's which again cannot be implemented. 
-However if inverted using DeMorgan's law to produce Equation~\ref{eq:DecSUB3} it is possible, and uses 8 smaller gates. 
-Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. 
-A similar approach is taken for the remaining signals listed in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}, with the final circuit diagrams also shown in Figure~\ref{fig:DecMultiCirs}. 
-\todo[inline,color=green]{HSL - @MW I don't think this aids any understanding. Maybe just give the final equations implemented with reason of optimising to reduce number of gates.}
+The first one, taken from the k-map, requires 9 non-inverter logic gates. 
+%To simplify design, inverters were not considered for optimization as both inverted and non-inverted inputs were made available globally. 
+This equation cannot be implemented since AND gates with more than 2 inputs are not available. 
+Equation~\ref{eq:DecSUB2} requires 8 gates and is unimplementable. 
+However if inverted using DeMorgan's law to produce Equation~\ref{eq:DecSUB3} it is possible.
+Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}, along with the remaining signals in Equations\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}.
 
 \newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \begin{align}
 	\text{SUB} &= \bar{A}BC + \bar{A}B\bar{C}E + B\bar{C}D\bar{E} + \bar{A}CDE \label{eq:DecSUB1}\\
 	&= \bar{A}B(C + \bar{C}E) + D(B\bar{C}\bar{E} + \bar{A}CE) \label{eq:DecSUB2}\\
-	%&= \bar{A + \bar{B} + \bar{(p)}} \label{eq:DecSUB3} %(\bar{C}\bar{(c + \bar{E})})
 	&= \overbar{\overbar{(\bar{A}B\overbar{(\bar{C}\overbar{(\bar{C}E)})})}\overbar{(D\overbar{(\overbar{(B\bar{C}\bar{E})}\overbar{(\bar{A}CE)})})}} \label{eq:DecSUB3}
 \end{align}
-\todo[inline]{check against implimented}
-\todo[inline]{are all final equations needed as above?}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{Figures/ALUDecoderMore1.png}
+	\includegraphics[scale=0.45]{Figures/ALUDecoderMore1.png}
 	\caption{Circuit Diagrams For Signals Active For More Than One Opcode}
 	\label{fig:DecMultiCirs}
 \end{figure}
+\todo[inline]{Add ShL and ShR? to this}
+\todo[inline]{Fiks positioning}
 
 For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. 
-Since additional logic for flag calculations are implemented in the decoder, the circuit diagram for this portion is also shown in Figure~\ref{fig:GateArray}. 
-\todo[inline,color=green]{HSL - @MW this makes no sense to me}
+Since additional logic needed for flag calculations are implemented in the decoder, the circuit diagram for this portion is also shown in Figure~\ref{fig:GateArray}. 
+\todo[inline,color=green]{HSL - @MW this makes no sense to me, MW - not sure how to reword}
 
 \begin{figure}[h]
 	\missingfigure{Circuit Diagrams For Gate Array and Flag Overhead Logic}
@@ -208,10 +176,10 @@ Since additional logic for flag calculations are implemented in the decoder, the
 
 \subsection{ALU Block}
 The final hierarchical view of the assembled ALU made up of each part mentioned previously is shown in Figure~\ref{fig:ALUAssembled}. 
-ALU slice is duplicated to make up the 16 bits in parallel, LLI high is added to the top byte and LLI low is added to the bottom half. 
+ALU slice is duplicated to make up the 16 bits in parallel, LLI high is added to the top half and LLI low is added to the bottom half. 
 The decoder is added above, with additional wiring to connect together right shifting inputs. 
 While the left shifting inputs at the bottom are tied low. 
-The output to the ALU is available as a direct connection to elsewhere in the datapath, but it is also stored in a register for later transfer onto the system bus. 
+The output to the ALU is available as a direct connection to the rest of the datapath, but it is also stored in a register for later transfer onto the system bus. 
 This register forms a part of a separate module to the ALU. 
 
 \begin{figure}[h]
