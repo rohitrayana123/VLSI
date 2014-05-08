@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # @file whitenoise.py
 # Date Created: Thu 08 May 2014 13:59:02 BST by seblovett on seblovett-Ubuntu
-# <+Last Edited: Thu 08 May 2014 18:31:39 BST by seblovett on seblovett-Ubuntu +>
+# <+Last Edited: Thu 08 May 2014 22:15:19 BST by hl13g10 on hind.ecs.soton.ac.uk +>
 # @author seblovett
 # @brief A brief description of this code
 
@@ -66,10 +66,36 @@ def CheckOps(ops, options):
 	#no BGE or BLT acts on the result of a logic operation
 	#no unused opcodes are used
 	for i in range(len(ops)):
-		if (GetOp(ops[i]) == "X") or (GetOp(ops[i]) == "INTERRUPT") or (GetOp(ops[i]) == "BRANCH"):
-			ops[i] = "0000\n"
+		if (GetOp(ops[i])) in ("X", "INTERRUPT", "BRANCH", "PUSH", "POP", "LDW", "STW"):
+			ops[i] = "187f\n"#addib r0 127
 	
 	return ops
+
+def ParseResults():
+	#read in behavioural results
+	beh = open("WN_behavioural.hex", "r")
+	beh_regs = beh.readlines()
+	beh.close()
+	print beh_regs
+	#read in extracted results
+	ext = open("WN_ext.hex","r")
+	ext_regs = ext.readlines()
+	ext.close()
+	print ext_regs
+	print "\n\nReg\tB\tE\tP/F\n---------------------------"
+	res = True
+	for i in range (8): #for each reg
+		if ext_regs[i] == beh_regs[i]:
+			print "%d\t%s\t%s\tP" % (i, beh_regs[i][:-1], ext_regs[i][:-1])
+		else:
+			print "%d\t%s\t%s\tF" % (i, beh_regs[i][:-1], ext_regs[i][:-1])
+			res = False
+	if res:
+		print "White Noise Test Passed"
+	else:
+		print "White Noise Test Failed."
+	#compare each
+	pass
 
 if "__main__" == __name__:
 	''' Code to be run if this is main '''
@@ -97,10 +123,13 @@ if "__main__" == __name__:
 	setattr(options, "switches", "0")
 	setattr(options, "debug", False)
 	setattr(options, "home", None)
-	setattr(options, "type", None)
+	setattr(options, "type", "behavioural")
 	setattr(options, "scanpath", False)
 	setattr(options, "gui", False)
 	setattr(options, "legacy", True)
-	sim.RunSim(options, "")
+	sim.RunSim(options, ["+define+special_monitor", "+define+whitenoise"])
+	options.type = "extracted"
+	sim.RunSim(options, ["+define+special_monitor", "+define+whitenoise"])
+	ParseResults()
 	pass
 
