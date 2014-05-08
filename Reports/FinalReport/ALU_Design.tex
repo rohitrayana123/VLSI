@@ -24,7 +24,8 @@ The breakdown of the ALU is illustrated in Figure~\ref{fig:abstractALU}, with th
 
 
 \begin{figure}[h]
-	\missingfigure{Abstract ALU Breakdown}
+	\centering
+	\includegraphics[width=3in]{Figures/AbstractALU.png}
 	\caption{ALU Separated into Sub-modules}
 	\label{fig:abstractALU}
 \end{figure}
@@ -44,7 +45,8 @@ The final point is key, but could be condensed down into one/two lines and joine
 Maybe ``To reduce the bitslice size, all decoding logic was implemented in an extra decoding module.''}
 
 \begin{figure}[h]
-	\missingfigure{Basic top level view of ALU}
+	\centering
+	\includegraphics[width=1.5in]{Figures/ALUTopLevel.png}
 	\caption{Initial Top-level View of ALU Module}
 	\label{fig:BasicALUSym}
 \end{figure}
@@ -60,13 +62,15 @@ Bit slicing the logic section was just one of each logic gate followed by a tri-
 
 
 \begin{figure}[h]
-	\missingfigure{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
+	\centering
+	\includegraphics[width=3in]{Figures/ArithSlice.png}
 	\caption{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
 	\label{fig:ArithSlice}
 \end{figure}
 
 \begin{figure}[h]
-	\missingfigure{Bitsliced Ciruit Diagram for Logic Section of ALU}
+	\centering
+	\includegraphics[width=3in]{Figures/LogicSlice.png}
 	\caption{Bitsliced Ciruit Diagram for Logic Section of ALU}
 	\label{fig:LogicSlice}
 \end{figure}
@@ -78,29 +82,25 @@ To support arithmetic shifting, the shifted value into a right shift can be eith
 Implementation of this section is shown in Figure~\ref{fig:ShiftSlice}. 
 
 \begin{figure}[h]
-	\missingfigure{Bitsliced Ciruit Diagram for Shift Section of ALU}
+	\centering
+	\includegraphics[width=\textwidth]{Figures/ShiftSlice.png}
 	\caption{Bitsliced Ciruit Diagram for Shift Section of ALU}
 	\label{fig:ShiftSlice}
 \end{figure}
 
 Every instruction can be carried out using one of the previous sections, with the exception of LUI and LLI. Loading an upper immediate value involves concatenating the 8-bit value with 8 zero bits. 
 This is equivalent to shifting the second operand by 8-bits, as such it can be implemented with an additional multiplexor before the shifting section to select between each input operand. 
-This is shown in Figure~\ref{fig:LUISlice}. 
+This is shown in Figure~\ref{fig:ShiftSlice} as a precurser to standard shifting operation. 
 Loading a lower immediate involves concatenating the existing high byte of the destination register with the value in the instruction. 
 However there is no way of separating this into 16 identical slices. 
 As such two versions of the slice were designed, one which passes through the upper byte with no change, and one which selects between the lower byte of the input register value and the immediate value. 
-These form modules which are separate to the main slice, as shown in Figure~\ref{fig:LLISlices}, therefore LLI functionality is not part of the main ALU. 
+These form modules which are separate to the main slice, with the lower slice shown in  Figure~\ref{fig:LLISlice}, therefore LLI functionality is not part of the main ALU. 
 
 \begin{figure}[h]
-	\missingfigure{Bitsliced Ciruit Diagram for LUI Section of ALU, could form part of previou figure}
-	\caption{Bitsliced Ciruit Diagram for LUI Section of ALU}
-	\label{fig:LUISlice}
-\end{figure}
-
-\begin{figure}[h]
-	\missingfigure{Bitsliced Ciruit Diagram for LLI Modules}
+	\centering
+	\includegraphics[width=1.5in]{Figures/LLILSlice.png}
 	\caption{Bitsliced Ciruit Diagram for LLI Modules}
-	\label{fig:LLISlices}
+	\label{fig:LLISlice}
 \end{figure}
 
 \subsection{ALU Decoder}
@@ -128,7 +128,7 @@ The purpose of a decoder module is to convert any given opcode into a number of 
 		SUB   & 01010 & FAOut, SUB &  & NAND  & 10110 & NAND \\
 		SUBI  & 01110 & FAOut, SUB &  & NOR   & 10111 & NOR \\
 		CMPI  & 01111 & FAOut, SUB &  & LLI   & 10101 & ShOut, LLI \\
-		SUCI  & 01101 & FAOut, SUB, {\it UseC} &  & LUI   & 10100 & ShOut, ShR, ShB, Sh8 \\
+		SUCI  & 01101 & FAOut, SUB, {\it UseC} &  & LUI   & 10100 & ShOut, ShL, ShB, Sh8 \\
 		SUC   & 01100 & FAOut, SUB, {\it UseC} &  & & 11011 & ShOut \\
 		\cline{1-3} \cline{5-7}
 	\end{tabular}
@@ -153,15 +153,16 @@ The one unused opcode is set to perform no operation on data to prevent unpredic
 \begin{align}
 	\text{FAOut} &= \bar{A} + BD\bar{E} \label{eq:DecBasicS}\\
 	\text{SUB} &= \bar{A}BC + \bar{A}B\bar{C}E + B\bar{C}D\bar{E} + \bar{A}CDE \\
-	\text{ShOut} &= AC\bar{D} + ABCE + AB\bar{C}\bar{D} \\
-	\text{ShR} &= AC\bar{D}\bar{E} + ABC\bar{D} \\
-	\text{UseC} &= \bar{A}C\bar{D} \\
-	\text{Sh1} &= (ABCE + ABC\bar{D})imm[0] \\
-	\text{Sh2} &= (ABCE + ABC\bar{D})imm[1] \\
+	\text{ShL} &= \\
+	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \label{eq:DecBasicF} \\
 	\text{Sh4} &= (ABCE + ABC\bar{D})imm[2] \\
-	\text{Sh8} &= (ABCE + ABC\bar{D})imm[3] + A\bar{B}C\bar{D}\bar{E} \label{eq:DecBasicF}
+	\text{Sh2} &= (ABCE + ABC\bar{D})imm[1] \\
+	\text{Sh1} &= (ABCE + ABC\bar{D})imm[0] \\
+	\text{ShOut} &= AC\bar{D} + ABCE + AB\bar{C}\bar{D} \\
+	\text{UseC} &= \bar{A}C\bar{D} \\
+	\text{ShR} &= ABC\bar{D}
 \end{align}
-\todo[inline]{check against implimented}
+\todo[inline]{ShL}
 
 By using the opcodes and k-map groupings defined in Tables~\ref{tab:OpKmapA}~and~\ref{tab:OpKmapB}, logic equations have be formed as shown in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. 
 Where the letters A-E correspond to bits 4-0 of the opcode. 
@@ -183,13 +184,14 @@ A similar approach is taken for the remaining signals listed in Equations~\ref{e
 	\text{SUB} &= \bar{A}BC + \bar{A}B\bar{C}E + B\bar{C}D\bar{E} + \bar{A}CDE \label{eq:DecSUB1}\\
 	&= \bar{A}B(C + \bar{C}E) + D(B\bar{C}\bar{E} + \bar{A}CE) \label{eq:DecSUB2}\\
 	%&= \bar{A + \bar{B} + \bar{(p)}} \label{eq:DecSUB3} %(\bar{C}\bar{(c + \bar{E})})
-	&= \overbar{\overbar{A + \bar{B} + \overbar{(\bar{C}\overbar{(C + \bar{E})})}} + \overbar{\overbar{\overbar{(\bar{B} + C + E)}\overbar{(A + \bar{C} + \bar{E})}} + \bar{D}}} \label{eq:DecSUB3}
+	&= \overbar{\overbar{(\bar{A}B\overbar{(\bar{C}\overbar{(\bar{C}E)})})}\overbar{(D\overbar{(\overbar{(B\bar{C}\bar{E})}\overbar{(\bar{A}CE)})})}} \label{eq:DecSUB3}
 \end{align}
 \todo[inline]{check against implimented}
 \todo[inline]{are all final equations needed as above?}
 
 \begin{figure}[h]
-	\missingfigure{Circuit Diagrams For Each Output Signal Active During More Than One Opcode}
+	\centering
+	\includegraphics[width=\textwidth]{Figures/ALUDecoderMore1.png}
 	\caption{Circuit Diagrams For Signals Active For More Than One Opcode}
 	\label{fig:DecMultiCirs}
 \end{figure}
