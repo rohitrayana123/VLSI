@@ -30,4 +30,24 @@ Interrupt
 
 Implementation of interrupts (flags, enable\dots)
 
-Synthesis and layout - I/O config, magic vs Ledit maybe?
+
+\subsection{Synthesis}
+
+The controller was synthesised using Cadence Encounter. 
+This provided a gate level netlist which was then used for place and route.
+Both Magic and L-Edit place and route tools were used. 
+
+The Magic place and route had a considerably larger routing channel than L-Edit.
+The cells were all placed in one long row. 
+This was suboptimal as it resulted in a lot of dead space within the floorplan.
+
+The L-Edit place and route provided far better results. 
+The datapath and controller were approximately the same width. 
+The I/Os were able to be positioned around the module to reduce the overall wiring needed in the full floor plan. 
+Most of the datapath control signals were routed to the top of the module to reduce the wiring channel needed between them.
+All the memory access signals were routed to the left of the controller to make easier connections to the pad ring. 
+The controller was also connected to the low nibble of the input data. 
+This was connected at the bottom of the controller to reduce wiring needed. 
+Finally, decoder signals and flag inputs were routed to the right of the control. 
+
+
