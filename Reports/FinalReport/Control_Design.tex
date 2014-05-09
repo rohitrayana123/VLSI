@@ -9,7 +9,7 @@ Typedefs, defined in a global file, are used for some single bit outputs and all
 
 \begin{figure}[ht]
    \centering
-    \includegraphics[width = 0.8\textwidth]{ControlPinout.pdf}
+    \includegraphics[width = 0.9\textwidth]{ControlPinout.pdf}
 		\caption{Inputs, outputs and internal registers of the control block.}% \todo[inline]{Maybe change to IEEE symbols if we have time, AJR: we still have the eagle d-types but I think it would look a bit messy} }
    \label{fig:ControlBlock}
 \end{figure}
@@ -17,7 +17,10 @@ Typedefs, defined in a global file, are used for some single bit outputs and all
 Three main states exist to service the fetch, execute and interrupt stages.
 Five sub states are used within the main states to further coordinate operation.
 The ASM chart in figure~\ref{fig:MainStateASM} describes state changes using the sub state, opcode and interrupt request signal.   
+Linked state machines are are used to produce the 
 When \textbf{nReset} is asserted the machine will return to the first cycle of the fetch state.
+
+
 
 
 \begin{figure}[ht]
@@ -36,12 +39,15 @@ When \textbf{nReset} is asserted the machine will return to the first cycle of t
 
 \subsection{Fetch}
 
+Fetching an instruction from memory requires placing the program counter on the address bus then reading the instruction in to the instruction register. 
+The state machine described in figure~\ref{fig:FetchASM} asserts signals associated with memory access and delays if the slow memory access input, \textbf{nWait}, is set.
+When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main state machine, figure~\ref{fig:MainStateASM}, also make as transition therefore severing the link to this machine. 
 
 \begin{figure}[ht]
    \centering
     \includegraphics[width = \textwidth]{FetchASM.pdf}
-		\caption{ASM chart of sub state transistions in the featch stage.}
-		\label{fig:MainStateASM}
+		\caption{ASM chart of sub state transitions in the fetch stage.}
+		\label{fig:FetchASM}
 \end{figure}
 
 
@@ -50,11 +56,16 @@ When \textbf{nReset} is asserted the machine will return to the first cycle of t
 
 \subsection{Execute}
 
+The instruction fetched from memory is decoded in one cycle
+This is a variable length stage that takes either $1$ or $4$ cycles depending on whether the instruction in the requires memory access.
+After the instruction has been executed the \textbf{IntReq} is used to 
+
+
 \begin{figure}[ht]
    \centering
     \includegraphics[width = \textwidth]{ExecuteASM.pdf}
-		\caption{ASM chart of sub state transistions in the execute stage.}
-		\label{fig:MainStateASM}
+		\caption{ASM chart of sub state transitions in the execute stage.}
+		\label{fig:ExecuteASM}
 \end{figure}
 
 
@@ -63,8 +74,21 @@ When \textbf{nReset} is asserted the machine will return to the first cycle of t
 
 \subsection{Interrupt}
 
+The circuit in figure~\ref{fig:IntReqCircuit} is used to generate a interrupt request.
+To avoid problems introduced by metastability the external \textbf{nIRQ} signal is retimed using two D-types.
+\textbf{IntEnable} can only be set in code using the \textbf{ENAI} instruction.
+\textbf{IntDisable} is set when the processor is interrupted and also in code using the \textbf{DISI} instruction.
+The end register contains \textbf{IntStatus} which is low at reset therefore interrupts are off by default. 
 
-Implementation of interrupts (flags, enable\dots)
+\begin{figure}[ht]
+   \centering
+    \includegraphics[width = \textwidth]{Interrupt.png}
+		\caption{IntReq generation circuit.}
+		\label{fig:IntReqCircuit}
+\end{figure}
+
+
+
 
 
 \subsection{Synthesis}
