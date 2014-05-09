@@ -48,17 +48,29 @@ Bit slicing the logic section was just one of each logic gate followed by a tri-
 
 \begin{figure}[h]
 	\centering
+	\subfloat[Arithmetic Section\label{fig:ArithSlice}]{
 	\includegraphics[scale=0.75]{Figures/ArithSlice.png}
-	\caption{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
-	\label{fig:ArithSlice}
+	}
+	\subfloat[Logic Section\label{fig:LogicSlice}]{
+	\includegraphics[scale=0.75]{Figures/LogicSlice.png}
+	}
+	\caption{Bitsliced Circuit Diagrams for Arithmetic and Logic Sections}
+	\label{fig:ArithLogicSlice}
 \end{figure}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.75]{Figures/LogicSlice.png}
-	\caption{Bitsliced Ciruit Diagram for Logic Section of ALU}
-	\label{fig:LogicSlice}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[scale=0.75]{Figures/ArithSlice.png}
+%	\caption{Bitsliced Ciruit Diagram for Arithmetic Section of ALU}
+%	\label{fig:ArithSlice}
+%\end{figure}
+
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[scale=0.75]{Figures/LogicSlice.png}
+%	\caption{Bitsliced Ciruit Diagram for Logic Section of ALU}
+%	\label{fig:LogicSlice}
+%\end{figure}
 
 Implementing shifting capabilities into individual bits required few logic gates since it is a wire-dominated circuit, but each wire needed to be lined up correctly between slices. 
 This results from this slice section having more dependency on the neighbouring slices than both arithmetic and logic functions. 
@@ -146,7 +158,9 @@ The first one, taken from the k-map, requires 9 non-inverter logic gates.
 This equation cannot be implemented since AND gates with more than 2 inputs are not available. 
 Equation~\ref{eq:DecSUB2} requires 8 gates and is unimplementable. 
 However if inverted using DeMorgan's law to produce Equation~\ref{eq:DecSUB3} it is possible.
-Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}, along with the remaining signals in Equations\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}.
+Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach was used for the remaining signals, also shown in Figure~\ref{fig:DecMultiCirs}. 
+
+Since additional logic needed for flag calculations are implemented in the decoder, the circuit diagram for this portion is also shown in Figure~\ref{fig:DecMultiCirs}. For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. 
 
 \newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \begin{align}
@@ -157,19 +171,15 @@ Since no further improvements could be made, this final equation is used and imp
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.45]{Figures/ALUDecoderMore1.png}
+	\includegraphics[width=\textwidth]{Figures/ALUDecoderMore1v2.png}
 	\caption{Circuit Diagrams For Signals Active For More Than One Opcode}
 	\label{fig:DecMultiCirs}
 \end{figure}
-\todo[inline]{Add ShL and ShR? to this}
-\todo[inline]{Fiks positioning}
-
-For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. 
-Since additional logic needed for flag calculations are implemented in the decoder, the circuit diagram for this portion is also shown in Figure~\ref{fig:GateArray}. 
-\todo[inline,color=green]{HSL - @MW this makes no sense to me, MW - not sure how to reword}
+\todo[inline]{Fig \ref{fig:DecMultiCirs} too small??}
 
 \begin{figure}[h]
-	\missingfigure{Circuit Diagrams For Gate Array and Flag Overhead Logic}
+	\centering
+	\includegraphics[scale=0.75]{Figures/ALUDecoderGateArrayv2.png}
 	\caption{Circuit Diagrams For Gate Array and Flag Overhead Logic}
 	\label{fig:GateArray}
 \end{figure}
@@ -183,7 +193,8 @@ The output to the ALU is available as a direct connection to the rest of the dat
 This register forms a part of a separate module to the ALU. 
 
 \begin{figure}[h]
-	\missingfigure{Modular Diagram of Assembled ALU}
+	\centering
+	\includegraphics[scale=0.75]{Figures/ALUModular.png}
 	\caption{Modular Diagram of Assembled ALU}
 	\label{fig:ALUAssembled}
 \end{figure}
