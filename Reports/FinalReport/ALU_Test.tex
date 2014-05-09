@@ -2,11 +2,7 @@
 %  <+Last Edited: Thu 17 Apr 2014 15:34:48 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Arithmetic Logic Unit}
-\todo[color=cyan, inline]{Explain tests - what is done}
-\todo[color=cyan, inline]{why it is done}
-\todo[color=cyan, inline]{How it verifies everything - why it is complete}
-\todo[color=cyan, inline]{Show simulation results}
-
+\review{Project Management}
 To promote the use of hierarchy within design the ALU is broken down into a number of sub-modules. These have been tested individually to ensure they operate as expected. Then they are combined into 16-bits without decoder for testing the combination of ALU and LLI slices. Since the LLI slices are either a single multiplexor or wires they will not be tested individually. They will form a part of the ALU Block testing. All test results are shown in Appendix~\ref{chap:ALUTestResults}.
 
 \subsection{ALU Slice}
@@ -20,11 +16,13 @@ Testing of the shifting capabilities was done by setting all inter-slice inputs 
 Although shifting operation was as expected, much clearer testing will be done during 16-bit block tests to emulate typical running. 
 
 \subsection{ALU Decoder}
-The main testing of the ALU decoder module requires ensuring a correct response to each possible opcode. Secondary testing covers the flag calculation circuitry and the bit to input for right shifting operations. The test results are shown in Figure~\ref{fig:ALUDecoderRes}, where each line indicates what input changed and which control and flag outputs are active as a result. 
+The main testing of the ALU decoder module requires ensuring a correct response to each possible opcode. This was done by cycling through in-putted opcode values, with assertion checking using an always statement which activates every time an input changes. These check against the logic equations for each output signal given in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. As well as Table~\ref{tab:contrOuts} for single opcode signals. 
+Signals ``UseC'' and ``ShSign'' are still checked for correspondence with this table, even though they are not outputs from the decoder module. 
 
-Basic tests run through each opcode and ensure the outputted signals are as expected from Table~\ref{tab:contrOuts}. The signal {\bf \it CIn\_Slice} is the carry input to the top ALU slice after CIn has been influenced by UseC and SUB. While the signal {\bf \it ShiftIn} is the bit used for right shifting accounting for the current operation and data sign. Subsequent tests ensure correct flags and shifting signals. 
+Flag testing sets the opcode to either ``ADC'' or ``SUC'' and checks each combination of relevant inputs to ensure V, C and  are as expected. N remains untested as there is no logic to test. 
+Shift operations set the 4-bit immediate to a range of values which cover each output Sh8-Sh1 being activated at least once. A full test from 0 to 15 is not needed. The input bit for arithmetic shifting is also tested by enabling/disabling ASign. 
 
 \subsection{ALU Block}
-Testing of 16 connected slices involved a similar approach to an individual slice, but with full 16 bit values. Arithmetic used two random value inputs combined with the possible carry in values. Logic tests are no different. Whilst shifting tests show the correct operation on a given quantity with an equivalent 8-bit left shifting operation for LUI. The LLI module also shows correct concatenation of both inputs. The test results are shown in Figure~\ref{fig:ALUBlockRes}.
-
-
+Testing of 16 connected slices took a similar approach to an individual slice, but with full 16 bit values. Arithmetic used two arbitrary input values combined with each possible carry in value, accounting for both addition and subtraction operation. 
+Logic tests ensure each bit pair is operated upon independently of the rest by using an arbitrary string of bits. 
+Whilst shift tests run through both directions and a number of shifting amounts, similar to slice testing, to show the selected input is shifted by the expected number of bits. Then the ``LUI'' instruction was tested separately to ensure successful 8-bit left shifting operation. Finally ``LLI'' was tested using the same values as in previous tests, to check upper and lower byte concatenation of inputs A and B respectively. 

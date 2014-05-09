@@ -1,15 +1,15 @@
-
+\newgeometry{textheight=592pt} %, textwidth=196mm}
+\begin{minipage}[c]{\linewidth}
 \chapter{Instruction Set Summary}
 \label{chap:AppISS}
-\incomplete{Instruction Set Summary}
 
-\begin{table}[t]
+\vspace{5mm}
+\makebox[\textwidth]{
 \centering
 \footnotesize
-\renewcommand{\arraystretch}{1.2}
-\makebox[\linewidth]{
+\renewcommand{\arraystretch}{1}
 \begin{tabular}{r|c|c|c|c|c|c|c|}
-	\multicolumn{1}{c}{} & \multicolumn{1}{c}{\bf Mnemonic} & \multicolumn{1}{c}{\bf Syntax} & \multicolumn{1}{c}{\bf Semantics} & \multicolumn{1}{c}{\bf Flags} & \multicolumn{1}{c}{\bf Encoding} & \multicolumn{1}{c}{\bf Opcode} & \multicolumn{1}{c}{\bf Cond.} \\
+	\multicolumn{1}{c}{} & \multicolumn{1}{c}{\bf Mnemonic} & \multicolumn{1}{c}{\bf Syntax} & \multicolumn{1}{c}{\bf Semantics} & \multicolumn{1}{c}{\bf Flags} & \multicolumn{1}{c}{\bf } & \multicolumn{1}{c}{\bf Opcode} & \multicolumn{1}{c}{\bf Cond} \\
 	\cline{2-8}
 	1 & ADD   & ADD Rd, Ra, Rb      & Rd $\leftarrow$ Ra + Rb       & c,v,n,z & A & 00010 & - \\
 	2 & ADDI  & ADDI Rd, Ra, \#imm5 & Rd $\leftarrow$ Ra + imm5 	& c,v,n,z & A & 00110 & - \\
@@ -57,4 +57,5 @@
 	\cline{2-8}
 \end{tabular}
 }
-\end{table}
+\end{minipage}
+\restoregeometry
