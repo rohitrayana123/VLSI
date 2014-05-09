@@ -3,13 +3,41 @@
 
 \section{CPU}
 
-Include Sub tests - of slice and decoder (if app)
+A full system test was devised. 
+This consisted of filling the program memory with random data. 
+Two simulations are then run: one with the behavioural model and one on the extracted netlist. 
+If the two models are identical, then the contents of the memory and the registers should match at the end of the simulations.
 
-Explain tests - what is done
+A few issues were encountered in the implementation of the test.
+Firstly, memory operations caused issues. 
+As the memory map contains undefined areas, load operations could possilby load invalid memory into the design.
+Due to the Von Neuman architecture, this invalid memory could be stored back to the program memory and cause the processor to crash. 
+Invalid memory cannot be verified, resulting in the test failing. 
+For this reason, all memory operations were removed from the memory.
+Similarly, jumps were removed also removed to prevent the program jumping to an invalid memory location. 
 
-why it is done.
+Interrupt intstructions were also removed due to the memory returning issue with RETI, STF, LDF, and the lack of verification for the enable and disable interrupt instructions. 
+Finally, due to the unpredicatable nature for some flags after logic operations, any arithmetic instructions with flag depencies (ADCI, ADCIB etc.) are also removed. 
+The removed operations are replaced with ADDIB R0 127 to save repeatedly checking the data. 
 
-How it verifies everything - why it is complete
+Verilog was implemented to stop the simulation when the program counter reach $0x7FF$. 
+The contents of the 8 general purpose registers were then saved to a file. 
 
-Show simulation results
+\todo[inline]{Include verilog listing?}
 
+A python script was written and does the following:
+\begin{enumerate}
+\item Generate 2048 words of random data
+\item Remove any invalid instruction (as described above)
+\item Write operations to a hex file
+\item Run Behavioural simulation
+\item Run Extracted simulation
+\item Compare the saved files
+\end{enumerate}
+
+The comparison checks the final register values and indicate a pass or fail. 
+A pass is issued if all registers match. 
+The test on the processor showed that there is an inconsistency between the two processors.
+However, due to the use of random data, this is not a repeatable test and is difficult to debug the issues. 
+
+\todo[inline]{include a shot of the test results}
