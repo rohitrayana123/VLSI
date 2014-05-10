@@ -91,7 +91,7 @@ initial
     #60 assert(DataOut == DataIn) else begin errors++; $display("ERROR: SysBus incorrect"); end		
 	assert(Ir == DataIn) else begin errors++; $display("ERROR: IR incorrect"); end
 	assert(DataOut == DataIn) else begin errors++; $display("ERROR: SysBus incorrect"); end
-    #50 assert(d.Rs1 == Ir[10:8]) else begin errors++; $display("ERROR: Rs1, op0"); end	//ERROR d.Rs1 == Ir[11:9]???
+    #50 assert(d.Rs1 == Ir[10:8]) else begin errors++; $display("ERROR: Rs1, op0"); end
 	assert(d.Rs2 == Ir[4:2]) else begin errors++; $display("ERROR: Rs2, op0"); end
 	assert(d.Rw == Ir[7:5]) else begin errors++; $display("ERROR: Rw, op0"); end
 	assert(d.ImmProbe == { {8{Ir[7]}}, Ir[7:0]}) else begin errors++; $display("ERROR: Imm, op0"); end
