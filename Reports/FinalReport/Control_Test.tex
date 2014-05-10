@@ -3,6 +3,17 @@
 
 \section{Controller}
 
+Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ but opcode and the $3$ bit branchcode.  
+The instruction register is populated in the fetch stage, which is always the same, so a function \textbf{DoFetch} is used to update the instruction register with different value for testing.
+At this point an umbrella test is used to verify no output of the controller is ever unknown during any state.
+
+After each fetch the variable length execute stage is tested.
+
+
+\todo[inline]{Add listing package, need better machine to test}
+\lstinputlisting[style=C,label=lst:ControlVector.c,caption=Control unit test vector.]{Code/ControlVector.c}
+
+
 Include Sub tests - of slice and decoder (if app)
 
 Explain tests - what is done
