@@ -84,6 +84,9 @@ assign Regs = { Reg7 ,
 		\regBlock_slice_0/Reg2 ,
 		\regBlock_slice_0/Reg1 ,
 		\regBlock_slice_0/Reg0 };
+wire RD1, RD2 ;
+assign RD1 = \mux2_1/active_41_643# ;
+assign RD2 = \mux2_2/active_41_643# ;
 //logic Clock ;
 //assign Clock = \mux2_3/Clock ;
 //logic nReset = \mux2_3/nReset ;

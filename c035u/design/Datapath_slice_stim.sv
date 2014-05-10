@@ -111,28 +111,45 @@ initial
     #500 nReset = 1;
     //Only Testing Unique sections as sub-modules are tested already and just extended to top/bottom
     //Section A
-    #500 assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
+	$display("Starting Section A Tests");
+	$display("Sel | AluOut SysBus | WData");
+	$display("    |  (0)    (1)   |      ");
+    #500 $display(" %b  |   %b      %b    |   %b", WdSel, AluOut, SysBus, ds.WData);
+	assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
     #500 AluOut = 1;
-    #500 assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
+    #500 $display(" %b  |   %b      %b    |   %b", WdSel, AluOut, SysBus, ds.WData);
+	 assert(ds.WData == AluOut) else begin $display("ERROR:WData - %b, %b", ds.WData, AluOut); errors++; end
     #500 WdSel = 1;
-    #500 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
+    #500 $display(" %b  |   %b      %b    |   %b", WdSel, AluOut, SysBus, ds.WData);
+	 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
     #500 DR_SysBus = 1;
-    #500 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
+    #500 $display(" %b  |   %b      %b    |   %b", WdSel, AluOut, SysBus, ds.WData);
+	 assert(ds.WData == SysBus) else begin $display("ERROR:WData - %b, %b", ds.WData, DR_SysBus); errors++; end
     //Section B
-    #500 Rw = 8'b00000001; Rs1 = 8'b00000000; Rs2 = 8'b00000000;
+	$display("Starting Section B Tests");
+	$display("Op1 Op2 | Rd1 Pc  Imm Rd2  0  | A B ");
+	$display("        | (0) (1) (0) (1) (2) |     ");
+    #500 Rw = 8'b00000001; Rs1 = 8'b00000001; Rs2 = 8'b00000001;
     #500 Clock = 1;
+	 $display("Clock->high: WData = %b regs = %b, Rw = %b", ds.WData, ds.Regs, Rw);
     #500 Clock = 0;
+	 $display("Clock->low: WData = %b regs = %b, Rw = %b", ds.WData, ds.Regs, Rw);
     //#500 assert(ds.Regs == ds.WData) else begin $display("ERROR: Regs not written"); errors++; end
-    #500 assert(A == ds.Rd1) else begin $display("ERROR: A, Op1Sel=0"); errors++; end
+    #500 $display(" %d   %d  |  %b   %b   %b   %b      | %b %b ", Op1Sel, Op2Sel, ds.Rd1, ds.Pc, ds.Imm, ds.Rd2, A, ds.B);
+	 assert(A == ds.RD1) else begin $display("ERROR: A, Op1Sel=0"); errors++; end
     #500 Op1Sel = 1;
-    #500 assert(A == ds.Pc) else begin $display("ERROR: A, Op1Sel=1"); errors++; end
+    #500 $display(" %d   %d  |  %b   %b   %b   %b      | %b %b ", Op1Sel, Op2Sel, ds.Rd1, ds.Pc, ds.Imm, ds.Rd2, A, ds.B);
+	 assert(A == ds.Pc) else begin $display("ERROR: A, Op1Sel=1"); errors++; end
 	 assert(ds.B == ds.Imm) else begin $display("ERROR: B, Op2Sel=0"); errors++; end
     #500 Op2Sel = 1;
-    #500 assert(ds.B == ds.Rd2) else begin $display("ERROR: B, Op2Sel=1"); errors++; end
+    #500 $display(" %d   %d  |  %b   %b   %b   %b      | %b %b ", Op1Sel, Op2Sel, ds.Rd1, ds.Pc, ds.Imm, ds.Rd2, A, ds.B);
+	 assert(ds.B == ds.RD2) else begin $display("ERROR: B, Op2Sel=1"); errors++; end
     #500 Op2Sel = 2;
-    #500 assert(ds.B == 0) else begin $display("ERROR: B, Op2Sel=2"); errors++; end
+    #500 $display(" %d   %d  |  %b   %b   %b   %b      | %b %b ", Op1Sel, Op2Sel, ds.Rd1, ds.Pc, ds.Imm, ds.Rd2, A, ds.B);
+	 assert(ds.B == 0) else begin $display("ERROR: B, Op2Sel=2"); errors++; end
     #500 Op2Sel = 3; 
-    #500 assert(ds.B == 0) else begin $display("ERROR: B, Op2Sel=3"); errors++; end
+    #500 $display(" %d   %d  |  %b   %b   %b   %b      | %b %b ", Op1Sel, Op2Sel, ds.Rd1, ds.Pc, ds.Imm, ds.Rd2, A, ds.B);
+	 assert(ds.B == 0) else begin $display("ERROR: B, Op2Sel=3"); errors++; end
 
     #500 if(errors == 0)
 		$display("Simulation PASSED");

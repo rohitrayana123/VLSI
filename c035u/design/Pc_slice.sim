@@ -7,7 +7,7 @@ n Pc GND! trisbuf_1/active_40_335# 7 30 2961 401
 n trisbuf_1/active_40_335# GND! trisbuf_1/active_74_274# 7 30 2995 340
 n PcEn trisbuf_1/active_74_274# SysBus 7 30 3038 340
 n PcEn trisbuf_1/active_84_558# GND! 7 30 3070 274
-p mux2_4/Y Vdd! scanreg_1/active_35_623# 7 48 2236 689
+p PcIn Vdd! scanreg_1/active_35_623# 7 48 2236 689
 p PcWe scanreg_1/active_35_623# Vdd! 7 48 2266 689
 p scanreg_1/active_88_197# Vdd! scanreg_1/active_95_623# 7 48 2296 689
 p mux2_4/Test scanreg_1/active_95_623# scanreg_1/active_10_205# 7 48 2340 689
@@ -35,7 +35,7 @@ p scanreg_1/active_337_438# scanreg_1/nQ Vdd! 7 48 2646 504
 p scanreg_1/active_329_562# Vdd! scanreg_1/active_337_438# 7 48 2687 504
 p scanreg_1/active_362_643# scanreg_1/active_337_438# Vdd! 7 48 2749 504
 n scanreg_1/active_10_205# GND! scanreg_1/active_253_328# 7 30 2454 394
-n mux2_4/Y scanreg_1/active_10_205# scanreg_1/active_35_205# 7 30 2236 271
+n PcIn scanreg_1/active_10_205# scanreg_1/active_35_205# 7 30 2236 271
 n PcWe scanreg_1/active_35_205# scanreg_1/active_65_205# 7 30 2266 271
 n scanreg_1/active_88_197# scanreg_1/active_65_205# GND! 7 30 2296 271
 n mux2_4/Test GND! scanreg_1/active_139_205# 7 30 2340 271
@@ -63,14 +63,14 @@ p PcSel[2] Vdd! mux2_4/active_41_643# 7 48 2050 709
 p mux2_4/active_41_252# mux2_4/active_41_643# mux2_4/active_41_317# 7 48 2080 709
 p mux2_3/Y mux2_4/active_41_317# mux2_4/active_41_643# 7 48 2107 709
 p PCI_Value mux2_4/active_41_643# Vdd! 7 48 2134 709
-p mux2_4/active_41_317# Vdd! mux2_4/Y 7 48 2165 709
+p mux2_4/active_41_317# Vdd! PcIn 7 48 2165 709
 p PcSel[2] Vdd! mux2_4/active_41_252# 7 48 2050 630
 n PcSel[2] mux2_4/active_16_317# mux2_4/active_41_317# 7 30 2050 383
 n mux2_4/active_41_252# mux2_4/active_41_317# mux2_4/active_71_317# 7 30 2080 383
 n mux2_3/Y mux2_4/active_71_317# GND! 7 30 2107 383
 n PCI_Value GND! mux2_4/active_16_317# 7 30 2134 383
 n PcSel[2] GND! mux2_4/active_41_252# 7 30 2050 318
-n mux2_4/active_41_317# GND! mux2_4/Y 7 30 2165 318
+n mux2_4/active_41_317# GND! PcIn 7 30 2165 318
 p PcSel[1] Vdd! mux2_3/active_41_643# 7 48 1858 709
 p mux2_3/active_41_252# mux2_3/active_41_643# mux2_3/active_41_317# 7 48 1888 709
 p mux2_0/Y mux2_3/active_41_317# mux2_3/active_41_643# 7 48 1915 709
