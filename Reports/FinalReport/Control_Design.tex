@@ -88,6 +88,28 @@ The end register contains \textbf{IntStatus} which is low at reset therefore int
 \end{figure}
 
 
+Entering an interrupt service routine (ISR) is completely handled in hardware. 
+Interrupts are disabled and override functionality is used to decrement the SP therefore allowing the PC to be pushed to the stack.
+The PC is forced to address $0$x$0010$ which contains the code for ISR. 
+The first operation in the ISR is \textbf{STF} which also places the flags, located in the control unit, on the stack.
+
+When finished the second to last operation, \textbf{LDF}, loads the flags back in to the control unit.
+This is similar to a \textbf{POP} operation but writes to the control unit instead of a general purpose register. 
+The final operation is a \textbf{RETI} which again is similar but writes to the PC.
+
+A bidirectional data interface to the control unit is required to facilitate these operations. 
+Figure~\ref{fig:FlagCircuit} contains the circuit used to load and store flags inside the control unit.
+The $4$ bit word containing the flags is can be sourced from either the ALU or the bottom bits of SysBus. 
+When storing the flags in memory the output of the status register must be placed on SysBus where the upper $12$ bits are all set to zero;  
+
+\begin{figure}[ht]
+   \centering
+    \includegraphics[width = 0.7\textwidth]{ControlIF.png}
+		\caption{Control unit flag interface.}
+		\label{fig:FlagCircuit}
+\end{figure}
+
+
 
 
 
