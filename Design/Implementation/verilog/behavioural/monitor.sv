@@ -189,7 +189,6 @@ assign PcProbe = system.CPU.CPU_core.datapath.Pc;
 `ifdef extracted
 assign PcProbe = system.CPU.Pc;
 integer out;
-wire [8:0][15:0] regs;
 `endif
 always @ (posedge Clock)
 	if (PcProbe >= 16'h07FF)

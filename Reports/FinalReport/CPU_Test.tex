@@ -20,15 +20,19 @@ Interrupt intstructions were also removed due to the memory returning issue with
 Finally, due to the unpredicatable nature for some flags after logic operations, any arithmetic instructions with flag depencies (ADCI, ADCIB etc.) are also removed. 
 The removed operations are replaced with ADDIB R0 127 to save repeatedly checking the data. 
 
-Verilog was implemented to stop the simulation when the program counter reach $0x7FF$. 
-The contents of the 8 general purpose registers were then saved to a file. 
-
-\todo[inline]{Include verilog listing?}
+%Verilog was implemented to stop the simulation when the program counter reach $0x7FF$. 
+%The contents of the 8 general purpose registers were then saved to a file. 
+The code implemented in Verilog to save the registers is shown in Listing~\ref{lst:wn:verilog}.
+The Program Counter is probed depending on which simulation is been run.
+On each clock, it is checked.
+If the Program Counter is greater than or equal to $0x07FF$ (the end of valid memory), the simulation is terminated.
+The values of the registers are saved to a file. 
+%\todo[inline]{Include verilog listing?}
 
 A python script was written and does the following:
 \begin{enumerate}
 \item Generate 2048 words of random data
-\item Remove any invalid instruction (as described above)
+\item Remove any invalid instructions (as described above)
 \item Write operations to a hex file
 \item Run Behavioural simulation
 \item Run Extracted simulation
@@ -37,8 +41,24 @@ A python script was written and does the following:
 
 The comparison checks the final register values and indicate a pass or fail. 
 A pass is issued if all registers match. 
-The test on the processor showed that there is an inconsistency between the two processors.
+The test on the processor showed that there is an inconsistency between the two processors. 
+The output of the test is shown in Listing~\ref{lst:wn:output}.
 However, due to the use of random data, this is not a repeatable test and is difficult to debug the issues. 
 
-\lstinputlisting[label=lst:wn:verilog,caption=Whitenoise test verilog]{../../Design/Implementation/verilog/behavioural/monitor.sv}
-\todo[inline]{include a shot of the test results}
+\lstinputlisting[style=sverilog,firstline=184,label=lst:wn:verilog,caption=Whitenoise test verilog]{../../Design/Implementation/verilog/behavioural/monitor.sv}
+
+\begin{lstlisting}[label=lst:wn:output,caption={Output of the white noise test}]
+Reg	B	E	P/F
+---------------------------
+0	007f	007f	P
+1	5504	0073	F
+2	faff	faff	P
+3	581a	581a	P
+4	aafc	aafc	P
+5	04d4	04d4	P
+6	7cff	0001	F
+7	faf4	faf4	P
+White Noise Test Failed.
+\end{lstlisting}
+
+%\todo[inline]{include a shot of the test results}
