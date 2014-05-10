@@ -2,14 +2,16 @@
 %  <+Last Edited: Thu 17 Apr 2014 15:35:14 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Program Counter}
+%\todo[color=cyan, inline]{Include Sub tests - of slice and decoder (if app)}
+%\todo[color=cyan, inline]{Explain tests - what is done}
+%\todo[color=cyan, inline]{why it is done.}
+%\todo[color=cyan, inline]{How it verifies everything - why it is complete}
+%\todo[color=cyan, inline]{Show simulation results}
+\todo[inline]{Add text output to stim files for screenshot if needed}
 
-Include Sub tests - of slice and decoder (if app)
+This module contains both the program counter and link register, which could be tested independently by checking the response to different select signals. The PC was tested by setting PcSel to each possible value, then causing a change in the value of that input to ensure the value of PC reflects the change. This covers incrementing, SysBus, AluOut and constant inputs. 
+\todo[inline]{Extend tests for load from LR}
 
-Explain tests - what is done
+The link register was then tested in the same manner for loading from SysBus and an incremented program counter value. The value of each register was read from the system bus with assertions to ensure correct behaviour. 
 
-why it is done.
-
-How it verifies everything - why it is complete
-
-Show simulation results
-
+\todo[inline]{@HL This can be finished once testing of Pc\_Block has assertions added}
