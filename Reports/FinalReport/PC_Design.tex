@@ -1,7 +1,7 @@
 %  PC_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:01:32 BST
-%  <+Last Edited: Thu 17 Apr 2014 15:35:06 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 15:17:40 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Program Counter and Link Register}
 
@@ -11,7 +11,7 @@ The program counter and link register were implemented in one module.
 The module has two load enable registers. 
 The data source logic and an adder for incrementing the program counter is also implemented in this module.
 
-\noindent The program counter sources are:
+The program counter sources are:
 \begin{enumerate}
 \item Incremented program counter - for normal sequential operation
 \item Link Register - for returning from a subroutine call
@@ -20,7 +20,7 @@ The data source logic and an adder for incrementing the program counter is also 
 \item ISR Location - a constant defined for the location of the interrupt service routine in memory.
 \end{enumerate}
 
-\noindent The link register has two inputs:
+The link register has two inputs:
 \begin{enumerate}
 \item Incremented program counter - for storing the return address when executing a function call
 \item System Bus - for retrieving a return address from the stack 
@@ -35,8 +35,8 @@ The slice is implemented to match the circuit diagram.
 %Multiplexors are used instead of tristate buffers as there is little wiring involved. 
 Multiplexors are used instead of tristate buffers since there are few data sources used which are not significantly distributed around the datapath to require a bus. 
 It also removes the need for a decoder.
-\todo[inline, color=green]{MW:Ive reworded this to better wexplain use of muxes over tristates}
-\todo[inline, color=green]{MW:Some of this is surely implied, could you not say more? @seblovett}
+%\todo[inline, color=green]{MW:Ive reworded this to better wexplain use of muxes over tristates}
+\todo[inline, color=green]{MW:Some of this is surely implied, could you not say more? @seblovett; HSL: It's a very simple module, not much to say here really.}
 
 \begin{figure}
 \includegraphics[width=\textwidth]{../../eagle/PcBlock/PcBlock_slice.png}

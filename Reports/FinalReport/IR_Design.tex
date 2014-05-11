@@ -1,7 +1,7 @@
 %  IR_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:01:50 BST
-%  <+Last Edited: Mon 05 May 2014 11:36:08 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 15:18:54 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Instruction Register}
 
@@ -11,9 +11,10 @@ The instruction register module has a load enable register for storing of the in
 It also has the immediate selection and sign extension circuitry.
 The two immediate values are either a five bit signed value located at position [4:0] of the instruction, or an eight bit signed value at [7:0] of the instruction.
 Only the \textbf{LLI} instruction does not use a signed immediate value. 
-The ALU therefore ignores the top eight bits of the immediate value. 
-ALU design is discussed further in Section~\ref{sect:design:alu}.
-\todo[inline, color=green]{MW: Is ALU comment needed as it is discussed later?}
+This is implemented by the ALU, discussed in Section~\ref{sect:design:alu}.
+%The ALU therefore ignores the top eight bits of the immediate value. 
+%ALU design is discussed further in Section~\ref{sect:design:alu}.
+%\todo[inline, color=green]{MW: Is ALU comment needed as it is discussed later?}
 
 
 %Use of hierarchy / blocks - i.e. bit sliced, decoder
