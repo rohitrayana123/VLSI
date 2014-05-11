@@ -1,5 +1,5 @@
 %  CPU_Test.tex
-%  <+Last Edited: Thu 17 Apr 2014 15:36:06 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 09:50:12 BST by seblovett on seblovett-Ubuntu +>
 
 \section{CPU}
 
@@ -45,7 +45,10 @@ The test on the processor showed that there is an inconsistency between the two 
 The output of the test is shown in Listing~\ref{lst:wn:output}.
 However, due to the use of random data, this is not a repeatable test and is difficult to debug the issues. 
 
-\lstinputlisting[style=sverilog,firstline=184,label=lst:wn:verilog,caption=Whitenoise test verilog]{../../Design/Implementation/verilog/behavioural/monitor.sv}
+\todo[inline,color=red]{BUG: When I include the definitions.tex and change the style of the verilog listing, some contention happens with the xcolor package and breaks things.}
+\lstinputlisting[firstline=184,label=lst:wn:verilog,caption=Whitenoise test verilog]{../../Design/Implementation/verilog/behavioural/monitor.sv}
+
+
 
 \begin{lstlisting}[label=lst:wn:output,caption={Output of the white noise test}]
 Reg	B	E	P/F
