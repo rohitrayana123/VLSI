@@ -6,7 +6,7 @@
 
 \section{Arithmetic Logic Unit}\label{sect:design:alu}
 \review{Arithmetic Logic Unit Design}
-\todo[color=cyan, inline]{Layout in silicon}
+%\todo[color=cyan, inline]{Layout in silicon}
 
 The ALU is the central unit for performing calculations within the datapath. 
 Most instructions use the ALU as part of their operation and as such this module needs to interpret every instruction and perform the necessary function. 
@@ -84,10 +84,10 @@ The circuit diagram is shown in Figure~\ref{fig:LogicSlice}.
 
 Implementing shifting capabilities into individual bits required few logic gates since it is a wire-dominated circuit, but each wire needed to be lined up correctly between slices. 
 This results from this slice section having more dependency on the neighbouring slices than both arithmetic and logic functions. 
-The left and right shifting have been implemented using separate hardware. 
-To support arithmetic shifting, the shifted value into a right shift can be either a zero and the current operand's sign.
+The left and right shifting have been implemented using separate hardware, with a logarithmic strategy. 
+To support arithmetic shifting, the shifted value into a right shift can be either a zero or the current operand's sign.
 Implementation of this section is shown in Figure~\ref{fig:ShiftSlice}. 
-\todo[inline]{HSL: explain the operation of the shifter maybe?}
+\todo[inline]{HSL: explain the operation of the shifter maybe? MW:How? its just wires}
 
 \begin{figure}[h]
 	\centering
