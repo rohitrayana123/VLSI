@@ -1,7 +1,7 @@
 %  ALU_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:00:33 BST
-%  <+Last Edited: Sun 11 May 2014 21:25:26 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 21:44:19 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Arithmetic Logic Unit}\label{sect:design:alu}
@@ -37,8 +37,8 @@ It was decided to add an additional input to the module for the 4 bit immediate 
 Otherwise the lowest four slices of the ALU would each need different routing to each segment, reducing how much of each slice could be identically duplicated. 
 
 Initial design of the ALU module was based upon the planned datapath layout as shown in Figure~\ref{fig:BasicALUSym}. 
-From this it was seen that there may be some difficulty with interpreting the opcodes provided. 
-Each slice would have to individually interpret the opcode, using much more space than is necessary due to replicated hardware. 
+From this it was seen that there may be some difficulty with interpreting the Opcodes provided. 
+Each slice would have to individually interpret the Opcode, using much more space than is necessary due to replicated hardware. 
 Observations showed that different groups of instructions would perform the same operation within the ALU, therefore a separate decoder module was implemented to reduce required area.
 
 \subsection{ALU Slice}
@@ -148,7 +148,7 @@ Signals \textit{Sh8}, \textit{Sh4}, \textit{Sh2} and \textit{Sh1} enable each se
 Signal \textit{LLI} activates the LLI module after no operation is performed within the main ALU. 
 While \textit{UseC} and \textit{ShInBit} are internal signals indicating use of the carry flag from previous instruction and the bit to shift in respectively. 
 The remaining signals enable the relevant tristate buffers to output the result. It uses one hot encoding to prevent contention. 
-The one unused opcode does not activate any signals to reduce the number of gates within the decoder. 
+The one unused Opcode does not activate any signals to reduce the number of gates within the decoder. 
 
 \begin{align}
 	\text{FAOut} &= \bar{A} + BD\bar{E} \label{eq:DecBasicS}\\
@@ -163,19 +163,21 @@ The one unused opcode does not activate any signals to reduce the number of gate
 	\text{ShR} &= ABC\bar{D} \label{eq:DecBasicF}
 \end{align}
 
-By using the opcodes and K-map groupings defined in Table~\ref{tab:OpKmaps}, logic equations have been formed as shown in Equations~\eqref{eq:DecBasicS}~to~\eqref{eq:DecBasicF}. 
-Where the letters A-E correspond to bits 4-0 of the opcode. 
+By using the Opcodes and K-map groupings defined in Table~\ref{tab:OpKmaps}, logic equations have been formed as shown in Equations~\eqref{eq:DecBasicS}~to~\eqref{eq:DecBasicF}. 
+Where the letters A-E correspond to bits 4-0 of the Opcode. 
 Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. 
 Since the negated output gates could have more inputs, as well as being physically smaller, they were more favourable to use. 
 Some potential options for the logic equation for the \textit{SUB} signal are shown in Equations~\eqref{eq:DecSUB1}~and~\eqref{eq:DecSUB2}. 
-The first one, taken from the K-map, requires 9 non-inverter logic gates. 
+The first one, taken from the K-map, requires 9 non-inverting logic gates. 
 %To simplify design, inverters were not considered for optimization as both inverted and non-inverted inputs were made available globally. 
 This equation cannot be implemented since \texttt{AND} gates with more than 2 inputs are not available. 
-Equation~\eqref{eq:DecSUB2} requires 8 gates and is unimplementable. 
+Equation~\eqref{eq:DecSUB2} requires 8 gates and is unimplementable for the same reason. 
 However if inverted using DeMorgan's law to produce Equation~\eqref{eq:DecSUB3} it is possible.
 Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach was used for the remaining signals, also shown in Figure~\ref{fig:DecMultiCirs}. 
 
-Since additional logic needed for flag calculations are implemented in the decoder, the circuit diagram for this portion is also shown in Figure~\ref{fig:DecMultiCirs}. For the control signals which respond to only one opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. 
+The additional logic needed for the flag calculations is implemented in the decoder. 
+However, the circuit diagram for this portion is shown in Figure~\ref{fig:DecMultiCirs}. 
+For the control signals which respond to only one Opcode, a gate array was used, as shown in Figure~\ref{fig:GateArray}. 
 
 \newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \begin{align}
