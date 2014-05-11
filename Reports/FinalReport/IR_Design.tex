@@ -18,7 +18,7 @@ ALU design is discussed further in Section~\ref{sect:design:alu}.
 %Use of hierarchy / blocks - i.e. bit sliced, decoder
 The instruction register module is separated into three different bit slices.
 The circuit diagrams for these are seen in Figure~\ref{fig:ir:circuit}.
-It cannot be broken into sixteen identical modules due to needing sign extension. 
+It cannot be broken into sixteen identical modules due to the sign extension needed.
 
 The data for the instruction register is only read from the system bus. 
 The instruction is then directly fed out of the module to be passed to the controller or register decoding blocks.

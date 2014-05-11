@@ -6,11 +6,11 @@
 
 \chapter{Architecture}
 
-\incomplete{Architecture}
+\review{Architecture}
 
-Design of the datapath architecture.
+%Design of the datapath architecture.
 
-Refer to the research done and how this influenced the design
+%Refer to the research done and how this influenced the design
 
 The architecture for the processor was initially designed on a MIPS datapath.
 Support was then added to allow the ARM Thumb architecture (see Chapter~\ref{ch:is}) to be executed on the datapath.
@@ -20,6 +20,11 @@ The full datapath diagram is seen in Figure~\ref{fig:architecture}.
 A Link Register is used to improve the speed when calling leaf functions.
 The original design also included a dedicated Stack Pointer, however this was later removed during the project.
 The convention of using Register 7 as the Stack Pointer was instead used. 
+Both of these aspects were added from the recomendations from the research report on subroutines.
+
+The processor supports four flags: carry, overflow, negative and zero. 
+It is a two operand register-register design.
+There are eight general purpose registers with no dummy register. 
 
 The datapath was also modified during the project to allow for interrupt support.
 These changes included a input to the Program Counter to jump to a specific location, reading and writing of the status register from and to the system bus, and input of the Program Counter directly from the system bus. 

@@ -27,14 +27,13 @@ However, all signals are allowed to be off if no register is to be written to.
 The circuit diagram for the bit slice is seen in Figure~\ref{fig:reg:slice}.
 
 \begin{figure}
+\centering
 \includegraphics[angle=90,height=\textheight]{../../eagle/regBlock/regBlock_slice.png}
 \caption{Circuit diagram for the register block slice.}
 \label{fig:reg:slice}
 \end{figure}
 
-The read decoder is based around a 3-8 decoder. 
-For each 3 bit input, one and only one output should be high. 
-The logic functions used are summarised in Table~\ref{tab:reg:decoder}.
+
 
 \begin{table}
 \caption{Decoder Logic Functions}
@@ -53,6 +52,9 @@ Register Number & Logic Select Function \\
 \end{tabular}
 \end{table}
 
+The read decoder is based around a 3-8 decoder. 
+For each 3 bit input, one and only one output should be high. 
+The logic functions used are summarised in Table~\ref{tab:reg:decoder}.
 The circuit diagram is seen in Figure~\ref{fig:reg:decoder}.
 This is for one of the decoders needed. 
 The two read decoders are identical.
@@ -60,6 +62,7 @@ However, the write decoder must also use a write enable function.
 This is done by using the same logic functions seen in Table~\ref{tab:reg:decoder}, but the resulting signals are then \texttt{AND}ed with the register write enable signal. 
 
 \begin{figure}
+\centering
 %\missingfigure{Decoder circuit diagram}
 \includegraphics[width=\textwidth]{../../eagle/regBlock/regBlock_decoder.png}
 \caption{Circuit diagram for the register decoder.}
