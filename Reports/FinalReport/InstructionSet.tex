@@ -71,6 +71,8 @@ While an additional 3 bit field in interrupt operations maintains location consi
 
 \newcolumntype{B}{c}
 \begin{table}[h]
+\caption{General Instruction Formatting}
+\label{tab:GIF}
 \def\arraystretch{1.5}
 \centering
 \footnotesize
@@ -97,8 +99,7 @@ While an additional 3 bit field in interrupt operations maintains location consi
 	\hline
 \end{tabular}
 }
-\caption{General Instruction Formatting}
-\label{tab:GIF}
+
 \end{table}
 
 To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:GIF}. 
@@ -131,6 +132,8 @@ minimum width=1.2cm,align=center,text depth=.25ex,outer sep=1.5pt]
 \darkercolor{green}{60}{darkgreen}
 
 \begin{table}[b]
+	\caption{Opcode Assignment K-Maps}
+	\label{tab:OpKmaps}
 	\def\arraystretch{1.5}
 	\centering
 	\footnotesize
@@ -148,8 +151,7 @@ minimum width=1.2cm,align=center,text depth=.25ex,outer sep=1.5pt]
 		\cline{1-4}\cline{6-9}
 		\multicolumn{1}{c}{} & \multicolumn{1}{c}{\textcolor{blue}{$\bullet$ FAOut}} & \multicolumn{1}{c}{\textcolor{red}{$\bullet$ ShOut}} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textcolor{darkgreen}{$\bullet$ SUB}} & \multicolumn{1}{c}{\textcolor{orange}{$\bullet$ ShR}} & \multicolumn{1}{c}{} \\
 	\end{tabular}
-	\caption{Opcode Assignment K-Maps}
-	\label{tab:OpKmaps}
+
 	
 	\begin{tikzpicture}[overlay]
 		%Define path of circles
@@ -231,6 +233,8 @@ Since interrupts are only used in the controller, and added as they were deemed 
 The code assignments are shown in Table~\ref{tab:CondAssign:icond}. 
 
 \begin{table}[h!]
+\caption{Condition Code Assignments}
+\label{tab:CondAssign}
 \def\arraystretch{1.2}
 \centering
 \footnotesize
@@ -265,6 +269,5 @@ The code assignments are shown in Table~\ref{tab:CondAssign:icond}.
 	\end{tabular}
 	\hspace{.5cm}
 }
-\caption{Condition Code Assignments}
-\label{tab:CondAssign}
+
 \end{table}
