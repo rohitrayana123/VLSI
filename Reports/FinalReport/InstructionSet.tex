@@ -103,7 +103,7 @@ This was adapted for all other instruction types, and reordered to ensure immedi
 This was to make sign extension of immediate values in the datapath easier since they are always in the same location.
 It was also necessary to align all the destination and source registers to maintain consistency between instructions, aiding datapath simplicity. 
 
-Allocation of opcodes was done using k-map design with the arrangement designated according to the operation needing to be performed within the ALU module. 
+Allocation of opcodes was done using K-map design with the arrangement designated according to the operation needing to be performed within the ALU module. 
 This was because this allocation would have the greatest effect on the amount of logic needed for the ALU decoder. 
 With the resultant mapping shown in Table~\ref{tab:OpKmaps}, with the important groupings highlighted. 
 The four groups shown correspond to command signals between the ALU and decoder which need to be active for more than one instruction. 

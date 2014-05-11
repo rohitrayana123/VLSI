@@ -3,8 +3,8 @@
 
 \section{CPU}
 
-\todo[inline, color=green]{MW:State its a white noise test}
-A full system test was devised. 
+
+A full system white noise test was devised. 
 This consisted of filling the program memory with random data. 
 Two simulations are then run: one with the behavioural model and one on the extracted netlist. 
 If the two models are identical, then the contents of the memory and the registers should match at the end of the simulations.
@@ -25,7 +25,6 @@ The removed operations are replaced with ADDIB R0 127 to save repeatedly checkin
 %The contents of the 8 general purpose registers were then saved to a file. 
 The code implemented in SystemVerilog to save the registers is shown in Listing~\ref{lst:wn:verilog}.
 The Program Counter is probed depending on which simulation is being run, and checked on the rising edge of each clock pulse. %On each clock, it is checked.
-\todo[inline, color=green]{MW:Ive combined sentense and expanded this a little}
 If the Program Counter is greater than or equal to $0x07FF$ (the end of valid memory), the simulation is terminated.
 The values of the registers are saved to a file. 
 %\todo[inline]{Include verilog listing?}
@@ -48,7 +47,7 @@ However, due to the use of random data, this is not a repeatable test and it is 
 
 \todo[inline,color=red]{BUG: When I include the definitions.tex and change the style of the verilog listing, some contention happens with the xcolor package and breaks things.}
 \inote{maybe move this listing to appendix - MW:Agreed, also may look better with the black border used in programmers guide}
-\lstinputlisting[firstline=184,label=lst:wn:verilog,caption=SystemVerilog Whitenoise Test]{../../Design/Implementation/verilog/behavioural/monitor.sv}
+\lstinputlisting[style=sverilog,firstline=184,label=lst:wn:verilog,caption=SystemVerilog Whitenoise Test]{../../Design/Implementation/verilog/behavioural/monitor.sv}
 
 \todo[inline, color=green]{MW:Center this listing}
 \begin{lstlisting}[label=lst:wn:output,caption={Output of the white noise test}]

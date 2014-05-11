@@ -17,10 +17,8 @@ The one hot coding output is then checked to be as expected for the current inpu
 This is repeated for each read decoder, and the write decoder is verified to only output correctly when the write enable signal is high. 
 
 The full test uses a ``task'' code block to write to a register and read the data back.
-\todo[inline, color=green]{MW:I assume you were talking about the SV Task code blocks?}
 The data is then verified to be correct on both read ports.
 This process is repeated 100 times to exercise different data on all the registers. 
-\todo[inline, color=green]{MW:Why do 100 repetitions? surely that is not needed, otherwise explain}
 Assertions are used to give a final pass/fail result allowing quick verification of the module.
 The tests ensure the read buffers and the writing to each register is fully functional.
 
@@ -28,5 +26,4 @@ The tests ensure the read buffers and the writing to each register is fully func
 
 %How it verifies everything - why it is complete
 
-\inote{Register Test : Show simulation results}
 

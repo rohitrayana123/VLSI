@@ -2,15 +2,13 @@
 %  <+Last Edited: Thu 17 Apr 2014 15:35:51 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Datapath}
-\review{Datapath Test}
+
 %\todo[color=cyan, inline]{Include Sub tests - of slice and decoder (if app)}
 %\todo[color=cyan, inline]{Explain tests - what is done}
 %\todo[color=cyan, inline]{why it is done.}
 %\todo[color=cyan, inline]{How it verifies everything - why it is complete}
 %\todo[color=cyan, inline]{Show simulation results}
-\todo[inline]{Fix slice testing problems}
-\todo[inline]{Main - Change testing values to ensure changes to output}
-\todo[inline]{(Operand Selection)}
+
 
 Testing of the complete datapath was done at both the slice level and fully assembled. These modules are highly hierarchical and as such each sub-module would have been tested during the implementation of it. Since the datapath slice is simply an accumulation of sub-modules and some multiplexors, only the top-level circuitry needs to be tested. This was made up of input selection multiplexors for regBlock and the ALU. The first was tested by changing the inputs AluOut and SysBus and switching between them, asserting if the output is correct. A similar approach was taken for the remaining logic.
 
