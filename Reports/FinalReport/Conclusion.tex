@@ -7,19 +7,23 @@
 \chapter{Conclusion}
 %\incomplete{Conclusion}
 \review{Conclusion}
+\todo[inline, color=green]{MW:Ive expanded alot on what was here for more overview status of system and some evaluative conclusions}
 
-The processor designed is a 16 bit RISC architecture.
-The layout is fully complete and design rule checked.
-
+The processor designed is a 16 bit RISC architecture which has a fully completed layout and is design rule checked. 
+With added novel functionality including; multi-bit shifting, stack-specific operation \texttt{PUSH} and \texttt{POP}, varied length immediate value support and 8 GPRs with dedicated link register and program counter. 
 Each module has been individually tested and verified.
-However, there is a discrepancy between the Verilog behavioural model and the extracted layout.
-In the test programs, this discrepancy was not noticed. 
-It is not known if the bug exists in the layout or the Verilog.
+However, there is a discrepancy between the behavioural model and the extracted layout.
+In the individual modular test sequences, this discrepancy was not noticed. 
+It is not known if the bug exists in the layout or the behavioural model. 
 
 Appendix~\ref{ch:pm} discusses the workings of the group and the project management.
 This is rounded off with individual reflections from group members.
 Appendix~\ref{ch:dol} shows the overall Division of Labour within the group for the entire project.
 
-Overall, the project has been a success. 
-The processor is functional and includes advanced features such as interrupts.
-Given the size of the group, the level of functionality gained and the progress made is higher than the original expectations of the group.
+Given the size of the group, the level of functionality gained and the progress made is higher than the original expectations of the group. 
+However this has lead to a less optimized design due to the limited manpower available. 
+As with interrupt support being an additional aspect not forming a part of the initial design. 
+It also became apparent from the ``Balloon Debate'' that our design focussed more advanced functionality than operating speed and physical size which should have had greater consideration. 
+
+Overall, the project has been successful in producing a functional general purpose microprocessor.  
+Whilst supporting material such as a symbolic assembler has been produced to a good standard to aid any programmer with using this system. 
