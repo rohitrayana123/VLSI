@@ -8,7 +8,7 @@
 \review{Arithmetic Logic Unit Design}
 \todo[color=cyan, inline]{Layout in silicon}
 
-The arithmetic logic unit (ALU) is the central unit for performing calculations within the datapath. 
+The ALU is the central unit for performing calculations within the datapath. 
 Most instructions use the ALU as part of their operation and as such this module needs to interpret every instruction and perform the necessary function. 
 The range of functions needed fall into one of four types: arithmetic, logic, shifting and load lower. 
 %With the last type being a special case for the LLI instruction. 
@@ -17,9 +17,9 @@ Additional gates are used for subtraction and flag calculations. %setting the fi
 The logic operations consists of one gate corresponding to each of the logic instructions supported. 
 Shifts are performed using a logarithmic shifter to support up to a 15 bit shift in one clock cycle. 
 Finally, the LLI module concatenates the upper byte of the destination register with the provided 8-bit immediate value. 
-The breakdown of the ALU is illustrated in Figure~\ref{fig:ALUModules}, with the output of each section connected to an internal bus through a number of tri-state buffers. 
+The breakdown of the ALU is illustrated in Figure~\ref{fig:ALUModules}, with the output of each section connected to an internal bus through a number of tristate buffers. 
 
-
+\todo[inline]{Redo Figures in \ref{ig:ALUAbsract} and \ref{fig:ArithLogicSlice}}
 \begin{figure}[h]
 	\centering
 	\subfloat[Modular ALU Layout\label{fig:ALUModules}]{
@@ -143,7 +143,7 @@ Table~\ref{tab:contrOuts} shows the necessary control signals for each mnemonic.
 \textit{SUB} inverts the second input and flags for a subtraction operation and \textit{ZeroA} sets the first input to zero. 
 \textit{ShL} and \textit{ShR} switch between left and right shifting while \textit{ShB} switches between using the first (A) or second (B) input to shift. 
 Signals \textit{Sh8}, \textit{Sh4}, \textit{Sh2} and \textit{Sh1} enable each section of the barrel shifter and during normal shifting operations are dependent upon the 4 bit immediate input to decoder. 
-Sh8 is set during a \textbf{LUI} instruction since it will always shift by 8 bits. 
+\textit{Sh8} is set during a \textbf{LUI} instruction since it will always shift by 8 bits. 
 Signal \textit{LLI} activates the LLI module after no operation is performed within the main ALU. 
 While \textit{UseC} and \textit{ShInBit} are internal signals indicating use of the carry flag from previous instruction and the bit to shift in respectively. 
 The remaining signals enable the relevant tristate buffers to output the result. It uses one hot coding to prevent contention. 
@@ -167,9 +167,9 @@ Where the letters A-E correspond to bits 4-0 of the opcode.
 Refining these equations for implementation considered the set of logic gates available within the library, as well as the number of gates needed. 
 Since the negated output gates could have more inputs, as well as being physically smaller, they were more favourable to use. 
 Some potential options for the logic equation for the \textit{SUB} signal are shown in Equations~\eqref{eq:DecSUB1}~and~\eqref{eq:DecSUB2}. 
-The first one, taken from the k-map, requires 9 non-inverter logic gates. 
+The first one, taken from the K-map, requires 9 non-inverter logic gates. 
 %To simplify design, inverters were not considered for optimization as both inverted and non-inverted inputs were made available globally. 
-This equation cannot be implemented since AND gates with more than 2 inputs are not available. 
+This equation cannot be implemented since \texttt{AND} gates with more than 2 inputs are not available. 
 Equation~\eqref{eq:DecSUB2} requires 8 gates and is unimplementable. 
 However if inverted using DeMorgan's law to produce Equation~\eqref{eq:DecSUB3} it is possible.
 Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach was used for the remaining signals, also shown in Figure~\ref{fig:DecMultiCirs}. 
