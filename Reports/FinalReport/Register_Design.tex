@@ -39,8 +39,8 @@ The circuit diagram for the bit slice is seen in Figure~\ref{fig:reg:slice}.
 \caption{Decoder Logic Functions}
 \label{tab:reg:decoder}
 \centering
-\begin{tabular}{cc}
-Register Number & Logic Select Function \\
+\begin{tabular}{|c|c|}\hline
+Register Number & Logic Select Function \\ \hline
 0		&		$!( Rs0 | Rs1 | Rs2 )$ \\
 1		&		$ !( Rs1 | Rs2 ) \& Rs0$	\\
 2		&		$!( Rs2 | Rs0 ) \& Rs1$\\
@@ -48,7 +48,7 @@ Register Number & Logic Select Function \\
 4		&		$!( Rs0 | Rs1 ) \& Rs2$	\\
 5		&		$! ( ! ( Rs0 \& Rs2 ) | Rs1 )$	\\
 6		&		$! ( ! ( Rs1 \& Rs2 ) | Rs0 )$	\\
-7		&		$Rs0 \& Rs1 \& Rs2$	\\
+7		&		$Rs0 \& Rs1 \& Rs2$	\\ \hline
 \end{tabular}
 
 \end{table}
