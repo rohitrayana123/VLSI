@@ -1,5 +1,5 @@
 %  Register_Test.tex
-%  <+Last Edited: Thu 17 Apr 2014 15:34:21 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 21:24:04 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Register Block}
 
@@ -13,7 +13,7 @@ The bitslice test loads one bit of data into each register, and checks that it c
 Assertions are used to automate the checking of the bit slice.
 
 The decoder is verified by exercising all the possible inputs to each of the decoders.
-The one hot coding output is then checked to be as expected for the current input. %correct to the input.
+The one hot encoding output is then checked to be as expected for the current input. %correct to the input.
 This is repeated for each read decoder, and the write decoder is verified to only output correctly when the write enable signal is high. 
 
 The full test uses a ``task'' code block to write to a register and read the data back.

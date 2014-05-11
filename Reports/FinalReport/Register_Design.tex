@@ -1,7 +1,7 @@
 %  Register_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 14:59:55 BST
-%  <+Last Edited: Sun 11 May 2014 15:16:13 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 21:22:57 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Register Block}
 
@@ -21,8 +21,8 @@ The whole block is made up of sixteen slices and one decoder.
 
 The bit slice consists of eight load enable registers. 
 Two tristate buffers are used per register onto different buses for the two read data outputs. 
-The registers are selected by one hot coding and as such will result in the output bus always being driven. 
-The write enables are also controlled using one hot coding. 
+The registers are selected by one hot encoding and as such will result in the output bus always being driven. 
+The write enables are also controlled using one hot encoding. 
 However, all signals are allowed to be off if no register is to be written to.
 The circuit diagram for the bit slice is seen in Figure~\ref{fig:reg:slice}.
 

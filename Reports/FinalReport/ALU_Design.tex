@@ -1,7 +1,7 @@
 %  ALU_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:00:33 BST
-%  <+Last Edited: Sun 11 May 2014 19:59:04 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 21:25:26 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Arithmetic Logic Unit}\label{sect:design:alu}
@@ -10,11 +10,11 @@
 
 The ALU is the central unit for performing calculations within the datapath. 
 Most instructions use the ALU as part of their operation and as such this module needs to interpret every instruction and perform the necessary function. 
-The range of functions needed fall into one of four types: arithmetic, logic, shifting and load lower. 
+The functions implemented fall into one of four types: arithmetic, logic, shifting and load lower. 
 %With the last type being a special case for the LLI instruction. 
 Arithmetic operations are centralised around a full adder.
 Additional gates are used for subtraction and flag calculations. %setting the first input to zero and flag calculations. 
-The logic operations consists of one gate corresponding to each of the logic instructions supported. 
+The logic operations consists of the gate corresponding to each of the logic instructions supported. 
 Shifts are performed using a logarithmic shifter to support up to a 15 bit shift in one clock cycle. 
 Finally, the LLI module concatenates the upper byte of the destination register with the provided 8-bit immediate value. 
 The breakdown of the ALU is illustrated in Figure~\ref{fig:ALUModules}, with the output of each section connected to an internal bus through a number of tristate buffers. 
@@ -34,7 +34,7 @@ The breakdown of the ALU is illustrated in Figure~\ref{fig:ALUModules}, with the
 
 This design then needed to be bit sliced to simplify the datapath and promote hierarchical construction. 
 It was decided to add an additional input to the module for the 4 bit immediate value required to define the shifting amount. 
-Otherwise the lowest four slices of the ALU would each need a different routing to each segment, reducing how much of each slice could be identically duplicated. 
+Otherwise the lowest four slices of the ALU would each need different routing to each segment, reducing how much of each slice could be identically duplicated. 
 
 Initial design of the ALU module was based upon the planned datapath layout as shown in Figure~\ref{fig:BasicALUSym}. 
 From this it was seen that there may be some difficulty with interpreting the opcodes provided. 
@@ -107,7 +107,7 @@ These form modules which are separate to the main slice consisting of either wir
 
 \subsection{ALU Decoder}
 The purpose of a decoder module is to convert any given Opcode into a number of signals to control the path of data within the ALU. 
-As such it is composed of multiple circuits of purely combinational logic. 
+As such it is composed of combinational logic. 
 Table~\ref{tab:contrOuts} shows the necessary control signals for each mnemonic.
 
 \begin{table}[h]
@@ -147,8 +147,8 @@ Signals \textit{Sh8}, \textit{Sh4}, \textit{Sh2} and \textit{Sh1} enable each se
 \textit{Sh8} is set during a \textbf{LUI} instruction since it will always shift by 8 bits. 
 Signal \textit{LLI} activates the LLI module after no operation is performed within the main ALU. 
 While \textit{UseC} and \textit{ShInBit} are internal signals indicating use of the carry flag from previous instruction and the bit to shift in respectively. 
-The remaining signals enable the relevant tristate buffers to output the result. It uses one hot coding to prevent contention. 
-The one unused opcode does not active any signals to reduce the number of gates within the decoder. 
+The remaining signals enable the relevant tristate buffers to output the result. It uses one hot encoding to prevent contention. 
+The one unused opcode does not activate any signals to reduce the number of gates within the decoder. 
 
 \begin{align}
 	\text{FAOut} &= \bar{A} + BD\bar{E} \label{eq:DecBasicS}\\
@@ -184,7 +184,7 @@ Since additional logic needed for flag calculations are implemented in the decod
 	&= \overbar{\overbar{(\bar{A}B\overbar{(\bar{C}\overbar{(\bar{C}E)})})}\overbar{(D\overbar{(\overbar{(B\bar{C}\bar{E})}\overbar{(\bar{A}CE)})})}} \label{eq:DecSUB3}
 \end{align}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Figures/ALUDecoderMore1v2.png}
 	\caption{Circuit Diagrams For Signals Active For More Than One Opcode}
