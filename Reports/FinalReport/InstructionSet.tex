@@ -12,25 +12,25 @@
 
 In designing the instruction set architecture (ISA), emphasis was put on creating a complete set of basic operations which could be used to implement any program. 
 Early research suggested a RISC based architecture would be suitable since they have a small number of instructions and are optimized for a smaller chip area. 
-They also promote a simpler datapath since the same length instructions can have better bit-slicing. 
+They also promote a simpler datapath since the same length instructions can result in easier bit-slicing. 
 Irregular lengths would cause common fields to be in a different location within the instruction, leading to more complex decoding and potential wasted hardware when executing shorter instructions. 
-\todo[inline]{Expand basic ISA design considerations??}
+\todo[inline]{Expand basic ISA design considerations?? : HSL - I think it's complete enough.}
 
 Research into different microprocessor instruction sets has highlighted the potential of basing this system on the ARM Thumb architecture.
-This is a subset of the main 32-bit ARM instruction set which contains a suitably complete set of instructions. 
-The full Thumb ISA was not used to aid simplicity and because it supported operations not available within the intended datapath. 
+This is a subset of the main 32-bit ARM instruction set which contains a complete set of instructions. 
+The full Thumb ISA was not used to aid simplicity and because it supports operations not available within the intended datapath. 
 A summary of the final instruction set is provided in Appendix~\ref{chap:AppISS}. 
 The number of operations taken from ARM was adapted for greater support and novelty instructions.
 This included: use of carry flag with immediate values, a completed logic set, loading registers, better branching and interrupt support. 
-LUI and LLI provide the ability to set the upper or lower byte of a register to an immediate value for initialization. 
-It was also decided to simplify subroutine returns by incorporating a ``RET'' instruction as supported by the SPARC microprocessor, and allow transferring of control to an explicit location in memory using the ``JMP'' instruction.
+\textbf{LUI} and \textbf{LLI} provide the ability to set the upper or lower byte of a register to an immediate value for initialisation. 
+It was also decided to simplify subroutine returns by incorporating a \textbf{RET} instruction as supported by the SPARC microprocessor, and allow transferring of control to an explicit location in memory using the \textbf{JMP} instruction.
 From incorporating interrupt support, instructions were added for enabling/disabling interrupts, loading/storing status flags and an interrupt-specific subroutine return.
-\todo[inline]{Why Thumb?} 
+\todo[inline]{Why Thumb?; HSL - I think we have justified. Plus we chose it arbitarily so no justification is possible.} 
 
-Within this ISA it was decided to support up to 3 operands. 
+Within this ISA it was decided to support up to three operands. 
 This allows greater flexibility with the instructions available and reduces the amount of memory required to perform data processing operations. 
 The size of each field was determined by the number of possibilities needed and a length of 16 bits per instruction.
-The number of instructions and their groupings determined the requirement of having 6-bits for the Opcode field. 
+The number of instructions and their groupings determined the requirement of having 6 bits for the Opcode field. 
 As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be referenced in the remaining 10 bits. 
 With the option of expanding the third operand to a 5 bit immediate value, benefiting from the higher frequency of smaller values immediate values over larger ones. 
 There was also support added for byte sized operations with two operand formatting since this is a standard length for small binary values. 
@@ -38,7 +38,7 @@ There was also support added for byte sized operations with two operand formatti
 An important aspect of ISA design is the consideration of how much memory is required to store a particular program. 
 An architecture which requires less space will be desirable since more information can be stored in the same amount of memory. 
 To achieve this a high code density is required, as shown during instruction set research.
-The density of this system has been improved by using 3 operand instructions to reduce the number of data transfers required. 
+The density of this system has been improved by using three operand instructions to reduce the number of data transfers required. 
 This is illustrated in Figure~\ref{fig:NoOperands} in terms of register transfers required to add two values and place the result in another register. 
 Further improvements have been made by supporting multi-bit shifting, this means the useful maximum of 15 shifts can be done in one operation.
 
@@ -64,8 +64,8 @@ Further improvements have been made by supporting multi-bit shifting, this means
 
 Both control transfer and interrupt operations, with one exception, do not use any registers. 
 This meant a single opcode could be used to define an instruction type, with an additional field for defining the explicit instruction to perform.  
-A 3-bit condition field allows a sufficient quantity of branching operations to be supported, leaving 8 bits to define the distance to move forwards or backwards. 
-While an additional 3-bit field in interrupt operations maintains location consistency with control transfer and is long enough to define 5 instructions. 
+A 3 bit condition field allows a sufficient quantity of branching operations to be supported, leaving 8 bits to define the distance to move forwards or backwards. 
+While an additional 3 bit field in interrupt operations maintains location consistency with control transfer and is long enough to define the 5 instructions needed. 
 
 \newcolumntype{B}{c}
 \begin{table}[h]
@@ -100,7 +100,7 @@ While an additional 3-bit field in interrupt operations maintains location consi
 \end{table}
 
 To promote orthogonality, the instruction formatting for data manipulation operations followed a similar structure to the ARM Thumb, as shown in Table~\ref{tab:GIF}. 
-Which was adapted for all other instruction types, and reordered to ensure immediate values were always on the far right of the instruction. 
+This was adapted for all other instruction types, and reordered to ensure immediate values were always on the far right of the instruction. 
 This was to make sign extension of immediate values in the datapath easier since they are always in the same location.
 It was also necessary to align all the destination and source registers to maintain consistency between instructions, aiding datapath simplicity. 
 
@@ -220,7 +220,7 @@ minimum width=1.2cm,align=center,text depth=.25ex,outer sep=1.5pt]
 %\end{tikzpicture}
 %\end{table}
 
-Allocation of Condition codes for control transfer instructions was based upon the type and action of each branch. This helps to simplify decoding in the controller, promoting a smaller synthesized layout. 
+Allocation of condition codes for control transfer instructions was based upon the type and action of each branch. This helps to simplify decoding in the controller, promoting a smaller synthesized layout. 
 The aspects considered were: conditional or unconditional, use of link register and flags used. 
 These are summarised in Table~\ref{tab:CondAssign:branch}. 
 From this, the first bit was set according to whether there was a condition to be checked. 

@@ -12,12 +12,17 @@ The datapath consists of arrays of submodules.
 The interrupt constant is also included in the datapath design.
 The main submodule is the datapath bit slice. 
 
+%Design of whole module, including circuit diagram
+%The datapath consists of arrays of submodules. 
+%The interrupt constant is also included in the datapath design.
+%The main submodule is the datapath bit slice. 
+
 The program counter, link register, general purpose registers and ALU slices are grouped together into one bitslice.
 This module also implements some multiplexors for the Write Data selection and the ALU operand selection.
 Other signals are extended to the edges or routed to the relevant locations. 
 
-A ``seventeenth'' slice has also been designed. 
-This includes the decoders for the registers and the ALU.
+A ``seventeenth'' slice is also made. 
+This includes the three decoders for the registers and the decoder for the ALU.
 The register selection multiplexors are implemented in this module as well.
 An ALU override was also implemented in this slice.
 A series of multiplexors are added to give the controller the ability to conduct an increment / decrement operation. 
@@ -25,7 +30,7 @@ This override was added after the initial design to be able to increment the sta
 This was needed to implement the interrupt support to be able to save the Program Counter to the stack.
 
 The final module needed is for the end of the datapath. 
-This has the right cell buffer, along with the ALU output register and tristate buffer.
+This has the right cell buffer, along with the ALU output register and a tristate buffer.
 It also contains an extra tristate buffer to connect the status register (from the controller) to the system bus to allow the storage of the flags.
 There are two versions of this module: one to connect an input signal to the system bus, and one to drive the remaining 12 bits of the system bus with a 0. 
 This module also contains the memory enable tristate buffer.

@@ -33,11 +33,11 @@ The circuit diagram for the bit slice is seen in Figure~\ref{fig:reg:slice}.
 \label{fig:reg:slice}
 \end{figure}
 
-The read decoder is based around a 3-8 decoder. 
-For each 3 bit input, one and only one output should be high. 
-The logic functions used are summarised in Table~\ref{tab:reg:decoder}.
+
 
 \begin{table}
+\caption{Decoder Logic Functions}
+\label{tab:reg:decoder}
 \centering
 \begin{tabular}{cc}
 Register Number & Logic Select Function \\
@@ -50,10 +50,12 @@ Register Number & Logic Select Function \\
 6		&		$! ( ! ( Rs1 \& Rs2 ) | Rs0 )$	\\
 7		&		$Rs0 \& Rs1 \& Rs2$	\\
 \end{tabular}
-\caption{Decoder Logic Functions}
-\label{tab:reg:decoder}
+
 \end{table}
 
+The read decoder is based around a 3-8 decoder. 
+For each 3 bit input, one and only one output should be high. 
+The logic functions used are summarised in Table~\ref{tab:reg:decoder}.
 The bit sliced circuit diagram is shown in Figure~\ref{fig:reg:decoder}.
 This illustrates only one of the decoders needed since the second is identical.
 However, the write decoder must also use a write enable function.
@@ -62,6 +64,7 @@ This is done by using the same logic functions shown in Table~\ref{tab:reg:decod
 \todo[inline, color=green]{MW: what do you mean by write enable function?}
 
 \begin{figure}
+\centering
 %\missingfigure{Decoder circuit diagram}
 \includegraphics[width=\textwidth]{../../eagle/regBlock/regBlock_decoder.png}
 \caption{Circuit diagram for the register decoder.}
