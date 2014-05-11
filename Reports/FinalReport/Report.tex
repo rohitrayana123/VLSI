@@ -1,11 +1,10 @@
 %  Report.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 14:30:25 BST
-%  <+Last Edited: Thu 08 May 2014 13:48:45 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 10:10:19 BST by seblovett on seblovett-Ubuntu +>
 
 %HSL: when compiling final, remove draft option and comment watermark out
 \documentclass[draft,12pt, titlepage,twoside]{report}
-\usepackage{draftwatermark}
 \usepackage{multirow}
 \usepackage{array}
 \usepackage[table]{xcolor}
@@ -17,7 +16,6 @@
 %Hyperref is used for convienience so I dont have to keep rezooming the pdf output each time I build
 \usepackage[hidelinks,bookmarks=false]{hyperref}
 \hypersetup{pdfstartview={XYZ null null 0.773},pdfpagelayout=SinglePage, final}
-\usepackage{showframe}
 \usepackage{titlesec}
 \usepackage[final]{listings}
 \titleformat{\chapter}
@@ -27,7 +25,6 @@
 \usepackage[obeyDraft,colorinlistoftodos]{todonotes}
 \usepackage{graphicx}
 \setkeys{Gin}{draft=false} %the hacks to make images appear in a draft
-\SetWatermarkScale{4}
 \newcommand{\inote}[1]{\todo[inline]{#1}}
 \newcommand{\incomplete}[1]{\todo[inline,color=red]{INCOMPLETE CHAPTER: #1}}
 \newcommand{\review}[1]{\todo[inline,color=yellow]{Review: #1}}
@@ -35,6 +32,16 @@
 %\addtolength{\evensidemargin}{-.875in}
 \usepackage[inner=4cm,outer=3cm]{geometry}
 \graphicspath{{Figures/}}
+\usepackage{ifdraft}
+
+\ifdraft{%draft things
+\usepackage{showframe}
+\usepackage{showlabels}
+\usepackage{draftwatermark}
+\SetWatermarkScale{4}
+}{%final things
+}
+
 \author{Team R4 \\ Henry Lovett (hl13g10) \\ Ashley Robinson (ajr2g10) \\ Martin Wearn (mw20g10)}% \\ Anusha Reddy (arr1g13)}
 
 \title{Final Report \\ ELEC6027: VLSI Design Project \todo{Format title page}}
@@ -46,7 +53,7 @@
 %\begin{abstract}
 %Abstract
 %\end{abstract}
-\input{definitions.tex}
+%\input{definitions.tex}
 \input{Introduction.tex}
 \input{Architecture.tex}
 \input{InstructionSet.tex}
