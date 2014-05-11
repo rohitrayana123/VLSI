@@ -1,7 +1,7 @@
 %  Datapath_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:02:16 BST
-%  <+Last Edited: Sun 11 May 2014 15:25:52 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 22:05:33 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Datapath}
@@ -18,15 +18,15 @@ The main submodule is the datapath bit slice.
 %The main submodule is the datapath bit slice. 
 
 The program counter, link register, general purpose registers and ALU slices are grouped together into one bitslice.
-This module also implements some multiplexors for the Write Data selection and the ALU operand selection.
+This module also implements multiplexors for the Write Data selection and the ALU operand selection.
 Other signals are extended to the edges or routed to the relevant locations. 
 
 A ``seventeenth'' slice is also made. 
 This includes the three decoders for the registers and the decoder for the ALU.
 The register selection multiplexors are implemented in this module as well.
 An ALU override was also implemented in this slice.
-A series of multiplexors are added to give the controller the ability to conduct an increment / decrement operation. 
-This override was added after the initial design to be able to increment the stack pointer irrespective of the current operation.
+A series of multiplexors are added override standard ALU behaviour.%he controller the ability to conduct an increment / decrement operation. 
+This override was added after the initial design to be able to increment / decrement the stack pointer irrespective of the current instruction.
 This was needed to implement the interrupt support to be able to save the Program Counter to the stack.
 
 The final module needed is for the end of the datapath. 
