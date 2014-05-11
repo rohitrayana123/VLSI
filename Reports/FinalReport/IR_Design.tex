@@ -1,7 +1,7 @@
 %  IR_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:01:50 BST
-%  <+Last Edited: Sun 11 May 2014 15:18:54 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Sun 11 May 2014 20:21:45 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Instruction Register}
 
@@ -34,14 +34,15 @@ The three modules contain the same cells, but the input and output wires to the 
 
 By stacking these modules using $5\times$BB, $3\times$BA and $8\times$AA (bottom to top), the sign bits will be propagated at the correct points.
 The output is then a full sixteen bit signed value of the relevant immediate selected by the \textit{ImmSel} signal.
+%\todo[inline]{get this fig and IR fig on one page}
+
+
 \begin{figure}
 \centering
-\subfloat[The AA type slice]{\label{fig:ir:circuit:aa}\includegraphics[width=0.5\textwidth]{../../eagle/Ir/IrAA.png}}
-\subfloat[The BA type slice]{\label{fig:ir:circuit:ba}\includegraphics[width=0.5\textwidth]{../../eagle/Ir/IrBA.png}}\\
-\subfloat[The BB type slice]{\label{fig:ir:circuit:bb}\includegraphics[width=0.5\textwidth]{../../eagle/Ir/IrBB.png}}
+\subfloat[The AA type slice]{\label{fig:ir:circuit:aa}\includegraphics[width=0.45\textwidth]{../../eagle/Ir/IrAA.png}}
+\subfloat[The BA type slice]{\label{fig:ir:circuit:ba}\includegraphics[width=0.45\textwidth]{../../eagle/Ir/IrBA.png}}\\
+\subfloat[The BB type slice]{\label{fig:ir:circuit:bb}\includegraphics[width=0.45\textwidth]{../../eagle/Ir/IrBB.png}}
 \caption{The three circuits used for the instruction register block.}
 \label{fig:ir:circuit}
 \end{figure}
-\todo[inline]{get this fig and IR fig on one page}
-
 
