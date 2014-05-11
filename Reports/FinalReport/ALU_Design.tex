@@ -171,7 +171,7 @@ Some potential options for the logic equation for the \textit{SUB} signal are sh
 The first one, taken from the K-map, requires 9 non-inverter logic gates. 
 %To simplify design, inverters were not considered for optimization as both inverted and non-inverted inputs were made available globally. 
 This equation cannot be implemented since \texttt{AND} gates with more than 2 inputs are not available. 
-Equation~\eqref{eq:DecSUB2} requires 8 gates and is unimplementable. 
+Equation~\eqref{eq:DecSUB2} requires 8 gates and cannot be implemented using the available library.
 However if inverted using DeMorgan's law to produce Equation~\eqref{eq:DecSUB3} it is possible.
 Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach was used for the remaining signals, also shown in Figure~\ref{fig:DecMultiCirs}. 
 
