@@ -3,24 +3,26 @@
 
 \section{Register Block}
 
-Include Sub tests - of slice and decoder (if app)
+%Include Sub tests - of slice and decoder (if app)
 Tests were implemented for the decoder and bitslice modules implemented in Magic. 
-A full module test was also writen. 
-The same test was designed to be run on both the Magic layout and the behavioural verilog
-This allowed the full operation of the behavioural and layout to be verified to the same.
+A full module test was also written. 
+The same test was designed to be run on both the Magic layout and the behavioural systemverilog design. 
+This allowed the full operation of the behavioural model and implemented layout to be verified to the same standard. 
 
 The bitslice test loads one bit of data into each register, and checks that it can be read back on each of the data read lines.
 Assertions are used to automate the checking of the bit slice.
 
 The decoder is verified by exercising all the possible inputs to each of the decoders.
-The one hot coding output is then checked to be correct to the input.
-This is repeated for each read decoder, and the write decoder is verified to only correctly output when the write enable signal is high. 
+The one hot coding output is then checked to be as expected for the current input. %correct to the input.
+This is repeated for each read decoder, and the write decoder is verified to only output correctly when the write enable signal is high. 
 
-The full test uses a task to write to a register and read the data back.
-The data is verified to be correct on both read ports.
+The full test uses a ``task'' code block to write to a register and read the data back.
+\todo[inline, color=green]{MW:I assume you were talking about the SV Task code blocks?}
+The data is then verified to be correct on both read ports.
 This process is repeated 100 times to exercise different data on all the registers. 
+\todo[inline, color=green]{MW:Why do 100 repetitions? surely that is not needed, otherwise explain}
 Assertions are used to give a final pass/fail result allowing quick verification of the module.
-The test ensures the read buffers and the writing to each register is fully functional.
+The tests ensure the read buffers and the writing to each register is fully functional.
 
 %why it is done.
 

@@ -8,20 +8,21 @@
 
 %Overall layout 
 
-The datapath and the control units were designed to allow them to connect together with a small of a wiring channel as possible. 
+The datapath and the control units were designed to allow them to connect together with as small a wiring channel as possible. 
 All the I/Os were placed in each of the blocks to minimize the routing between the module and the pad ring. 
 The pad ring used had a core size of $1505.00\mu m \times 1500.70\mu m$. 
 The total size of the chip including the pad ring is $ 2150.00\mu m \times 2145.70\mu m$, a total area of $4.6mm^2$.
 
-The controller was positioned below the datapath as it needed a connection to the lower nibble of the system bus. 
-The control signals between the datapath and controller were then placed to minimise the routing between. 
+The controller was positioned below the datapath as it needed a connection to the lowest nibble of the system bus. 
+The control signals between the datapath and controller were then placed to minimise the routing between them. 
 This placement is at the expense of some control signals being routed to above the datapath. 
 
-A net list was written and the magic autorouter was used.
+A net list was created and the magic autorouter was used.
 This routed all the signals between the controller, datapath and the pad ring. 
 The power lines were routed manually to the correct sizes. 
 
 A large amount of polysilicon is needed in the routing channels of the CPU to satisfy the design rule checks. 
-A N-ohmic guard ring is also placed around the design and is connected the the core supply.
-A large block of not\_pwell paint is used to explictly define all undefined areas. 
+A N-ohmic guard ring is also placed around the design and is connected to the core supply.
+A large block of not\_pwell paint is used to explicitly define all undefined areas. 
 The name of the processor, \textsc{Samurai}, is put in polysilicon on the chip.
+\todo[inline, color=green]{MW:Possibly add `since there was sufficienct space, and it allowed forfillment of minimum material quantity rules' if correct?}

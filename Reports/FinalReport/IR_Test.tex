@@ -4,19 +4,20 @@
 \section{Instruction Register}
 
 
-Explain tests - what is done
+%Explain tests - what is done
 The test for the instruction register is for the magic layout only.
+\todo[inline, color=green]{MW:Poss explain why?}
 This test is written to exercise the storing and reading of the instruction register, and the sign extension.
 
-The test beings by resetting the module and checking the instruction register output is 0. 
+The test begins by resetting the module and checking the instruction register output is 0. 
 The register is then loaded with 65535 and verifies the output matches this value.
 
 The sign extension is then tested. 
 This is done by loading a value which should be sign extended if it is a 5 bit immediate, but not if it is a 8 bit immediate. 
 The two outputs are verified for each value of the \textit{ImmSel} signal. 
-This is then repeated by using a value that would be extended if it is 8 bit, but not if it is 5 bit. 
+This is then repeated by using a value that would be extended if it is 8 bits, but not if it is 5 bits. 
 
-This verifies the operation of the instruction register and that the sign extension correctly functions. 
-All behaviour is verified using assertions and giving a final pass/fail statement. 
+This verifies the operation of the instruction register and that the sign extension functions correctly. 
+All behaviour is verified using assertions with a final pass/fail statement which gives the number of errors if any are present. 
 This allowed for modifications to be easily verified. 
 
