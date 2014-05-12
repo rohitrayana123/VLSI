@@ -4,9 +4,9 @@
 The controller is a Mealy machine used to sequence operations performed on the datapath.
 Figure~\ref{fig:ControlBlock} contains all inputs, outputs and internal registers.
 There are $7$ labelled inputs including two $4$ bit buses and one $8$ bit bus.
-There are $26$ labelled outputs including five $4$ bit buses and one $3$ bit bus.
+There are $26$ labelled outputs including five $2$ bit buses and one $3$ bit bus.
 Typedefs, defined in a global file, are used for some single bit outputs and all bus outputs to keep decoding consistent in control and the datapath. 
-
+Inputs from the datapath also use typedefs as these are defined by the instruction set. 
 
 \begin{figure}[t]
    \centering
@@ -17,10 +17,12 @@ Typedefs, defined in a global file, are used for some single bit outputs and all
 
 Three main states exist to service the fetch, execute and interrupt stages.
 Five sub states are used within the main states to further coordinate operation.
-The ASM chart in Figure~\ref{fig:MainStateASM} describes state changes using the sub state, Opcode and interrupt request signal.   
-%Linked state machines are are used to produce the 
+The substate binary values are gray coded to avoid glitches in memory access.
+The ASM chart in Figure~\ref{fig:MainStateASM} describes state changes using the sub state, current opcode and interrupt request signal.   
+State machines linked to the main state in Figures~\ref{fig:FetchASM} and ~\ref{fig:ExecuteASM} described the substate transitions.
+The pruned Verilog in Listing~\ref{lst:ControlOverview.sv} explains how nested case statements are used to describes large amounts of logical operations. 
 When \textit{nReset} is asserted the machine will return to the first cycle of the fetch state.
-\todo[inline]{HSL: @AJR - this has an incomplete sentence in. - now commented out.}
+
 
 
 
@@ -30,6 +32,11 @@ When \textit{nReset} is asserted the machine will return to the first cycle of t
 		\caption{ASM chart of controller main states.}
 		\label{fig:MainStateASM}
 \end{figure}
+
+
+\lstinputlisting[style=sverilog,label=lst:ControlOverview.sv,caption=Reduced Verilog of control unit combinatorial logic.]{Code/ControlOverview.sv}
+
+
 
 
 
@@ -42,7 +49,7 @@ When \textit{nReset} is asserted the machine will return to the first cycle of t
 
 Fetching an instruction from memory requires placing the program counter on the address bus then reading the instruction in to the instruction register. 
 The state machine described in Figure~\ref{fig:FetchASM} asserts signals associated with memory access and delays if the slow memory access input, \textit{nWait}, is set.
-When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main state machine, Figure~\ref{fig:MainStateASM}, also make a transition therefore severing the link to this machine. 
+When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main state machine, Figure~\ref{fig:MainStateASM}, also makes a transition therefore severing the link to this machine. 
 
 \begin{figure}[ht]
    \centering
@@ -57,11 +64,13 @@ When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main sta
 
 \subsection{Execute}
 
-The instruction fetched from memory is decoded in one cycle
-This is a variable length stage that takes either $1$ or $4$ cycles depending on whether the instruction in the requires memory access.
+The instruction fetched from memory is decoded and executed in either $1$ or $4$ cycles.
+This is a variable length stage depends on whether the instruction the requires memory access.
 After the instruction has been executed the \textit{IntReq} signal is checked to decide whether an interrupt has occurred.
-\todo[inline]{HSL: @AJR - incomplete}
+If an interrupt has occurred the substate on exit is \textbf{cycle4} otherwise it is \textbf{cycle0} ready to perform another fetch. 
 
+A large section of Listing~\ref{lst:ControlOverview.sv} contains control flow for output decoding in this stage.
+The branch code is used during branch operations and also interrupt operations.
 \begin{figure}[ht]
    \centering
     \includegraphics[width = \textwidth]{ExecuteASM.pdf}
