@@ -1,0 +1,8 @@
+In my opinion the project design proposed and undertaken was realistically acheivable within the time-scale provided for a standard size group of 5 members. 
+The lack of one member would not however create a significant impact. 
+While a team of three I felt would put too much pressure on us to maintain a comparable level to other groups. 
+Due to ARR not being a fourth year student like the rest of us, she was not capable of as much. 
+While she also appeared to lack the motivation to learn new skills, and contribute enough to the project. 
+The addition of interrupts was also implemented in an ad-hoc manner.
+Which with a dedicated role would have enabled a much more seamless design to be implemented. 
+Overall the project progressed well but could have benefited more with greater manpower to spread the workload and allow for more design optimisations. 

@@ -1,0 +1,24 @@
+Firstly, I regard the project as a success. 
+We managed to work together and communicate to produce a functional processor. 
+All members got on well with each other on a whole and no social issues were encountered. 
+As MW, AJR and myself have all worked together previously, which helped going into this project.
+The regular meetings also helped keep everyone informed. 
+There were no issues wtih who was meant to be handing work in, or what people were doing.
+
+
+I think it was difficult for ARR to join our group as MW, AJR and myself were all good friends. 
+There was a skill and motivation divide which I noticed early on in the project. 
+Initially, work was allocated evenly amongst the group. 
+Work from ARR was often of a lower standard than other members. 
+In the early stages, help was given to ARR by other members. 
+However, as the project progressed with no change, less important work was given to ARR due to the time pressures and necessity to fix work done. 
+
+
+In hindsight, the pursuit of the interrupts was probably too much for a small group. 
+I was cautious to allow development of this at the time, but agreed to give it an attempt. 
+AJR and myself conducted the work needed.
+As we got it functional, and were the only team to do so, this encouraged us to keep the functionality. 
+However, this probably distracted us from other issues in our processor, such as the speed and size. 
+If we had more time, I would have given ARR more work to help her learn, and I potentially was a little impatient as my expectations may have been too high. 
+Nonetheless, I have learnt a lot about project management from doing this project. 
+It's been an enjoyable project and the end result is something I am proud of. 

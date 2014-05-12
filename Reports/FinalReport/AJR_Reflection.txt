@@ -1,0 +1,14 @@
+All four members of the team were capable of making an equal contribution to this project.
+HL took a management position educating himself in all areas of the design to enable coordination between myself and the datapath experts.
+MW and ARR were given the task of building the datapath using the layout tools provided where MW was more the capable and decided to investigate producing an assembler which proved beneficial.
+ARR found layout and simple circuit design in her strengths but some of the designs she produced were of poor quality and required re-working by either HL or MW.
+Her knowledge of Verilog was poor and simple verification tasks, required for the first semester course, were beyond her ability.
+
+The management tool Git was only used by myself and HL at the beginning of the project.
+Our strong recommendation lead to it being used throughout where the remaining two members, with our assistance, would have to learn how to use the tool.
+MW did not struggle but ARR did and was reluctant to make an effort.
+In retrospect this could be viewed as detrimental but with the benefits a tool like this provides I do not think this is the case. 
+
+Our main downfall was reaching too far with limited human resources.
+Operating a smaller team but going beyond the compulsory scope of this project left room for optimisation in basic areas. 
+However producing the functioning deliverables we have is a true testament to our skills in both digital design and project management.  
