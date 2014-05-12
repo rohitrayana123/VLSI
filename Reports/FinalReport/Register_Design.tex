@@ -8,7 +8,7 @@
 %Design of whole module, including circuit diagram
 The register block contains eight general purpose registers. 
 No dummy register is implemented in the register block. 
-The module has three address inputs, two read addresses and one write address. 
+This module has three address inputs, two read addresses and one write address. 
 There are two read outputs, which output the stored data, and a data input to be written. 
 Reads are asynchronous and must always be driven. 
 Writes are synchronous and must implement a write enable signal. 
@@ -24,7 +24,7 @@ Two tristate buffers are used per register onto different buses for the two read
 The registers are selected by one hot encoding and as such will result in the output bus always being driven. 
 The write enables are also controlled using one hot encoding. 
 However, all signals are allowed to be off if no register is to be written to.
-The circuit diagram for the bit slice is seen in Figure~\ref{fig:reg:slice}.
+The circuit diagram for the bit slice is shown in Figure~\ref{fig:reg:slice}.
 
 \begin{figure}
 \centering
@@ -57,7 +57,7 @@ The read decoder is based around a 3-8 decoder.
 For each 3 bit input, one and only one output should be high. 
 The logic functions used are summarised in Table~\ref{tab:reg:decoder}.
 The bit sliced circuit diagram is shown in Figure~\ref{fig:reg:decoder}.
-This illustrates only one of the decoders needed since the second is identical.
+This illustrates only one of the decoders needed since the remainder are identical.
 However, the write decoder must also use a write enable signal.
 This is done by using the same logic functions shown in Table~\ref{tab:reg:decoder}, but the resulting signals are then \texttt{AND}ed with the register write enable signal. 
 %\todo[inline, color=green]{MW: Ive re-worded this a bit}

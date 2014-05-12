@@ -27,9 +27,9 @@ The instruction is then directly fed out of this module to the controller or reg
 The three blocks differ due to the sign extension and are referred to as ``AA'', ``BA'' or ``BB''.
 The three modules contain the same cells, but the input and output wires to the multiplexor differ. 
 \begin{enumerate}
-\item[AA] - The final block chooses the sign from either the eight or five bit immediate. The signs are passed in at the bottom of the module and propagated to the top.
+\item[AA] - The first block chooses the sign from either the eight or five bit immediate. The sign is then passed in at the bottom of the module and propagated to the top.
 \item[BA] - This block chooses between the instruction register value or a value passed into the bottom of the module. This input is the sign of the five bit immediate and is outputted to the top of the module.
-\item[BB] - This block takes the value of the instruction register and passes it to both of the multiplexor inputs. The multiplexor is redundant here but kept to keep the sizes of the three modules identical. All inputs to the bottom of this module are ignored.
+\item[BB] - This block takes the value of the instruction register and passes it to both of the multiplexor inputs. The multiplexor is redundant here but kept to keep the size of the three modules identical. All inputs to the bottom of this module are ignored.
 \end{enumerate}
 
 By stacking these modules using $5\times$BB, $3\times$BA and $8\times$AA (bottom to top), the sign bits will be propagated at the correct points.

@@ -34,7 +34,7 @@ This allows greater flexibility with the instructions available and reduces the 
 The size of each field was determined by the number of possibilities needed and a length of 16 bits per instruction.
 The number of instructions and their groupings determined the requirement of having 6 bits for the Opcode field. 
 As such, 8 internal registers could be used since it is a realistic number for a RISC system and can be addressed in the remaining 10 bits. 
-With the option of expanding the third operand to a 5 bit immediate value, benefiting from the higher frequency of smaller values immediate values over larger ones. 
+With the option of expanding the third operand to a 5 bit immediate value, benefiting from the higher frequency of smaller immediate values over larger ones. 
 There was also support added for byte sized operations with two operand formatting since this is a standard length for small binary values. 
 
 An important aspect of ISA design is the consideration of how much memory is required to store a particular program. 
@@ -110,7 +110,7 @@ It was also necessary to align all the destination and source registers to maint
 Allocation of Opcodes was done using K-map design with the arrangement designated according to the operation needing to be performed within the ALU module. 
 This was because this allocation would have the greatest effect on the amount of logic needed for the ALU decoder. 
 The resultant mapping is shown in Table~\ref{tab:OpKmaps}, with the important groupings highlighted. 
-The four groups shown correspond to command signals between the ALU and decoder which need to be active for more than one instruction. 
+The four groups shown correspond to some command signals between the ALU and decoder which need to be active for more than one instruction. 
 %\todo[inline]{K-map or Karnaugh map?}
 %counter for counting nodes needed for circling
 \newcounter{nodecount}

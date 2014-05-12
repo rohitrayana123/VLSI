@@ -65,7 +65,7 @@ When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main sta
 \subsection{Execute}
 
 The instruction fetched from memory is decoded and executed in either $1$ or $4$ cycles.
-This is a variable length stage depends on whether the instruction the requires memory access.
+This is a variable length stage dependant upon whether the instruction requires memory access.
 After the instruction has been executed the \textit{IntReq} signal is checked to decide whether an interrupt has occurred.
 If an interrupt has occurred the substate on exit is \textbf{cycle4} otherwise it is \textbf{cycle0} ready to perform another fetch. 
 
@@ -109,7 +109,7 @@ The final operation is a \textbf{RETI} which again is similar to a \textbf{POP},
 
 A bidirectional data interface to the control unit is required to facilitate these operations. 
 Figure~\ref{fig:FlagCircuit} contains the circuit used to load and store flags inside the control unit.
-The $4$ bit word containing the flags is can be sourced from either the ALU or the bottom bits of SysBus. 
+The $4$ bit word containing the flags can be sourced from either the ALU or the bottom bits of SysBus. 
 When storing the flags in memory the output of the status register must be placed on SysBus where the upper $12$ bits are all set to zero.
 
 \begin{figure}[ht]

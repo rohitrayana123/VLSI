@@ -83,7 +83,7 @@ The circuit diagram is shown in Figure~\ref{fig:LogicSlice}.
 %\end{figure}
 
 Implementing shifting capabilities into individual bits required few logic gates since it is a wire-dominated circuit, but each wire needed to be lined up correctly between slices. 
-This results from this slice section having more dependency on the neighbouring slices than both arithmetic and logic functions. 
+This results in this slice section having more dependency on the neighbouring slices than both arithmetic and logic functions. 
 The left and right shifting have been implemented using separate hardware, with a logarithmic strategy. 
 To support arithmetic shifting, the shifted value into a right shift can be either a zero or the current operand's sign.
 Implementation of this section is shown in Figure~\ref{fig:ShiftSlice}. 
@@ -146,7 +146,7 @@ Table~\ref{tab:contrOuts} shows the necessary control signals for each mnemonic.
 Signals \textit{Sh8}, \textit{Sh4}, \textit{Sh2} and \textit{Sh1} enable each section of the barrel shifter and during normal shifting operations are dependent upon the 4 bit immediate input to decoder. 
 \textit{Sh8} is set during a \textbf{LUI} instruction since it will always shift by 8 bits. 
 Signal \textit{LLI} activates the LLI module after no operation is performed within the main ALU. 
-While \textit{UseC} and \textit{ShInBit} are internal signals indicating use of the carry flag from previous instruction and the bit to shift in respectively. 
+While \textit{UseC} and \textit{ShSign} are internal signals indicating use of the carry flag from the previous instruction and shifting in the current sign bit respectively. 
 The remaining signals enable the relevant tristate buffers to output the result. It uses one hot encoding to prevent contention. 
 The one unused Opcode does not activate any signals to reduce the number of gates within the decoder. 
 
@@ -171,7 +171,7 @@ Some potential options for the logic equation for the \textit{SUB} signal are sh
 The first one, taken from the K-map, requires 9 non-inverting logic gates. 
 %To simplify design, inverters were not considered for optimization as both inverted and non-inverted inputs were made available globally. 
 This equation cannot be implemented since \texttt{AND} gates with more than 2 inputs are not available. 
-Equation~\eqref{eq:DecSUB2} requires 8 gates and cannot be implemented using the available library.
+Equation~\eqref{eq:DecSUB2} requires 8 gates and also cannot be implemented using the available library.
 However if inverted using DeMorgan's law to produce Equation~\eqref{eq:DecSUB3} it is possible.
 Since no further improvements could be made, this final equation is used and implemented in Figure~\ref{fig:DecMultiCirs}. A similar approach was used for the remaining signals, also shown in Figure~\ref{fig:DecMultiCirs}. 
 
@@ -203,7 +203,7 @@ For the control signals which respond to only one Opcode, a gate array was used,
 
 \subsection{ALU Block}
 The final hierarchical view of the assembled ALU made up of each part mentioned previously is shown in Figure~\ref{fig:ALUAssembled}. 
-ALU slice is duplicated to make up the 16 bits in parallel, LLI high is added to the top half and LLI low is added to the bottom half. 
+The ALU slice is duplicated to make up the 16 bits in parallel, LLI high is added to the top half and LLI low is added to the bottom half. 
 The decoder is added above, with additional wiring to connect together right shifting inputs. 
 The left shifting inputs at the bottom are tied to ground. 
 The output to the ALU is available as a direct connection to the rest of the datapath, but it is also stored in a register for later transfer onto the system bus. 

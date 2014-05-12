@@ -9,7 +9,7 @@
 %Design of whole module, including circuit diagram
 The program counter and link register were implemented in one module.
 The module has two load enable registers. 
-The data source logic and an adder for incrementing the program counter is also implemented in this module.
+The data source logic and an adder for incrementing the program counter are also implemented in this module.
 
 The program counter sources are:
 \begin{enumerate}
@@ -28,7 +28,7 @@ The link register has two inputs:
 
 %Use of hierarchy / blocks - i.e. bit sliced, decoder
 This module is made up of sixteen identical bitslices. 
-All control signals are connected to the controller% and so no decoder is needed in this module.
+All control signals are connected to the controller. % and so no decoder is needed in this module.
 The circuit diagram is shown in Figure~\ref{fig:pc:circuit}.
 %Design of slice,
 The slice is implemented to match the circuit diagram. 
