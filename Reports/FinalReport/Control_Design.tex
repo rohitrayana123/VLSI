@@ -42,7 +42,7 @@ When \textit{nReset} is asserted the machine will return to the first cycle of t
 
 Fetching an instruction from memory requires placing the program counter on the address bus then reading the instruction in to the instruction register. 
 The state machine described in Figure~\ref{fig:FetchASM} asserts signals associated with memory access and delays if the slow memory access input, \textit{nWait}, is set.
-When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main state machine, Figure~\ref{fig:MainStateASM}, also make a transition therefore severing the link to this machine. 
+When the transition from \textbf{cycle3} to \textbf{cycle0} is made the main state machine, Figure~\ref{fig:MainStateASM}, also makes a transition therefore severing the link to this machine. 
 
 \begin{figure}[ht]
    \centering
