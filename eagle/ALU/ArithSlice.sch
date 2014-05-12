@@ -255,7 +255,7 @@
 <text x="-19.304" y="111.76" size="1.778" layer="95">ZeroA</text>
 <text x="27.94" y="142.24" size="1.778" layer="95">COut</text>
 <text x="27.94" y="83.82" size="1.778" layer="95" rot="R180">CIn</text>
-<text x="55.88" y="83.82" size="1.778" layer="95" rot="R180">Zprev</text>
+<text x="55.88" y="83.82" size="1.778" layer="95">Zprev</text>
 <text x="48.26" y="142.24" size="1.778" layer="95">nZ</text>
 <text x="40.64" y="142.24" size="1.778" layer="95">Sum</text>
 <text x="17.78" y="142.24" size="1.778" layer="95">prevCin</text>

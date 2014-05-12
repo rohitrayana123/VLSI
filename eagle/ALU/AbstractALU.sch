@@ -56,12 +56,10 @@
 <wire x1="55.88" y1="78.74" x2="48.26" y2="78.74" width="0.1524" layer="94"/>
 <text x="50.8" y="73.66" size="1.778" layer="94">LLI</text>
 <wire x1="55.88" y1="71.12" x2="55.88" y2="78.74" width="0.1524" layer="94"/>
-<text x="2.54" y="76.2" size="1.778" layer="91">A</text>
-<text x="2.54" y="76.2" size="1.778" layer="91">A</text>
-<text x="2.54" y="73.66" size="1.778" layer="91">B</text>
-<text x="2.54" y="73.66" size="1.778" layer="91">B</text>
-<text x="50.8" y="66.04" size="1.778" layer="92">SysBus</text>
-<text x="12.7" y="66.04" size="1.778" layer="92">ALUBus</text>
+<text x="2.54" y="76.2" size="1.778" layer="95">A</text>
+<text x="2.54" y="73.66" size="1.778" layer="95">B</text>
+<text x="55.88" y="68.58" size="1.778" layer="95" rot="R180">SysBus</text>
+<text x="22.86" y="68.58" size="1.778" layer="95" rot="R180">ALUBus</text>
 </plain>
 <instances>
 </instances>
