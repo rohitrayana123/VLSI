@@ -1,7 +1,7 @@
 %  ProjectManagement.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:26:37 BST
-%  <+Last Edited: Mon 12 May 2014 14:36:32 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 16:03:00 BST by seblovett on seblovett-Ubuntu +>
 
 \chapter{Project Management}\label{ch:pm}
 %\incomplete{Project Management}
@@ -114,12 +114,42 @@ Issue tracking meant it was easy to keep an eye on what tasks were on going, com
 Issues can be allocated to group members, so the same task is not completed by multiple people. 
 Github was extremely useful for this tracking and provided a common communication network for the group. 
 
+\subsection{Git Additions by Group Member}
+
+Github has the ability to extract statistics of the repository. 
+This includes the commits, additions and deletions over time by each user (excluding merges). 
+The number of commits is not an accurate method of measuring activity as different people have different commit habits.
+For example, one member may commit a lot, but make little changes in each commit, whereas someone else may make a lot of changes, test and then commit.
+Deletions are also included in the statistics, but are not a reliable measure as HL was responsible for keeping the repo clean and removing the temporary or unused files. 
+
+However, the total additions is a more accurate measure. 
+Magic files can be included in this measure as these are plain text files.
+Report writing was done using \LaTeX, which in essence, is code and therefore the additions measure applies here too.
+
+Due to ARR being introduced to Git, it would be expected that in the initial phase of the project, her commit count would be low, resulting in low additions also. 
+Ideally, this would then increase to a reasonable level during the project. 
+Some commits were done on behalf of ARR by HL in the early stages also, but this was not common.
+
+Figure~\ref{fig:additions} shows the addition history in the repository. 
+It is clear to see that HL employs a commit little and often style, where as MW and AJR commit more in less commits. 
+The initial peak with AJR was the addition of an emulator he found.
+If this is not taken into account, the total additions of HL, AJR and MW are approximately equal.  
+It was expected that the additions of ARR would be lower than other members due to the learning curve needed for Git.
+However, it is clear to see the 6,225 additions from ARR is significantly less than the rest of the group.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{Figures/gitadditions.png}
+\caption{Graph from Github showing the additions over time for each user. Additions are measured in lines in a file and shown in green. Deletions are shown in red. (seblovett = HL; ashleyjr = AJR; mw92 = MW; arr1g13 = ARR)}
+\label{fig:additions}
+\end{figure}
+
 
 \section{Reflections}
 
-This section contains individual reflections from all group members. 
+This section contains individual reflections from group members. 
 These are written to give everyone a chance to discuss their view of the group operation. 
-
+ARR's reflection is not included. 
+She was advised to include her own reflections in her individual report and given the same suggestions as to what it should include.
 
 \subsection{HL}
 
@@ -127,5 +157,5 @@ These are written to give everyone a chance to discuss their view of the group o
 
 \subsection{AJR}
 
-\subsection{ARR}
+%\subsection{ARR}
 
