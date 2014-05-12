@@ -51,7 +51,7 @@
 <layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
-<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
 <layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
@@ -260,23 +260,23 @@
 <sheets>
 <sheet>
 <plain>
-<text x="43.18" y="106.68" size="1.27" layer="91" rot="MR0">OpCode[4]</text>
-<text x="43.18" y="91.44" size="1.27" layer="91" rot="MR0">OpCode[3]</text>
-<text x="43.18" y="76.2" size="1.27" layer="91" rot="MR0">OpCode[2]</text>
-<text x="43.18" y="60.96" size="1.27" layer="91" rot="MR0">OpCode[1]</text>
-<text x="43.18" y="45.72" size="1.27" layer="91" rot="MR0">OpCode[0]</text>
-<text x="78.74" y="-17.78" size="1.27" layer="91" rot="MR180">ZeroA</text>
-<text x="66.04" y="-15.24" size="1.27" layer="91" rot="MR180">ShSign</text>
-<text x="93.98" y="-17.78" size="1.27" layer="91" rot="MR180">AND</text>
-<text x="106.68" y="-17.78" size="1.27" layer="91" rot="MR180">OR</text>
-<text x="119.38" y="-17.78" size="1.27" layer="91" rot="MR180">NOT</text>
-<text x="132.08" y="-17.78" size="1.27" layer="91" rot="MR180">XOR</text>
-<text x="170.18" y="-17.78" size="1.27" layer="91" rot="MR180">NAND</text>
-<text x="182.88" y="-17.78" size="1.27" layer="91" rot="MR180">NOR</text>
-<text x="157.48" y="-17.78" size="1.27" layer="91" rot="MR180">LLI</text>
-<text x="144.78" y="-17.78" size="1.27" layer="91" rot="MR180">ShB</text>
-<text x="48.26" y="10.16" size="1.27" layer="91" rot="MR0">ASign</text>
-<text x="50.8" y="-17.78" size="1.27" layer="91" rot="MR180">ShInBit</text>
+<text x="43.18" y="106.68" size="1.27" layer="95" rot="MR0">OpCode[4]</text>
+<text x="43.18" y="91.44" size="1.27" layer="95" rot="MR0">OpCode[3]</text>
+<text x="43.18" y="76.2" size="1.27" layer="95" rot="MR0">OpCode[2]</text>
+<text x="43.18" y="60.96" size="1.27" layer="95" rot="MR0">OpCode[1]</text>
+<text x="43.18" y="45.72" size="1.27" layer="95" rot="MR0">OpCode[0]</text>
+<text x="78.74" y="-17.78" size="1.27" layer="95" rot="MR0">ZeroA</text>
+<text x="66.04" y="-15.24" size="1.27" layer="95" rot="MR0">ShSign</text>
+<text x="93.98" y="-17.78" size="1.27" layer="95" rot="MR0">AND</text>
+<text x="106.68" y="-17.78" size="1.27" layer="95" rot="MR0">OR</text>
+<text x="119.38" y="-17.78" size="1.27" layer="95" rot="MR0">NOT</text>
+<text x="132.08" y="-17.78" size="1.27" layer="95" rot="MR0">XOR</text>
+<text x="170.18" y="-17.78" size="1.27" layer="95" rot="MR0">NAND</text>
+<text x="182.88" y="-17.78" size="1.27" layer="95" rot="MR0">NOR</text>
+<text x="157.48" y="-17.78" size="1.27" layer="95" rot="MR0">LLI</text>
+<text x="144.78" y="-17.78" size="1.27" layer="95" rot="MR0">ShB</text>
+<text x="48.26" y="10.16" size="1.27" layer="95" rot="MR0">ASign</text>
+<text x="50.8" y="-17.78" size="1.27" layer="95" rot="MR0">ShInBit</text>
 </plain>
 <instances>
 <instance part="INV_1" gate="G$1" x="55.88" y="99.06"/>
