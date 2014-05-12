@@ -1,11 +1,11 @@
 %  Control_Test.tex
-%  <+Last Edited: Thu 17 Apr 2014 15:36:24 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 09:18:39 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Controller}
 \todo[inline, color=green]{MW: Seems too short}
 
-Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit opcode and the $3$ bit condition code.  
-The instruction register is populated in the fetch stage, which is always the same, so a function \textbf{DoFetch} is used to update the instruction register with a different value for testing.
+Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit Opcode and the $3$ bit condition code.  
+The instruction register is populated in the fetch stage, which is always the same, so a function, \texttt{DoFetch()}, is used to update the instruction register with a different value for testing.
 At this point an umbrella test is used to verify no output of the controller is ever unknown during any state.
 
 After each fetch the variable length execute stage is tested.

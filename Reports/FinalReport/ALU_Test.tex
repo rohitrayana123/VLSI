@@ -1,8 +1,13 @@
 %  ALU_Test.tex
-%  <+Last Edited: Thu 17 Apr 2014 15:34:48 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 08:31:24 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Arithmetic Logic Unit}
-To promote the use of hierarchy within design the ALU is broken down into a number of sub-modules. These have been tested individually to ensure they operate as expected. Then they are combined into 16-bits without decoder for testing the combination of ALU and LLI slices. Since the LLI slices are either a single multiplexor or wires they will not be tested individually. They will form a part of the ALU Block testing. All test results are shown in Appendix~\ref{chap:ALUTestResults}.
+To promote the use of hierarchy within design the ALU is broken down into a number of sub-modules. 
+These have been tested individually to ensure they operate as expected. 
+Then they are combined into 16-bits without decoder for testing the combination of ALU and LLI slices. 
+Since the LLI slices are either a single multiplexor or wires they will not be tested individually. 
+They will form a part of the ALU Block testing. 
+%All test results are shown in Appendix~\ref{chap:ALUTestResults}.
 
 \subsection{ALU Slice}
 Testing of this module was broken down into the different ALU functions to be performed: arithmetic, logic and shifting. Control inputs which effect the behaviour of arithmetic operations are SUB and ZeroA. As such tests were run to cover every combination of A, B and CIn for addition and subtraction. Then ZeroA was activated during each combination of B and CIn, while A is held high, to ensure correct tieing low of one input. 

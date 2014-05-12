@@ -1,5 +1,5 @@
 %  CPU_Test.tex
-%  <+Last Edited: Sun 11 May 2014 19:54:23 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 09:17:44 BST by seblovett on seblovett-Ubuntu +>
 
 \section{CPU}
 
@@ -17,9 +17,9 @@ Invalid memory cannot be verified, resulting in the test failing.
 For this reason, all memory operations were removed from the test data.
 Similarly, jumps were also removed to prevent the program jumping to an invalid memory location. 
 
-Interrupt instructions were also removed due to the memory returning issue with RETI, STF, LDF, and the lack of verification for the enable and disable interrupt instructions. 
-Finally, due to the unpredictable nature for some flags after logic operations, any arithmetic instructions with flag dependencies (ADCI, ADCIB etc.) are also removed. 
-The removed operations are replaced with ADDIB R0 127 to save repeatedly checking the data. 
+Interrupt instructions were also removed due to the memory returning issue with \textbf{RETI}, \textbf{STF}, \textbf{LDF}, and the lack of verification for the enable and disable interrupt instructions. 
+Finally, due to the unpredictable nature for some flags after logic operations, any arithmetic instructions with flag dependencies (\textbf{ADCI}, \textbf{ADCIB} etc.) are also removed. 
+The removed operations are replaced with \textbf{ADDIB R0 \#127} to save repeatedly checking the data. 
 
 %Verilog was implemented to stop the simulation when the program counter reach $0x7FF$. 
 %The contents of the 8 general purpose registers were then saved to a file. 
