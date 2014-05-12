@@ -1,5 +1,5 @@
 %  Control_Test.tex
-%  <+Last Edited: Thu 17 Apr 2014 15:36:24 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 09:42:31 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Controller}
 \todo[inline, color=green]{MW: Seems too short}
@@ -10,16 +10,16 @@ The test then applies to both the behavioural model and the netlist extracted fr
 An umbrella test is used to verify no output of the controller is ever unknown during any state.
 A series of test vectors are applied to the module, an example is described in Listing~\ref{lst:ControlVector.v}.
 
-\lstinputlisting[style=sverilog,label=lst:ControlVector.v,caption=Control unit test vector.]{Code/ControlVector.v}
+\lstinputlisting[label=lst:ControlVector.v,caption=Control unit test vector.]{Code/ControlVector.v}
 
 
 Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit opcode and the $3$ bit branch condition code.  
-The instruction register is populated in the fetch stage, which is always the same, so a function \textbf{DoFetch} is used to update the instruction register with a different value for testing.
+The instruction register is populated in the fetch stage, which is always the same, so a function \texttt{DoFetch()} is used to update the instruction register with a different value for testing.
 Inside the function the substate transitions are made with \textbf{cycle0} on exit.
 Memory access violations are tested using the along with the entire system as a larger framework is required.
 
 After each fetch the variable length execute stage is tested.
-The output is verified using the function \textbf{SyncOutput}. 
+The output is verified using the function \texttt{SyncOutput()}. 
 This poses the datapath as such to perform the required operations.
 State transition occur outside the function.
 

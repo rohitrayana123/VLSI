@@ -1,5 +1,5 @@
 %  Datapath_Test.tex
-%  <+Last Edited: Thu 17 Apr 2014 15:35:51 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 09:53:31 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Datapath}
 
@@ -10,8 +10,18 @@
 %\todo[color=cyan, inline]{Show simulation results}
 
 
-Testing of the complete datapath was done at both the slice level and fully assembled. These modules are highly hierarchical and as such each sub-module would have been tested during the implementation of it. Since the datapath slice is simply an accumulation of sub-modules and some multiplexors, only the top-level circuitry needs to be tested. This was made up of input selection multiplexors for regBlock and the ALU. The first was tested by changing the inputs AluOut and SysBus and switching between them, asserting if the output is correct. A similar approach was taken for the remaining logic.
+Testing of the complete datapath was done at both the slice level and fully assembled.
+These modules are highly hierarchical and as such each sub-module would have been tested during the implementation of it. 
+Since the datapath slice is simply an accumulation of sub-modules and some multiplexors, only the top-level circuitry needs to be tested. 
+This was made up of input selection multiplexors for regBlock and the ALU. 
+The first was tested by changing the inputs \textit{AluOut} and \textit{SysBus} and switching between them, asserting if the output is correct. 
+A similar approach was taken for the remaining logic.
 
-Prior to testing it was necessary to reset register values, which was done by extending Clock and nReset signals to the edge of the cell as testing inputs. This does break hierarchy rules within magic, but prevents the need for a slightly larger cell to access global signals. 
+Prior to testing it was necessary to reset register values, which was done by extending \textit{Clock} and \textit{nReset} signals to the edge of the cell as testing inputs.
+This does break hierarchy rules within magic, but prevents the need for a slightly larger cell to access global signals. 
 
-The assembled datapath was tested by checking the flow of data between each node on the diagram shown in Figure~\ref{fig:architecture}, with additional multiplexed nodes between the IR and register address select signals; Rs1, Rs2 and Rw. Each of these nodes is an array of internal signals either from each slice or as outputted from the decoders in slice 17. Then these nodes are grouped in accordance with their location in the datapath and tested separately. These groupings were: multiplexors from IR, Operand Selection, ALU output, link register connections, program counter connections, writing general purpose registers, ALU override and status register. As with slice testing, every operation performed by the ALU or GPRs were not tested as they would have been for the individual module testing. 
+The assembled datapath was tested by checking the flow of data between each node on the diagram shown in Figure~\ref{fig:architecture}, with additional multiplexed nodes between the Instruction Register and register address select signals; \textit{Rs1}, \textit{Rs2} and \textit{Rw}.
+Each of these nodes is an array of internal signals either from each slice or as outputted from the decoders in slice 17. 
+Then these nodes are grouped in accordance with their location in the datapath and tested separately. 
+These groupings were: multiplexors from Instruction Register, Operand Selection, ALU output, link register connections, program counter connections, writing general purpose registers, ALU override and status register. 
+As with slice testing, every operation performed by the ALU or GPRs were not tested as this is covered by the individual module test. % they would have been for the individual module testing. 

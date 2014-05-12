@@ -1,32 +1,42 @@
 %  ALU_Test.tex
-%  <+Last Edited: Mon 12 May 2014 08:31:24 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 09:52:22 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Arithmetic Logic Unit}
 To promote the use of hierarchy within design the ALU is broken down into a number of sub-modules. 
 These have been tested individually to ensure they operate as expected. 
-Then they are combined into 16-bits without decoder for testing the combination of ALU and LLI slices. 
+Then they are combined into 16 bits without decoder for testing the combination of ALU and LLI slices. 
 Since the LLI slices are either a single multiplexor or wires they will not be tested individually. 
 They will form a part of the ALU Block testing. 
 %All test results are shown in Appendix~\ref{chap:ALUTestResults}.
 
 \subsection{ALU Slice}
-Testing of this module was broken down into the different ALU functions to be performed: arithmetic, logic and shifting. Control inputs which effect the behaviour of arithmetic operations are SUB and ZeroA. As such tests were run to cover every combination of A, B and CIn for addition and subtraction. Then ZeroA was activated during each combination of B and CIn, while A is held high, to ensure correct tieing low of one input. 
+Testing of this module was broken down into the different ALU functions to be performed: arithmetic, logic and shifting. 
+Control inputs which effect the behaviour of arithmetic operations are \textit{SUB} and \textit{ZeroA}. 
+As such tests were run to cover every combination of \textit{A}, \textit{B} and \textit{CIn} for addition and subtraction. 
+Then \textit{ZeroA} was activated during each combination of \textit{B} and \textit{CIn}, while \textit{A} is held high, to ensure correct tying low of one input. 
 %The test results are shown in Figure~\ref{fig:ALUSliceRes}. 
 For subtraction tests, because additional logic for handling subtraction carrys is within the decoder, testing needed to account for both the carry in and borrow signals being the inverse of expected operation.
 Logic operations are tested by using every input combination possible and comparing to the relevant logic table expected.
 %The output of these tests are shown in Figure~\ref{fig:ALUSliceRes}. 
-Testing of the shifting capabilities was done by setting all inter-slice inputs high with the input A held low. Then for each case of: left, right and left with B input shifting, different immediate signals were set to observe the propagation of bits through the slice. If a bit in the 4-bit immediate is high, a 1 would be outputted in the next adjacent bit of the output. This is OutLeft for left shifting of OutRight for right shifting.
+Testing of the shifting capabilities was done by setting all inter-slice inputs high with the input \textit{A} held low. Then for each case of: left, right and left with \textit{B} input shifting, different immediate signals were set to observe the propagation of bits through the slice. 
+If a bit in the 4 bit immediate is high, a 1 would be outputted in the next adjacent bit of the output. 
+This is \textit{OutLeft} for left shifting or \textit{OutRight} for right shifting.
 % as shown in Figure~\ref{fig:ALUSliceRes}.
-Although shifting operation was as expected, much clearer testing will be done during 16-bit block tests to emulate typical running. 
+Although shifting operation was as expected, much clearer testing will be done during 16 bit block tests to emulate typical running. 
 
 \subsection{ALU Decoder}
-The main testing of the ALU decoder module requires ensuring a correct response to each possible opcode. This was done by cycling through in-putted opcode values, with assertion checking using an always statement which activates every time an input changes. These check against the logic equations for each output signal given in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. As well as Table~\ref{tab:contrOuts} for single opcode signals. 
-Signals ``UseC'' and ``ShSign'' are still checked for correspondence with this table, even though they are not outputs from the decoder module. 
+The main testing of the ALU decoder module requires ensuring a correct response to each possible Opcode. 
+This was done by cycling through in-putted Opcode values, with assertion checking using an always statement which activates every time an input changes. 
+These check against the logic equations for each output signal given in Equations~\ref{eq:DecBasicS}~to~\ref{eq:DecBasicF}. As well as Table~\ref{tab:contrOuts} for single Opcode signals. 
+Signals \textit{UseC} and {\textit{ShSign} are still checked for correspondence with this table, even though they are not outputs from the decoder module. 
 
-Flag testing sets the opcode to either ``ADC'' or ``SUC'' and checks each combination of relevant inputs to ensure V, C and  are as expected. N remains untested as there is no logic to test. 
-Shift operations set the 4-bit immediate to a range of values which cover each output Sh8-Sh1 being activated at least once. A full test from 0 to 15 is not needed. The input bit for arithmetic shifting is also tested by enabling/disabling ASign. 
+Flag testing sets the Opcode to either \textbf{ADC} or \textbf{SUC} and checks each combination of relevant inputs to ensure V, C and  are as expected. N remains untested as there is no logic to test. 
+Shift operations set the 4 bit immediate to a range of values which cover each output Sh8-Sh1 being activated at least once. A full test from 0 to 15 is not needed. The input bit for arithmetic shifting is also tested by enabling/disabling ASign. 
 
 \subsection{ALU Block}
-Testing of 16 connected slices took a similar approach to an individual slice, but with full 16 bit values. Arithmetic used two arbitrary input values combined with each possible carry in value, accounting for both addition and subtraction operation. 
+Testing of 16 connected slices took a similar approach to an individual slice, but with full 16 bit values. 
+Arithmetic used two arbitrary input values combined with each possible carry in value, accounting for both addition and subtraction operation. 
 Logic tests ensure each bit pair is operated upon independently of the rest by using an arbitrary string of bits. 
-Whilst shift tests run through both directions and a number of shifting amounts, similar to slice testing, to show the selected input is shifted by the expected number of bits. Then the ``LUI'' instruction was tested separately to ensure successful 8-bit left shifting operation. Finally ``LLI'' was tested using the same values as in previous tests, to check upper and lower byte concatenation of inputs A and B respectively. 
+Whilst shift tests run through both directions and a number of shifting amounts, similar to slice testing, to show the selected input is shifted by the expected number of bits. 
+Then the \textbf{LUI} instruction was tested separately to ensure successful 8 bit left shifting operation. 
+Finally \textbf{LLI} was tested using the same values as in previous tests, to check upper and lower byte concatenation of inputs A and B respectively. 

@@ -1,7 +1,7 @@
 %  ALU_Design.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 17 Apr 2014 15:00:33 BST
-%  <+Last Edited: Sun 11 May 2014 19:59:04 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 09:55:07 BST by seblovett on seblovett-Ubuntu +>
 
 
 \section{Arithmetic Logic Unit}\label{sect:design:alu}
@@ -16,7 +16,7 @@ Arithmetic operations are centralised around a full adder.
 Additional gates are used for subtraction and flag calculations. %setting the first input to zero and flag calculations. 
 The logic operations consists of the gate corresponding to each of the logic instructions supported. 
 Shifts are performed using a logarithmic shifter to support up to a 15 bit shift in one clock cycle. 
-Finally, the LLI module concatenates the upper byte of the destination register with the provided 8-bit immediate value. 
+Finally, the LLI module concatenates the upper byte of the destination register with the provided 8 bit immediate value. 
 The breakdown of the ALU is illustrated in Figure~\ref{fig:ALUModules}, with the output of each section connected to an internal bus through a number of tristate buffers. 
 
 \todo[inline]{Redo Figures in \ref{ig:ALUAbsract} and \ref{fig:ArithLogicSlice}}
