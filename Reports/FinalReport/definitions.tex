@@ -1,7 +1,7 @@
 %  definitions.tex
 %  Document created by seblovett on seblovett-Ubuntu
 %  Date created: Thu 24 Apr 2014 18:25:35 BST
-%  <+Last Edited: Mon 28 Apr 2014 21:25:35 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 10:08:47 BST by seblovett on seblovett-Ubuntu +>
 
 % This contains macros and definitions used in the report. 
 
@@ -18,7 +18,7 @@
   captionpos=t,                    % sets the caption-position to bottom
   commentstyle=\color{mygreen},    % comment style
   deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  escapeinside={\%*},%{*)},          % if you want to add LaTeX within your code
   extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
   frame=single,                    % adds a frame around the code
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
@@ -44,7 +44,7 @@
   language=Verilog,
   otherkeywords={always\_ff,always\_comb,assert,logic,return,\$random,\#*},            % if you want to add more keywords to the set
   stringstyle=\color{mymauve},     % string literal style
-  keywordstyle=\color{blue}      % keyword style
+  keywordstyle=\color{blue},      % keyword style
 }
 \lstdefinelanguage{samurai}{
 	keywords={ADD,ADDI,ADDIB,ADC,ADCI,NEG,SUB,SUBIB,SUBI,SUC,SUCI,CMP,CMPI,AND,OR,XOR,NOT,NAND,NOR,LSL,LSR,ASR,LDW,STW,LUI,LLI,BR,BNE,BE,BLT,BGE,BWL,RET,JMP,PUSH,POP,RETI,ENAI,DISI,STF,LDF},         % if you want to add more keywords to the se

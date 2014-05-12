@@ -1,5 +1,5 @@
 %  Control_Test.tex
-%  <+Last Edited: Mon 12 May 2014 09:42:31 BST by seblovett on seblovett-Ubuntu +>
+%  <+Last Edited: Mon 12 May 2014 10:05:47 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Controller}
 \todo[inline, color=green]{MW: Seems too short}
@@ -10,7 +10,7 @@ The test then applies to both the behavioural model and the netlist extracted fr
 An umbrella test is used to verify no output of the controller is ever unknown during any state.
 A series of test vectors are applied to the module, an example is described in Listing~\ref{lst:ControlVector.v}.
 
-\lstinputlisting[label=lst:ControlVector.v,caption=Control unit test vector.]{Code/ControlVector.v}
+\lstinputlisting[style=sverilog,label=lst:ControlVector.v,caption=Control unit test vector.]{Code/ControlVector.v}
 
 
 Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit opcode and the $3$ bit branch condition code.  
