@@ -13,7 +13,7 @@ A series of test vectors are applied to the module, an example is described in L
 \lstinputlisting[style=sverilog,label=lst:ControlVector.v,caption=Control unit test vector.]{Code/ControlVector.v}
 
 
-Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit opcode and the $3$ bit branch condition code.  
+Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit Opcode and the $3$ bit branch condition code.  
 The instruction register is populated in the fetch stage, which is always the same, so a function \texttt{DoFetch()} is used to update the instruction register with a different value for testing.
 Inside the function the substate transitions are made with \textbf{cycle0} on exit.
 Memory access violations are tested using the along with the entire system as a larger framework is required.
