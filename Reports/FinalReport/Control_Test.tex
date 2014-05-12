@@ -2,7 +2,6 @@
 %  <+Last Edited: Mon 12 May 2014 14:34:59 BST by seblovett on seblovett-Ubuntu +>
 
 \section{Controller}
-\todo[inline, color=green]{MW: Seems too short}
 
 State machine activity is recreated in the testbench which is verified using observable control unit outputs.
 This assumes a known state on reset and state transitions are done by manipulating the inputs as described in section~\ref{sec:controller}.  
@@ -14,9 +13,9 @@ A series of test vectors are applied to the module, an example is described in L
 
 
 Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit Opcode and the $3$ bit branch condition code.  
-The instruction register is populated in the fetch stage, which is always the same, so a function \texttt{DoFetch()} is used to update the instruction register with a different value for testing.
-Inside the function the substate transitions are made with \textbf{cycle0} on exit.
-Memory access violations are tested using the \todo[color=red]{HSL: @AJR - please complete this} along with the entire system as a larger framework is required.
+The instruction register is populated in the fetch stage, which is always the same for control signals, so a function \texttt{DoFetch()} is used to update the instruction register with a different value for testing.
+Inside the function the substate transitions are made ending with \textbf{cycle0} on exit.
+Memory access violations are tested using the assertions applied in the \textbf{demux\_bus.sv} file along with the entire system as a larger framework is required.
 
 After each fetch the variable length execute stage is tested.
 The output is verified using the function \texttt{SyncOutput()}. 
