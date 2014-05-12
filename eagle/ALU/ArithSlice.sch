@@ -269,6 +269,11 @@
 <instance part="TRISBUF_1" gate="G$1" x="48.26" y="99.06" rot="R270"/>
 </instances>
 <busses>
+<bus name="B$1">
+<segment>
+<wire x1="-20.32" y1="86.36" x2="58.42" y2="86.36" width="0.1524" layer="92"/>
+</segment>
+</bus>
 </busses>
 <nets>
 <net name="N$13" class="0">
@@ -304,6 +309,8 @@
 <pinref part="OR2_1" gate="G$1" pin="I0"/>
 <wire x1="48.26" y1="111.76" x2="45.72" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="111.76" x2="45.72" y2="111.76" width="0.1524" layer="91"/>
+<junction x="45.72" y="111.76"/>
+<junction x="40.64" y="111.76"/>
 </segment>
 </net>
 <net name="N$19" class="0">
@@ -328,12 +335,18 @@
 <segment>
 <pinref part="XOR2_1" gate="G$1" pin="I0"/>
 <wire x1="-10.16" y1="104.14" x2="-10.16" y2="137.16" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="137.16" x2="-10.16" y2="137.16" width="0.1524" layer="91"/>
+<junction x="-10.16" y="137.16"/>
+<wire x1="-10.16" y1="137.16" x2="55.88" y2="137.16" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$24" class="0">
 <segment>
 <pinref part="AND2_1" gate="G$1" pin="A"/>
 <wire x1="-7.62" y1="116.84" x2="-7.62" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="139.7" x2="-7.62" y2="139.7" width="0.1524" layer="91"/>
+<junction x="-7.62" y="139.7"/>
+<wire x1="-7.62" y1="139.7" x2="55.88" y2="139.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$25" class="0">
@@ -342,29 +355,13 @@
 <wire x1="27.94" y1="99.06" x2="27.94" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="99.06" x2="17.78" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="99.06" x2="17.78" y2="142.24" width="0.1524" layer="91"/>
+<junction x="27.94" y="99.06"/>
 </segment>
 </net>
 <net name="N$17" class="0">
 <segment>
 <wire x1="35.56" y1="101.6" x2="39.37" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="TRISBUF_1" gate="G$1" pin="P$1"/>
-</segment>
-</net>
-<net name="N$22" class="0">
-<segment>
-<wire x1="-20.32" y1="86.36" x2="48.26" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="TRISBUF_1" gate="G$1" pin="O"/>
-<wire x1="48.26" y1="86.36" x2="58.42" y2="86.36" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$26" class="0">
-<segment>
-<wire x1="-20.32" y1="137.16" x2="55.88" y2="137.16" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$27" class="0">
-<segment>
-<wire x1="-20.32" y1="139.7" x2="55.88" y2="139.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

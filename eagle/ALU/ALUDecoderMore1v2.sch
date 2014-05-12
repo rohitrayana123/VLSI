@@ -457,30 +457,6 @@
 <busses>
 </busses>
 <nets>
-<net name="N$2" class="0">
-<segment>
-<wire x1="55.88" y1="149.86" x2="55.88" y2="152.4" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="149.86" x2="304.8" y2="149.86" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="147.32" x2="43.18" y2="152.4" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="147.32" x2="304.8" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="30.48" y1="144.78" x2="30.48" y2="152.4" width="0.1524" layer="91"/>
-<wire x1="30.48" y1="144.78" x2="304.8" y2="144.78" width="0.1524" layer="91"/>
-<wire x1="5.08" y1="137.16" x2="5.08" y2="139.7" width="0.1524" layer="91"/>
-<pinref part="INV_1" gate="G$1" pin="I"/>
-<wire x1="5.08" y1="139.7" x2="5.08" y2="152.4" width="0.1524" layer="91"/>
-<wire x1="5.08" y1="139.7" x2="17.78" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="139.7" x2="30.48" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="30.48" y1="139.7" x2="43.18" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="139.7" x2="55.88" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="139.7" x2="304.8" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="142.24" x2="17.78" y2="152.4" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="142.24" x2="304.8" y2="142.24" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="139.7" x2="17.78" y2="142.24" width="0.1524" layer="91"/>
-<wire x1="30.48" y1="144.78" x2="30.48" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="147.32" x2="43.18" y2="139.7" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="149.86" x2="55.88" y2="139.7" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="NAND2_2" gate="G$1" pin="O"/>
@@ -611,6 +587,7 @@
 <pinref part="AND2_2" gate="G$1" pin="I1"/>
 <pinref part="AND2_3" gate="G$1" pin="I1"/>
 <pinref part="NAND2_9" gate="G$1" pin="I1"/>
+<junction x="215.9" y="48.26"/>
 </segment>
 </net>
 <net name="N$21" class="0">
@@ -622,6 +599,9 @@
 <segment>
 <wire x1="30.48" y1="33.02" x2="35.56" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="35.56" y1="33.02" x2="35.56" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="XOR2_3" gate="G$1" pin="O"/>
+<pinref part="XOR2_2" gate="G$1" pin="I1"/>
+<junction x="30.48" y="33.02"/>
 </segment>
 </net>
 <net name="N$25" class="0">
@@ -691,6 +671,7 @@
 <wire x1="27.94" y1="2.54" x2="27.94" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="XOR2_1" gate="G$1" pin="I1"/>
 <pinref part="XOR2_3" gate="G$1" pin="I0"/>
+<junction x="27.94" y="2.54"/>
 </segment>
 </net>
 <net name="N$44" class="0">
@@ -731,9 +712,22 @@
 <wire x1="302.26" y1="109.22" x2="302.26" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="106.68" x2="302.26" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="104.14" x2="302.26" y2="101.6" width="0.1524" layer="91"/>
-<wire x1="30.48" y1="109.22" x2="302.26" y2="109.22" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="106.68" x2="302.26" y2="106.68" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="104.14" x2="302.26" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="109.22" x2="68.58" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="109.22" x2="99.06" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="109.22" x2="104.14" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="109.22" x2="132.08" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="109.22" x2="165.1" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="109.22" x2="193.04" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="193.04" y1="109.22" x2="302.26" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="106.68" x2="157.48" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="157.48" y1="106.68" x2="284.48" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="284.48" y1="106.68" x2="299.72" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="299.72" y1="106.68" x2="302.26" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="104.14" x2="81.28" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="81.28" y1="104.14" x2="129.54" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="129.54" y1="104.14" x2="154.94" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="104.14" x2="236.22" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="104.14" x2="302.26" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="104.14" x2="304.8" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="106.68" x2="304.8" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="302.26" y1="109.22" x2="304.8" y2="109.22" width="0.1524" layer="91"/>
@@ -741,348 +735,264 @@
 <wire x1="43.18" y1="116.84" x2="43.18" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="116.84" x2="55.88" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="NAND4_5" gate="G$1" pin="A"/>
+<wire x1="68.58" y1="101.6" x2="68.58" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="NOR3_1" gate="G$1" pin="I0"/>
+<junction x="68.58" y="109.22"/>
+<wire x1="81.28" y1="101.6" x2="81.28" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="NAND3_1" gate="G$1" pin="A"/>
+<junction x="81.28" y="104.14"/>
+<wire x1="99.06" y1="101.6" x2="99.06" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="NAND2_1" gate="G$1" pin="A"/>
+<junction x="99.06" y="109.22"/>
+<wire x1="104.14" y1="109.22" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="78.74" x2="101.6" y2="78.74" width="0.1524" layer="91"/>
+<pinref part="NAND2_3" gate="G$1" pin="A"/>
+<junction x="104.14" y="109.22"/>
+<wire x1="132.08" y1="109.22" x2="132.08" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND3_3" gate="G$1" pin="A"/>
+<junction x="132.08" y="109.22"/>
+<wire x1="129.54" y1="104.14" x2="129.54" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND3_3" gate="G$1" pin="I2"/>
+<junction x="129.54" y="104.14"/>
+<wire x1="154.94" y1="101.6" x2="154.94" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="NOR3_3" gate="G$1" pin="I1"/>
+<junction x="154.94" y="104.14"/>
+<wire x1="157.48" y1="101.6" x2="157.48" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="NOR3_3" gate="G$1" pin="I2"/>
+<junction x="157.48" y="106.68"/>
+<wire x1="165.1" y1="53.34" x2="165.1" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="53.34" x2="152.4" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="53.34" x2="152.4" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="NOR3_4" gate="G$1" pin="I2"/>
+<junction x="165.1" y="109.22"/>
+<wire x1="193.04" y1="109.22" x2="193.04" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NOR3_5" gate="G$1" pin="I2"/>
+<junction x="193.04" y="109.22"/>
+<wire x1="236.22" y1="101.6" x2="236.22" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="NAND4_3" gate="G$1" pin="A"/>
+<junction x="236.22" y="104.14"/>
+<wire x1="284.48" y1="101.6" x2="284.48" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="NAND3_4" gate="G$1" pin="A"/>
+<junction x="284.48" y="106.68"/>
+<wire x1="299.72" y1="101.6" x2="299.72" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="NAND4_5" gate="G$1" pin="A1"/>
+<junction x="299.72" y="106.68"/>
+<junction x="302.26" y="109.22"/>
 </segment>
 </net>
 <net name="N$53" class="0">
 <segment>
 <pinref part="INV_1" gate="G$1" pin="O"/>
 <wire x1="5.08" y1="116.84" x2="5.08" y2="114.3" width="0.1524" layer="91"/>
-<wire x1="5.08" y1="114.3" x2="304.8" y2="114.3" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$54" class="0">
-<segment>
-<wire x1="63.5" y1="101.6" x2="63.5" y2="139.7" width="0.1524" layer="91"/>
-<pinref part="NOR3_1" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$55" class="0">
-<segment>
-<wire x1="66.04" y1="147.32" x2="66.04" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NOR3_1" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$56" class="0">
-<segment>
-<wire x1="68.58" y1="101.6" x2="68.58" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="NOR3_1" gate="G$1" pin="I0"/>
-</segment>
-</net>
-<net name="N$57" class="0">
-<segment>
-<wire x1="76.2" y1="101.6" x2="76.2" y2="142.24" width="0.1524" layer="91"/>
-<pinref part="NAND3_1" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$58" class="0">
-<segment>
-<wire x1="78.74" y1="101.6" x2="78.74" y2="147.32" width="0.1524" layer="91"/>
-<pinref part="NAND3_1" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$59" class="0">
-<segment>
-<wire x1="81.28" y1="101.6" x2="81.28" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="NAND3_1" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$60" class="0">
-<segment>
-<wire x1="93.98" y1="101.6" x2="93.98" y2="149.86" width="0.1524" layer="91"/>
-<pinref part="NAND2_1" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$61" class="0">
-<segment>
-<wire x1="99.06" y1="101.6" x2="99.06" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="NAND2_1" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$62" class="0">
-<segment>
-<wire x1="86.36" y1="139.7" x2="86.36" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="78.74" x2="83.82" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="NAND2_2" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$63" class="0">
-<segment>
-<wire x1="104.14" y1="109.22" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="104.14" y1="78.74" x2="101.6" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="NAND2_3" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$65" class="0">
-<segment>
-<wire x1="106.68" y1="58.42" x2="106.68" y2="142.24" width="0.1524" layer="91"/>
-<wire x1="101.6" y1="55.88" x2="101.6" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="101.6" y1="58.42" x2="106.68" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="NAND3_5" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$67" class="0">
-<segment>
-<wire x1="114.3" y1="101.6" x2="114.3" y2="144.78" width="0.1524" layer="91"/>
-<pinref part="NAND3_2" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$66" class="0">
-<segment>
-<wire x1="116.84" y1="149.86" x2="116.84" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND3_2" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$68" class="0">
-<segment>
+<wire x1="5.08" y1="114.3" x2="109.22" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="NAND3_5" gate="G$1" pin="A"/>
+<wire x1="109.22" y1="114.3" x2="119.38" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="114.3" x2="167.64" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="114.3" x2="195.58" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="195.58" y1="114.3" x2="304.8" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="55.88" x2="109.22" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="114.3" x2="109.22" y2="55.88" width="0.1524" layer="91"/>
+<junction x="109.22" y="114.3"/>
 <wire x1="119.38" y1="101.6" x2="119.38" y2="114.3" width="0.1524" layer="91"/>
 <pinref part="NAND3_2" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$69" class="0">
-<segment>
-<wire x1="127" y1="101.6" x2="127" y2="142.24" width="0.1524" layer="91"/>
-<pinref part="NAND3_3" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$70" class="0">
-<segment>
-<wire x1="129.54" y1="104.14" x2="129.54" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND3_3" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$71" class="0">
-<segment>
-<wire x1="132.08" y1="109.22" x2="132.08" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND3_3" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$72" class="0">
-<segment>
-<wire x1="137.16" y1="147.32" x2="137.16" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="129.54" y1="55.88" x2="137.16" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="NAND2_5" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$74" class="0">
-<segment>
-<wire x1="142.24" y1="101.6" x2="142.24" y2="142.24" width="0.1524" layer="91"/>
-<pinref part="NOR3_2" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$75" class="0">
-<segment>
-<wire x1="147.32" y1="101.6" x2="147.32" y2="149.86" width="0.1524" layer="91"/>
-<pinref part="NOR3_2" gate="G$1" pin="I0"/>
-</segment>
-</net>
-<net name="N$73" class="0">
-<segment>
-<wire x1="144.78" y1="147.32" x2="144.78" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NOR3_2" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$76" class="0">
-<segment>
-<wire x1="154.94" y1="101.6" x2="154.94" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="NOR3_3" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$77" class="0">
-<segment>
-<wire x1="157.48" y1="101.6" x2="157.48" y2="106.68" width="0.1524" layer="91"/>
-<pinref part="NOR3_3" gate="G$1" pin="I2"/>
+<junction x="119.38" y="114.3"/>
+<wire x1="167.64" y1="114.3" x2="167.64" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="50.8" x2="154.94" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="NOR3_4" gate="G$1" pin="I0"/>
+<junction x="167.64" y="114.3"/>
+<wire x1="195.58" y1="114.3" x2="195.58" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NOR3_5" gate="G$1" pin="I0"/>
+<junction x="195.58" y="114.3"/>
 </segment>
 </net>
 <net name="N$78" class="0">
 <segment>
 <wire x1="160.02" y1="101.6" x2="160.02" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="NOR3_3" gate="G$1" pin="I0"/>
-</segment>
-</net>
-<net name="N$79" class="0">
-<segment>
-<wire x1="165.1" y1="53.34" x2="165.1" y2="109.22" width="0.1524" layer="91"/>
-<wire x1="165.1" y1="53.34" x2="152.4" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="152.4" y1="53.34" x2="152.4" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="NOR3_4" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$80" class="0">
-<segment>
-<wire x1="167.64" y1="114.3" x2="167.64" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="167.64" y1="50.8" x2="154.94" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="NOR3_4" gate="G$1" pin="I0"/>
-</segment>
-</net>
-<net name="N$81" class="0">
-<segment>
-<wire x1="172.72" y1="139.7" x2="172.72" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND4_1" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$82" class="0">
-<segment>
-<wire x1="175.26" y1="142.24" x2="175.26" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND4_1" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$83" class="0">
-<segment>
-<wire x1="182.88" y1="144.78" x2="182.88" y2="101.6" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$84" class="0">
-<segment>
+<wire x1="17.78" y1="111.76" x2="160.02" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="INV_2" gate="G$1" pin="O"/>
+<wire x1="160.02" y1="111.76" x2="180.34" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="180.34" y1="111.76" x2="304.8" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="111.76" x2="17.78" y2="116.84" width="0.1524" layer="91"/>
+<junction x="160.02" y="111.76"/>
 <wire x1="180.34" y1="111.76" x2="180.34" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_1" gate="G$1" pin="A1"/>
-</segment>
-</net>
-<net name="N$85" class="0">
-<segment>
-<wire x1="190.5" y1="101.6" x2="190.5" y2="142.24" width="0.1524" layer="91"/>
-<pinref part="NOR3_5" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$86" class="0">
-<segment>
-<wire x1="195.58" y1="114.3" x2="195.58" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NOR3_5" gate="G$1" pin="I0"/>
-</segment>
-</net>
-<net name="N$87" class="0">
-<segment>
-<wire x1="193.04" y1="109.22" x2="193.04" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NOR3_5" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$88" class="0">
-<segment>
-<wire x1="203.2" y1="149.86" x2="203.2" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="NAND3_7" gate="G$1" pin="A"/>
-<wire x1="203.2" y1="76.2" x2="198.12" y2="76.2" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$89" class="0">
-<segment>
-<wire x1="200.66" y1="78.74" x2="200.66" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="200.66" y1="78.74" x2="195.58" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="NAND3_7" gate="G$1" pin="I2"/>
-<wire x1="195.58" y1="78.74" x2="195.58" y2="76.2" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$90" class="0">
-<segment>
-<wire x1="210.82" y1="139.7" x2="210.82" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND4_2" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$91" class="0">
-<segment>
-<wire x1="208.28" y1="142.24" x2="208.28" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND4_2" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$92" class="0">
-<segment>
-<wire x1="215.9" y1="144.78" x2="215.9" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND4_2" gate="G$1" pin="A1"/>
-</segment>
-</net>
-<net name="N$93" class="0">
-<segment>
-<wire x1="218.44" y1="149.86" x2="218.44" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="NAND4_2" gate="G$1" pin="A"/>
+<junction x="180.34" y="111.76"/>
 </segment>
 </net>
 <net name="N$94" class="0">
 <segment>
 <wire x1="226.06" y1="139.7" x2="226.06" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_3" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$95" class="0">
-<segment>
+<wire x1="55.88" y1="149.86" x2="55.88" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="149.86" x2="93.98" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="149.86" x2="116.84" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="149.86" x2="147.32" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="147.32" y1="149.86" x2="203.2" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="203.2" y1="149.86" x2="218.44" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="149.86" x2="271.78" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="271.78" y1="149.86" x2="304.8" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="147.32" x2="43.18" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="147.32" x2="66.04" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="147.32" x2="78.74" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="147.32" x2="137.16" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="147.32" x2="144.78" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="147.32" x2="200.66" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="200.66" y1="147.32" x2="304.8" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="144.78" x2="30.48" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="144.78" x2="114.3" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="144.78" x2="182.88" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="182.88" y1="144.78" x2="215.9" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="144.78" x2="233.68" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="233.68" y1="144.78" x2="269.24" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="269.24" y1="144.78" x2="281.94" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="281.94" y1="144.78" x2="304.8" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="5.08" y1="137.16" x2="5.08" y2="139.7" width="0.1524" layer="91"/>
+<pinref part="INV_1" gate="G$1" pin="I"/>
+<wire x1="5.08" y1="139.7" x2="5.08" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="5.08" y1="139.7" x2="17.78" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="139.7" x2="30.48" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="139.7" x2="43.18" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="139.7" x2="55.88" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="139.7" x2="63.5" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="139.7" x2="86.36" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="139.7" x2="172.72" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="172.72" y1="139.7" x2="210.82" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="210.82" y1="139.7" x2="226.06" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="139.7" x2="264.16" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="264.16" y1="139.7" x2="279.4" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="279.4" y1="139.7" x2="292.1" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="292.1" y1="139.7" x2="304.8" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="142.24" x2="17.78" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="142.24" x2="76.2" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="142.24" x2="106.68" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="142.24" x2="127" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="127" y1="142.24" x2="142.24" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="142.24" x2="175.26" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="142.24" x2="190.5" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="190.5" y1="142.24" x2="208.28" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="208.28" y1="142.24" x2="228.6" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="142.24" x2="261.62" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="142.24" x2="294.64" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="294.64" y1="142.24" x2="304.8" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="139.7" x2="17.78" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="30.48" y1="144.78" x2="30.48" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="147.32" x2="43.18" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="149.86" x2="55.88" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="101.6" x2="63.5" y2="139.7" width="0.1524" layer="91"/>
+<pinref part="NOR3_1" gate="G$1" pin="I1"/>
+<junction x="63.5" y="139.7"/>
+<wire x1="66.04" y1="147.32" x2="66.04" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NOR3_1" gate="G$1" pin="I2"/>
+<junction x="66.04" y="147.32"/>
+<wire x1="76.2" y1="101.6" x2="76.2" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="NAND3_1" gate="G$1" pin="I1"/>
+<junction x="76.2" y="142.24"/>
+<wire x1="78.74" y1="101.6" x2="78.74" y2="147.32" width="0.1524" layer="91"/>
+<pinref part="NAND3_1" gate="G$1" pin="I2"/>
+<junction x="78.74" y="147.32"/>
+<wire x1="86.36" y1="139.7" x2="86.36" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="78.74" x2="83.82" y2="78.74" width="0.1524" layer="91"/>
+<pinref part="NAND2_2" gate="G$1" pin="A"/>
+<junction x="86.36" y="139.7"/>
+<wire x1="93.98" y1="101.6" x2="93.98" y2="149.86" width="0.1524" layer="91"/>
+<pinref part="NAND2_1" gate="G$1" pin="I1"/>
+<junction x="93.98" y="149.86"/>
+<wire x1="106.68" y1="58.42" x2="106.68" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="55.88" x2="101.6" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="58.42" x2="106.68" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="NAND3_5" gate="G$1" pin="I2"/>
+<junction x="106.68" y="142.24"/>
+<wire x1="114.3" y1="101.6" x2="114.3" y2="144.78" width="0.1524" layer="91"/>
+<pinref part="NAND3_2" gate="G$1" pin="I1"/>
+<junction x="114.3" y="144.78"/>
+<wire x1="116.84" y1="149.86" x2="116.84" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND3_2" gate="G$1" pin="I2"/>
+<junction x="116.84" y="149.86"/>
+<wire x1="127" y1="101.6" x2="127" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="NAND3_3" gate="G$1" pin="I1"/>
+<junction x="127" y="142.24"/>
+<wire x1="137.16" y1="147.32" x2="137.16" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="129.54" y1="55.88" x2="137.16" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="NAND2_5" gate="G$1" pin="A"/>
+<junction x="137.16" y="147.32"/>
+<wire x1="142.24" y1="101.6" x2="142.24" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="NOR3_2" gate="G$1" pin="I1"/>
+<junction x="142.24" y="142.24"/>
+<wire x1="144.78" y1="147.32" x2="144.78" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NOR3_2" gate="G$1" pin="I2"/>
+<junction x="144.78" y="147.32"/>
+<wire x1="147.32" y1="101.6" x2="147.32" y2="149.86" width="0.1524" layer="91"/>
+<pinref part="NOR3_2" gate="G$1" pin="I0"/>
+<junction x="147.32" y="149.86"/>
+<wire x1="172.72" y1="139.7" x2="172.72" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND4_1" gate="G$1" pin="I2"/>
+<junction x="172.72" y="139.7"/>
+<wire x1="175.26" y1="142.24" x2="175.26" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND4_1" gate="G$1" pin="I1"/>
+<junction x="175.26" y="142.24"/>
+<wire x1="182.88" y1="144.78" x2="182.88" y2="101.6" width="0.1524" layer="91"/>
+<junction x="182.88" y="144.78"/>
+<wire x1="190.5" y1="101.6" x2="190.5" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="NOR3_5" gate="G$1" pin="I1"/>
+<junction x="190.5" y="142.24"/>
+<wire x1="200.66" y1="78.74" x2="200.66" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="200.66" y1="78.74" x2="195.58" y2="78.74" width="0.1524" layer="91"/>
+<pinref part="NAND3_7" gate="G$1" pin="I2"/>
+<wire x1="195.58" y1="78.74" x2="195.58" y2="76.2" width="0.1524" layer="91"/>
+<junction x="200.66" y="147.32"/>
+<wire x1="203.2" y1="149.86" x2="203.2" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="NAND3_7" gate="G$1" pin="A"/>
+<wire x1="203.2" y1="76.2" x2="198.12" y2="76.2" width="0.1524" layer="91"/>
+<junction x="203.2" y="149.86"/>
+<wire x1="208.28" y1="142.24" x2="208.28" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND4_2" gate="G$1" pin="I2"/>
+<junction x="208.28" y="142.24"/>
+<wire x1="210.82" y1="139.7" x2="210.82" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND4_2" gate="G$1" pin="I1"/>
+<junction x="210.82" y="139.7"/>
+<wire x1="215.9" y1="144.78" x2="215.9" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND4_2" gate="G$1" pin="A1"/>
+<junction x="215.9" y="144.78"/>
+<wire x1="218.44" y1="149.86" x2="218.44" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="NAND4_2" gate="G$1" pin="A"/>
+<junction x="218.44" y="149.86"/>
+<junction x="226.06" y="139.7"/>
 <wire x1="228.6" y1="101.6" x2="228.6" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="NAND4_3" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$96" class="0">
-<segment>
+<junction x="228.6" y="142.24"/>
 <wire x1="233.68" y1="144.78" x2="233.68" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_3" gate="G$1" pin="A1"/>
-</segment>
-</net>
-<net name="N$97" class="0">
-<segment>
-<wire x1="236.22" y1="101.6" x2="236.22" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="NAND4_3" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$98" class="0">
-<segment>
-<wire x1="264.16" y1="101.6" x2="264.16" y2="139.7" width="0.1524" layer="91"/>
-<pinref part="NAND4_4" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$99" class="0">
-<segment>
+<junction x="233.68" y="144.78"/>
 <wire x1="261.62" y1="142.24" x2="261.62" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_4" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$100" class="0">
-<segment>
+<junction x="261.62" y="142.24"/>
+<wire x1="264.16" y1="101.6" x2="264.16" y2="139.7" width="0.1524" layer="91"/>
+<pinref part="NAND4_4" gate="G$1" pin="I1"/>
+<junction x="264.16" y="139.7"/>
 <wire x1="269.24" y1="144.78" x2="269.24" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_4" gate="G$1" pin="A1"/>
-</segment>
-</net>
-<net name="N$101" class="0">
-<segment>
+<junction x="269.24" y="144.78"/>
 <wire x1="271.78" y1="149.86" x2="271.78" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_4" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$102" class="0">
-<segment>
+<junction x="271.78" y="149.86"/>
 <wire x1="279.4" y1="101.6" x2="279.4" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="NAND3_4" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$103" class="0">
-<segment>
+<junction x="279.4" y="139.7"/>
 <wire x1="281.94" y1="144.78" x2="281.94" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND3_4" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$104" class="0">
-<segment>
-<wire x1="284.48" y1="101.6" x2="284.48" y2="106.68" width="0.1524" layer="91"/>
-<pinref part="NAND3_4" gate="G$1" pin="A"/>
-</segment>
-</net>
-<net name="N$105" class="0">
-<segment>
+<junction x="281.94" y="144.78"/>
 <wire x1="292.1" y1="101.6" x2="292.1" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="NAND4_5" gate="G$1" pin="I2"/>
-</segment>
-</net>
-<net name="N$106" class="0">
-<segment>
+<junction x="292.1" y="139.7"/>
 <wire x1="294.64" y1="142.24" x2="294.64" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="NAND4_5" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$107" class="0">
-<segment>
-<wire x1="299.72" y1="101.6" x2="299.72" y2="106.68" width="0.1524" layer="91"/>
-<pinref part="NAND4_5" gate="G$1" pin="A1"/>
-</segment>
-</net>
-<net name="N$109" class="0">
-<segment>
-<wire x1="17.78" y1="111.76" x2="304.8" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="INV_2" gate="G$1" pin="O"/>
-<wire x1="17.78" y1="111.76" x2="17.78" y2="116.84" width="0.1524" layer="91"/>
+<junction x="294.64" y="142.24"/>
+<junction x="55.88" y="149.86"/>
+<junction x="43.18" y="147.32"/>
+<junction x="30.48" y="144.78"/>
+<junction x="17.78" y="142.24"/>
+<junction x="5.08" y="139.7"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -1101,13 +1011,6 @@
 <segment>
 <pinref part="NAND2_3" gate="G$1" pin="O"/>
 <pinref part="NAND3_5" gate="G$1" pin="I1"/>
-</segment>
-</net>
-<net name="N$5" class="0">
-<segment>
-<pinref part="NAND3_5" gate="G$1" pin="A"/>
-<wire x1="104.14" y1="55.88" x2="109.22" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="109.22" y1="114.3" x2="109.22" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$50" class="0">
@@ -1180,12 +1083,6 @@
 <wire x1="195.58" y1="53.34" x2="195.58" y2="22.86" width="0.1524" layer="91"/>
 <pinref part="NAND2_7" gate="G$1" pin="I1"/>
 <wire x1="195.58" y1="22.86" x2="203.2" y2="22.86" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$38" class="0">
-<segment>
-<pinref part="XOR2_3" gate="G$1" pin="O"/>
-<pinref part="XOR2_2" gate="G$1" pin="I1"/>
 </segment>
 </net>
 </nets>
