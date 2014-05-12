@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
@@ -42,13 +42,13 @@
 <wire x1="10.16" y1="66.04" x2="7.62" y2="63.5" width="0.1524" layer="94"/>
 <text x="12.7" y="66.04" size="1.778" layer="94">ALU</text>
 <text x="12.7" y="66.04" size="1.778" layer="94">ALU</text>
-<text x="22.86" y="66.04" size="1.778" layer="91">ALUOut</text>
-<text x="2.54" y="58.42" size="1.778" layer="91">B</text>
-<text x="2.54" y="73.66" size="1.778" layer="91">A</text>
-<text x="12.7" y="81.28" size="1.778" layer="91">OpCode</text>
-<text x="10.16" y="78.74" size="1.778" layer="91">5</text>
-<text x="15.24" y="76.2" size="1.778" layer="91">4</text>
-<text x="17.78" y="78.74" size="1.778" layer="91">imm</text>
+<text x="22.86" y="66.04" size="1.778" layer="95">ALUOut</text>
+<text x="2.54" y="58.42" size="1.778" layer="95">B</text>
+<text x="2.54" y="73.66" size="1.778" layer="95">A</text>
+<text x="12.7" y="81.28" size="1.778" layer="95">OpCode</text>
+<text x="13.462" y="77.724" size="1.778" layer="91">5</text>
+<text x="18.542" y="74.93" size="1.778" layer="91">4</text>
+<text x="17.78" y="78.74" size="1.778" layer="95">imm</text>
 </plain>
 <instances>
 </instances>
