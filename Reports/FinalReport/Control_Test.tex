@@ -9,8 +9,9 @@ The test then applies to both the behavioural model and the netlist extracted fr
 An umbrella test is used to verify no output of the controller is ever unknown during any state.
 A series of test vectors are applied to the module, an example is described in Listing~\ref{lst:ControlVector.v}.
 
+\begin{minipage}{\linewidth}
 \lstinputlisting[style=sverilog,label=lst:ControlVector.v,caption=Control unit test vector.]{Code/ControlVector.v}
-
+\end{minipage}
 
 Activity in the control unit is dependent on the upper byte of data in the instruction register which is broken down into the $5$ bit Opcode and the $3$ bit branch condition code.  
 The instruction register is populated in the fetch stage, which is always the same for control signals, so a function \texttt{DoFetch()} is used to update the instruction register with a different value for testing.
@@ -19,9 +20,10 @@ Memory access violations are tested using the assertions applied in the \textbf{
 
 After each fetch the variable length execute stage is tested.
 The output is verified using the function \texttt{SyncOutput()}. 
-This probes the datapath as such to perform the required operations.
-State transitions occur outside the function.
+This probes the datapath as such to verify if the control unit is performing the required operations.
+State transitions occur outside the function the test will end if the outputs are ill-matched.
 
 As the interrupt functionality is a lower priority no explicit testing of entry was performed at this level.
 This proved difficult because of the nature of real-time systems.
-Operations used to support the interrupts can be tested using the existing method. 
+Operations used to support the interrupts can be tested using the existing method.
+Actual interrupt functionality is tested when running programs on the entire CPU.
